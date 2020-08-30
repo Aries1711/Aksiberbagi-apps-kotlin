@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AKSIBERBAGI-DONATUR</string>
+    <string name="app_name">AksiBerbagi</string>
+    <string name="helloworld">helloworld</string>
 </resources>
