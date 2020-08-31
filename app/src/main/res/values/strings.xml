@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">AksiBerbagi</string>
     <string name="helloworld">helloworld</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="masuk">MASUK</string>
+    <string name="daftar">DAFTAR</string>
+    <string name="bannerlogo">TODO</string>
 </resources>
