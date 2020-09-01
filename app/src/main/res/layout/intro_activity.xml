@@ -11,7 +11,7 @@
         android:layout_width="271dp"
         android:layout_height="103dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:maxHeight="60dp"
         android:weightSum="3"
@@ -44,7 +44,9 @@
         android:id="@+id/introSliderViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
         app:layout_constraintBottom_toTopOf="@id/indicatorContainer"
         android:layout_marginBottom="12dp"
         />
