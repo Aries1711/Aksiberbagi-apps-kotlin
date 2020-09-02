@@ -1,7 +1,11 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -9,27 +13,29 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.IntroSlide;
+import com.inddevid.aksiberbagi_donatur.presenter.IntroSliderAdapter;
 import kotlinx.android.synthetic.main.intro_activity.*
 
 class IntroActivity : AppCompatActivity() {
     private val introSliderAdapter = IntroSliderAdapter(
         listOf(
             IntroSlide(
-                    "#semangatKebaikan",
+                "#semangatKebaikan",
                 "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
                 R.drawable.intro1
-            ),
-            IntroSlide(
-                "#kebaikanRutin",
-                "Dengan fitur Donasi rutin aksiberbagi menyediakan sarana kebaikan berkesinambungan",
+            ),IntroSlide(
+                "#semangatKebaikan",
+                "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
                 R.drawable.intro2
             ),IntroSlide(
-                "#semangatBerbagi",
-                "Dengan berbagi kita dapat meningkatkan kebahagian kita",
+                "#semangatKebaikan",
+                "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
                 R.drawable.intro3
             )
         )
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro_activity)
@@ -46,6 +52,10 @@ class IntroActivity : AppCompatActivity() {
                 setCurrentIndicator(position)
             }
         })
+        val loginBtn: Button = findViewById(R.id.login_btn)
+        val signupBtn: Button = findViewById(R.id.signup_btn)
+        loginBtn.setOnClickListener{ redirectLogin()}
+        signupBtn.setOnClickListener{redirectSignup() }
     }
 
     private fun setupIndicators(){
@@ -92,4 +102,23 @@ class IntroActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun redirectLogin(){
+        Looper.myLooper()?.let {
+            Handler(it).postDelayed({
+                val intent = Intent (this@IntroActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }, 0)
+        }
+    }
+
+    private fun redirectSignup(){
+        Looper.myLooper()?.let {
+            Handler(it).postDelayed({
+                val intent = Intent (this@IntroActivity, SignUpActivity::class.java)
+                startActivity(intent)
+            }, 0)
+        }
+    }
+
 }

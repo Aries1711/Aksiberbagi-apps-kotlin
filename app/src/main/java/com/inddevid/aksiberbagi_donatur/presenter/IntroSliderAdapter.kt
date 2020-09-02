@@ -1,4 +1,5 @@
-package com.inddevid.aksiberbagi_donatur.view
+package com.inddevid.aksiberbagi_donatur.presenter
+
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.IntroSlide;
 
 class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
     RecyclerView.Adapter<IntroSliderAdapter.IntroSlideViewHolder>() {

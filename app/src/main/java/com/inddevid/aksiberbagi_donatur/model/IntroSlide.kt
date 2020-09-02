@@ -1,4 +1,4 @@
-package com.inddevid.aksiberbagi_donatur.view
+package com.inddevid.aksiberbagi_donatur.model
 
 data class IntroSlide (
     val title: String,

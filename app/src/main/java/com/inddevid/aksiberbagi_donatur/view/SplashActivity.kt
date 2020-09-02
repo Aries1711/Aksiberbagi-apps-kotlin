@@ -16,9 +16,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.splash_activity)
 
         //declare the animation
-        val fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         val imageLogo: ImageView = findViewById(R.id.splashImage_id);
-        imageLogo.startAnimation(fade_in)
+        imageLogo.startAnimation(fadeIn)
 
         //code for noActionbar
         supportActionBar?.hide()

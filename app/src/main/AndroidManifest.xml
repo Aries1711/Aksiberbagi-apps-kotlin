@@ -8,10 +8,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".view.SplashActivity"
+
+<!--        Start Auth android app-->
+        <activity
+            android:name=".view.SignUpActivity"
+            android:theme="@style/AppMaterial">
+
+        </activity>
+        <activity android:name=".view.LoginActivity"
+            android:theme="@style/AppMaterial">
+
+        </activity>
+<!--        End Auth android app-->
+
+<!--        Start activity splash And Intro-->
+        <activity
+            android:name=".view.SplashActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -20,9 +36,11 @@
             android:theme="@style/AppMaterial">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+<!--        End activity splash And Intro-->
 
         <meta-data
             android:name="preloaded_fonts"
