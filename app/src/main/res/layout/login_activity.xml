@@ -8,10 +8,13 @@
     android:background="#15BBDA">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
             android:id="@+id/circularRevealLinearLayout"
             android:layout_width="match_parent"
@@ -44,12 +47,12 @@
                 android:id="@+id/versi_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginStart="0dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="0dp"
                 android:fontFamily="@font/actor"
-                android:text="@string/greetingLogin"
                 android:gravity="center"
+                android:text="@string/greetingLogin"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/splashImage_id" />
@@ -83,29 +86,42 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/labelPassword"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:hint="@string/labelPassword"
                 android:textColorHint="@color/colorIndicatorPrimary"
-                app:hintTextColor="@color/colorIndicatorPrimary"
                 app:boxStrokeColor="@color/colorIndicatorPrimary"
-                app:errorEnabled="true">
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/colorIndicatorPrimary"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/colorIndicatorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:inputType="textPassword"
                     android:textColor="@color/colorIndicatorPrimary" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lupaAkun"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:fontFamily="@font/actor"
+                android:text="@string/lupaKataSandi"
+                android:textAlignment="textEnd"
+                android:textAllCaps="false" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="#FFFFFF"
                 android:minHeight="60dp"
@@ -114,5 +130,5 @@
                 android:textSize="18sp"
                 app:cornerRadius="10dp" />
         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
-        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
