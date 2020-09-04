@@ -7,43 +7,112 @@
     tools:context=".view.LoginActivity"
     android:background="#15BBDA">
 
-    <com.google.android.material.circularreveal.CircularRevealLinearLayout
-        android:id="@+id/circularRevealLinearLayout"
-        android:layout_width="192dp"
-        android:layout_height="102dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="600dp"
-        android:maxHeight="60dp"
-        android:weightSum="3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:contentDescription="@string/bannerlogo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_panjang" />
-    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+            android:id="@+id/circularRevealLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/closeLogin"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="44dp"
-        app:icon="@drawable/ic_close"
-        app:iconSize="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/circularRevealLinearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/closeLogin"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:icon="@drawable/ic_close"
+                app:iconSize="30dp" />
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="60dp"
+                android:contentDescription="@string/bannerlogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo_panjang" />
+
+            <TextView
+                android:id="@+id/versi_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:fontFamily="@font/actor"
+                android:text="@string/greetingLogin"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/splashImage_id" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namePhone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#FFFFFF"
+                android:hint="@string/labelNomor"
+                android:textColorHint="@color/colorIndicatorPrimary"
+                app:boxStrokeColor="@color/colorIndicatorPrimary"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/colorIndicatorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textColor="@color/colorIndicatorPrimary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namePassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/labelPassword"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:textColorHint="@color/colorIndicatorPrimary"
+                app:hintTextColor="@color/colorIndicatorPrimary"
+                app:boxStrokeColor="@color/colorIndicatorPrimary"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textColor="@color/colorIndicatorPrimary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#FFFFFF"
+                android:minHeight="60dp"
+                android:text="@string/masuk"
+                android:textColor="#15BBDA"
+                android:textSize="18sp"
+                app:cornerRadius="10dp" />
+        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

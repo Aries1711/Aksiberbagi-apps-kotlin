@@ -7,4 +7,7 @@
     <string name="bannerlogo">TODO</string>
     <string name="title_text">Text Title</string>
     <string name="description_text">Description Text</string>
+    <string name="greetingLogin">\"Sedikit Lagi Untuk Inisialisasi Kebaikan\"</string>
+    <string name="labelNomor">Nomor Telepon</string>
+    <string name="labelPassword">Password</string>
 </resources>
