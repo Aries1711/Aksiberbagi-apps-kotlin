@@ -13,4 +13,6 @@
     <string name="labelPassword">Password</string>
     <string name="labelNamalengkap">Nama Lengkap</string>
     <string name="lupaKataSandi">Lupa Kata Sandi ?</string>
+    <string name="haveAkun">Sudah Punya Akun ?</string>
+    <string name="btnMasuk">Masuk</string>
 </resources>

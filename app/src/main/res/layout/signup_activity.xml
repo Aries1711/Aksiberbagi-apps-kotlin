@@ -129,6 +129,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:strokeColor="#FFF"
                 app:strokeWidth="1dp" />
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/haveAkun"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lupaAkun"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="52dp"
+                    android:layout_height="60dp"
+                    android:fontFamily="@font/actor"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/btnMasuk"
+                    android:text
+                    android:textAllCaps="false" />
+            </LinearLayout>
         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
