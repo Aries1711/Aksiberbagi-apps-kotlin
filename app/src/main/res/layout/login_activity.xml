@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
@@ -27,7 +26,7 @@
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:icon="@drawable/ic_close"
+                app:icon="@drawable/ic_baseline_arrow_back_24"
                 app:iconSize="30dp" />
 
             <ImageView
@@ -77,7 +76,11 @@
                     android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:textColor="@color/colorIndicatorPrimary" />
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/colorIndicatorPrimary"
+                    android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +105,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:inputType="textPassword"
-                    android:textColor="@color/colorIndicatorPrimary" />
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/colorIndicatorPrimary"
+                    android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,6 +131,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/actor"
                 android:minHeight="60dp"
                 android:text="@string/masuk"
                 android:textColor="#15BBDA"

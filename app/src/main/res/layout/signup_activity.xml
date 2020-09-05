@@ -4,18 +4,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignUpActivity">
+    tools:context=".view.SignUpActivity"
+    android:background="#15BBDA">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="362dp"
-        android:layout_marginBottom="350dp"
-        android:text="Daftar"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+            android:id="@+id/circularRevealLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/closeDaftar"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:icon="@drawable/ic_baseline_arrow_back_24"
+                app:iconSize="30dp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="60dp"
+                android:contentDescription="@string/bannerlogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo_panjang" />
+
+            <TextView
+                android:id="@+id/greetingDaftar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="0dp"
+                android:fontFamily="@font/actor"
+                android:gravity="center"
+                android:text="@string/greetingDaftar"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/splashImage_id" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namePhoneSignup"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#FFFFFF"
+                android:hint="@string/labelNomor"
+                android:textColorHint="@color/colorIndicatorPrimary"
+                app:boxStrokeColor="@color/colorIndicatorPrimary"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/colorIndicatorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumberSignup"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/colorIndicatorPrimary"
+                    android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameFull"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/labelNamalengkap"
+                android:textColorHint="@color/colorIndicatorPrimary"
+                app:boxStrokeColor="@color/colorIndicatorPrimary"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/colorIndicatorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/colorIndicatorPrimary"
+                    android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signupSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/actor"
+                android:minWidth="250dp"
+                android:minHeight="60dp"
+                android:text="@string/daftar"
+                android:textSize="18sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:strokeColor="#FFF"
+                app:strokeWidth="1dp" />
+        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

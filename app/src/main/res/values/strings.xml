@@ -8,7 +8,9 @@
     <string name="title_text">Text Title</string>
     <string name="description_text">Description Text</string>
     <string name="greetingLogin">\"Sedikit Lagi Untuk Inisialisasi Kebaikan\"</string>
+    <string name="greetingDaftar">\"Daftar untuk semangat kebaikan\"</string>
     <string name="labelNomor">Nomor Telepon</string>
     <string name="labelPassword">Password</string>
+    <string name="labelNamalengkap">Nama Lengkap</string>
     <string name="lupaKataSandi">Lupa Kata Sandi ?</string>
 </resources>
