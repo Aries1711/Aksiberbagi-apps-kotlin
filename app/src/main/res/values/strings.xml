@@ -13,6 +13,9 @@
     <string name="labelPassword">Password</string>
     <string name="labelNamalengkap">Nama Lengkap</string>
     <string name="lupaKataSandi">Lupa Kata Sandi ?</string>
-    <string name="haveAkun">Sudah Punya Akun ?</string>
+    <string name="haveAkun">Sudah Punya Akun?</string>
+    <string name="daftarAgreement1">Dengan mendaftar, kamu setuju dengan</string>
     <string name="btnMasuk">Masuk</string>
+    <string name="btnSyarat">Syarat dan Ketentuan</string>
+    <string name="appNameCom">AksiBerbagi.com</string>
 </resources>

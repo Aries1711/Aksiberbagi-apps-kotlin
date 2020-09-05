@@ -9,8 +9,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
@@ -46,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="0dp"
                 android:fontFamily="@font/actor"
                 android:gravity="center"
@@ -59,7 +60,7 @@
                 android:id="@+id/namePhoneSignup"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="63dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
@@ -74,12 +75,12 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneNumberSignup"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="20dp"
                 android:hint="@string/labelNamalengkap"
                 android:textColorHint="@color/colorIndicatorPrimary"
@@ -100,13 +101,13 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fullname"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,42 +116,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="24dp"
+                android:backgroundTint="#FFFFFF"
                 android:fontFamily="@font/actor"
-                android:minWidth="250dp"
                 android:minHeight="60dp"
                 android:text="@string/daftar"
+                android:textColor="#15BBDA"
                 android:textSize="18sp"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:strokeColor="#FFF"
-                app:strokeWidth="1dp" />
+                app:cornerRadius="10dp" />
+
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/haveAkun"
-                    />
+                    android:textColor="#132487"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/lupaAkun"
+                    android:id="@+id/btnMasuk"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="52dp"
                     android:layout_height="60dp"
                     android:fontFamily="@font/actor"
+
                     android:paddingStart="0dp"
                     android:paddingEnd="0dp"
                     android:text="@string/btnMasuk"
-                    android:text
                     android:textAllCaps="false" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/greetingDaftarSyarat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="0dp"
+                android:fontFamily="@font/actor"
+                android:gravity="center"
+                android:text="@string/daftarAgreement1"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/splashImage_id" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/syaratBtn"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/actor"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/btnSyarat"
+                    android:textAllCaps="false"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="133dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/actor"
+                    android:text="@string/appNameCom"
+                    android:textColor="#132487"
+                    android:textSize="16sp" />
             </LinearLayout>
         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
     </LinearLayout>
