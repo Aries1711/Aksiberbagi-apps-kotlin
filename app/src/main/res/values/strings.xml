@@ -9,8 +9,10 @@
     <string name="description_text">Description Text</string>
     <string name="greetingLogin">\"Sedikit Lagi Untuk Inisialisasi Kebaikan\"</string>
     <string name="greetingDaftar">\"Daftar untuk semangat kebaikan\"</string>
+    <string name="greetingPassword">Tentukan Kata Sandi Sobat Kebaikan</string>
     <string name="labelNomor">Nomor Telepon</string>
-    <string name="labelPassword">Password</string>
+    <string name="labelPassword">Kata Sandi</string>
+    <string name="labelPassword2">Konfirmasi Kata Sandi</string>
     <string name="labelNamalengkap">Nama Lengkap</string>
     <string name="lupaKataSandi">Lupa Kata Sandi ?</string>
     <string name="haveAkun">Sudah Punya Akun?</string>

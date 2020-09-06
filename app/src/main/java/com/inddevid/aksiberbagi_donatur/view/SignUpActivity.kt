@@ -17,6 +17,8 @@ class SignUpActivity : AppCompatActivity() {
         backButton.setOnClickListener{ redirectBack() }
         val masukLogin: Button = findViewById(R.id.btnMasuk)
         masukLogin.setOnClickListener{ redirectLogin() }
+        val SubmitSignUp: Button = findViewById(R.id.signupSubmit)
+        SubmitSignUp.setOnClickListener { redirectSetPassword() }
     }
 
     private fun redirectBack(){
@@ -25,6 +27,10 @@ class SignUpActivity : AppCompatActivity() {
     }
     private fun redirectLogin(){
         val intent = Intent (this@SignUpActivity, LoginActivity::class.java)
+        startActivity(intent)
+    }
+    private fun redirectSetPassword(){
+        val intent = Intent (this@SignUpActivity, PasswordSetActivity::class.java)
         startActivity(intent)
     }
 }

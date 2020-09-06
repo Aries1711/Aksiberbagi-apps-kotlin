@@ -7,5 +7,6 @@
     <color name="colorTextSecondary">#546787</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
+    <color name="colorInputStrokeBlue">#15BBDA</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#91ffff</color>
 </resources>

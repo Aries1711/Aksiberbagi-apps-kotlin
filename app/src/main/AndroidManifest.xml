@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.inddevid.aksiberbagi_donatur"
-    >
+    package="com.inddevid.aksiberbagi_donatur">
 
     <application
         android:allowBackup="true"
@@ -9,20 +8,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-
-<!--        Start Auth android app-->
+        <!-- Start Auth android app -->
         <activity
             android:name=".view.SignUpActivity"
+            android:theme="@style/AppMaterial"></activity>
+        <activity
+            android:name=".view.LoginActivity"
+            android:theme="@style/AppMaterial"></activity>
+        <activity android:name=".view.PasswordSetActivity"
             android:theme="@style/AppMaterial">
-
         </activity>
-        <activity android:name=".view.LoginActivity"
-            android:theme="@style/AppMaterial">
-
-        </activity>
-<!--        End Auth android app-->
-
-<!--        Start activity splash And Intro-->
+        <!-- End Auth android app -->
+        <!-- Start activity splash And Intro -->
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/AppTheme">
@@ -40,9 +37,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-<!--        End activity splash And Intro-->
-
+        </activity> <!-- End activity splash And Intro -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
