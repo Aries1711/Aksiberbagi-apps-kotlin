@@ -8,17 +8,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+        <activity android:name=".view.DashboardActivity"
+            android:theme="@style/AppMaterial"/>
         <!-- Start Auth android app -->
         <activity
             android:name=".view.SignUpActivity"
-            android:theme="@style/AppMaterial"></activity>
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.LoginActivity"
-            android:theme="@style/AppMaterial"></activity>
-        <activity android:name=".view.PasswordSetActivity"
-            android:theme="@style/AppMaterial">
-        </activity>
-        <!-- End Auth android app -->
+            android:theme="@style/AppMaterial" />
+        <activity
+            android:name=".view.PasswordSetActivity"
+            android:theme="@style/AppMaterial" /> <!-- End Auth android app -->
         <!-- Start activity splash And Intro -->
         <activity
             android:name=".view.SplashActivity"

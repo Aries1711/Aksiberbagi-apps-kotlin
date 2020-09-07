@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/berandaId"
+        android:title="Home"
+        android:icon="@drawable/donasi"
+        />
+    <item
+        android:id="@+id/zakatId"
+        android:title="Zakat"
+        android:icon="@drawable/zakat"/>
+    <item
+        android:id="@+id/donasiSayaId"
+        android:title="Donasi Saya"
+        android:icon="@drawable/donasi_saya" />
+    <item
+        android:id="@+id/favoritId"
+        android:title="Favorit"
+        android:icon="@drawable/favorit"/>
+    <item
+        android:id="@+id/penggunaId"
+        android:title="Pengguna"
+        android:icon="@drawable/user"/>
+</menu>

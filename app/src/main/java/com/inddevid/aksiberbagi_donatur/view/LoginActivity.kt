@@ -13,12 +13,8 @@ class LoginActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
         val closeBtnLogin: Button = findViewById(R.id.closeLogin)
-
-        closeBtnLogin.setOnClickListener{ redirectIntro() }
-    }
-
-    private fun redirectIntro(){
-        val intent = Intent (this@LoginActivity, IntroActivity::class.java)
-        startActivity(intent)
+        val submitLogin: Button = findViewById(R.id.loginSubmit)
+        closeBtnLogin.setOnClickListener{ startActivity(Intent(this@LoginActivity, IntroActivity::class.java)) }
+        submitLogin.setOnClickListener { startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))  }
     }
 }

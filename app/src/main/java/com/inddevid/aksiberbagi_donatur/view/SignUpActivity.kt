@@ -14,23 +14,10 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.signup_activity)
         supportActionBar?.hide()
         val backButton: Button = findViewById(R.id.closeDaftar)
-        backButton.setOnClickListener{ redirectBack() }
+        backButton.setOnClickListener{ startActivity(Intent(this@SignUpActivity, IntroActivity::class.java))}
         val masukLogin: Button = findViewById(R.id.btnMasuk)
-        masukLogin.setOnClickListener{ redirectLogin() }
-        val SubmitSignUp: Button = findViewById(R.id.signupSubmit)
-        SubmitSignUp.setOnClickListener { redirectSetPassword() }
-    }
-
-    private fun redirectBack(){
-        val intent = Intent (this@SignUpActivity, IntroActivity::class.java)
-        startActivity(intent)
-    }
-    private fun redirectLogin(){
-        val intent = Intent (this@SignUpActivity, LoginActivity::class.java)
-        startActivity(intent)
-    }
-    private fun redirectSetPassword(){
-        val intent = Intent (this@SignUpActivity, PasswordSetActivity::class.java)
-        startActivity(intent)
+        masukLogin.setOnClickListener{ startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))}
+        val submitSignUp: Button = findViewById(R.id.signupSubmit)
+        submitSignUp.setOnClickListener { startActivity(Intent(this@SignUpActivity, PasswordSetActivity::class.java)) }
     }
 }

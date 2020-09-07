@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aksiberbagi_nav"
+    app:startDestination="@id/donasiSayaId">
+
+    <fragment
+        android:id="@+id/donasiSayaId"
+        android:name="com.inddevid.aksiberbagi_donatur.DonasiSaya"
+        android:label="donasi_saya_index"
+        tools:layout="@layout/donasi_saya_index" />
+    <fragment
+        android:id="@+id/zakatId"
+        android:name="com.inddevid.aksiberbagi_donatur.Zakat"
+        android:label="zakat_index"
+        tools:layout="@layout/zakat_index" />
+    <fragment
+        android:id="@+id/favoritId"
+        android:name="com.inddevid.aksiberbagi_donatur.Favorit"
+        android:label="favorit_index"
+        tools:layout="@layout/favorit_index" />
+    <fragment
+        android:id="@+id/berandaId"
+        android:name="com.inddevid.aksiberbagi_donatur.Beranda"
+        android:label="beranda_index"
+        tools:layout="@layout/beranda_index" />
+    <fragment
+        android:id="@+id/penggunaId"
+        android:name="com.inddevid.aksiberbagi_donatur.Pengguna"
+        android:label="pengguna_index"
+        tools:layout="@layout/pengguna_index" />
+</navigation>
