@@ -7,9 +7,12 @@
     tools:context=".view.DashboardActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/bottomNavAksiBerbagi"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        app:itemIconSize="@dimen/icon_size"
+        android:textColor="@color/navigation_state_list"
+        app:labelVisibilityMode="labeled"
         android:background="@color/colorIndicatorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="@id/bottomNavAksiBerbagi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
