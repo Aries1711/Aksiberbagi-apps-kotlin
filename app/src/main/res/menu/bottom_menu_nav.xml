@@ -14,15 +14,14 @@
         android:iconTint="@color/colorInputPressFalse"
         android:icon="@drawable/zakat"/>
     <item
+        android:id="@+id/disabled"
+        android:iconTint="@color/colorInputPressFalse"
+        android:title=""/>
+    <item
         android:id="@+id/donasiSayaId"
         android:title="Donasi Saya"
         android:iconTint="@color/colorInputPressFalse"
         android:icon="@drawable/my" />
-    <item
-        android:id="@+id/favoritId"
-        android:title="Favorit"
-        android:iconTint="@color/colorInputPressFalse"
-        android:icon="@drawable/favorit"/>
     <item
         android:id="@+id/penggunaId"
         android:title="Pengguna"
