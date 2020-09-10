@@ -3,27 +3,27 @@
     >
 
     <item
-        android:id="@+id/berandaId"
+        android:id="@+id/berandaIndex"
         android:title="Beranda"
         android:iconTint="@color/colorInputPressFalse"
         android:icon="@drawable/beranda"
         />
     <item
-        android:id="@+id/zakatId"
-        android:title="Zakat"
+        android:id="@+id/favoritIndex"
+        android:title="Favorit"
         android:iconTint="@color/colorInputPressFalse"
-        android:icon="@drawable/zakat"/>
+        android:icon="@drawable/favorit"/>
     <item
         android:id="@+id/disabled"
         android:iconTint="@color/colorInputPressFalse"
         android:title=""/>
     <item
-        android:id="@+id/donasiSayaId"
+        android:id="@+id/donasiSayaIndex"
         android:title="Donasi Saya"
         android:iconTint="@color/colorInputPressFalse"
         android:icon="@drawable/my" />
     <item
-        android:id="@+id/penggunaId"
+        android:id="@+id/penggunaIndex"
         android:title="Pengguna"
         android:iconTint="@color/colorInputPressFalse"
         android:icon="@drawable/pengguna"/>

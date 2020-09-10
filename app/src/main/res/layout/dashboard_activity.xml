@@ -11,15 +11,6 @@
         android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    <FrameLayout
-        android:id="@+id/contentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include
-            layout="@layout/up_appbar"
-            />
-    </FrameLayout>
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bottom_bar"
                 android:layout_width="match_parent"
@@ -29,7 +20,7 @@
                 app:contentInsetStartWithNavigation="0dp"
                 app:fabAlignmentMode="center">
                 <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottom_navigation"
+                    android:id="@+id/bottomNavAksiberbagi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
@@ -50,6 +41,17 @@
             app:maxImageSize="35dp"
             android:backgroundTint="@color/colorInputStrokeBlue"
             app:tint="@color/colorIndicatorPrimary"/>
+        <include
+            layout="@layout/up_appbar"
+            />
+        <fragment
+            android:id="@+id/fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="673dp"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/aksiberbagi_nav"
+            />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

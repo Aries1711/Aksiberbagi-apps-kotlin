@@ -206,6 +206,10 @@
     <string name="donasi_saya">Donasi Saya</string>
     <string name="zakat">Zakat</string>
     <string name="favorit_saya">Favorit saya</string>
+    <string name="Beranda">BerandaText</string>
+    <string name="donasi_saya_index">Donasi Saya Index</string>
+    <string name="favorit_index">Favorit Index</string>
+    <string name="pengguna_index">Pengguna Index</string>
 
 
 </resources>
