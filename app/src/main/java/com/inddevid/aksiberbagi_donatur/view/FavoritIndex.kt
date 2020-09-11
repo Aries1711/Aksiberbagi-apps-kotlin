@@ -1,10 +1,12 @@
-package com.inddevid.aksiberbagi_donatur
+package com.inddevid.aksiberbagi_donatur.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import com.inddevid.aksiberbagi_donatur.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +36,10 @@ class FavoritIndex : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorit_index, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_favorit_index, container, false)
+        val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
+        toolbar.inflateMenu(R.menu.upbarr_beranda_index)
+        return view
     }
 
     companion object {

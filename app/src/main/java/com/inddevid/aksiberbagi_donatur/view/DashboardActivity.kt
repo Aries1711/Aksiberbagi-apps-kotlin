@@ -12,6 +12,8 @@ import com.inddevid.aksiberbagi_donatur.R
 class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.dashboard_activity)
         val bottomBar: BottomAppBar = findViewById(R.id.bottom_bar)
         bottomBar.bringToFront()
@@ -19,6 +21,5 @@ class DashboardActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment)
         bottomNav.setupWithNavController(navController)
     }
-
 
 }
