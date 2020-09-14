@@ -38,7 +38,9 @@ class DonasiSayaIndex : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_donasi_saya_index , container, false)
         val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
-        toolbar.inflateMenu(R.menu.upbarr_beranda_index)
+        toolbar.inflateMenu(R.menu.donasisaya_upbar_menu)
+        toolbar.title = "Donasi Saya"
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         return view
     }
 

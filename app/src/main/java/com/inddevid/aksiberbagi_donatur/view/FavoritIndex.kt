@@ -38,7 +38,9 @@ class FavoritIndex : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_favorit_index, container, false)
         val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
-        toolbar.inflateMenu(R.menu.upbarr_beranda_index)
+        toolbar.inflateMenu(R.menu.favorit_upbar_menu)
+        toolbar.title = "Favorit"
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         return view
     }
 
