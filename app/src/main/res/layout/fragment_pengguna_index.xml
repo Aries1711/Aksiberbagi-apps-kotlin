@@ -21,123 +21,178 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <!-- TODO: Layout Master -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <!-- TODO: Card profil header -->
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/penggunaHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight=".2"
+                        android:src="@drawable/user_settings" />
+
+                    <LinearLayout
+                        android:layout_width="186dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/actor"
+                            android:text="Arisqi Setyawan"
+                            android:textColor="#474747"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/actor"
+                            android:text="Lengkapi Profil"
+                            android:textColor="@color/colorInputStrokeBlue"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center">
+                            <ProgressBar
+                                android:layout_width="190dp"
+                                android:id="@+id/progressBar"
+                                android:paddingTop="5dp"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_weight=".7"
+                                android:layout_height="10dp"
+                                android:progress="25"
+                                android:progressDrawable="@drawable/progress_bar_style"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight=".2"
+                                android:text="25%"
+                                android:textSize="14sp"
+                                android:textColor="@color/colorInputStrokeBlue"
+                                android:layout_gravity="bottom"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:visibility="visible"-->
+<!--                    android:layout_height="1.5dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="#f5f5f5"/>-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/penggunaHeader">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/total_donasi_user" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/actor"
+                    android:text="Total Donasi"
+                    android:textColor="#8c8e91"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:padding="20dp"
+                android:paddingEnd="5dp"
+                android:text="Rp"
+                app:layout_constraintEnd_toStartOf="@+id/moneyLayout"
+                app:layout_constraintTop_toBottomOf="@+id/penggunaHeader" />
+
+            <LinearLayout
+                android:id="@+id/moneyLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:padding="10dp"
+                android:paddingStart="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/penggunaHeader">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="1.000.000"
+                    android:textColor="#8c8e91"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/garisProfil"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="5dp"
+                android:background="#f5f5f5"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp">
-                <LinearLayout
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/garisProfil">
+
+                <TextView
+                    android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:padding="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_gravity="center">
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/pengguna"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Arisqi Setyawan"
-                            android:fontFamily="@font/actor"
-                            android:textSize="20sp"
-                            android:textColor="#000000"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Lengkapi Profil"
-                            android:fontFamily="@font/actor"
-                            android:textSize="14sp"
-                            android:textColor="#478dff"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:padding="10dp"
-                    android:layout_marginStart="5dp"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
-                    <View
-                        android:layout_width="match_parent"
-                        android:visibility="visible"
-                        android:layout_height="1dp"
-                        android:background="#e1e3e8"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        >
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/total_donasi"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Total Donasi"
-                                android:textStyle="bold"
-                                android:layout_marginStart="10dp"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/actor"
-                                android:textColor="#7e8187"
-                                android:layout_gravity="center"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:text="Rp"
-                                android:fontFamily="@font/actor"
-                                android:textSize="14sp"
-                                android:textColor="#7e8187"
-                                android:layout_gravity="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:text="0"
-                                android:fontFamily="@font/actor"
-                                android:textSize="20sp"
-                                android:textColor="#000000"
-                                android:layout_gravity="center"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
+                    android:text="@string/large_text"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
             </LinearLayout>
-            <!-- TODO: Card Settings Pengguna -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-            <!-- TODO: Card About Aplikasi -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
