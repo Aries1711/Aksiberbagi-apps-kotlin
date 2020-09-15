@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.PenggunaSettings
+import com.inddevid.aksiberbagi_donatur.presenter.PenggunaSettingsAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,14 +40,42 @@ class PenggunaIndex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_pengguna_index, container, false)
+        var listView: ListView = view.findViewById(R.id.listViewPengguna)
+        listView.divider = this.resources.getDrawable(R.drawable.listview_divider_transparent)
+        var list = mutableListOf<PenggunaSettings>()
+        list.add(PenggunaSettings("pengaturan", R.drawable.favorit))
+        list.add(PenggunaSettings("Bantuan", R.drawable.favorit))
+        list.add(PenggunaSettings("Tentang AksiBerbagi", R.drawable.favorit))
+        list.add(PenggunaSettings("Syarat dan Ketentuan", R.drawable.favorit))
+
+        listView.adapter = PenggunaSettingsAdapter(requireActivity(), R.layout.pengguna_settings_row1,list)
+
+        listView.setOnItemClickListener{ parent:AdapterView<*>, view:View, position:Int, id:Long ->
+            if (position == 0){
+                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+            }
+            if (position == 1){
+                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+            }
+            if (position == 2){
+                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+            }
+            if (position == 3){
+                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+            }
+        }
+
         val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
         toolbar.inflateMenu(R.menu.pengguna_upbar_menu)
         toolbar.title = "Pengguna"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         return view
     }
+
+
 
     companion object {
         /**

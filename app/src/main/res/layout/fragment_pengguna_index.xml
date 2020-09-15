@@ -24,7 +24,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <!-- TODO: Start layout Profil Header -->
             <LinearLayout
                 android:id="@+id/penggunaHeader"
                 android:layout_width="match_parent"
@@ -100,12 +100,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-<!--                <View-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:visibility="visible"-->
-<!--                    android:layout_height="1.5dp"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:background="#f5f5f5"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -174,23 +168,48 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
+            <!-- TODO: End layout Profil Header -->
             <LinearLayout
+                android:id="@+id/layoutListA"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="450dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/garisProfil">
 
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/listViewPengguna"/>
+                <View
+                    android:id="@+id/garisListSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#f5f5f5"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            </LinearLayout>
+            <!-- TODO: End layout Profil Header -->
+            <LinearLayout
+                android:id="@+id/layoutListB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutListA">
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/large_text"
                     android:textAlignment="center"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:text="@string/large_text" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
