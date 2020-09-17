@@ -17,6 +17,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 app:contentInsetStart="0dp"
+
+                app:fabCradleRoundedCornerRadius="30dp"
                 app:contentInsetStartWithNavigation="0dp"
                 app:fabAlignmentMode="center">
                 <com.google.android.material.bottomnavigation.BottomNavigationView

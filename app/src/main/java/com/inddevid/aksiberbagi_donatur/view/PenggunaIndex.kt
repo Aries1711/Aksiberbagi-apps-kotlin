@@ -46,31 +46,39 @@ class PenggunaIndex : Fragment() {
         var listView: ListView = view.findViewById(R.id.listViewPengguna)
         listView.divider = this.resources.getDrawable(R.drawable.listview_divider_transparent)
         var list = mutableListOf<PenggunaSettings>()
-        list.add(PenggunaSettings("pengaturan", R.drawable.favorit))
-        list.add(PenggunaSettings("Bantuan", R.drawable.favorit))
-        list.add(PenggunaSettings("Tentang AksiBerbagi", R.drawable.favorit))
-        list.add(PenggunaSettings("Syarat dan Ketentuan", R.drawable.favorit))
+        list.add(PenggunaSettings("pengaturan", R.drawable.p_settings))
+        list.add(PenggunaSettings("Bantuan", R.drawable.p_help))
+        list.add(PenggunaSettings("Tentang AksiBerbagi", R.drawable.p_akbersettings))
+        list.add(PenggunaSettings("Syarat dan Ketentuan", R.drawable.p_agreement))
+        list.add(PenggunaSettings("Rating Kami", R.drawable.p_akberrating))
+        list.add(PenggunaSettings("Logout", R.drawable.p_logout))
 
         listView.adapter = PenggunaSettingsAdapter(requireActivity(), R.layout.pengguna_settings_row1,list)
 
         listView.setOnItemClickListener{ parent:AdapterView<*>, view:View, position:Int, id:Long ->
             if (position == 0){
-                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Pengaturan", Toast.LENGTH_LONG).show()
             }
             if (position == 1){
-                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Bantuan", Toast.LENGTH_LONG).show()
             }
             if (position == 2){
-                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Tentang Kami", Toast.LENGTH_LONG).show()
             }
             if (position == 3){
-                Toast.makeText(requireActivity(), "you bisa yokkk", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Syarat dan Ketentuan", Toast.LENGTH_LONG).show()
+            }
+            if (position == 4){
+                Toast.makeText(requireActivity(), "Rating Kami", Toast.LENGTH_LONG).show()
+            }
+            if (position == 5){
+                Toast.makeText(requireActivity(), "Keluar mang ?", Toast.LENGTH_LONG).show()
             }
         }
 
         val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
         toolbar.inflateMenu(R.menu.pengguna_upbar_menu)
-        toolbar.title = "Pengguna"
+        toolbar.title = "Akun"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         return view
     }
