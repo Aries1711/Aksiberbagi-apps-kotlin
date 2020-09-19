@@ -13,114 +13,153 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:padding="5dp"
+        android:paddingBottom="5dp"
         >
 
-        <ImageView
-            android:id="@+id/imageProgram"
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="190dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="5dp"
-            android:layout_weight=".5"
-            android:contentDescription="Gambar Program"
-            android:src="@mipmap/ic_launcher"
+            android:layout_height="130dp"
+            android:layout_marginStart="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageProgram"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Gambar Program"
+                android:padding="7dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:layout_width="193dp"
+                android:layout_height="130dp"
+                android:padding="2dp"
+                android:src="@drawable/frame_rounded" />
+
+        </FrameLayout>
 
         <LinearLayout
-            android:layout_width="180dp"
+            android:id="@+id/linearLayout2"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="vertical">
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
-                android:paddingTop="10dp"
+                android:id="@+id/cardHorizontalTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cardHorizontalTitle"
+                android:fontFamily="@font/actor"
+                android:paddingTop="10dp"
                 android:text="Bantu Ratusan Kucing Terlantar"
-                android:textStyle="bold"
                 android:textSize="14sp"
-                android:fontFamily="@font/actor"/>
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp">
+
                 <TextView
+                    android:id="@+id/cardHorizontalRelawan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/cardHorizontalRelawan"
+                    android:fontFamily="@font/actor"
                     android:text="AksiBerbagi.com"
-                    android:textStyle="bold"
                     android:textSize="10sp"
-                    android:fontFamily="@font/actor"/>
+                    android:textStyle="bold" />
+
                 <ImageView
-                    android:layout_marginStart="5dp"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/verifikasi"/>
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/verifikasi" />
             </LinearLayout>
 
             <ProgressBar
-                android:layout_width="180dp"
                 android:id="@+id/progressBar"
-                android:paddingTop="5dp"
                 style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="160dp"
                 android:layout_height="10dp"
+                android:paddingTop="5dp"
                 android:progress="25"
-                android:progressDrawable="@drawable/progress_bar_style"/>
+                android:progressDrawable="@drawable/progress_bar_style" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp">
+
                 <TextView
-                    android:layout_weight=".5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/cardHorizontalTerkumpul"
-                    android:text="Terkumpul"
-                    android:textSize="8sp"
-                    android:fontFamily="@font/actor"/>
-                <TextView
-                    android:layout_weight=".5"
-                    android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
-                    android:textAlignment="textEnd"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/actor"
+                    android:text="Terkumpul"
+                    android:textSize="10sp" />
+
+                <TextView
                     android:id="@+id/cardHorizontalSisaHari"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/actor"
                     android:text="Sisa hari"
-                    android:textSize="8sp"
-                    android:fontFamily="@font/actor"/>
+                    android:textAlignment="textEnd"
+                    android:textSize="10sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp">
+
                 <TextView
-                    android:layout_weight=".5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/cardHorizontalTerkumpulRupiah"
-                    android:text="Rp 1.620.000"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    />
-                <TextView
-                    android:layout_weight=".5"
-                    android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
-                    android:textAlignment="textEnd"
                     android:layout_height="wrap_content"
-                    android:id="@+id/cardHorizontalSisaHariAngka"
-                    android:text="77"
-                    android:textStyle="bold"
+                    android:layout_weight=".5"
+                    android:text="Rp 1.620.000"
                     android:textSize="14sp"
-                    />
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cardHorizontalSisaHariAngka"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight=".5"
+                    android:text="77"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="5dp"
+            android:background="@color/colorInputStrokeBlue"
+            app:cardBackgroundColor="@color/colorInputStrokeBlue"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_app"/>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
