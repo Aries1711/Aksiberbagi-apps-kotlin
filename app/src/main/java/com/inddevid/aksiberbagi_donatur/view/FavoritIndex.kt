@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.CardHorizontalRecycler
+import com.inddevid.aksiberbagi_donatur.presenter.RecyclerHorizontalAdapter
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,12 +40,31 @@ class FavoritIndex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // get val for arraylist
+        val imageUrl:String = "https://aksiberbagi.com/storage/program/Sedekah%20Air%20untuk%20Pesantren%20dan%20Masjid%20-%20Alirkan%20Pahala%20Tak%20Terputus-banner.jpg"
+        val titleCard:String = "Bangun Rumah Di Surga dengan menyantuni anak yatim"
+        val volunteerCard:String = "AksiBerbagi.com"
+        val moneyCard:String = "Rp 162.700.000"
+        val dayCard:String = "17"
+
+        // inflate the list cardview for favorite program
+        val arrayList = ArrayList<CardHorizontalRecycler>()
+        arrayList.add(CardHorizontalRecycler(titleCard, volunteerCard , moneyCard, dayCard, imageUrl ))
+        arrayList.add(CardHorizontalRecycler(titleCard, volunteerCard , moneyCard, dayCard, imageUrl ))
+        val myAdapter = RecyclerHorizontalAdapter(arrayList, requireActivity())
+
         // Inflate the layout for this fragment
+        val title = "Favorit"
         val view: View = inflater.inflate(R.layout.fragment_favorit_index, container, false)
         val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
         toolbar.inflateMenu(R.menu.favorit_upbar_menu)
-        toolbar.title = "Favorit"
+        toolbar.title = title
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+
+        var mainMenu = view.findViewById(R.id.recyclerFavorit) as RecyclerView
+        mainMenu.layoutManager = LinearLayoutManager(requireActivity())
+        mainMenu.adapter = myAdapter
+
         return view
     }
 
