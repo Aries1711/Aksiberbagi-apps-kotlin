@@ -46,7 +46,7 @@ class PenggunaIndex : Fragment() {
         var listView: ListView = view.findViewById(R.id.listViewPengguna)
         listView.divider = this.resources.getDrawable(R.drawable.listview_divider_transparent)
         var list = mutableListOf<PenggunaSettings>()
-        list.add(PenggunaSettings("pengaturan", R.drawable.p_settings))
+        list.add(PenggunaSettings("Pengaturan", R.drawable.p_settings))
         list.add(PenggunaSettings("Bantuan", R.drawable.p_help))
         list.add(PenggunaSettings("Tentang AksiBerbagi", R.drawable.p_akbersettings))
         list.add(PenggunaSettings("Syarat dan Ketentuan", R.drawable.p_agreement))

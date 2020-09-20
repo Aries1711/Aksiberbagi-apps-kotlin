@@ -17,7 +17,7 @@ class RecyclerHorizontalAdapter(val arrayList: ArrayList<CardHorizontalRecycler>
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(190, 130)
+            .override(200, 130)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 

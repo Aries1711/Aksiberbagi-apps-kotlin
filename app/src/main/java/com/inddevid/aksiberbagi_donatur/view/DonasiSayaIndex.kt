@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
+import com.inddevid.aksiberbagi_donatur.presenter.RecyclerDonasiSayaAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,12 +39,31 @@ class DonasiSayaIndex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // get val for arraylist
+        val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
+        val titleCardDonasi:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
+        val paymentDonasi:String = "Gopay"
+        val timePayment:String = "1 jam lalu"
+        val donasiSum:String = "100.789"
+        val donasiSayaStat:String = "Berhasil"
+        //declare the arraylist for card donasi saya
+        val arrayList = ArrayList<CardDonasiSaya>()
+        arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
+        arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
+        arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
+        val myAdapter = RecyclerDonasiSayaAdapter(arrayList, requireActivity())
+
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_donasi_saya_index , container, false)
         val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
         toolbar.inflateMenu(R.menu.donasisaya_upbar_menu)
         toolbar.title = "Donasi Saya"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        //inflate the recycler for cardview donasi saya
+        var mainMenu = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
+        mainMenu.layoutManager = LinearLayoutManager(requireActivity())
+        mainMenu.adapter = myAdapter
+
         return view
     }
 
