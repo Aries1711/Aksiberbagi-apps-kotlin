@@ -17,17 +17,17 @@ class RecyclerHorizontalAdapter(val arrayList: ArrayList<CardHorizontalRecycler>
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(200, 130)
+            .override(210, 135)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
         fun bindItems(model: CardHorizontalRecycler){
+            // try glide image loading from url
+            Glide.with(itemView.imageProgram.context).load(model.img).apply(options).into(itemView.imageProgram)
             itemView.cardHorizontalTitle.text = model.title
             itemView.cardHorizontalRelawan.text = model.volunteer
             itemView.cardHorizontalTerkumpulRupiah.text = model.moneyFund
             itemView.cardHorizontalSisaHariAngka.text = model.dayFund
-            // try glide image loading from url
-            Glide.with(itemView.imageProgram.context).load(model.img).apply(options).into(itemView.imageProgram)
         }
     }
 

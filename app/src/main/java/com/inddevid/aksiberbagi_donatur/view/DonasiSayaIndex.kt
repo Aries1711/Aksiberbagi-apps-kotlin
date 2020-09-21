@@ -42,6 +42,7 @@ class DonasiSayaIndex : Fragment() {
         // get val for arraylist
         val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
         val titleCardDonasi:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
+        val titleCardDonasiA:String = "Oke"
         val paymentDonasi:String = "Gopay"
         val timePayment:String = "1 jam lalu"
         val donasiSum:String = "100.789"
@@ -49,7 +50,7 @@ class DonasiSayaIndex : Fragment() {
         //declare the arraylist for card donasi saya
         val arrayList = ArrayList<CardDonasiSaya>()
         arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
-        arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
+        arrayList.add(CardDonasiSaya(titleCardDonasiA,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
         arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
         val myAdapter = RecyclerDonasiSayaAdapter(arrayList, requireActivity())
 

@@ -16,18 +16,21 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
     class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(200, 130)
+            .override(210, 125)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
         fun bindItems(model: CardDonasiSaya){
+            // try glide image loading from url
+            Glide.with(itemView.imageDonasiSayaCard.context).load(model.img).apply(options).into(itemView.imageDonasiSayaCard)
             itemView.cardTitleDonasiSaya.text = model.title
+//            if( model.title == "Oke"){
+//                itemView.cardTitleDonasiSaya.setTextColor(Color.parseColor("#f2f542"));
+//            }
             itemView.paymentDonasiSaya.text = model.payment
             itemView.waktuDonasiSaya.text = model.timePay
             itemView.donasiRupiah.text = model.moneyPay
             itemView.donasiSayaStatus.text = model.status
-            // try glide image loading from url
-            Glide.with(itemView.imageDonasiSayaCard.context).load(model.img).apply(options).into(itemView.imageDonasiSayaCard)
         }
     }
 
