@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
+import com.inddevid.aksiberbagi_donatur.model.DateDonasiSaya
+import com.inddevid.aksiberbagi_donatur.presenter.DateDonasiSayaAdapter
 import com.inddevid.aksiberbagi_donatur.presenter.RecyclerDonasiSayaAdapter
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,7 +43,34 @@ class DonasiSayaIndex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // get val for arraylist
+
+        // set val for arraylist date donasi saya
+        val dayA:String = "SEN"
+        val dateA:String = "21"
+        val dayB:String = "SEL"
+        val dateB:String = "22"
+        val dayC:String = "RAB"
+        val dateC:String = "23"
+        val dayD:String = "KAM"
+        val dateD:String = "24"
+        val dayE:String = "JUM"
+        val dateE:String = "25"
+        val dayF:String = "SAB"
+        val dateF:String = "26"
+        val dayG:String = "MIN"
+        val dateG:String = "27"
+        // declare the arraylist as arraydate for date donasi saya
+        val arrayDate = ArrayList<DateDonasiSaya>()
+        arrayDate.add(DateDonasiSaya(dayA, dateA))
+        arrayDate.add(DateDonasiSaya(dayB, dateB))
+        arrayDate.add(DateDonasiSaya(dayC, dateC))
+        arrayDate.add(DateDonasiSaya(dayD, dateD))
+        arrayDate.add(DateDonasiSaya(dayE, dateE))
+        arrayDate.add(DateDonasiSaya(dayF, dateF))
+        arrayDate.add(DateDonasiSaya(dayG, dateG))
+        val myAdapterA = DateDonasiSayaAdapter(arrayDate, requireActivity())
+
+        // set val for arraylist card donasi saya
         val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
         val titleCardDonasi:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
         val titleCardDonasiA:String = "Oke"
@@ -52,7 +83,7 @@ class DonasiSayaIndex : Fragment() {
         arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
         arrayList.add(CardDonasiSaya(titleCardDonasiA,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
         arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
-        val myAdapter = RecyclerDonasiSayaAdapter(arrayList, requireActivity())
+        val myAdapterB = RecyclerDonasiSayaAdapter(arrayList, requireActivity())
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_donasi_saya_index , container, false)
@@ -61,9 +92,13 @@ class DonasiSayaIndex : Fragment() {
         toolbar.title = "Donasi Saya"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         //inflate the recycler for cardview donasi saya
-        var mainMenu = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
-        mainMenu.layoutManager = LinearLayoutManager(requireActivity())
-        mainMenu.adapter = myAdapter
+        var mainMenuA = view.findViewById(R.id.recyclerDonasiSayaDate) as RecyclerView
+        mainMenuA.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+        mainMenuA.adapter = myAdapterA
+        var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
+        mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
+        mainMenuB.adapter = myAdapterB
+
 
         return view
     }

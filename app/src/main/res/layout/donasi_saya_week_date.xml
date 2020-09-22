@@ -1,254 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameADS"
+    android:layout_width="40dp"
+    android:layout_height="75dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/frameADS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+        <TextView
+            android:id="@+id/dayDonasiSaya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/actor"
+            android:text="KAM"
+            android:textAlignment="center"
+            android:textColor="#828fa8" />
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="SEN"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaA"
+                    android:id="@+id/dateDonasiSaya"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="21"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/frameBDS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="SEL"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="22"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/frameCDS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="RAB"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaC"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="23"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/frameDDS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="KAM"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="5dp"
                     android:text="24"
                     android:textAlignment="center"
-                    android:textColor="#FFF"
+                    android:textColor="#2e4c87"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/frameEDS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="JUM"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="25"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/frameFDS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="SAB"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaF"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="26"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/frameGDS"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:background="@drawable/rounded_linear_layout">
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/actor"
-                    android:text="MIN"
-                    android:textAlignment="center"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/dateDonasiSayaG"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="27"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </FrameLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
