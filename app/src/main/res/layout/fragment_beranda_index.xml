@@ -15,37 +15,11 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:text="@string/large_text" />
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:text="@string/large_text" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="match_parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
