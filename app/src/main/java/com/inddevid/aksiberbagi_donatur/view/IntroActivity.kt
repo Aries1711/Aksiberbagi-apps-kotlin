@@ -2,8 +2,6 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ImageView
@@ -13,8 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.inddevid.aksiberbagi_donatur.R
-import com.inddevid.aksiberbagi_donatur.model.IntroSlide;
-import com.inddevid.aksiberbagi_donatur.presenter.IntroSliderAdapter;
+import com.inddevid.aksiberbagi_donatur.model.IntroSlide
+import com.inddevid.aksiberbagi_donatur.presenter.IntroSliderAdapter
 import kotlinx.android.synthetic.main.intro_activity.*
 
 class IntroActivity : AppCompatActivity() {
@@ -54,8 +52,8 @@ class IntroActivity : AppCompatActivity() {
         })
         val loginBtn: Button = findViewById(R.id.login_btn)
         val signupBtn: Button = findViewById(R.id.signup_btn)
-        loginBtn.setOnClickListener{ redirectLogin()}
-        signupBtn.setOnClickListener{redirectSignup() }
+        loginBtn.setOnClickListener{ startActivity(Intent(this@IntroActivity, LoginActivity::class.java))}
+        signupBtn.setOnClickListener{startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))}
     }
 
     private fun setupIndicators(){
@@ -100,24 +98,6 @@ class IntroActivity : AppCompatActivity() {
                     )
                 )
             }
-        }
-    }
-
-    private fun redirectLogin(){
-        Looper.myLooper()?.let {
-            Handler(it).postDelayed({
-                val intent = Intent (this@IntroActivity, LoginActivity::class.java)
-                startActivity(intent)
-            }, 0)
-        }
-    }
-
-    private fun redirectSignup(){
-        Looper.myLooper()?.let {
-            Handler(it).postDelayed({
-                val intent = Intent (this@IntroActivity, SignUpActivity::class.java)
-                startActivity(intent)
-            }, 0)
         }
     }
 
