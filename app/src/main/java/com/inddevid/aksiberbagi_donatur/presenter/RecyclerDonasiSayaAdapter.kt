@@ -24,9 +24,6 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
             // try glide image loading from url
             Glide.with(itemView.imageDonasiSayaCard.context).load(model.img).apply(options).into(itemView.imageDonasiSayaCard)
             itemView.cardTitleDonasiSaya.text = model.title
-//            if( model.title == "Oke"){
-//                itemView.cardTitleDonasiSaya.setTextColor(Color.parseColor("#f2f542"));
-//            }
             itemView.paymentDonasiSaya.text = model.payment
             itemView.waktuDonasiSaya.text = model.timePay
             itemView.donasiRupiah.text = model.moneyPay

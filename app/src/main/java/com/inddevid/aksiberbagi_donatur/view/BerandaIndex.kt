@@ -38,7 +38,10 @@ class BerandaIndex : Fragment() {
                 R.drawable.banner_a
             ),
             BerandaSlideBanner(
-                R.drawable.banner_a
+                R.drawable.banner_b
+            ),
+            BerandaSlideBanner(
+                R.drawable.banner_c
             )
         )
     )
