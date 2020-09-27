@@ -35,13 +35,13 @@ class BerandaIndex : Fragment() {
     private var berandaSlideAdapter = BerandaSlideAdapter(
         listOf(
             BerandaSlideBanner(
-                R.drawable.banner_a
+                R.drawable.banner_d
             ),
             BerandaSlideBanner(
-                R.drawable.banner_b
+                R.drawable.banner_g
             ),
             BerandaSlideBanner(
-                R.drawable.banner_c
+                R.drawable.banner_h
             )
         )
     )
@@ -74,13 +74,25 @@ class BerandaIndex : Fragment() {
             }
         })
 
-        val imageDonasiRutin : ImageView = view.findViewById(R.id.donasiRutinLogo)
-        Glide.with(requireActivity()).load(R.drawable.donasi_rutin_icon).into(imageDonasiRutin)
+//        val imageDonasiRutin : ImageView = view.findViewById(R.id.donasiRutinLogo)
+//        Glide.with(requireActivity()).load(R.drawable.donasi_rutin_icon).into(imageDonasiRutin)
 
-        val btnGbgDonRut: CardView = view.findViewById(R.id.cardGabungDonasiRutin)
+        //        tombol cari
+        val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
         btnGbgDonRut.setOnClickListener(View.OnClickListener {
             Toast.makeText(requireActivity(), "Gabung Donasi Rutin ?", Toast.LENGTH_LONG).show()
         })
+
+        //        tombol submenu beranda a-d
+        val imageSubA : ImageView = view.findViewById(R.id.subA)
+        Glide.with(requireActivity()).load(R.drawable.submenu_a).into(imageSubA)
+        val imageSubB : ImageView = view.findViewById(R.id.subB)
+        Glide.with(requireActivity()).load(R.drawable.submenu_b).into(imageSubB)
+        val imageSubC : ImageView = view.findViewById(R.id.subC)
+        Glide.with(requireActivity()).load(R.drawable.submenu_c).into(imageSubC)
+        val imageSubD : ImageView = view.findViewById(R.id.subD)
+        Glide.with(requireActivity()).load(R.drawable.submenu_d).into(imageSubD)
+
 
         return view
     }
