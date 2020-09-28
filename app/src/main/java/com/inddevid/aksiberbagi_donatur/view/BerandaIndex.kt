@@ -11,10 +11,16 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.BerandaLaporan
+import com.inddevid.aksiberbagi_donatur.model.BerandaProgramPilihan
 import com.inddevid.aksiberbagi_donatur.model.BerandaSlideBanner
+import com.inddevid.aksiberbagi_donatur.presenter.BerandaLaporanAdapter
+import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramPilihanAdapter
 import com.inddevid.aksiberbagi_donatur.presenter.BerandaSlideAdapter
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
 
@@ -59,6 +65,29 @@ class BerandaIndex : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //deklarasi variabel sementara untuk array program pilihan (Recycler view)
+        val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
+        val titleCardPilihan:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
+        val donasiFund:String = "100.789"
+        val donasiDayFund:String = "37 hari lagi"
+        val arrayPilihan = ArrayList<BerandaProgramPilihan>()
+        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
+        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
+        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
+        val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayPilihan, requireActivity())
+
+        //deklarasi variabel sementara untuk array laporan (Recycler view)
+        val imageReportUrl:String = "https://aksiberbagi.com/storage/program/berita/851c06263eaaeea0a3dd445cc823874c_WhatsApp%20Image%202020-06-20%20at%2011.49.08.jpeg"
+        val titleCardReport:String = "Sedekah air untuk pesantren dan .."
+        val summariCardReport:String = "Telah Disalurkan Air ke Ponpes As-syifa"
+        val locationReport:String = "Situbondo, Jawa Timur."
+        val dateReport:String = "27 Sep"
+        val arrayLaporan = ArrayList<BerandaLaporan>()
+        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
+        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
+        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
+        val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
+
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_beranda_index , container, false)
 
@@ -74,24 +103,31 @@ class BerandaIndex : Fragment() {
             }
         })
 
-//        val imageDonasiRutin : ImageView = view.findViewById(R.id.donasiRutinLogo)
-//        Glide.with(requireActivity()).load(R.drawable.donasi_rutin_icon).into(imageDonasiRutin)
-
         //        tombol cari
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
         btnGbgDonRut.setOnClickListener(View.OnClickListener {
-            Toast.makeText(requireActivity(), "Gabung Donasi Rutin ?", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireActivity(), "Mau Cari Sesuatu mang ?", Toast.LENGTH_LONG).show()
         })
 
         //        tombol submenu beranda a-d
         val imageSubA : ImageView = view.findViewById(R.id.subA)
-        Glide.with(requireActivity()).load(R.drawable.submenu_a).into(imageSubA)
+        Glide.with(requireActivity()).load(R.drawable.submenua).into(imageSubA)
         val imageSubB : ImageView = view.findViewById(R.id.subB)
-        Glide.with(requireActivity()).load(R.drawable.submenu_b).into(imageSubB)
+        Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
         val imageSubC : ImageView = view.findViewById(R.id.subC)
-        Glide.with(requireActivity()).load(R.drawable.submenu_c).into(imageSubC)
+        Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubC)
         val imageSubD : ImageView = view.findViewById(R.id.subD)
-        Glide.with(requireActivity()).load(R.drawable.submenu_d).into(imageSubD)
+        Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubD)
+
+    //inflate horizontal program pilihan
+        var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
+        mainMenuPilihan.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+        mainMenuPilihan.adapter = myAdapterPilihan
+
+     //inflate horizontal laporan
+        var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
+        mainMenuLaporan.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
+        mainMenuLaporan.adapter = myAdapterLaporan
 
 
         return view

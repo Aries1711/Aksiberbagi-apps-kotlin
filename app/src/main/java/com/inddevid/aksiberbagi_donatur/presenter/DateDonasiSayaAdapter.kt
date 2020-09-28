@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.donasi_saya_week_date.view.*
 
 class DateDonasiSayaAdapter (val arrayList: ArrayList<DateDonasiSaya>, val context:Context) :
     RecyclerView.Adapter<DateDonasiSayaAdapter.ViewHolder>() {
+
     class ViewHolder(itemView : View) :RecyclerView.ViewHolder(itemView){
         fun bindItems(model:DateDonasiSaya){
             itemView.dayDonasiSaya.text = model.day
