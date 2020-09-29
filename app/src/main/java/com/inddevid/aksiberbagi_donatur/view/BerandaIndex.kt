@@ -17,9 +17,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaLaporan
+import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramPilihan
 import com.inddevid.aksiberbagi_donatur.model.BerandaSlideBanner
 import com.inddevid.aksiberbagi_donatur.presenter.BerandaLaporanAdapter
+import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramAllAdapter
 import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramPilihanAdapter
 import com.inddevid.aksiberbagi_donatur.presenter.BerandaSlideAdapter
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
@@ -88,6 +90,20 @@ class BerandaIndex : Fragment() {
         arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
         val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
 
+        //deklarasi variabel sementara untuk array ProgramAll (Recycler view)
+        val imageProgram:String = "https://aksiberbagi.com/storage/program/Sedekah%20Terbaik%20untuk%20Anak%20Yatim-banner.jpg"
+        val titleAll:String = "Sedekah Terbaik Untuk Anak Yatim"
+        val titleSummary:String = "Sesurga bersama Rasulullah"
+        val volunteer:String = "Aksiberbagi.com"
+        val fundAll:String = "765.987.079"
+        val dayAll:String = "37 hari lagi"
+        val arrayProgramAll = ArrayList<BerandaProgramAll>()
+        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll,dayAll))
+        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll,dayAll))
+        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll,dayAll))
+        val myAdapterAll = BerandaProgramAllAdapter(arrayProgramAll,requireActivity())
+
+
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_beranda_index , container, false)
 
@@ -129,6 +145,10 @@ class BerandaIndex : Fragment() {
         mainMenuLaporan.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
         mainMenuLaporan.adapter = myAdapterLaporan
 
+     //inflate vertical program All
+        var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
+        mainMenuAll.layoutManager = LinearLayoutManager(requireActivity())
+        mainMenuAll.adapter =myAdapterAll
 
         return view
     }
