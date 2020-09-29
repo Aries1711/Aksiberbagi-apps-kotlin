@@ -48,7 +48,7 @@
                         android:contentDescription="@string/bannerlogo"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/notifikasi" />
+                        app:srcCompat="@drawable/notifikasi_baru" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>

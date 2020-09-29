@@ -17,7 +17,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(210, 125)
+            .override(220, 157)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 

@@ -272,12 +272,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/headerFavorit" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
+            <FrameLayout
+                android:id="@+id/frameButtonLihatSemua"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_linear_layout"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerProgramAll"/>
+                app:layout_constraintTop_toBottomOf="@id/recyclerProgramAll">
+
+                <TextView
+                    android:id="@+id/btnLihatSemuaProgram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lihat Semua"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorIndicatorPrimary"
+                    android:textSize="14sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frameButtonLihatSemua"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
