@@ -27,7 +27,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             itemView.summaryProgramAll.text = model.summary
             itemView.volunteerProgamAll.text = model.volunteer
             itemView.fundProgramAll.text = model.fund
-            itemView.dayProgramAll.text = model.dayFund
+//            itemView.dayProgramAll.text = model.dayFund
         }
     }
 

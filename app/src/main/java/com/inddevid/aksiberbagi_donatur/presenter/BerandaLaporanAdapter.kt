@@ -24,7 +24,6 @@ class BerandaLaporanAdapter (val arrayList: ArrayList<BerandaLaporan>, val conte
         fun bindItems(model: BerandaLaporan){
             Glide.with(itemView.imageLaporan.context).load(model.img).apply(options).into(itemView.imageLaporan)
             itemView.titleProgramLaporan.text = model.titleReport
-            itemView.laporanSummary.text = model.summary
             itemView.lokasiLaporan.text = model.location
             itemView.tanggalLaporan.text = model.dayReport
         }

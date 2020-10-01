@@ -85,9 +85,9 @@ class BerandaIndex : Fragment() {
         val locationReport:String = "Situbondo, Jawa Timur."
         val dateReport:String = "27 Sep"
         val arrayLaporan = ArrayList<BerandaLaporan>()
-        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
-        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
-        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,summariCardReport,locationReport,dateReport))
+        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,locationReport,dateReport))
+        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,locationReport,dateReport))
+        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,locationReport,dateReport))
         val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
 
         //deklarasi variabel sementara untuk array ProgramAll (Recycler view)
@@ -98,9 +98,9 @@ class BerandaIndex : Fragment() {
         val fundAll:String = "765.987.079"
         val dayAll:String = "37 hari lagi"
         val arrayProgramAll = ArrayList<BerandaProgramAll>()
-        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll,dayAll))
-        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll,dayAll))
-        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll,dayAll))
+        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll/**,dayAll*/))
+        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll/**,dayAll*/))
+        arrayProgramAll.add(BerandaProgramAll(imageProgram, titleAll,titleSummary,volunteer,fundAll/**,dayAll*/))
         val myAdapterAll = BerandaProgramAllAdapter(arrayProgramAll,requireActivity())
 
 
@@ -127,13 +127,18 @@ class BerandaIndex : Fragment() {
 
         //        tombol submenu beranda a-d
         val imageSubA : ImageView = view.findViewById(R.id.subA)
-        Glide.with(requireActivity()).load(R.drawable.submenua).into(imageSubA)
+        Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubA)
         val imageSubB : ImageView = view.findViewById(R.id.subB)
         Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
         val imageSubC : ImageView = view.findViewById(R.id.subC)
-        Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubC)
+        Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubC)
         val imageSubD : ImageView = view.findViewById(R.id.subD)
-        Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubD)
+        Glide.with(requireActivity()).load(R.drawable.submenue).into(imageSubD)
+
+    //inflate view LelangBaik
+        view.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(requireActivity(), R.color.colorInputStrokeBlue)
+        view.normalCountDownView.initTimer(3600)
+        view.normalCountDownView.startTimer()
 
     //inflate horizontal program pilihan
         var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
@@ -149,6 +154,11 @@ class BerandaIndex : Fragment() {
         var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
         mainMenuAll.layoutManager = LinearLayoutManager(requireActivity())
         mainMenuAll.adapter =myAdapterAll
+
+    //set banner for footer beranda
+        var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
+        val imageBanner :ImageView = view.findViewById(R.id.berandaBanner)
+        Glide.with(requireActivity()).load(imgBannerUrl).into(imageBanner)
 
         return view
     }

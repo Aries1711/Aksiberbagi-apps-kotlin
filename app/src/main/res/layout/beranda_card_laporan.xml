@@ -28,16 +28,7 @@
             android:textStyle="bold"
             />
 
-        <TextView
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
-            android:id="@+id/laporanSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Telah Disalurkan Air ke Ponpes As-syifa"
-            android:textSize="8sp"
-            android:textStyle="bold"/>
+
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"

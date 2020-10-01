@@ -23,7 +23,7 @@
             android:layout_margin="10dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="5dp"
             app:cardElevation="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
@@ -54,7 +54,7 @@
                 android:fontFamily="@font/actor"
                 android:paddingTop="10dp"
                 android:text="Bantu Ratusan Kucing Terlantar"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <LinearLayout

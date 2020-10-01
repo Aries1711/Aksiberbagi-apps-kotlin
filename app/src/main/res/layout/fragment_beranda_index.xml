@@ -5,10 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="vertical"
     tools:context=".view.BerandaIndex">
     <include
-        layout="@layout/up_appbar_b"
+        layout="@layout/up_appbar"
         />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             </LinearLayout>
 
             <include
-                layout="@layout/search_btn"
+                layout="@layout/donasi_rutin_btn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -87,7 +88,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Donasi Rutin"
+                        android:text="Lelang Baik"
                         android:textSize="10sp"
                         android:textAlignment="center"
                         android:textStyle="bold"
@@ -127,7 +128,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Lelang Baik"
+                        android:text="Publi Ajukan"
                         android:textSize="10sp"
                         android:textAlignment="center"
                         android:textStyle="bold"
@@ -148,12 +149,96 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="Publik Ajukan"
+                        android:text="Sapa Kami"
                         android:textAlignment="center"
                         android:textStyle="bold"
                         android:textColor="@color/colorInputStrokeBlue" />
                 </LinearLayout>
             </LinearLayout>
+
+            <View
+                android:id="@+id/breakSubLelang"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorBreakLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/beranda_btn_submenu" />
+
+            <LinearLayout
+
+                android:id="@+id/headerLelangBaik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/breakSubLelang">
+                <TextView
+                    android:layout_weight=".2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lelang Baik"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginStart="10dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorInputPressFalse"/>
+                <LinearLayout
+                    android:layout_weight=".6"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.androchef.happytimer.countdowntimer.DynamicCountDownView
+                        android:id="@+id/normalCountDownView"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:layout_height="wrap_content"
+                        app:dynamic_timer_text_color="@android:color/white"
+                        app:dynamic_timer_text_separator_color="@color/colorInputStrokeBlue"
+                        app:dynamic_timer_text_size="10sp"
+                        app:dynamic_timer_separator_text_size="15sp"
+                        app:dynamic_timer_text_isBold="true"
+                        app:dynamic_timer_text__separator_isBold="true"
+                        app:dynamic_timer_text_separator=":"
+                        app:dynamic_show_hour="true"
+                        app:dynamic_show_labels="true"
+                        app:dynamic_show_minutes="true"
+                        app:dynamic_show_seconds="true"
+                        app:timer_type="COUNT_DOWN"
+                        />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_weight=".2"
+                    android:id="@+id/lihatSemuaLelang"
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:text="Lihat Semua ->"
+                    android:textSize="10sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    app:cornerRadius="15dp"
+                    app:backgroundTint="@color/colorInputStrokeBlue"
+                    />
+
+
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/horizontalScrollLelangBaik"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerLelangBaik">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerLelangBaik"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
             <View
                 android:id="@+id/breakSubmenu"
@@ -163,7 +248,7 @@
                 android:background="@color/colorBreakLine"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/beranda_btn_submenu" />
+                app:layout_constraintTop_toBottomOf="@id/horizontalScrollLelangBaik" />
 
             <TextView
                 android:id="@+id/headerPilihan"
@@ -174,6 +259,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorInputPressFalse"
                 android:text="Program Pilihan AksiBerbagi.com"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakSubmenu"/>
@@ -216,6 +302,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorInputPressFalse"
                 android:text="Laporan Penyaluran Terbaru"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakSubmenuPilihan"/>
@@ -223,7 +310,7 @@
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollLaporan"
                 android:layout_width="match_parent"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -258,6 +345,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorInputPressFalse"
                 android:text="Pilih Donasi Favoritmu"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakSubmenuLaporan"/>
@@ -296,12 +384,73 @@
                     android:textSize="14sp" />
             </FrameLayout>
 
+            <View
+                android:id="@+id/breakSubmenuProgramAll"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:background="@color/colorBreakLine"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frameButtonLihatSemua" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/frameButtonLihatSemua"/>
+                app:layout_constraintTop_toBottomOf="@id/breakSubmenuProgramAll">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/bannerBerandaTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lelang Baik"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorInputPressFalse"/>
+                    <FrameLayout
+                        android:id="@+id/labelBanner"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/rounded_linear_layout"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kabar Baik"
+                            android:textAlignment="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorIndicatorPrimary"
+                            android:textSize="10sp" />
+                    </FrameLayout>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/berandaBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"/>
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
