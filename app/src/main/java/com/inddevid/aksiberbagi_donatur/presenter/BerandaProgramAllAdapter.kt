@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.androchef.happytimer.utils.extensions.invisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
@@ -45,5 +46,9 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
 
     override fun onBindViewHolder(holder: BerandaProgramAllAdapter.ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
+
+        if (position == 2){
+            holder.itemView.programAllLineList.invisible()
+        }
     }
 }

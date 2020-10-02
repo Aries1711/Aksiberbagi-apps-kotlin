@@ -16,14 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
-import com.inddevid.aksiberbagi_donatur.model.BerandaLaporan
-import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
-import com.inddevid.aksiberbagi_donatur.model.BerandaProgramPilihan
-import com.inddevid.aksiberbagi_donatur.model.BerandaSlideBanner
-import com.inddevid.aksiberbagi_donatur.presenter.BerandaLaporanAdapter
-import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramAllAdapter
-import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramPilihanAdapter
-import com.inddevid.aksiberbagi_donatur.presenter.BerandaSlideAdapter
+import com.inddevid.aksiberbagi_donatur.model.*
+import com.inddevid.aksiberbagi_donatur.presenter.*
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -67,6 +61,16 @@ class BerandaIndex : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val imageLe:String = "https://photo.kontan.co.id/photo/2019/10/15/233819550p.jpg"
+        val hargaLe:String = "978.876,00"
+        val arrayLelang = ArrayList<BerandaLelang>()
+        arrayLelang.add(BerandaLelang(imageLe, 34,hargaLe))
+        arrayLelang.add(BerandaLelang(imageLe, 50,hargaLe))
+        arrayLelang.add(BerandaLelang(imageLe, 15,hargaLe))
+        arrayLelang.add(BerandaLelang(imageLe, 90,hargaLe))
+        val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
+
         //deklarasi variabel sementara untuk array program pilihan (Recycler view)
         val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
         val titleCardPilihan:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
@@ -135,10 +139,14 @@ class BerandaIndex : Fragment() {
         val imageSubD : ImageView = view.findViewById(R.id.subD)
         Glide.with(requireActivity()).load(R.drawable.submenue).into(imageSubD)
 
-    //inflate view LelangBaik
+    //inflate view header, time, button LelangBaik
         view.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(requireActivity(), R.color.colorInputStrokeBlue)
         view.normalCountDownView.initTimer(3600)
         view.normalCountDownView.startTimer()
+    //inflate view card Lelang baik
+        var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
+        mainMenuLelang.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+        mainMenuLelang.adapter = myAdapterLelang
 
     //inflate horizontal program pilihan
         var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
