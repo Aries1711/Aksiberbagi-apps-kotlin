@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,26 +15,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/backSearchBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:srcCompat="@drawable/ic_baseline_arrow_back_24"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:icon="@drawable/ic_baseline_arrow_back_24"
+                    app:iconSize="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/closeSearchBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                <EditText
+                    android:id="@+id/searchField"
+                    android:layout_width="230dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="@color/colorInputStrokeBlue"
+                    android:hint="Cari yang ingin kamu bantu"
+                    android:textSize="16sp"
+                    android:focusedByDefault="true"
+                    android:textColorHint="@color/colorIndicatorPrimary"
+                    android:textColor="@color/colorIndicatorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/clearSearchField"
+                    app:layout_constraintStart_toEndOf="@+id/backSearchBtn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clearSearchField"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:icon="@drawable/ic_close"
+                    app:iconSize="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/ic_close" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
 </LinearLayout>

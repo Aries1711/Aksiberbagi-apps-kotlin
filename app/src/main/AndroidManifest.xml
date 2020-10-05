@@ -11,7 +11,9 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".view.SearchActivity"
+        <activity
+            android:windowSoftInputMode="stateVisible"
+            android:name=".view.SearchActivity"
             android:theme="@style/AppMaterial">
 
         </activity>
