@@ -25,7 +25,7 @@
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="15dp"
                 android:layout_weight=".7"
                 android:progress="40"
                 android:progressDrawable="@drawable/progress_bar_style" />
@@ -52,16 +52,16 @@
             android:orientation="horizontal">
             <TextView
                 android:textSize="12sp"
-                android:layout_weight=".2"
+                android:layout_weight=".1"
                 android:layout_marginEnd="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:textStyle="bold"/>
             <TextView
                 android:textSize="12sp"
-                android:layout_weight=".7"
+                android:layout_weight=".8"
                 android:layout_gravity="center"
                 android:id="@+id/hargaLelang"
                 android:layout_width="wrap_content"

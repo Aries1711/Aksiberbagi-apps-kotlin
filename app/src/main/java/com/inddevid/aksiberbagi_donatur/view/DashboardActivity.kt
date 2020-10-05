@@ -22,4 +22,5 @@ class DashboardActivity : AppCompatActivity() {
         bottomNav.setupWithNavController(navController)
     }
 
+
 }

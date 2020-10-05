@@ -53,7 +53,7 @@ class IntroActivity : AppCompatActivity() {
         val loginBtn: Button = findViewById(R.id.login_btn)
         val signupBtn: Button = findViewById(R.id.signup_btn)
         loginBtn.setOnClickListener{ startActivity(Intent(this@IntroActivity, LoginActivity::class.java))}
-        signupBtn.setOnClickListener{startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))}
+        signupBtn.setOnClickListener{ startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))}
     }
 
     private fun setupIndicators(){

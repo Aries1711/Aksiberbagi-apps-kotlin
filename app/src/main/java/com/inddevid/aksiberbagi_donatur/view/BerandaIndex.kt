@@ -1,5 +1,6 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -123,10 +124,16 @@ class BerandaIndex : Fragment() {
             }
         })
 
-        //        tombol cari
+        // tombol cari appbar
+        val searcBtn: ImageView = view.findViewById(R.id.searchImageButton)
+        searcBtn.setOnClickListener( View.OnClickListener {
+            startActivity(Intent(requireActivity(), SearchActivity::class.java))
+        })
+
+        //        tombol gabung donasi rutin
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
         btnGbgDonRut.setOnClickListener(View.OnClickListener {
-            Toast.makeText(requireActivity(), "Mau Cari Sesuatu mang ?", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireActivity(), "Gabung Donasi Rutin Kuy ?", Toast.LENGTH_LONG).show()
         })
 
         //        tombol submenu beranda a-d
