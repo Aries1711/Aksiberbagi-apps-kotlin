@@ -20,7 +20,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         //appbar background Image
         val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(900, 460)
+            .override(900, 470)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
