@@ -2,6 +2,7 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -28,7 +29,8 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.upAppbarProgramDetail)
         toolbar.setNavigationOnClickListener{startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))}
-
+        val myWebView: WebView = findViewById(R.id.keteranganProgram)
+        myWebView.loadUrl("https://aksiberbagi.com/sedekahair")
     }
 
     override fun onSupportNavigateUp(): Boolean {
