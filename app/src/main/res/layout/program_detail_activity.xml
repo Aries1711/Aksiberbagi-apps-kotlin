@@ -202,7 +202,7 @@
             <View
                 android:id="@+id/breakHeaderDetail"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="6dp"
                 android:layout_marginTop="15dp"
                 android:background="@color/colorBreakLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -299,7 +299,7 @@
             <View
                 android:id="@+id/breakInfoDetail"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="6dp"
                 android:layout_marginTop="15dp"
                 android:background="@color/colorBreakLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -375,7 +375,7 @@
             <View
                 android:id="@+id/breakLaporanDetail"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="6dp"
                 android:layout_marginTop="15dp"
                 android:background="@color/colorBreakLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -398,7 +398,93 @@
                     android:layout_marginStart="20dp"
                     android:textStyle="bold"
                     />
+                <LinearLayout
+                    android:id="@+id/kontenLaporanDetail"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/laporan"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="Belum ada laporan terbaru mengenai penggalangan dana ini"
+                        android:textColor="@color/colorInputPressFalse"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+            </LinearLayout>
 
+            <View
+                android:id="@+id/breakDonasiDetail"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorBreakLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutLaporanDetail"/>
+
+            <LinearLayout
+                android:id="@+id/layoutDonasiDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/breakDonasiDetail">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="Donasi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center"
+                        android:textSize="18sp"
+                        android:layout_marginStart="20dp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:text="(12)"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorInputPressFalse"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/totalDonasiRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lihatSemuaDonasi"
+                    android:layout_gravity="center"
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:text="Lihat Semua"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="10dp"
+                    app:cornerRadius="15dp"
+                    android:layout_marginBottom="10dp"
+                    app:backgroundTint="@color/colorInputStrokeBlue"/>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
