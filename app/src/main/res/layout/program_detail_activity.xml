@@ -61,7 +61,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:id="@+id/layoutHeaderDetail"
                 android:layout_width="match_parent"
@@ -352,11 +351,11 @@
                 android:id="@+id/btnKeteranganProgram"
                 android:layout_gravity="center"
                 android:layout_width="120dp"
-                android:layout_height="35dp"
+                android:layout_height="45dp"
                 android:text="Lihat Semua"
                 android:textSize="10sp"
-                android:layout_marginEnd="10dp"
                 app:cornerRadius="15dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 app:backgroundTint="@color/colorInputStrokeBlue"
                 app:layout_constraintBottom_toBottomOf="@id/layoutCeritaDetail"
@@ -478,15 +477,93 @@
                     android:id="@+id/lihatSemuaDonasi"
                     android:layout_gravity="center"
                     android:layout_width="120dp"
-                    android:layout_height="35dp"
+                    android:layout_height="45dp"
                     android:text="Lihat Semua"
                     android:textSize="10sp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
                     app:cornerRadius="15dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     app:backgroundTint="@color/colorInputStrokeBlue"/>
             </LinearLayout>
+            <View
+                android:id="@+id/breakFooterDetail"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorBreakLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutDonasiDetail"/>
 
+            <LinearLayout
+                android:id="@+id/layoutFooterDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/breakFooterDetail">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bantu Share penggalangan dana ini"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/shareWhatsapp"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight=".5"
+                        android:backgroundTint="#3ddb4b"
+                        android:fontFamily="@font/actor"
+                        android:minWidth="250dp"
+                        android:minHeight="60dp"
+                        android:text="Share"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="10dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/shareFacebook"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight=".5"
+                        android:backgroundTint="#1f62bf"
+                        android:fontFamily="@font/actor"
+                        android:minWidth="250dp"
+                        android:minHeight="60dp"
+                        android:text="Share"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@color/colorBreakLine"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

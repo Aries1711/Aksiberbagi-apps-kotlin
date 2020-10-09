@@ -24,7 +24,7 @@ class DashboardActivity : AppCompatActivity() {
         bottomNav.setupWithNavController(navController)
 
         val btnDonasiAll: FloatingActionButton = findViewById(R.id.floatingBtn)
-        btnDonasiAll.setOnClickListener{startActivity(Intent(this@DashboardActivity, ProgramDetailActivity::class.java)) }
+        btnDonasiAll.setOnClickListener{startActivity(Intent(this@DashboardActivity, ProgramAllActivity::class.java)) }
     }
 
 

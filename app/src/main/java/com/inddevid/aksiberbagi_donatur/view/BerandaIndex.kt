@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -170,11 +171,15 @@ class BerandaIndex : Fragment() {
         mainMenuAll.layoutManager = LinearLayoutManager(requireActivity())
         mainMenuAll.adapter =myAdapterAll
 
+        //set button lihat semua
+        val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
+        btnLihatAllProgram.setOnClickListener{ startActivity(Intent(requireActivity(), ProgramDetailActivity::class.java))}
+     //
+
     //set banner for footer beranda
         var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
         val imageBanner :ImageView = view.findViewById(R.id.berandaBanner)
         Glide.with(requireActivity()).load(imgBannerUrl).into(imageBanner)
-
         return view
     }
 

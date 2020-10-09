@@ -44,13 +44,15 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     //    viewpager libraries
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    // start material asset libraries
+    //    start material asset libraries
     implementation 'com.google.android.material:material:1.2.0-alpha02'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    // start countdown timer android
+    //      start countdown timer android
     implementation 'com.github.happysingh23828:HappyTimer:1.0.1'
+    // start fast android networking
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     testImplementation 'junit:junit:4.12'
