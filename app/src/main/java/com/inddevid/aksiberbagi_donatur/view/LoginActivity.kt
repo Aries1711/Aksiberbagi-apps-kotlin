@@ -2,6 +2,7 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import org.json.JSONObject
 
 
 class LoginActivity : AppCompatActivity() {
+    private val TAG: String ="MyActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
@@ -48,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                     if (response?.getString("message").equals("Nomor telepon tidak terdaftar")) {
                         val toast = Toast.makeText(applicationContext, "Nomor telepon tidak terdaftar", Toast.LENGTH_LONG)
                         toast.show()
-                    }else{
+                    }else if(response?.getString("message").equals("Data donatur ditemukan")){
                         val toast = Toast.makeText(applicationContext, "Tidak definisikan", Toast.LENGTH_LONG)
                         toast.show()
                     }
@@ -59,8 +61,17 @@ class LoginActivity : AppCompatActivity() {
 
                 }
                 override fun onError(anError: ANError?) {
-                    val toast = Toast.makeText(applicationContext, "Error koneksi", Toast.LENGTH_LONG)
-                    toast.show()
+                    if (anError?.errorCode != null){
+                        val c = anError.errorCode
+                        val b = anError.errorBody
+                        val d = anError.errorDetail
+                        Log.d(TAG, "Kodingmu error cok $c" )
+                        Log.d(TAG, "Parametermu error cok $b" )
+                        Log.d(TAG, "Iki jelase errormu cok $d" )
+                    }
+
+//                    val toast = Toast.makeText(applicationContext, "Error koneksi", Toast.LENGTH_LONG)
+//                    toast.show()
                 }
 
             })
