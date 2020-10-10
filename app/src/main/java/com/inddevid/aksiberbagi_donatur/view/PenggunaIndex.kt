@@ -1,5 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PenggunaIndex.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class PenggunaIndex : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -36,6 +39,7 @@ class PenggunaIndex : Fragment() {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +61,7 @@ class PenggunaIndex : Fragment() {
 
         listView.setOnItemClickListener{ parent:AdapterView<*>, view:View, position:Int, id:Long ->
             if (position == 0){
-                Toast.makeText(requireActivity(), "Pengaturan", Toast.LENGTH_LONG).show()
+                startActivity(Intent(requireActivity(),PengaturanActivity::class.java))
             }
             if (position == 1){
                 Toast.makeText(requireActivity(), "Bantuan", Toast.LENGTH_LONG).show()

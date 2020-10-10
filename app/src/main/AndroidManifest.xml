@@ -13,16 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".view.ProgramAllActivity"
+            android:name=".view.PengaturanActivity"
             android:theme="@style/AppMaterial">
         </activity>
         <activity
-            android:name=".view.ProgramDetailActivity"
+            android:name=".view.ProgramAllActivity"
             android:theme="@style/AppMaterial"></activity>
+        <activity
+            android:name=".view.ProgramDetailActivity"
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.SearchActivity"
             android:theme="@style/AppMaterial"
-            android:windowSoftInputMode="stateVisible"></activity>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".view.DashboardActivity"
             android:theme="@style/AppMaterial" /> <!-- Start Auth android app -->
