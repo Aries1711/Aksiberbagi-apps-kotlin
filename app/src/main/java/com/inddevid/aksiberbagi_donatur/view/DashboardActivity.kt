@@ -15,13 +15,19 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContentView(R.layout.dashboard_activity)
         val bottomBar: BottomAppBar = findViewById(R.id.bottom_bar)
         bottomBar.bringToFront()
         val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavAksiberbagi)
         val navController = findNavController(R.id.fragment)
         bottomNav.setupWithNavController(navController)
+
+        //retrieve intent from PenggunaIndex
+        var valuePengguna: String? = intent.getStringExtra("penggunaAktif")
+        if (valuePengguna == "true"){
+            navController.navigate(R.id.penggunaIndex)
+            bottomNav.menu.getItem(4).isChecked = true
+        }
 
         val btnDonasiAll: FloatingActionButton = findViewById(R.id.floatingBtn)
         btnDonasiAll.setOnClickListener{startActivity(Intent(this@DashboardActivity, ProgramAllActivity::class.java)) }

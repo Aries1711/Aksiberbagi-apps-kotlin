@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.inddevid.aksiberbagi_donatur.R
 
+
 class PengaturanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,7 +15,12 @@ class PengaturanActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.upAppbarPengaturan)
         toolbar.title = "Pengaturan"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
-        toolbar.setNavigationOnClickListener{startActivity(Intent(this@PengaturanActivity, PenggunaIndex::class.java))}
+        toolbar.setNavigationOnClickListener{
+            val mIntent = Intent(this, DashboardActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("penggunaAktif", "true")
+            mIntent.putExtras(mBundle)
+            startActivity(mIntent)}
     }
 
     override fun onSupportNavigateUp(): Boolean {

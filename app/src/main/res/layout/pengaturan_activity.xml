@@ -56,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:text="Donasi sebagai Anonim"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="@color/colorTextPrimary"/>
         </LinearLayout>
         <View
@@ -75,7 +74,6 @@
                 android:layout_height="wrap_content"
                 android:text="Ingatkan saya Donasi"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="@color/colorTextPrimary"/>
         </LinearLayout>
         <FrameLayout
