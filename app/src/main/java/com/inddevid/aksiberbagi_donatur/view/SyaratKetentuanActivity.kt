@@ -1,8 +1,11 @@
 package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.webkit.WebView
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.inddevid.aksiberbagi_donatur.R
@@ -21,8 +24,58 @@ class SyaratKetentuanActivity : AppCompatActivity() {
             mBundle.putString("penggunaAktif", "true")
             mIntent.putExtras(mBundle)
             startActivity(mIntent)}
+
+        val btnRelawan: FrameLayout = findViewById(R.id.relawanSyarat)
+        var textRelawan: TextView = findViewById(R.id.relawanSyaratText)
+
+        val btnDonatur: FrameLayout = findViewById(R.id.relawanDonatur)
+        var textDonatur: TextView = findViewById(R.id.relawanDonaturText)
+
+        val btnAjukan: FrameLayout = findViewById(R.id.relawanAjukan)
+        var textAjukan: TextView = findViewById(R.id.relawanAjukanText)
+
+        var stringUrl:String = "https://aksiberbagi.com/relawan"
+
         val myWebSyarat: WebView = findViewById(R.id.webviewSyarat)
-        myWebSyarat.loadUrl("https://aksiberbagi.com/relawan")
+        myWebSyarat.loadUrl(stringUrl)
+
+
+        btnRelawan.background = getDrawable(R.drawable.rounded_linear_layout)
+        textRelawan.setTextColor(Color.parseColor("#FFFFFF"));
+
+        btnRelawan.setOnClickListener {
+            btnAjukan.background = getDrawable(R.drawable.rounded_linear_layout_width)
+            textAjukan.setTextColor(Color.parseColor("#15BBDA"));
+            btnDonatur.background = getDrawable(R.drawable.rounded_linear_layout_width)
+            textDonatur.setTextColor(Color.parseColor("#15BBDA"));
+            btnRelawan.background = getDrawable(R.drawable.rounded_linear_layout)
+            textRelawan.setTextColor(Color.parseColor("#FFFFFF"));
+            stringUrl = "https://aksiberbagi.com/relawan"
+            myWebSyarat.loadUrl(stringUrl)
+        }
+
+        btnDonatur.setOnClickListener {
+            btnAjukan.background = getDrawable(R.drawable.rounded_linear_layout_width)
+            textAjukan.setTextColor(Color.parseColor("#15BBDA"));
+            btnRelawan.background = getDrawable(R.drawable.rounded_linear_layout_width)
+            textRelawan.setTextColor(Color.parseColor("#15BBDA"));
+            btnDonatur.background = getDrawable(R.drawable.rounded_linear_layout)
+            textDonatur.setTextColor(Color.parseColor("#FFFFFF"));
+            stringUrl = "https://aksiberbagi.com/donasi"
+            myWebSyarat.loadUrl(stringUrl)
+        }
+
+        btnAjukan.setOnClickListener {
+            btnRelawan.background = getDrawable(R.drawable.rounded_linear_layout_width)
+            textRelawan.setTextColor(Color.parseColor("#15BBDA"));
+            btnDonatur.background = getDrawable(R.drawable.rounded_linear_layout_width)
+            textDonatur.setTextColor(Color.parseColor("#15BBDA"));
+            btnAjukan.background = getDrawable(R.drawable.rounded_linear_layout)
+            textAjukan.setTextColor(Color.parseColor("#FFFFFF"));
+            stringUrl = "https://aksiberbagi.com/kontak"
+            myWebSyarat.loadUrl(stringUrl)
+        }
+
     }
 
 
