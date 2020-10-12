@@ -70,7 +70,7 @@ class PenggunaIndex : Fragment() {
                 startActivity(Intent(requireActivity(),TentangActivity::class.java))
             }
             if (position == 3){
-                Toast.makeText(requireActivity(), "Syarat dan Ketentuan", Toast.LENGTH_LONG).show()
+                startActivity(Intent(requireActivity(),SyaratKetentuanActivity::class.java))
             }
             if (position == 4){
                 Toast.makeText(requireActivity(), "Rating Kami", Toast.LENGTH_LONG).show()

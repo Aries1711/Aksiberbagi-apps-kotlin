@@ -10,6 +10,7 @@ class TentangActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tentang_activity)
+
         val toolbar: Toolbar = findViewById(R.id.upAppbarTentang)
         toolbar.title = "AksiBerbagi.com"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
