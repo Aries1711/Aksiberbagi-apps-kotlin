@@ -52,15 +52,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:layout_weight=".5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Donasi sebagai Anonim"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorTextPrimary"/>
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="10dp"
+                style="@style/MySwitch" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="6dp"
+            android:layout_height="4dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="#f5f5f5"
@@ -73,11 +80,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ingatkan saya Donasi"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorTextPrimary"/>
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="10dp"
+                style="@style/MySwitch" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#f5f5f5"
+            android:visibility="visible"/>
         <FrameLayout
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_linear_layout"
@@ -88,7 +108,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Akun"
+                android:text="Akun saya"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/colorIndicatorPrimary"
@@ -100,16 +120,25 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:layout_weight=".5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Donasi sebagai Anonim"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:text="No Telepon"
+                android:textSize="18sp"
                 android:textColor="@color/colorTextPrimary"/>
+            <TextView
+                android:layout_weight=".5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="083835551491"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/colorTextSecondary"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="6dp"
+            android:layout_height="4dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="#f5f5f5"
@@ -121,11 +150,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingatkan saya Donasi"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:text="Ubah password"
+                android:textSize="18sp"
                 android:textColor="@color/colorTextPrimary"/>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#f5f5f5"
+            android:visibility="visible"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,10 +64,10 @@ class PenggunaIndex : Fragment() {
                 startActivity(Intent(requireActivity(),PengaturanActivity::class.java))
             }
             if (position == 1){
-                Toast.makeText(requireActivity(), "Bantuan", Toast.LENGTH_LONG).show()
+                startActivity(Intent(requireActivity(),BantuanActivity::class.java))
             }
             if (position == 2){
-                Toast.makeText(requireActivity(), "Tentang Kami", Toast.LENGTH_LONG).show()
+                startActivity(Intent(requireActivity(),TentangActivity::class.java))
             }
             if (position == 3){
                 Toast.makeText(requireActivity(), "Syarat dan Ketentuan", Toast.LENGTH_LONG).show()

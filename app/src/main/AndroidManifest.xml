@@ -13,12 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".view.PengaturanActivity"
+            android:name=".view.TentangActivity"
             android:theme="@style/AppMaterial">
         </activity>
         <activity
-            android:name=".view.ProgramAllActivity"
+            android:name=".view.BantuanActivity"
             android:theme="@style/AppMaterial"></activity>
+        <activity
+            android:name=".view.PengaturanActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
+            android:name=".view.ProgramAllActivity"
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.ProgramDetailActivity"
             android:theme="@style/AppMaterial" />
