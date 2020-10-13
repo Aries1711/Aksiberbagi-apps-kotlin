@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.PenggunaSettings
+import com.inddevid.aksiberbagi_donatur.presenter.CustomDialogFragment
 import com.inddevid.aksiberbagi_donatur.presenter.PenggunaSettingsAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -76,7 +77,8 @@ class PenggunaIndex : Fragment() {
                 Toast.makeText(requireActivity(), "Rating Kami", Toast.LENGTH_LONG).show()
             }
             if (position == 5){
-                Toast.makeText(requireActivity(), "Keluar mang ?", Toast.LENGTH_LONG).show()
+                var dialog = CustomDialogFragment()
+                fragmentManager?.let { dialog.show(it, "customDialog") }
             }
         }
 
@@ -86,8 +88,6 @@ class PenggunaIndex : Fragment() {
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         return view
     }
-
-
 
     companion object {
         /**

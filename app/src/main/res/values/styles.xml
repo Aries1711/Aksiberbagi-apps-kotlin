@@ -12,6 +12,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+<!--        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>-->
     </style>
 
     <style name="ToolbarProgramDetail" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -31,6 +32,11 @@
 
     <style name="MySwitch">
         <item name="android:colorControlActivated"> @color/colorInputStrokeBlue</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
 
