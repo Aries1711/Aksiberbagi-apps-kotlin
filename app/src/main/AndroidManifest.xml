@@ -13,15 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".view.SemuaDonasiSayaActivity"
+            android:name=".view.SemuaLaporanActivity"
             android:theme="@style/AppMaterial">
+
         </activity>
         <activity
-            android:name=".view.SyaratKetentuanActivity"
+            android:name=".view.SemuaDonasiSayaActivity"
             android:theme="@style/AppMaterial"></activity>
         <activity
+            android:name=".view.SyaratKetentuanActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
             android:name=".view.TentangActivity"
-            android:theme="@style/AppMaterial"></activity>
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.BantuanActivity"
             android:theme="@style/AppMaterial" />
@@ -40,7 +44,7 @@
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".view.DashboardActivity"
-            android:theme="@style/AppMaterial"></activity> <!-- Start Auth android app -->
+            android:theme="@style/AppMaterial" /> <!-- Start Auth android app -->
         <activity
             android:name=".view.SignUpActivity"
             android:theme="@style/AppMaterial" />

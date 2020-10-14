@@ -162,6 +162,9 @@ class BerandaIndex : Fragment() {
         mainMenuPilihan.adapter = myAdapterPilihan
 
      //inflate horizontal laporan
+        //button lihat semua laporan
+        val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
+        btnLihatLaporan.setOnClickListener { startActivity(Intent(requireActivity(), SemuaLaporanActivity::class.java)) }
         var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
         mainMenuLaporan.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
         mainMenuLaporan.adapter = myAdapterLaporan
