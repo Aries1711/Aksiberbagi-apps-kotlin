@@ -1,9 +1,11 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,10 +92,16 @@ class DonasiSayaIndex : Fragment() {
         toolbar.inflateMenu(R.menu.donasisaya_upbar_menu)
         toolbar.title = "Donasi Saya"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
-        //inflate the recycler for cardview donasi saya
+        //tombol lihat semua donasi
+        val btnLihatSemua : Button = view.findViewById(R.id.lihatSemua)
+
+        btnLihatSemua.setOnClickListener { startActivity(Intent(requireActivity(), SemuaDonasiSayaActivity::class.java)) }
+
+        //inflate the recycler for Date donasi saya
         var mainMenuA = view.findViewById(R.id.recyclerDonasiSayaDate) as RecyclerView
         mainMenuA.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
         mainMenuA.adapter = myAdapterA
+        //inflate the recycler for cardview donasi saya
         var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
         mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
         mainMenuB.adapter = myAdapterB

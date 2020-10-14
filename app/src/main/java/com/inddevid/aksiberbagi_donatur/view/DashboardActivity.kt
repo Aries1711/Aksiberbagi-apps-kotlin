@@ -29,6 +29,13 @@ class DashboardActivity : AppCompatActivity() {
             bottomNav.menu.getItem(4).isChecked = true
         }
 
+        //retrieve intent from DonasiSayaIndex
+        var valueDonasi: String? = intent.getStringExtra("donasiSayaAktif")
+        if (valueDonasi == "true"){
+            navController.navigate(R.id.donasiSayaIndex)
+            bottomNav.menu.getItem(3).isChecked = true
+        }
+
         val btnDonasiAll: FloatingActionButton = findViewById(R.id.floatingBtn)
         btnDonasiAll.setOnClickListener{startActivity(Intent(this@DashboardActivity, ProgramAllActivity::class.java)) }
     }
