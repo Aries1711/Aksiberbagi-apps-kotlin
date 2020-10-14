@@ -16,7 +16,7 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
     class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(210, 125)
+            .override(210, 210)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 

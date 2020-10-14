@@ -99,7 +99,7 @@
                 <HorizontalScrollView
                     android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="110dp"
                     android:scrollbars="none">
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -221,7 +221,6 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:text="Lihat Semua"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -237,7 +236,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
                 android:text="Catatan Kebaikan"
                 android:textColor="@color/ic_launcher_background"

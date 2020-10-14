@@ -75,7 +75,7 @@ class DonasiSayaIndex : Fragment() {
         val titleCardDonasiA:String = "Oke"
         val paymentDonasi:String = "Gopay"
         val timePayment:String = "1 jam lalu"
-        val donasiSum:String = "100.789"
+        val donasiSum:String = "Rp 100.789"
         val donasiSayaStat:String = "Berhasil"
         //declare the arraylist for card donasi saya
         val arrayList = ArrayList<CardDonasiSaya>()
