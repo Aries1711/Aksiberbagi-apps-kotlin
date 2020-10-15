@@ -13,13 +13,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".view.SemuaLaporanActivity"
+            android:name=".view.LelangActivity"
             android:theme="@style/AppMaterial">
-
         </activity>
         <activity
+            android:name=".view.SapaActivity"
+            android:theme="@style/AppMaterial"/>
+        <activity
+            android:name=".view.ZakatActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
+            android:name=".view.PublikAjukanActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
+            android:name=".view.DonasiRutinActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
+            android:name=".view.SemuaLaporanActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
             android:name=".view.SemuaDonasiSayaActivity"
-            android:theme="@style/AppMaterial"></activity>
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.SyaratKetentuanActivity"
             android:theme="@style/AppMaterial" />

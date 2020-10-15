@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -133,19 +132,33 @@ class BerandaIndex : Fragment() {
 
         //        tombol gabung donasi rutin
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
-        btnGbgDonRut.setOnClickListener(View.OnClickListener {
-            Toast.makeText(requireActivity(), "Gabung Donasi Rutin Kuy ?", Toast.LENGTH_LONG).show()
-        })
+        btnGbgDonRut.setOnClickListener{ startActivity(Intent(requireActivity(), DonasiRutinActivity::class.java)) }
 
-        //        tombol submenu beranda a-d
+        // tombol submenu beranda a-d
+        // tombol lelang baik
         val imageSubA : ImageView = view.findViewById(R.id.subA)
         Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubA)
+        imageSubA.setOnClickListener {
+            startActivity(Intent(requireActivity(), LelangActivity::class.java ))
+            }
+        // tombol zakat
         val imageSubB : ImageView = view.findViewById(R.id.subB)
         Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
+        imageSubB.setOnClickListener {
+            startActivity(Intent(requireActivity(), ZakatActivity::class.java))
+        }
+        // tombol publik ajukan
         val imageSubC : ImageView = view.findViewById(R.id.subC)
         Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubC)
+        imageSubC.setOnClickListener {
+            startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
+        }
+        // tombol sapa kami
         val imageSubD : ImageView = view.findViewById(R.id.subD)
         Glide.with(requireActivity()).load(R.drawable.submenue).into(imageSubD)
+        imageSubD.setOnClickListener {
+            startActivity(Intent(requireActivity(), SapaActivity::class.java))
+        }
 
     //inflate view header, time, button LelangBaik
         view.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(requireActivity(), R.color.colorInputStrokeBlue)
@@ -155,12 +168,10 @@ class BerandaIndex : Fragment() {
         var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
         mainMenuLelang.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
         mainMenuLelang.adapter = myAdapterLelang
-
     //inflate horizontal program pilihan
         var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
         mainMenuPilihan.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
         mainMenuPilihan.adapter = myAdapterPilihan
-
      //inflate horizontal laporan
         //button lihat semua laporan
         val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
@@ -168,17 +179,13 @@ class BerandaIndex : Fragment() {
         var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
         mainMenuLaporan.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
         mainMenuLaporan.adapter = myAdapterLaporan
-
      //inflate vertical program All
         var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
         mainMenuAll.layoutManager = LinearLayoutManager(requireActivity())
         mainMenuAll.adapter =myAdapterAll
-
         //set button lihat semua
         val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
         btnLihatAllProgram.setOnClickListener{ startActivity(Intent(requireActivity(), ProgramDetailActivity::class.java))}
-     //
-
     //set banner for footer beranda
         var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
         val imageBanner :ImageView = view.findViewById(R.id.berandaBanner)
