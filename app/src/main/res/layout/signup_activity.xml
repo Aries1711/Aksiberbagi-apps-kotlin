@@ -78,6 +78,7 @@
                     android:layout_height="50dp"
                     android:lines="1"
                     android:maxLines="1"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
                     android:textSize="18sp" />
