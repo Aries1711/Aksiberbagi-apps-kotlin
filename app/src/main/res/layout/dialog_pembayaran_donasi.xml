@@ -101,6 +101,7 @@
             android:gravity="center"
             tools:ignore="RtlCompat" />
         <TextView
+            android:id="@+id/pilihPembayaranBtn"
             android:layout_weight=".2"
             android:layout_marginEnd="20dp"
             android:layout_width="wrap_content"
@@ -138,7 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:layout_marginEnd="20dp"
-            style="@style/MySwitch" />
+            style="@style/MySwitch"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -160,7 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:layout_marginEnd="20dp"
-            style="@style/MySwitch" />
+            style="@style/MySwitch"
+            tools:ignore="UseSwitchCompatOrMaterialXml"/>
     </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/doaDonasi"
@@ -180,7 +183,7 @@
             android:id="@+id/doaDonatur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text"
+            android:inputType="text|textMultiLine"
             android:textAlignment="textStart"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14sp" />

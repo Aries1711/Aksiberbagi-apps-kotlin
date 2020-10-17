@@ -60,7 +60,7 @@ class PenggunaIndex : Fragment() {
 
         listView.adapter = PenggunaSettingsAdapter(requireActivity(), R.layout.pengguna_settings_row1,list)
 
-        listView.setOnItemClickListener{ parent:AdapterView<*>, view:View, position:Int, id:Long ->
+        listView.setOnItemClickListener{ _:AdapterView<*>, _:View, position:Int, _:Long ->
             if (position == 0){
                 startActivity(Intent(requireActivity(),PengaturanActivity::class.java))
             }

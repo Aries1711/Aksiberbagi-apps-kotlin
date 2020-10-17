@@ -2,12 +2,10 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.webkit.WebView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Switch
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ListDonasi
@@ -73,14 +72,36 @@ class ProgramDetailActivity : AppCompatActivity() {
         val dialogPembayaran = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view : View  = layoutInflater.inflate(R.layout.dialog_pembayaran_donasi, null)
         dialogPembayaran.setContentView(view)
+        val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
-        dialogPembayaran.dismiss()
+        val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
+
+        var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
+        var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
+        if (dialogPembayaranAktif == "true"){
+            dialogPembayaran.show()
+            textNominalDonasi.text = nominalPembayaran?.toEditable()
+        }else{
+            dialogPembayaran.dismiss()
+        }
+
+
         btnDonasi.setOnClickListener {
             dialogPembayaran.show()
         }
+
         btnDonasiClose.setOnClickListener {
             dialogPembayaran.dismiss()
         }
+
+        btnPilihBayar.setOnClickListener {
+            val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("nominal", textNominalDonasi.text.toString())
+            mIntent.putExtras(mBundle)
+            startActivity(mIntent)
+        }
+
 
         val doaBtn: Switch = view.findViewById(R.id.doaDonasiBtn)
         val inputLayoutDoa: TextInputLayout = view.findViewById(R.id.doaDonasi)
@@ -109,5 +130,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         view.visibility = View.VISIBLE
     }
 
+    fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 }
 

@@ -24,7 +24,8 @@ class DonasiRutinActivity : AppCompatActivity() {
             val mBundle = Bundle()
             mBundle.putString("berandaAktif", "true")
             mIntent.putExtras(mBundle)
-            startActivity(mIntent)}
+            startActivity(mIntent)
+        }
 
 //         set pilihan program dropdown
         val items = listOf("Wujudkan Pondok Pesantren Tahfidz Qur’an Hadist Internasional Pekanbaru, Riau", "Simpan Hartamu dilangit, Sedekah Jariyah Atas Nama Keluarga", "Bangun Rumah di Surga: Sedekah Jariah Renovasi Masjid Pelosok", "Android")
