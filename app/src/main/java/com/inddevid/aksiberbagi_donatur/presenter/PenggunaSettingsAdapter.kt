@@ -10,7 +10,8 @@ import android.widget.TextView
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.PenggunaSettings
 
-class PenggunaSettingsAdapter (var mCtx: Context, var resource:Int, var items:List<PenggunaSettings>):ArrayAdapter<PenggunaSettings>(mCtx, resource,items) {
+class PenggunaSettingsAdapter (var mCtx: Context, var resource:Int, var items:List<PenggunaSettings>):
+    ArrayAdapter<PenggunaSettings>(mCtx, resource,items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater:LayoutInflater = LayoutInflater.from(mCtx)
         val view:View = layoutInflater.inflate(resource,null)

@@ -54,7 +54,13 @@
             android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.ProgramDetailActivity"
-            android:theme="@style/AppMaterial" />
+            android:theme="@style/AppMaterial" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.SearchActivity"
             android:theme="@style/AppMaterial"
@@ -75,11 +81,11 @@
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".view.IntroActivity"
