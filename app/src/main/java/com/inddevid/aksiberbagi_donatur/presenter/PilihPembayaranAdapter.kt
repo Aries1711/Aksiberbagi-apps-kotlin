@@ -30,7 +30,7 @@ class PilihPembayaranAdapter (var mCtx: Context, var resource: Int, var items:Li
 
 
         var mItem: ModelPembayaran = items[position]
-        Glide.with(imageSet.context).load(mItem.img).apply(options).into(imageSet)
+        Glide.with(imageSet.context).load(mItem.img).into(imageSet)
 //        imageSet.setImageDrawable(mCtx.resources.getDrawable(mItem.img))
         titleSet.text = mItem.title
 

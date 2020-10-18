@@ -30,7 +30,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/headerEwallet"
@@ -50,13 +50,20 @@
                     android:textSize="16sp"/>
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/listViewEwallet"
+            <LinearLayout
+                android:id="@+id/layoutListEwallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerEwallet" />
+                app:layout_constraintTop_toBottomOf="@id/headerEwallet">
+                <ListView
+                    android:id="@+id/listViewEwallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/headerEpayment"
@@ -66,7 +73,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/listViewEwallet" >
+                app:layout_constraintTop_toBottomOf="@id/layoutListEwallet" >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
@@ -75,13 +82,20 @@
                     android:textStyle="bold"
                     android:textSize="16sp"/>
             </LinearLayout>
-            <ListView
-                android:id="@+id/listViewTransfer"
+            <LinearLayout
+                android:id="@+id/layoutListTransfer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerEpayment" />
+                app:layout_constraintTop_toBottomOf="@id/headerEpayment">
+                <ListView
+                    android:id="@+id/listViewTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
