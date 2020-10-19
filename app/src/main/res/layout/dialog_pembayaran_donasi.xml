@@ -77,10 +77,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_weight=".2"
+            android:layout_weight=".3"
             android:orientation="horizontal"
             android:layout_width="60dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
             android:background="@drawable/rounded_linear_layout_width">
@@ -92,7 +92,7 @@
         </LinearLayout>
         <TextView
             android:id="@+id/titleJenisPembayaran"
-            android:layout_weight=".5"
+            android:layout_weight=".4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Transfer BNI"
@@ -191,7 +191,7 @@
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/donasiBtn"
+        android:id="@+id/donasiLanjutPembayaran"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

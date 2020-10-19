@@ -77,6 +77,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
+        val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
 
 
         var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
@@ -95,6 +96,8 @@ class ProgramDetailActivity : AppCompatActivity() {
         }else{
             dialogPembayaran.dismiss()
         }
+
+        btnLanjutPembayaran.setOnClickListener { startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java)) }
 
 
         btnDonasi.setOnClickListener {
