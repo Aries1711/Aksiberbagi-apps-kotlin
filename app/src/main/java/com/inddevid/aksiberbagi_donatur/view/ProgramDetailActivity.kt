@@ -75,12 +75,15 @@ class ProgramDetailActivity : AppCompatActivity() {
         val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
         val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
+        val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
 
         var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
+        var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
         if (dialogPembayaranAktif == "true"){
             dialogPembayaran.show()
             textNominalDonasi.text = nominalPembayaran?.toEditable()
+            textPembayaran.text = pilihanPembayaran
         }else{
             dialogPembayaran.dismiss()
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,16 +13,11 @@
         android:layout_gravity="top"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         android:background="@color/colorInputStrokeBlue"
-        android:theme="@style/ToolbarProgramDetail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextAppearance="@style/Toolbar.TitleText" />
+        android:theme="@style/ToolbarProgramDetail"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,20 +46,22 @@
                     android:textSize="16sp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layoutListEwallet"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerEwallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerEwallet">
-                <ListView
-                    android:id="@+id/listViewEwallet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/headerEwallet" />
+
+<!--            <ListView-->
+<!--                android:id="@+id/listViewEwallet"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/headerEwallet" />-->
+
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/headerEpayment"
@@ -73,7 +71,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutListEwallet" >
+                app:layout_constraintTop_toBottomOf="@id/recyclerEwallet" >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
@@ -82,21 +80,23 @@
                     android:textStyle="bold"
                     android:textSize="16sp"/>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layoutListTransfer"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerTransfer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerEpayment">
-                <ListView
-                    android:id="@+id/listViewTransfer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/headerEpayment"/>
+
+<!--            <ListView-->
+<!--                android:id="@+id/listViewTransfer"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/headerEpayment" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

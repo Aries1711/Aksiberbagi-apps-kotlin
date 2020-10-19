@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:src="@drawable/p_settings"
-            android:id="@+id/imageSettingListUser"/>
+            android:id="@+id/imagePembayaran"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -30,6 +30,6 @@
         android:text="Settings"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:id="@+id/titleSettingListUser"/>
+        android:id="@+id/titlePembayaran"/>
     </LinearLayout>
 </LinearLayout>
