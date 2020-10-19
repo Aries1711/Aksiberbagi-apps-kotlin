@@ -75,15 +75,23 @@ class ProgramDetailActivity : AppCompatActivity() {
         val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
         val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
+        val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
+
 
         var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
-        if (dialogPembayaranAktif == "true"){
+        var imgPilihan: String? = intent.getStringExtra("imagePilihan")
+
+        if (dialogPembayaranAktif == "true"  && pilihanPembayaran != ""){
+            dialogPembayaran.show()
+            textPembayaran.text = pilihanPembayaran
+            Glide.with(this).load(imgPilihan).into(imgPembayaran)
+            textNominalDonasi.text = nominalPembayaran?.toEditable()
+        }else if(dialogPembayaranAktif == "true"){
             dialogPembayaran.show()
             textNominalDonasi.text = nominalPembayaran?.toEditable()
-            textPembayaran.text = pilihanPembayaran
         }else{
             dialogPembayaran.dismiss()
         }

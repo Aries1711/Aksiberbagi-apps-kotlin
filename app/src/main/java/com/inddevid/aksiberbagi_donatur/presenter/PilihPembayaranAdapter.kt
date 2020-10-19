@@ -1,6 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ModelPembayaran
+import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.pilih_pembayaran_row.view.*
+import android.content.Intent as Intent1
 
 class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val context: Context, val nominal:String) :
     RecyclerView.Adapter<PilihPembayaranAdapter.ViewHolder> () {
@@ -31,15 +34,17 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
             val model = arrayList[position]
             val id : String = model.id
             val pTitle : String = model.title
+            val imgPilihan : String = model.img
             val nominalSet: String = nominal
 
-//            val intent
-//            val mIntent = Intent(this, ProgramDetailActivity::class.java)
-//            val mBundle = Bundle()
-//            mBundle.putString("dialogAktif", "true")
-//            mBundle.putString("nominalDonasi", nominalSet)
-//            mIntent.putExtras(mBundle)
-//            startActivity(mIntent)
+            val mIntent = Intent1(context, ProgramDetailActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("dialogAktif", "true")
+            mBundle.putString("pilihanPembayaran", pTitle)
+            mBundle.putString("imagePilihan", imgPilihan)
+            mBundle.putString("nominalDonasi", nominalSet)
+            mIntent.putExtras(mBundle)
+            context.startActivity(mIntent)
         }
     }
 
