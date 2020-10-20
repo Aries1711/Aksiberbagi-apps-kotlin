@@ -72,22 +72,61 @@ class ProgramDetailActivity : AppCompatActivity() {
         val dialogPembayaran = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view : View  = layoutInflater.inflate(R.layout.dialog_pembayaran_donasi, null)
         dialogPembayaran.setContentView(view)
+        val textNominalLayout: TextInputLayout = view.findViewById(R.id.nominalDonasiLayout)
         val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
         val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
+        val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
 
+        //Array pilihan nominal donasi
+        val nominalItems = listOf("Pilih Nominal Donasi","Rp 50000 Semua Bisa Sedekah",
+            "Rp 100000 Sedekah Pilihan", "Rp 250000 Sedekah Terbaik", "Rp 500000 Sedekah Berkah",
+            "Rp 1000000 Sedekah Pilihan", "Masukkan Nominal Lain")
+        val adapterNominal = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, nominalItems)
+        pilihNominal.adapter = adapterNominal
 
+        //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
+        var spinnerPilihNominal : String? = ""
+
+        pilihNominal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if ( nominalItems[p2] == "Masukkan Nominal Lain"){
+                    spinnerPilihNominal = nominalItems[p2]
+                    show(textNominalLayout)
+                }else{
+                    gone(textNominalLayout)
+                    spinnerPilihNominal = nominalItems[p2]
+                }
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        hidden(imgPembayaran)
+        gone(textNominalLayout)
+
+        // Receiver intent data
         var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
         var imgPilihan: String? = intent.getStringExtra("imagePilihan")
+        var spinner: String? = intent.getStringExtra("spinner")
+
+        if (spinner == "Masukkan Nominal Lain"){
+            pilihNominal.setSelection(adapterNominal.getPosition("Masukkan Nominal Lain"))
+        }else{
+            pilihNominal.setSelection(adapterNominal.getPosition("Pilih Nominal Donasi"))
+        }
 
         if (dialogPembayaranAktif == "true"  && pilihanPembayaran != ""){
             dialogPembayaran.show()
+            show(textNominalLayout)
             textPembayaran.text = pilihanPembayaran
+            show(imgPembayaran)
             Glide.with(this).load(imgPilihan).into(imgPembayaran)
             textNominalDonasi.text = nominalPembayaran?.toEditable()
         }else if(dialogPembayaranAktif == "true"){
@@ -108,10 +147,13 @@ class ProgramDetailActivity : AppCompatActivity() {
             dialogPembayaran.dismiss()
         }
 
+
+        //deklarasi variabel untuk intent ke menu pilih pembayaran
         btnPilihBayar.setOnClickListener {
             val mIntent = Intent(this, PilihPembayaranActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("nominal", textNominalDonasi.text.toString())
+            mBundle.putString("spinnerValue", spinnerPilihNominal)
             mIntent.putExtras(mBundle)
             startActivity(mIntent)
         }
@@ -142,6 +184,10 @@ class ProgramDetailActivity : AppCompatActivity() {
 
     fun show(view: View){
         view.visibility = View.VISIBLE
+    }
+
+    fun hidden(view: View){
+        view.visibility = View.INVISIBLE
     }
 
     fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)

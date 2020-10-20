@@ -25,6 +25,15 @@
         android:text="Masukkan Nominal Donasi"
         android:textSize="20sp"
         android:textStyle="bold"/>
+    <Spinner
+        android:id="@+id/spinerPilihNominal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/dropdown_custom"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nominalDonasiLayout"
@@ -39,6 +48,7 @@
         android:textColorHint="@color/colorTextSecondary"
         app:boxStrokeColor="@color/colorInputStrokeBlue"
         app:errorEnabled="true"
+        android:focusableInTouchMode="true"
         app:hintEnabled="true"
         app:hintTextColor="@color/colorInputStrokeBlue">
 
@@ -77,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/layoutImageBank"
             android:layout_weight=".3"
             android:orientation="horizontal"
             android:layout_width="60dp"
@@ -95,7 +106,7 @@
             android:layout_weight=".4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Transfer BNI"
+            android:text="Metode Pembayaran"
             android:layout_marginStart="5dp"
             android:textAlignment="textStart"
             android:textSize="16sp"

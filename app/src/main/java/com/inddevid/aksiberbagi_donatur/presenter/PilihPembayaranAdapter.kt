@@ -13,7 +13,7 @@ import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.pilih_pembayaran_row.view.*
 import android.content.Intent as Intent1
 
-class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val context: Context, val nominal:String) :
+class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val context: Context, val nominal:String, val spinner:String) :
     RecyclerView.Adapter<PilihPembayaranAdapter.ViewHolder> () {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bindItems(model: ModelPembayaran){
@@ -36,6 +36,7 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
             val pTitle : String = model.title
             val imgPilihan : String = model.img
             val nominalSet: String = nominal
+            val spinnerSet: String = spinner
 
             val mIntent = Intent1(context, ProgramDetailActivity::class.java)
             val mBundle = Bundle()
@@ -43,6 +44,7 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
             mBundle.putString("pilihanPembayaran", pTitle)
             mBundle.putString("imagePilihan", imgPilihan)
             mBundle.putString("nominalDonasi", nominalSet)
+            mBundle.putString("spinner", spinnerSet)
             mIntent.putExtras(mBundle)
             context.startActivity(mIntent)
         }

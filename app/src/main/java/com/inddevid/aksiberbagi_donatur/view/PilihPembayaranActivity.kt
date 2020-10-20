@@ -3,6 +3,7 @@ package com.inddevid.aksiberbagi_donatur.view
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,17 +21,28 @@ class PilihPembayaranActivity : AppCompatActivity() {
         toolbar.title = "Metode Pembayaran"
         toolbar.setTitleTextColor(Color.WHITE)
         var valueNominal: String? = intent.getStringExtra("nominal")
+        var spinnerPilihan: String? = intent.getStringExtra("spinnerValue")
+
+        val toast = Toast.makeText(this, spinnerPilihan, Toast.LENGTH_LONG)
+        toast.show()
+
         var nominalSet: String = ""
+        var spinnerSet: String = ""
+
         if (valueNominal == ""){
             nominalSet = "0"
+            spinnerSet = spinnerPilihan.toString()
         }else{
             nominalSet = valueNominal.toString()
+            spinnerSet = spinnerPilihan.toString()
         }
+
         toolbar.setNavigationOnClickListener{
             val mIntent = Intent(this, ProgramDetailActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("dialogAktif", "true")
             mBundle.putString("nominalDonasi", nominalSet)
+            mBundle.putString("spinner", spinnerPilihan)
             mIntent.putExtras(mBundle)
             startActivity(mIntent)
         }
@@ -42,7 +54,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
         arrayEwallet.add(ModelPembayaran("3","OVO","https://aksiberbagi.com/storage/bank/logo-ovo.png"))
         arrayEwallet.add(ModelPembayaran("4","Link Aja","https://aksiberbagi.com/storage/bank/8uOgHqnWJByhe5p3QMFzCTYxmTLBJpuKGtku3djn.png"))
         arrayEwallet.add(ModelPembayaran("5","ShopeePay","https://aksiberbagi.com/storage/bank/8QZzJV93mHSsDCEEMicKg985ba5MMbBjbsXvACDG.png"))
-        val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this, nominalSet)
+        val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this, nominalSet, spinnerSet )
         var mainMenuEwallet = findViewById<RecyclerView>(R.id.recyclerEwallet)
         mainMenuEwallet.layoutManager = LinearLayoutManager(this)
         mainMenuEwallet.adapter = myAdapterEwallet
@@ -57,10 +69,12 @@ class PilihPembayaranActivity : AppCompatActivity() {
         arrayTranfer.add(ModelPembayaran("10","Mandiri", "https://aksiberbagi.com/storage/bank/logo-mandiri.png"))
         arrayTranfer.add(ModelPembayaran("11","Muamalat", "https://aksiberbagi.com/storage/bank/Qdtf4FswhYjSyRyMcod8U59FQ6w5peVKyfHrtNHk.png"))
         arrayTranfer.add(ModelPembayaran("12","CIMB Niaga / Syariah", "https://aksiberbagi.com/storage/bank/eSxD2RemwuxkNdjIIAfZWpEeaioePxX4LfybUujK.png"))
-        val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this, nominalSet)
+        val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this, nominalSet , spinnerSet)
         var mainMenuTranfer = findViewById<RecyclerView>(R.id.recyclerTransfer)
         mainMenuTranfer.layoutManager = LinearLayoutManager(this)
         mainMenuTranfer.adapter = myAdapterTransfer
+
+
 
     }
 }
