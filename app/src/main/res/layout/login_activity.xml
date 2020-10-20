@@ -66,10 +66,12 @@
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="#FFFFFF"
                 android:hint="@string/labelNomor"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/error_color"
+                app:helperText=""
                 android:textColorHint="@color/colorIndicatorPrimary"
                 app:boxStrokeColor="@color/colorIndicatorPrimary"
-                app:errorEnabled="true"
-                app:hintEnabled="true"
+                app:errorTextAppearance="@color/colorIndicatorPrimary"
                 app:hintTextColor="@color/colorIndicatorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -82,7 +84,6 @@
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
                     android:textSize="20sp" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -94,11 +95,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:hint="@string/labelPassword"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/error_color"
+                app:helperText=""
                 android:textColorHint="@color/colorIndicatorPrimary"
                 app:boxStrokeColor="@color/colorIndicatorPrimary"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/colorIndicatorPrimary"
-                app:errorEnabled="true"
                 app:hintTextColor="@color/colorIndicatorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -111,7 +114,6 @@
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
                     android:textSize="20sp" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
