@@ -14,6 +14,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import org.json.JSONException
 import org.json.JSONObject
@@ -28,7 +29,12 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
         val closeBtnLogin: Button = findViewById(R.id.closeLogin)
         val submitLogin: Button = findViewById(R.id.loginSubmit)
-        closeBtnLogin.setOnClickListener{ startActivity(Intent(this@LoginActivity, IntroActivity::class.java)) }
+        closeBtnLogin.setOnClickListener{ startActivity(
+            Intent(
+                this@LoginActivity,
+                IntroActivity::class.java
+            )
+        ) }
 
 
         var phoneNumber: TextInputEditText = findViewById(R.id.phoneNumber)
@@ -44,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             validateForm(phone, password, layoutPhone, layoutPassword)
         }
 
-        phoneNumber.addTextChangedListener(object: TextWatcher {
+        phoneNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
             }
@@ -54,13 +60,16 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                layoutPhone.boxStrokeColor = getColor(this@LoginActivity, R.color.colorIndicatorPrimary)
+                layoutPhone.boxStrokeColor = getColor(
+                    this@LoginActivity,
+                    R.color.colorIndicatorPrimary
+                )
                 layoutPhone.helperText = ""
             }
 
         })
 
-        userPassword.addTextChangedListener(object: TextWatcher {
+        userPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
             }
@@ -70,7 +79,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                layoutPassword.boxStrokeColor = getColor(this@LoginActivity, R.color.colorIndicatorPrimary)
+                layoutPassword.boxStrokeColor = getColor(
+                    this@LoginActivity,
+                    R.color.colorIndicatorPrimary
+                )
                 layoutPassword.helperText = ""
             }
 
@@ -78,9 +90,14 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun validateForm(phoneNumber:String, password:String, layoutPhone: TextInputLayout, layoutPass: TextInputLayout){
+    private fun validateForm(
+        phoneNumber: String,
+        password: String,
+        layoutPhone: TextInputLayout,
+        layoutPass: TextInputLayout
+    ){
         if (phoneNumber != "" && password != ""){
-            submitLogin(phoneNumber,password,layoutPhone,layoutPass)
+            submitLogin(phoneNumber, password, layoutPhone, layoutPass)
         }else if (phoneNumber == ""){
             layoutPhone.requestFocus()
             layoutPhone.boxStrokeColor = getColor(this, R.color.error_color)
@@ -92,7 +109,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun submitLogin(phone:String, password: String, layoutPhone: TextInputLayout, layoutPass: TextInputLayout){
+    private fun submitLogin(
+        phone: String,
+        password: String,
+        layoutPhone: TextInputLayout,
+        layoutPass: TextInputLayout
+    ){
         val body = JSONObject()
         try {
             body.put("nomor_telepon", phone)
@@ -101,27 +123,50 @@ class LoginActivity : AppCompatActivity() {
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
                         try {
-                            if (response?.getString("message").equals("Nomor telepon tidak terdaftar")) {
+                            if (response?.getString("message")
+                                    .equals("Nomor telepon tidak terdaftar")
+                            ) {
                                 layoutPhone.requestFocus()
-                                layoutPhone.boxStrokeColor = getColor(this@LoginActivity, R.color.error_color)
+                                layoutPhone.boxStrokeColor = getColor(
+                                    this@LoginActivity,
+                                    R.color.error_color
+                                )
                                 layoutPhone.helperText = response?.getString("message")
-                            }else if(response?.getString("message").equals("Data donatur ditemukan")){
-                                val toast = Toast.makeText(applicationContext, "Donatur", Toast.LENGTH_LONG)
+                            } else if (response?.getString("message")
+                                    .equals("Data donatur ditemukan")
+                            ) {
+                                val data: JSONObject? = response?.getJSONObject("data")
+                                val donaturJson: JSONObject? = data?.getJSONObject("donatur")
+                                val toast = Toast.makeText(
+                                    applicationContext, donaturJson?.getString(
+                                        "tbldonatur_nama"
+                                    ), Toast.LENGTH_LONG
+                                )
                                 toast.show()
                             }
-                        }catch (e : JSONException){
-                            val toast = Toast.makeText(applicationContext, "Kesalahan Try", Toast.LENGTH_LONG)
+                        } catch (e: JSONException) {
+                            val toast = Toast.makeText(
+                                applicationContext,
+                                "Kesalahan Try",
+                                Toast.LENGTH_LONG
+                            )
                             toast.show()
                         }
                     }
-                    override fun onError(anError: ANError?) {
-                        Log.d(TAG, "OnErroBody " + anError?.errorBody )
-                        Log.d(TAG, "OnErroCode " + anError?.errorCode )
-                        Log.d(TAG, "OnErroDetail " + anError?.errorDetail )
+
+                    override fun onError(anError: ANError? ) {
+                        val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                        if (apiError?.message == "Nomor telepon tidak terdaftar"){
+                            val toast = Toast.makeText(applicationContext, "Nomor Tidak terdaftar oke okee", Toast.LENGTH_LONG)
+                            toast.show()
+                        }
+                        Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                        Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                        Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
                     }
 
                 })
-        }catch(e: JSONException){
+        }catch (e: JSONException){
 
         }
     }
