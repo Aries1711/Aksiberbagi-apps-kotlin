@@ -1,6 +1,8 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -123,41 +125,52 @@ class LoginActivity : AppCompatActivity() {
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
                         try {
-                            if (response?.getString("message")
-                                    .equals("Nomor telepon tidak terdaftar")
-                            ) {
-                                layoutPhone.requestFocus()
-                                layoutPhone.boxStrokeColor = getColor(
-                                    this@LoginActivity,
-                                    R.color.error_color
-                                )
-                                layoutPhone.helperText = response?.getString("message")
-                            } else if (response?.getString("message")
-                                    .equals("Data donatur ditemukan")
-                            ) {
+                            if (response?.getString("message").equals("Data donatur ditemukan")) {
                                 val data: JSONObject? = response?.getJSONObject("data")
                                 val donaturJson: JSONObject? = data?.getJSONObject("donatur")
-                                val toast = Toast.makeText(
-                                    applicationContext, donaturJson?.getString(
-                                        "tbldonatur_nama"
-                                    ), Toast.LENGTH_LONG
-                                )
-                                toast.show()
+
+                                //save token and donatur id on preferences
+                                val token: String? = data?.getString("token")
+                                val donatur: String? = donaturJson?.getString("tbldonatur_id")
+                                val preferences: SharedPreferences =
+                                    this@LoginActivity.getSharedPreferences("MY_APP",Context.MODE_PRIVATE)
+                                    preferences.edit().putString("TOKEN", token).apply()
+                                    preferences.edit().putString("DONATUR_ID", donatur).apply()
+                                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
                             }
                         } catch (e: JSONException) {
                             val toast = Toast.makeText(
                                 applicationContext,
-                                "Kesalahan Try",
+                                "Kesalahan pengaturan kondisi di try",
                                 Toast.LENGTH_LONG
                             )
                             toast.show()
                         }
                     }
 
-                    override fun onError(anError: ANError? ) {
+                    override fun onError(anError: ANError?) {
                         val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                        if (apiError?.message == "Nomor telepon tidak terdaftar"){
-                            val toast = Toast.makeText(applicationContext, "Nomor Tidak terdaftar oke okee", Toast.LENGTH_LONG)
+                        if (apiError?.message == "Nomor telepon tidak terdaftar") {
+                            layoutPhone.requestFocus()
+                            layoutPhone.boxStrokeColor = getColor(
+                                this@LoginActivity,
+                                R.color.error_color
+                            )
+                            layoutPhone.helperText = apiError?.message
+                        } else if (apiError?.message == "Password yang dimasukkan salah") {
+                            layoutPass.requestFocus()
+                            layoutPass.boxStrokeColor = getColor(
+                                this@LoginActivity,
+                                R.color.error_color
+                            )
+                            layoutPass.helperText = apiError?.message
+                        } else {
+                            var kodeError: Int? = apiError?.kode
+                            val toast = Toast.makeText(
+                                applicationContext,
+                                "Kesalahan kode $kodeError",
+                                Toast.LENGTH_LONG
+                            )
                             toast.show()
                         }
                         Log.d(TAG, "OnErrorBody " + anError?.errorBody)
