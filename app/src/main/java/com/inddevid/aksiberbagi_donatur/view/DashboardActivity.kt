@@ -2,6 +2,7 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -9,6 +10,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 
 
 class DashboardActivity : AppCompatActivity() {
@@ -21,6 +23,17 @@ class DashboardActivity : AppCompatActivity() {
         val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavAksiberbagi)
         val navController = findNavController(R.id.fragment)
         bottomNav.setupWithNavController(navController)
+
+
+        //retrive token from preference
+        val sharedPreference: Preferences = Preferences(this)
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+        val toast = Toast.makeText(
+            applicationContext,
+            retrivedToken,
+            Toast.LENGTH_LONG
+        )
+        toast.show()
 
         //retrieve intent from PenggunaIndex
         var valuePengguna: String? = intent.getStringExtra("penggunaAktif")

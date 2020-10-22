@@ -1,8 +1,6 @@
 package com.inddevid.aksiberbagi_donatur.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +13,7 @@ import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.ApiService
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -34,10 +33,19 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         //cek if user have token or not
-        val preferences: SharedPreferences = this.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-        val retrivedToken = preferences.getString("TOKEN", null)
+        val sharedPreference: Preferences = Preferences(this)
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+
+
+        Log.d(TAG, "OnCatchTokenPreference $retrivedToken")
 
         if (retrivedToken != null){
+            val toast = Toast.makeText(
+                applicationContext,
+                "Token tidak Kosong $retrivedToken",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
             refreshToken(retrivedToken)
         }else{
             //redirect to intro page
@@ -54,39 +62,61 @@ class SplashActivity : AppCompatActivity() {
 
     private fun refreshToken(tokenValue: String){
         val header : String = tokenValue
+        val sharedPreference: Preferences = Preferences(this)
         try {
             ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     try {
                         if (response?.getString("message").equals("Refresh berhasil")){
                             val token : String? = response?.getString("token")
-                            val preferences: SharedPreferences =
-                                this@SplashActivity.getSharedPreferences("MY_APP",Context.MODE_PRIVATE)
-                            preferences.edit().putString("TOKEN", token).apply()
-                            //redirect to intro page
-                            Looper.myLooper()?.let {
-                                Handler(it).postDelayed({
-                                    val intent = Intent(this@SplashActivity, DashboardActivity::class.java)
-                                    startActivity(intent)
-                                }, 2500)
+                            Log.d(TAG, "OnErrorCode $token")
+                            //save token
+                            if (token != null) {
+                                sharedPreference.save("TOKEN", token)
+                                //redirect to Beranda page
+                                Looper.myLooper()?.let {
+                                    Handler(it).postDelayed({
+                                        val intent = Intent(this@SplashActivity, DashboardActivity::class.java)
+                                        startActivity(intent)
+                                    }, 2500)
+                                }
+                            }else{
+                                Looper.myLooper()?.let {
+                                    Handler(it).postDelayed({
+                                        val intent = Intent(this@SplashActivity, IntroActivity::class.java)
+                                        startActivity(intent)
+                                    }, 2500)
+                                }
                             }
-                        }else{
+                        }else if(response?.getString("message").equals("Token expired.")){
                             val toast = Toast.makeText(
                                 applicationContext,
-                                "Response berhasil but message unknown",
+                                "Token Expired",
                                 Toast.LENGTH_LONG
                             )
                             toast.show()
+                        }else{
+                            Looper.myLooper()?.let {
+                                Handler(it).postDelayed({
+                                    val intent = Intent(this@SplashActivity, IntroActivity::class.java)
+                                    startActivity(intent)
+                                }, 2500)
+                            }
                         }
 
                     }catch (e : JSONException){
-
+                        val toast = Toast.makeText(
+                            applicationContext,
+                            "Invalid Json",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
                     }
                 }
                 override fun onError(anError: ANError?) {
                     val toast = Toast.makeText(
                         applicationContext,
-                        "Response error",
+                        "Koneksi Error",
                         Toast.LENGTH_LONG
                     )
                     toast.show()

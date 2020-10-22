@@ -1,8 +1,6 @@
 package com.inddevid.aksiberbagi_donatur.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -118,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
         layoutPass: TextInputLayout
     ){
         val body = JSONObject()
+        val sharedPreference: Preferences = Preferences(this)
         try {
             body.put("nomor_telepon", phone)
             body.put("password", password)
@@ -127,16 +127,13 @@ class LoginActivity : AppCompatActivity() {
                         try {
                             if (response?.getString("message").equals("Data donatur ditemukan")) {
                                 val data: JSONObject? = response?.getJSONObject("data")
-                                val donaturJson: JSONObject? = data?.getJSONObject("donatur")
+                                val token: String? = data?.getString("token")
 
                                 //save token and donatur id on preferences
-                                val token: String? = data?.getString("token")
-                                val donatur: String? = donaturJson?.getString("tbldonatur_id")
-                                val preferences: SharedPreferences =
-                                    this@LoginActivity.getSharedPreferences("MY_APP",Context.MODE_PRIVATE)
-                                    preferences.edit().putString("TOKEN", token).apply()
-                                    preferences.edit().putString("DONATUR_ID", donatur).apply()
-                                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                                if (token != null) {
+                                    sharedPreference.save("TOKEN", token)
+                                    startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                                }
                             }
                         } catch (e: JSONException) {
                             val toast = Toast.makeText(

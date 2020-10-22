@@ -102,7 +102,7 @@ public class ApiService {
     public static ANRequest postRefreshToken(String data){
         token = data ;
         JSONObject json = null;
-        String endpoint = baseUrl("autentikasi/refresh-token/");
+        String endpoint = baseUrl("autentikasi/refresh-token");
         return post(endpoint);
     }
 
