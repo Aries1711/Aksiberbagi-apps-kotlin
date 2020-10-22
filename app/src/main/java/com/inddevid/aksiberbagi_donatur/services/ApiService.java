@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 public class ApiService {
 
+    static String token ;
     /**
      * Get base url (full url)
      *
@@ -39,7 +40,17 @@ public class ApiService {
     public static ANRequest post(String endpoint, JSONObject data){
         return AndroidNetworking.post(endpoint)
                 .addJSONObjectBody(data)
-                .addHeaders("Accept", "application/json").build();
+                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).build();
+    }
+
+    /**
+     * Post http request
+     *
+     * @return ANRequest
+     */
+    public static ANRequest post(String endpoint){
+        return AndroidNetworking.post(endpoint)
+                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).build();
     }
 
     /**
@@ -86,6 +97,13 @@ public class ApiService {
     public static ANRequest postMasuk(JSONObject data){
         String endpoint = baseUrl("autentikasi/masuk");
         return post(endpoint, data);
+    }
+
+    public static ANRequest postRefreshToken(String data){
+        token = data ;
+        JSONObject json = null;
+        String endpoint = baseUrl("autentikasi/refresh-token/");
+        return post(endpoint);
     }
 
 }

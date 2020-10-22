@@ -1,16 +1,26 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.ApiService
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class SplashActivity : AppCompatActivity() {
+    private val TAG = "SplashActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
@@ -22,12 +32,77 @@ class SplashActivity : AppCompatActivity() {
 
         //code for noActionbar
         supportActionBar?.hide()
-        //redirect to intro page
-        Looper.myLooper()?.let {
-            Handler(it).postDelayed({
-                val intent = Intent (this@SplashActivity, IntroActivity::class.java)
-                startActivity(intent)
-            }, 2500)
+
+        //cek if user have token or not
+        val preferences: SharedPreferences = this.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        val retrivedToken = preferences.getString("TOKEN", null)
+
+        if (retrivedToken != null){
+            refreshToken(retrivedToken)
+        }else{
+            //redirect to intro page
+            Looper.myLooper()?.let {
+                Handler(it).postDelayed({
+                    val intent = Intent(this@SplashActivity, IntroActivity::class.java)
+                    startActivity(intent)
+                }, 2500)
+            }
+
+        }
+
+    }
+
+    private fun refreshToken(tokenValue: String){
+        val header : String = tokenValue
+        try {
+            ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    try {
+                        if (response?.getString("message").equals("Refresh berhasil")){
+                            val token : String? = response?.getString("token")
+                            val preferences: SharedPreferences =
+                                this@SplashActivity.getSharedPreferences("MY_APP",Context.MODE_PRIVATE)
+                            preferences.edit().putString("TOKEN", token).apply()
+                            //redirect to intro page
+                            Looper.myLooper()?.let {
+                                Handler(it).postDelayed({
+                                    val intent = Intent(this@SplashActivity, DashboardActivity::class.java)
+                                    startActivity(intent)
+                                }, 2500)
+                            }
+                        }else{
+                            val toast = Toast.makeText(
+                                applicationContext,
+                                "Response berhasil but message unknown",
+                                Toast.LENGTH_LONG
+                            )
+                            toast.show()
+                        }
+
+                    }catch (e : JSONException){
+
+                    }
+                }
+                override fun onError(anError: ANError?) {
+                    val toast = Toast.makeText(
+                        applicationContext,
+                        "Response error",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
+
+            })
+        }catch (e: JSONException){
+            val toast = Toast.makeText(
+                applicationContext,
+                "Kesalahan Header",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
         }
     }
 }
