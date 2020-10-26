@@ -99,6 +99,11 @@ public class ApiService {
         return post(endpoint, data);
     }
 
+    public static ANRequest postDaftar(JSONObject data){
+        String endpoint = baseUrl("autentikasi/daftar");
+        return post(endpoint, data);
+    }
+
     public static ANRequest postRefreshToken(String data){
         token = data ;
         JSONObject json = null;

@@ -1,19 +1,21 @@
 package com.inddevid.aksiberbagi_donatur.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
+import org.json.JSONException
 import org.json.JSONObject
 
 class SignUpActivity : AppCompatActivity() {
-    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
@@ -34,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
         var passwordLayout: TextInputLayout = findViewById(R.id.passwordLayout)
 
         var passwordConfirmInput: TextInputEditText = findViewById(R.id.passwordConfirmationInput)
-        var passwordConfirmLayout: TextInputLayout = findViewById(R.id.passwordConfirmationInput)
+        var passwordConfirmLayout: TextInputLayout = findViewById(R.id.passwordConfirmationLayout)
 
 
         val submitSignUp: Button = findViewById(R.id.signupSubmit)
@@ -78,6 +80,12 @@ class SignUpActivity : AppCompatActivity() {
             passwordLayout.requestFocus()
             passwordLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
             passwordConfirmLayout.helperText = " Konfirmasi Password Tidak Boleh Kosong"
+        }else if (password != confirm){
+            passwordLayout.requestFocus()
+            passwordLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+            passwordConfirmLayout.helperText = " Konfirmasi Password Tidak Sama"
+        }else{
+            submitSignup(phone,fullname,password,confirm,phoneLayout,fullnameLayout, passwordLayout,passwordConfirmLayout)
         }
     }
 
@@ -93,5 +101,25 @@ class SignUpActivity : AppCompatActivity() {
     ){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
+
+        try{
+            body.put("nomor_telepon", phone)
+            body.put("password", password)
+            body.put("konfirmasi_password", confirm)
+            body.put("nama_lengkap", fullname)
+            ApiService.postDaftar(body)
+                .getAsJSONObject(object : JSONObjectRequestListener{
+                    override fun onResponse(response: JSONObject?) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onError(anError: ANError?) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+        }catch (e: JSONException){
+
+        }
     }
 }
