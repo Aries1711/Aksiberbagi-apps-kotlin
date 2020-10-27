@@ -2,6 +2,9 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -10,12 +13,14 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
 import org.json.JSONObject
 
 class SignUpActivity : AppCompatActivity() {
+    private val TAG = "SignUpActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
@@ -45,9 +50,65 @@ class SignUpActivity : AppCompatActivity() {
             var fullname:String = fullnameInput.text.toString()
             var password:String = passwordInput.text.toString()
             var confirmation:String = passwordConfirmInput.text.toString()
-
             validateForm(phone, fullname,password,confirmation, phoneLayout, fullnameLayout,passwordLayout, passwordConfirmLayout )
         }
+
+        phoneInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //do your stuff
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                phoneLayout.boxStrokeColor = ContextCompat.getColor(
+                    this@SignUpActivity,
+                    R.color.colorIndicatorPrimary
+                )
+                phoneLayout.helperText = ""
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                //do your stuff
+            }
+
+        })
+
+        passwordInput.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //do your stuff
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                passwordLayout.boxStrokeColor = ContextCompat.getColor(
+                    this@SignUpActivity,
+                    R.color.colorIndicatorPrimary
+                )
+                passwordLayout.helperText = ""
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                //do your stuff
+            }
+
+        })
+
+        passwordConfirmInput.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //do your stuff
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                passwordConfirmLayout.boxStrokeColor = ContextCompat.getColor(
+                    this@SignUpActivity,
+                    R.color.colorIndicatorPrimary
+                )
+                passwordConfirmLayout.helperText = ""
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                //do your stuff
+            }
+
+        })
     }
 
     private fun validateForm(
@@ -62,9 +123,8 @@ class SignUpActivity : AppCompatActivity() {
         passwordConfirmLayout: TextInputLayout
 
     ){
-        if (phone != "" && fullname != "" && password != "" && confirm != ""){
-            submitSignup(phone,fullname, password , confirm, phoneLayout, fullnameLayout, passwordLayout,passwordConfirmLayout)
-        }else if (phone == ""){
+
+        if (phone == ""){
             phoneLayout.requestFocus()
             phoneLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
             phoneLayout.helperText = "Harap Masukkan No Telepon"
@@ -77,12 +137,12 @@ class SignUpActivity : AppCompatActivity() {
             passwordLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
             passwordLayout.helperText = "Password Tidak Boleh Kosong"
         }else if (confirm == ""){
-            passwordLayout.requestFocus()
-            passwordLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+            passwordConfirmLayout.requestFocus()
+            passwordConfirmLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
             passwordConfirmLayout.helperText = " Konfirmasi Password Tidak Boleh Kosong"
         }else if (password != confirm){
-            passwordLayout.requestFocus()
-            passwordLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+            passwordConfirmLayout.requestFocus()
+            passwordConfirmLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
             passwordConfirmLayout.helperText = " Konfirmasi Password Tidak Sama"
         }else{
             submitSignup(phone,fullname,password,confirm,phoneLayout,fullnameLayout, passwordLayout,passwordConfirmLayout)
@@ -110,11 +170,41 @@ class SignUpActivity : AppCompatActivity() {
             ApiService.postDaftar(body)
                 .getAsJSONObject(object : JSONObjectRequestListener{
                     override fun onResponse(response: JSONObject?) {
-                        TODO("Not yet implemented")
+                        try{
+                            if(response?.getString("message").equals("Donatur berhasil mendaftar")){
+                                val data: JSONObject? = response?.getJSONObject("data")
+                                val token: String? = data?.getString("token")
+
+                                //save token and donatur id on preferences
+                                if (token != null) {
+                                    sharedPreference.save("TOKEN", token)
+                                    startActivity(Intent(this@SignUpActivity, DashboardActivity::class.java))
+                                }
+                            }
+                        }catch (e: JSONException){
+
+                        }
                     }
 
                     override fun onError(anError: ANError?) {
-                        TODO("Not yet implemented")
+                        val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                        if(apiError?.message == "Nomor telepon telah terdaftar"){
+                            phoneLayout.requestFocus()
+                            phoneLayout.boxStrokeColor = ContextCompat.getColor(this@SignUpActivity, R.color.error_color)
+                            phoneLayout.helperText = "Nomor telepon telah terdaftar"
+                        }
+
+//
+//                        try {
+//                            val jsonObject: JSONObject = apiError?.message.
+//
+//                        }catch (e: JSONException){
+//
+//                        }
+
+                        Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                        Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                        Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
                     }
 
                 })
@@ -123,3 +213,4 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 }
+
