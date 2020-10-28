@@ -2,6 +2,7 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.*
 import com.inddevid.aksiberbagi_donatur.presenter.*
+import com.inddevid.aksiberbagi_donatur.services.ApiService
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +41,8 @@ class BerandaIndex : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private val TAG = "Fragment Beranda"
+    private val arrayRekomendasi = ArrayList<BerandaProgramPilihan>()
     private var berandaSlideAdapter = BerandaSlideAdapter(
         listOf(
             BerandaSlideBanner(
@@ -62,6 +70,13 @@ class BerandaIndex : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //retrieved token from preseference
+        val sharedPreference: Preferences = Preferences(requireContext())
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+
+        if(retrivedToken != null){
+            getProgramRekomendasi(retrivedToken)
+        }
 
         val imageLe:String = "https://photo.kontan.co.id/photo/2019/10/15/233819550p.jpg"
         val hargaLe:String = "978.876,00"
@@ -73,15 +88,15 @@ class BerandaIndex : Fragment() {
         val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
 
         //deklarasi variabel sementara untuk array program pilihan (Recycler view)
-        val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
-        val titleCardPilihan:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
-        val donasiFund:String = "100.789"
-        val donasiDayFund:String = "37 hari lagi"
-        val arrayPilihan = ArrayList<BerandaProgramPilihan>()
-        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
-        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
-        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
-        val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayPilihan, requireActivity())
+//        val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
+//        val titleCardPilihan:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
+//        val donasiFund:String = "100.789"
+//        val donasiDayFund:String = "37 hari lagi"
+//        val arrayPilihan = ArrayList<BerandaProgramPilihan>()
+//        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
+//        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
+//        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
+        val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
 
         //deklarasi variabel sementara untuk array laporan (Recycler view)
         val imageReportUrl:String = "https://aksiberbagi.com/storage/program/berita/851c06263eaaeea0a3dd445cc823874c_WhatsApp%20Image%202020-06-20%20at%2011.49.08.jpeg"
@@ -247,6 +262,33 @@ class BerandaIndex : Fragment() {
         }
     }
 
+    private fun getProgramRekomendasi(tokenValue: String){
+        val header : String = tokenValue
+        ApiService.getRekomendasi(header).getAsJSONObject(object : JSONObjectRequestListener {
+            override fun onResponse(response: JSONObject?) {
+                val jsonArray = response?.getJSONArray("data");
+                if (jsonArray?.length()!! > 0){
+                    for (i in 0 until jsonArray.length()){
+                        val item = jsonArray.getJSONObject(i)
+                        val program = item?.getJSONObject("program")
+                        val img: String? = program?.getString("thumbnail_url")
+                        val judul: String? = program?.getString("tblprogram_judul")
+                        val donasi: String? = program?.getString("capaian_donasi")
+                        val sisahari: String? = program?.getString("sisa_hari")
+                        arrayRekomendasi.add(BerandaProgramPilihan(img,judul,donasi,sisahari))
+                    }
+                }
+
+            }
+            override fun onError(anError: ANError?) {
+                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+            }
+
+        })
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -267,3 +309,4 @@ class BerandaIndex : Fragment() {
             }
     }
 }
+

@@ -28,7 +28,8 @@ public class ApiService {
      * @return String
      */
     public static ANRequest get(String endpoint){
-        return AndroidNetworking.get(endpoint).addHeaders("Accept", "application/json").build();
+        return AndroidNetworking.get(endpoint)
+                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).build();
     }
 
     /**
@@ -106,9 +107,14 @@ public class ApiService {
 
     public static ANRequest postRefreshToken(String data){
         token = data ;
-        JSONObject json = null;
         String endpoint = baseUrl("autentikasi/refresh-token");
         return post(endpoint);
+    }
+
+    public static ANRequest getRekomendasi(String data){
+        token = data ;
+        String endpoint = baseUrl("slider");
+        return get(endpoint);
     }
 
 }
