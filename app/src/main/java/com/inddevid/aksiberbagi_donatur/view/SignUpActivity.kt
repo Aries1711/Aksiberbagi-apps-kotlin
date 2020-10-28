@@ -19,6 +19,7 @@ import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
 import org.json.JSONObject
 
+
 class SignUpActivity : AppCompatActivity() {
     private val TAG = "SignUpActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +27,19 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.signup_activity)
         supportActionBar?.hide()
         val backButton: Button = findViewById(R.id.closeDaftar)
-        backButton.setOnClickListener{ startActivity(Intent(this@SignUpActivity, IntroActivity::class.java))}
+        backButton.setOnClickListener{ startActivity(
+            Intent(
+                this@SignUpActivity,
+                IntroActivity::class.java
+            )
+        )}
         val masukLogin: Button = findViewById(R.id.btnMasuk)
-        masukLogin.setOnClickListener{ startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))}
+        masukLogin.setOnClickListener{ startActivity(
+            Intent(
+                this@SignUpActivity,
+                LoginActivity::class.java
+            )
+        )}
 
         //variabel submit signup
         var phoneInput: TextInputEditText = findViewById(R.id.phoneInput)
@@ -50,7 +61,16 @@ class SignUpActivity : AppCompatActivity() {
             var fullname:String = fullnameInput.text.toString()
             var password:String = passwordInput.text.toString()
             var confirmation:String = passwordConfirmInput.text.toString()
-            validateForm(phone, fullname,password,confirmation, phoneLayout, fullnameLayout,passwordLayout, passwordConfirmLayout )
+            validateForm(
+                phone,
+                fullname,
+                password,
+                confirmation,
+                phoneLayout,
+                fullnameLayout,
+                passwordLayout,
+                passwordConfirmLayout
+            )
         }
 
         phoneInput.addTextChangedListener(object : TextWatcher {
@@ -72,7 +92,7 @@ class SignUpActivity : AppCompatActivity() {
 
         })
 
-        passwordInput.addTextChangedListener(object: TextWatcher{
+        passwordInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 //do your stuff
             }
@@ -91,7 +111,7 @@ class SignUpActivity : AppCompatActivity() {
 
         })
 
-        passwordConfirmInput.addTextChangedListener(object: TextWatcher{
+        passwordConfirmInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 //do your stuff
             }
@@ -145,7 +165,16 @@ class SignUpActivity : AppCompatActivity() {
             passwordConfirmLayout.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
             passwordConfirmLayout.helperText = " Konfirmasi Password Tidak Sama"
         }else{
-            submitSignup(phone,fullname,password,confirm,phoneLayout,fullnameLayout, passwordLayout,passwordConfirmLayout)
+            submitSignup(
+                phone,
+                fullname,
+                password,
+                confirm,
+                phoneLayout,
+                fullnameLayout,
+                passwordLayout,
+                passwordConfirmLayout
+            )
         }
     }
 
@@ -168,39 +197,51 @@ class SignUpActivity : AppCompatActivity() {
             body.put("konfirmasi_password", confirm)
             body.put("nama_lengkap", fullname)
             ApiService.postDaftar(body)
-                .getAsJSONObject(object : JSONObjectRequestListener{
+                .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        try{
-                            if(response?.getString("message").equals("Donatur berhasil mendaftar")){
+                        try {
+                            if (response?.getString("message")
+                                    .equals("Donatur berhasil mendaftar")
+                            ) {
                                 val data: JSONObject? = response?.getJSONObject("data")
                                 val token: String? = data?.getString("token")
 
                                 //save token and donatur id on preferences
                                 if (token != null) {
                                     sharedPreference.save("TOKEN", token)
-                                    startActivity(Intent(this@SignUpActivity, DashboardActivity::class.java))
+                                    startActivity(
+                                        Intent(
+                                            this@SignUpActivity,
+                                            DashboardActivity::class.java
+                                        )
+                                    )
                                 }
                             }
-                        }catch (e: JSONException){
+                        } catch (e: JSONException) {
 
                         }
                     }
 
                     override fun onError(anError: ANError?) {
                         val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                        if(apiError?.message == "Nomor telepon telah terdaftar"){
+                        if (apiError?.message == "Nomor telepon telah terdaftar") {
                             phoneLayout.requestFocus()
-                            phoneLayout.boxStrokeColor = ContextCompat.getColor(this@SignUpActivity, R.color.error_color)
+                            phoneLayout.boxStrokeColor = ContextCompat.getColor(
+                                this@SignUpActivity,
+                                R.color.error_color
+                            )
                             phoneLayout.helperText = "Nomor telepon telah terdaftar"
                         }
 
-//
-//                        try {
-//                            val jsonObject: JSONObject = apiError?.message.
-//
-//                        }catch (e: JSONException){
-//
-//                        }
+                        val jsonObject = JSONObject(anError?.errorBody);
+                        val jsonArray = jsonObject.getJSONArray("password");
+
+                        if(jsonArray[0] == "The password must be at least 5 characters."){
+                            passwordLayout.requestFocus()
+                            passwordLayout.boxStrokeColor = ContextCompat.getColor(this@SignUpActivity, R.color.error_color)
+                            passwordLayout.helperText = "Password minimal 5 karakter"
+                        }
+
 
                         Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                         Log.d(TAG, "OnErrorCode " + anError?.errorCode)
