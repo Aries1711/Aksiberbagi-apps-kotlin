@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
+import com.androidnetworking.common.Priority;
 
 import org.json.JSONObject;
 
@@ -29,7 +30,7 @@ public class ApiService {
      */
     public static ANRequest get(String endpoint){
         return AndroidNetworking.get(endpoint)
-                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).build();
+                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).setPriority(Priority.HIGH).build();
     }
 
     /**

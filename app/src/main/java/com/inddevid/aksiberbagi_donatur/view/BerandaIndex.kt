@@ -74,10 +74,6 @@ class BerandaIndex : Fragment() {
         val sharedPreference: Preferences = Preferences(requireContext())
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
-        if(retrivedToken != null){
-            getProgramRekomendasi(retrivedToken)
-        }
-
         val imageLe:String = "https://photo.kontan.co.id/photo/2019/10/15/233819550p.jpg"
         val hargaLe:String = "978.876,00"
         val arrayLelang = ArrayList<BerandaLelang>()
@@ -86,17 +82,6 @@ class BerandaIndex : Fragment() {
         arrayLelang.add(BerandaLelang(imageLe, 15,hargaLe))
         arrayLelang.add(BerandaLelang(imageLe, 90,hargaLe))
         val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
-
-        //deklarasi variabel sementara untuk array program pilihan (Recycler view)
-//        val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
-//        val titleCardPilihan:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
-//        val donasiFund:String = "100.789"
-//        val donasiDayFund:String = "37 hari lagi"
-//        val arrayPilihan = ArrayList<BerandaProgramPilihan>()
-//        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
-//        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
-//        arrayPilihan.add(BerandaProgramPilihan(imageUrl,titleCardPilihan,donasiFund,donasiDayFund))
-        val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
 
         //deklarasi variabel sementara untuk array laporan (Recycler view)
         val imageReportUrl:String = "https://aksiberbagi.com/storage/program/berita/851c06263eaaeea0a3dd445cc823874c_WhatsApp%20Image%202020-06-20%20at%2011.49.08.jpeg"
@@ -183,11 +168,13 @@ class BerandaIndex : Fragment() {
         var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
         mainMenuLelang.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
         mainMenuLelang.adapter = myAdapterLelang
-    //inflate horizontal program pilihan
+
+    //inflate horizontal program Rekomendasi
         var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
-        mainMenuPilihan.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
-        mainMenuPilihan.adapter = myAdapterPilihan
-     //inflate horizontal laporan
+        getProgramRekomendasi(retrivedToken, mainMenuPilihan )
+
+
+    //inflate horizontal laporan
         //button lihat semua laporan
         val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
         btnLihatLaporan.setOnClickListener { startActivity(Intent(requireActivity(), SemuaLaporanActivity::class.java)) }
@@ -262,8 +249,8 @@ class BerandaIndex : Fragment() {
         }
     }
 
-    private fun getProgramRekomendasi(tokenValue: String){
-        val header : String = tokenValue
+    private fun getProgramRekomendasi(tokenValue: String?, view: RecyclerView){
+        val header : String? = tokenValue
         ApiService.getRekomendasi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 val jsonArray = response?.getJSONArray("data");
@@ -277,6 +264,9 @@ class BerandaIndex : Fragment() {
                         val sisahari: String? = program?.getString("sisa_hari")
                         arrayRekomendasi.add(BerandaProgramPilihan(img,judul,donasi,sisahari))
                     }
+                    val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
+                    view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+                    view.adapter = myAdapterPilihan
                 }
 
             }

@@ -5,7 +5,7 @@
     android:layout_width="260dp"
     app:cardCornerRadius="5dp"
     android:elevation="5dp"
-    android:layout_height="190dp">
+    android:layout_height="200dp">
     <ImageView
         android:id="@+id/imageProgramPilihan"
         android:layout_width="match_parent"
