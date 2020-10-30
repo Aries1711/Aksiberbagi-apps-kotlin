@@ -36,16 +36,7 @@ class SplashActivity : AppCompatActivity() {
         val sharedPreference: Preferences = Preferences(this)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
-
-        Log.d(TAG, "OnCatchTokenPreference $retrivedToken")
-
         if (retrivedToken != null){
-            val toast = Toast.makeText(
-                applicationContext,
-                "Token tidak Kosong $retrivedToken",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
             refreshToken(retrivedToken)
         }else{
             //redirect to intro page
@@ -55,7 +46,6 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(intent)
                 }, 2500)
             }
-
         }
 
     }
@@ -69,7 +59,6 @@ class SplashActivity : AppCompatActivity() {
                     try {
                         if (response?.getString("message").equals("Refresh berhasil")){
                             val token : String? = response?.getString("token")
-                            Log.d(TAG, "OnErrorCode $token")
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
@@ -80,21 +69,19 @@ class SplashActivity : AppCompatActivity() {
                                         startActivity(intent)
                                     }, 2500)
                                 }
-                            }else{
+                            }
+                        }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
+                            val token : String? = response?.getString("token")
+                            if (token != null) {
+                                sharedPreference.save("TOKEN", token)
+                                //redirect to Beranda page
                                 Looper.myLooper()?.let {
                                     Handler(it).postDelayed({
-                                        val intent = Intent(this@SplashActivity, IntroActivity::class.java)
+                                        val intent = Intent(this@SplashActivity, DashboardActivity::class.java)
                                         startActivity(intent)
                                     }, 2500)
                                 }
                             }
-                        }else if(response?.getString("message").equals("Token expired.")){
-                            val toast = Toast.makeText(
-                                applicationContext,
-                                "Token Expired",
-                                Toast.LENGTH_LONG
-                            )
-                            toast.show()
                         }else{
                             Looper.myLooper()?.let {
                                 Handler(it).postDelayed({
@@ -114,12 +101,12 @@ class SplashActivity : AppCompatActivity() {
                     }
                 }
                 override fun onError(anError: ANError?) {
-                    val toast = Toast.makeText(
-                        applicationContext,
-                        "Koneksi Error",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
+                    Looper.myLooper()?.let {
+                        Handler(it).postDelayed({
+                            val intent = Intent(this@SplashActivity, IntroActivity::class.java)
+                            startActivity(intent)
+                        }, 2500)
+                    }
                     Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                     Log.d(TAG, "OnErrorCode " + anError?.errorCode)
                     Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)

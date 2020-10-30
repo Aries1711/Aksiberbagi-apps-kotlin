@@ -42,7 +42,9 @@ class BerandaIndex : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private val TAG = "Fragment Beranda"
+    private val arrayLelang = ArrayList<BerandaLelang>()
     private val arrayRekomendasi = ArrayList<BerandaProgramPilihan>()
+    private val arrayLaporan = ArrayList<BerandaLaporan>()
     private var berandaSlideAdapter = BerandaSlideAdapter(
         listOf(
             BerandaSlideBanner(
@@ -74,26 +76,7 @@ class BerandaIndex : Fragment() {
         val sharedPreference: Preferences = Preferences(requireContext())
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
-        val imageLe:String = "https://photo.kontan.co.id/photo/2019/10/15/233819550p.jpg"
-        val hargaLe:String = "978.876,00"
-        val arrayLelang = ArrayList<BerandaLelang>()
-        arrayLelang.add(BerandaLelang(imageLe, 34,hargaLe))
-        arrayLelang.add(BerandaLelang(imageLe, 50,hargaLe))
-        arrayLelang.add(BerandaLelang(imageLe, 15,hargaLe))
-        arrayLelang.add(BerandaLelang(imageLe, 90,hargaLe))
-        val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
 
-        //deklarasi variabel sementara untuk array laporan (Recycler view)
-        val imageReportUrl:String = "https://aksiberbagi.com/storage/program/berita/851c06263eaaeea0a3dd445cc823874c_WhatsApp%20Image%202020-06-20%20at%2011.49.08.jpeg"
-        val titleCardReport:String = "Sedekah air untuk pesantren dan .."
-        val summariCardReport:String = "Telah Disalurkan Air ke Ponpes As-syifa"
-        val locationReport:String = "Situbondo, Jawa Timur."
-        val dateReport:String = "27 Sep"
-        val arrayLaporan = ArrayList<BerandaLaporan>()
-        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,locationReport,dateReport))
-        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,locationReport,dateReport))
-        arrayLaporan.add(BerandaLaporan(imageReportUrl,titleCardReport,locationReport,dateReport))
-        val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
 
         //deklarasi variabel sementara untuk array ProgramAll (Recycler view)
         val imageProgram:String = "https://aksiberbagi.com/storage/program/Sedekah%20Terbaik%20untuk%20Anak%20Yatim-banner.jpg"
@@ -166,21 +149,19 @@ class BerandaIndex : Fragment() {
         view.normalCountDownView.startTimer()
     //inflate view card Lelang baik
         var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
-        mainMenuLelang.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
-        mainMenuLelang.adapter = myAdapterLelang
+        getLelangBaik(retrivedToken, mainMenuLelang )
 
     //inflate horizontal program Rekomendasi
         var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
         getProgramRekomendasi(retrivedToken, mainMenuPilihan )
-
 
     //inflate horizontal laporan
         //button lihat semua laporan
         val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
         btnLihatLaporan.setOnClickListener { startActivity(Intent(requireActivity(), SemuaLaporanActivity::class.java)) }
         var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
-        mainMenuLaporan.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
-        mainMenuLaporan.adapter = myAdapterLaporan
+        getLaporanTerbaru(retrivedToken, mainMenuLaporan)
+
      //inflate vertical program All
         var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
         mainMenuAll.layoutManager = LinearLayoutManager(requireActivity())
@@ -249,11 +230,38 @@ class BerandaIndex : Fragment() {
         }
     }
 
+    private fun getLelangBaik(tokenValue: String?, view: RecyclerView){
+        val header : String? = tokenValue
+        ApiService.getLelang(header).getAsJSONObject(object : JSONObjectRequestListener {
+            override fun onResponse(response: JSONObject?) {
+                val jsonArray = response?.getJSONArray("data")
+                if (jsonArray?.length()!! > 0){
+                    for (i in 0 until jsonArray.length()){
+                        val item = jsonArray.getJSONObject(i)
+                        val nominalItem = item?.getJSONObject("nominal")
+                        val img: String? = item?.getString("gambar_url")
+                        val nominal: String? = nominalItem?.getString("nominal_flash_sale")
+                        val stok: String? = item?.getString("stok")
+                        arrayLelang.add(BerandaLelang(img, stok?.toInt(),nominal))
+                    }
+                    val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
+                    view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+                    view.adapter = myAdapterLelang
+                }
+            }
+
+            override fun onError(anError: ANError?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     private fun getProgramRekomendasi(tokenValue: String?, view: RecyclerView){
         val header : String? = tokenValue
         ApiService.getRekomendasi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                val jsonArray = response?.getJSONArray("data");
+                val jsonArray = response?.getJSONArray("data")
                 if (jsonArray?.length()!! > 0){
                     for (i in 0 until jsonArray.length()){
                         val item = jsonArray.getJSONObject(i)
@@ -277,6 +285,34 @@ class BerandaIndex : Fragment() {
             }
 
         })
+    }
+
+    private fun getLaporanTerbaru(tokenValue: String?, view: RecyclerView){
+        val header: String? = tokenValue
+        ApiService.getLaporan(header).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                val jsonArray =response?.getJSONArray("data")
+                if (jsonArray?.length()!! > 0){
+                    for(i in 0 until jsonArray.length()){
+                        val item = jsonArray.getJSONObject(i)
+                        val img: String? = "https://aksiberbagi.com/storage/program/berita/"+item?.getString("tblupdateprogram_file")
+                        val judul: String? = item?.getString("tblupdateprogram_judul")
+                        val lokasi: String? = "unknown"
+                        val date: String? = item?.getString("tblupdateprogam_tanggal")
+                        arrayLaporan.add(BerandaLaporan(img,judul,lokasi,date))
+                        val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
+                        view.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
+                        view.adapter = myAdapterLaporan
+                    }
+                }
+            }
+
+            override fun onError(anError: ANError?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
     }
 
     companion object {

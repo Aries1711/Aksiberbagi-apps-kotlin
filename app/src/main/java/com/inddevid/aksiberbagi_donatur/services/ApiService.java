@@ -112,9 +112,21 @@ public class ApiService {
         return post(endpoint);
     }
 
+    public static ANRequest getLelang(String data){
+        token = data;
+        String endpoint = baseUrl("flashsale");
+        return get(endpoint);
+    }
+
     public static ANRequest getRekomendasi(String data){
         token = data ;
-        String endpoint = baseUrl("slider");
+        String endpoint = baseUrl("slider/rekomendasi");
+        return get(endpoint);
+    }
+
+    public static ANRequest getLaporan(String data){
+        token = data;
+        String endpoint = baseUrl("slider/laporan");
         return get(endpoint);
     }
 

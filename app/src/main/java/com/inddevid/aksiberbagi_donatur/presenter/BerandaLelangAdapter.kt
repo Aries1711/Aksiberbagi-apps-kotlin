@@ -23,8 +23,8 @@ class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context
             .error(R.mipmap.ic_launcher_round)
         fun bindItems(model: BerandaLelang){
             Glide.with(itemView.imageLelang.context).load(model.imgLelang).apply(options).into(itemView.imageLelang)
-            itemView.progressBar.progress = model.progress
-            var sisa:Int = model.progress
+            itemView.progressBar.progress = model.progress!!
+            var sisa:Int = model.progress!!
             itemView.textInsideprogressBar.text = "Tersisa $sisa"
             itemView.hargaLelang.text = model.hargaLelang
         }
