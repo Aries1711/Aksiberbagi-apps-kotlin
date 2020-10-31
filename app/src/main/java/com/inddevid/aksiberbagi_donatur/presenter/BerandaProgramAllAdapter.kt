@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
+import com.inddevid.aksiberbagi_donatur.services.Converter
 import kotlinx.android.synthetic.main.beranda_card_program_all.view.*
 
 class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val context:Context) :
@@ -27,7 +28,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             itemView.titleProgramAll.text = model.title
             itemView.summaryProgramAll.text = model.summary
             itemView.volunteerProgamAll.text = model.volunteer
-            itemView.fundProgramAll.text = model.fund
+            itemView.fundProgramAll.text = Converter.rupiah(model.fund)
 //            itemView.dayProgramAll.text = model.dayFund
         }
     }

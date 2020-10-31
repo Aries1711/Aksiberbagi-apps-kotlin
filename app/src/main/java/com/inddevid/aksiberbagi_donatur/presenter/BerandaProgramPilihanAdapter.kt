@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramPilihan
+import com.inddevid.aksiberbagi_donatur.services.Converter
 import kotlinx.android.synthetic.main.beranda_card_program_pilihan.view.*
 
 class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilihan>, val context: Context) :
@@ -27,7 +28,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
         fun bindItems(model: BerandaProgramPilihan){
             Glide.with(itemView.imageProgramPilihan.context).load(model.img).apply(options).into(itemView.imageProgramPilihan)
             itemView.titleProgramPilihan.text = model.titleChoose
-            itemView.terkumpulCardPilihan.text = model.fund
+            itemView.terkumpulCardPilihan.text = Converter.rupiah(model.fund)
             itemView.sisaDayCardPilihan.text = model.dayFund
 
         }

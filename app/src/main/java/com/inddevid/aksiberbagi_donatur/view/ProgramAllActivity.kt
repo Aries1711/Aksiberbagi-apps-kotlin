@@ -22,7 +22,7 @@ class ProgramAllActivity : AppCompatActivity() {
         val titleAll:String = "Sedekah Terbaik Untuk Anak Yatim"
         val titleSummary:String = "Sesurga bersama Rasulullah"
         val volunteer:String = "Aksiberbagi.com"
-        val fundAll:String = "765.987.079"
+        val fundAll:Double? = 765987079.00
         val dayAll:String = "37 hari lagi"
         val arrayProgramAll = ArrayList<BerandaProgramAll>()
         arrayProgramAll.add(

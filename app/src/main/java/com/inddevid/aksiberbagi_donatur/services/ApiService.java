@@ -130,4 +130,11 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getProgramTerbaru(String data){
+        token = data;
+        String endpoint = baseUrl("slider/program");
+        return get(endpoint);
+    }
+
+
 }
