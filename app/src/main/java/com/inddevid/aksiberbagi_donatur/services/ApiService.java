@@ -90,12 +90,12 @@ public class ApiService {
                 .addHeaders("Accept", "application/json").build();
     }
 
-    /**
-     * Post masuk
-     *
-     * @param data Ini adalah form data masuk
-     * @return ANRequest
-     */
+    public static ANRequest getKoneksi(String data){
+        token = data;
+        String endpoint = baseUrl("koneksi");
+        return get(endpoint);
+    }
+
     public static ANRequest postMasuk(JSONObject data){
         String endpoint = baseUrl("autentikasi/masuk");
         return post(endpoint, data);

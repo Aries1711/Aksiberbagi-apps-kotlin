@@ -2,6 +2,8 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -25,6 +28,7 @@ import com.inddevid.aksiberbagi_donatur.presenter.*
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
+import org.json.JSONException
 import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,6 +50,7 @@ class BerandaIndex : Fragment() {
     private val arrayRekomendasi = ArrayList<BerandaProgramPilihan>()
     private val arrayLaporan = ArrayList<BerandaLaporan>()
     private val arrayProgram = ArrayList<BerandaProgramAll>()
+    private var cekKoneksi : String = "testing"
     private var berandaSlideAdapter = BerandaSlideAdapter(
         listOf(
             BerandaSlideBanner(
@@ -77,11 +82,6 @@ class BerandaIndex : Fragment() {
         val sharedPreference: Preferences = Preferences(requireContext())
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
-
-
-        //deklarasi variabel sementara untuk array ProgramAll (Recycler view)
-
-
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_beranda_index , container, false)
 
@@ -103,7 +103,7 @@ class BerandaIndex : Fragment() {
             startActivity(Intent(requireActivity(), SearchActivity::class.java))
         })
 
-        //        tombol gabung donasi rutin
+        //tombol gabung donasi rutin
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
         btnGbgDonRut.setOnClickListener{ startActivity(Intent(requireActivity(), DonasiRutinActivity::class.java)) }
 
@@ -133,24 +133,7 @@ class BerandaIndex : Fragment() {
             startActivity(Intent(requireActivity(), SapaActivity::class.java))
         }
 
-    //inflate view card Lelang baik
-        var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
-        getLelangBaik(retrivedToken, mainMenuLelang, view )
-
-    //inflate horizontal program Rekomendasi
-        var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
-        getProgramRekomendasi(retrivedToken, mainMenuPilihan )
-
-    //inflate horizontal laporan
-        //button lihat semua laporan
-        val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
-        btnLihatLaporan.setOnClickListener { startActivity(Intent(requireActivity(), SemuaLaporanActivity::class.java)) }
-        var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
-        getLaporanTerbaru(retrivedToken, mainMenuLaporan)
-
-     //inflate vertical program All
-        var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
-        getListProgram(retrivedToken, mainMenuAll)
+        getKoneksi(retrivedToken, view)
 
         //set button lihat semua
         val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
@@ -208,6 +191,37 @@ class BerandaIndex : Fragment() {
                 )
             }
         }
+    }
+
+    private fun getKoneksi(tokenValue: String?, view: View){
+        val header : String? = tokenValue
+        ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                //inflate view card Lelang baik
+                var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
+                getLelangBaik(tokenValue, mainMenuLelang, view )
+
+                //inflate horizontal program Rekomendasi
+                var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
+                getProgramRekomendasi(tokenValue, mainMenuPilihan )
+
+                //inflate horizontal laporan
+                var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
+                getLaporanTerbaru(tokenValue, mainMenuLaporan)
+                //button lihat semua laporan
+                val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
+                btnLihatLaporan.setOnClickListener { startActivity(Intent(requireActivity(), SemuaLaporanActivity::class.java)) }
+
+                //inflate vertical program All
+                var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
+                getListProgram(tokenValue, mainMenuAll)
+            }
+
+            override fun onError(anError: ANError?) {
+                refreshToken(tokenValue, view)
+            }
+
+        })
     }
 
     private fun getLelangBaik(tokenValue: String?, view: RecyclerView, viewT : View){
@@ -326,6 +340,67 @@ class BerandaIndex : Fragment() {
             }
 
         })
+    }
+
+    private fun refreshToken(tokenValue: String?, view: View){
+        val header : String? = tokenValue
+        val sharedPreference: Preferences = Preferences(requireContext())
+        try {
+            ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    try {
+                        if (response?.getString("message").equals("Refresh berhasil")){
+                            val token : String? = response?.getString("token")
+                            //save token
+                            if (token != null) {
+                                sharedPreference.save("TOKEN", token)
+                                getKoneksi(token, view)
+                            }
+                        }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
+                            val token : String? = response?.getString("token")
+                            if (token != null) {
+                                sharedPreference.save("TOKEN", token)
+                                getKoneksi(token, view)
+                            }
+                        }else{
+                            Looper.myLooper()?.let {
+                                Handler(it).postDelayed({
+                                    val intent = Intent(requireContext(), IntroActivity::class.java)
+                                    startActivity(intent)
+                                }, 2500)
+                            }
+                        }
+
+                    }catch (e : JSONException){
+                        val toast = Toast.makeText(
+                            requireContext(),
+                            "Invalid Json",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                    }
+                }
+                override fun onError(anError: ANError?) {
+                    Looper.myLooper()?.let {
+                        Handler(it).postDelayed({
+                            val intent = Intent(requireContext(), IntroActivity::class.java)
+                            startActivity(intent)
+                        }, 2500)
+                    }
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
+
+            })
+        }catch (e: JSONException){
+            val toast = Toast.makeText(
+                requireContext(),
+                "Kesalahan Header",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+        }
     }
 
     companion object {
