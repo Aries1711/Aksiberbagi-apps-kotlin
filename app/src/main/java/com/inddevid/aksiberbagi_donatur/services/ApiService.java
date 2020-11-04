@@ -136,5 +136,11 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getBanner(String data){
+        token = data;
+        String endpoint = baseUrl("pengaturan/banner");
+        return get(endpoint);
+    }
+
 
 }

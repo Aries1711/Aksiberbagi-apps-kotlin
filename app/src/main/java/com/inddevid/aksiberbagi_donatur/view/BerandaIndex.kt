@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -140,8 +137,6 @@ class BerandaIndex : Fragment() {
         btnLihatAllProgram.setOnClickListener{ startActivity(Intent(requireActivity(), ProgramDetailActivity::class.java))}
     //set banner for footer beranda
         var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
-        val imageBanner :ImageView = view.findViewById(R.id.berandaBanner)
-        Glide.with(requireActivity()).load(imgBannerUrl).into(imageBanner)
         return view
     }
 
@@ -215,6 +210,11 @@ class BerandaIndex : Fragment() {
                 //inflate vertical program All
                 var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
                 getListProgram(tokenValue, mainMenuAll)
+
+                val imageBanner :ImageView = view.findViewById(R.id.berandaBanner)
+                val titleBanner : TextView = view.findViewById(R.id.bannerBerandaTitle)
+                getBannerFooter(tokenValue, imageBanner, titleBanner)
+
             }
 
             override fun onError(anError: ANError?) {
@@ -335,6 +335,23 @@ class BerandaIndex : Fragment() {
                 }
             }
 
+            override fun onError(anError: ANError?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun getBannerFooter(tokenValue: String?, image: ImageView, title: TextView){
+        val header: String? = tokenValue
+        ApiService.getBanner(header).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if(response?.getString("message").equals("Data banner berhasil diambil")){
+                    var imgUrl: String? = response?.getString("data")
+                    Glide.with(requireActivity()).load(imgUrl).into(image)
+                    title.text = response?.getString("title")
+                }
+            }
             override fun onError(anError: ANError?) {
                 TODO("Not yet implemented")
             }
