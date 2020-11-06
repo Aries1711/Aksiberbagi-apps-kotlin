@@ -1,6 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramPilihan
 import com.inddevid.aksiberbagi_donatur.services.Converter
+import com.inddevid.aksiberbagi_donatur.services.Preferences
+import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.beranda_card_program_pilihan.view.*
 
 class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilihan>, val context: Context) :
@@ -30,7 +33,6 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
             itemView.titleProgramPilihan.text = model.titleChoose
             itemView.terkumpulCardPilihan.text = Converter.rupiah(model.fund)
             itemView.sisaDayCardPilihan.text = model.dayFund
-
         }
     }
 
@@ -45,5 +47,18 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
+        val sharedPreference: Preferences = Preferences(holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            val model = arrayList[position]
+            sharedPreference.save("idProgram", model.id)
+            sharedPreference.save("img", model.img)
+            sharedPreference.save("judul", model.titleChoose)
+            sharedPreference.save("capaian", model.fund.toString())
+            sharedPreference.save("sisaHari", model.dayFund)
+            sharedPreference.save("tanggalMulai", model.dateStart)
+
+            val mIntent = Intent(context, ProgramDetailActivity::class.java)
+            context.startActivity(mIntent)
+        }
     }
 }

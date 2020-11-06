@@ -216,7 +216,6 @@ class BerandaIndex : Fragment() {
                 getBannerFooter(tokenValue, imageBanner, titleBanner)
 
             }
-
             override fun onError(anError: ANError?) {
                 refreshToken(tokenValue, view)
             }
@@ -265,11 +264,13 @@ class BerandaIndex : Fragment() {
                     for (i in 0 until jsonArray.length()){
                         val item = jsonArray.getJSONObject(i)
                         val program = item?.getJSONObject("program")
+                        val id: String? = program?.getString("tblprogram_id")
                         val img: String? = program?.getString("thumbnail_url")
                         val judul: String? = program?.getString("tblprogram_judul")
                         val donasi: Double? = program?.getString("capaian_donasi")!!.toDouble()
                         val sisahari: String? = program?.getString("sisa_hari")
-                        arrayRekomendasi.add(BerandaProgramPilihan(img,judul,donasi,sisahari))
+                        val tanggalMulai: String? = program?.getString("tanggal_mulai_donasi")
+                        arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai))
                     }
                     val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
                     view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)

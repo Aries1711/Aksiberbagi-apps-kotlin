@@ -7,7 +7,7 @@ class Preferences(val context: Context) {
     private val PREFS_NAME = "kotlincodes"
     val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun save(KEY_NAME: String, text: String) {
+    fun save(KEY_NAME: String, text: String?) {
 
         val editor: SharedPreferences.Editor = sharedPref.edit()
 

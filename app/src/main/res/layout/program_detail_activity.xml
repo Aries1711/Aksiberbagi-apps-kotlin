@@ -70,6 +70,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
                 <TextView
+                    android:id="@+id/titleTextProgram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -78,7 +79,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="30dp"
                     android:textStyle="bold"
-                    android:text="Bantu Kami Bangkit Kembali Dari Efek Kantong Kering Korona"/>
+                    android:text="Program sedekah aksiberbagi"/>
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleHorizontal"
@@ -93,63 +94,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_weight=".2"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rp"
-                            android:layout_marginEnd="5dp"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:layout_marginStart="20dp"
-                            android:textColor="@color/colorInputStrokeBlue"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="890.98,00"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorInputStrokeBlue"/>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_weight=".3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rp"
-                            android:layout_marginEnd="5dp"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorInputStrokeBlue"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="111.890.980"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorInputStrokeBlue"/>
-
-                    </LinearLayout>
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/capaianTextProgram"
                         android:layout_weight=".33"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_weight=".33"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="72"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorInputStrokeBlue"/>
-                    </LinearLayout>
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Rp24321313768"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorInputStrokeBlue"/>
+                    <TextView
+                        android:id="@+id/targetTextProgram"
+                        android:layout_weight=".33"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorInputStrokeBlue"/>
+                    <TextView
+                        android:id="@+id/sisaHariTextProgram"
+                        android:layout_weight=".3"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorInputStrokeBlue"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,7 +131,7 @@
                     android:orientation="horizontal">
                     <TextView
                         android:layout_weight=".33"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Terkumpul"
                         android:textAlignment="center"
@@ -165,7 +139,7 @@
                         android:textColor="@color/colorInputPressFalse"/>
                     <TextView
                         android:layout_weight=".33"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Target"
                         android:textAlignment="center"
@@ -173,7 +147,7 @@
                         android:textColor="@color/colorInputPressFalse"/>
                     <TextView
                         android:layout_weight=".3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Sisa Hari"
                         android:textAlignment="center"
@@ -323,10 +297,11 @@
                         android:layout_marginStart="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cerita"
+                        android:text="Keterangan"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
                     <TextView
+                        android:id="@+id/tanggalMulaiTextProgram"
                         android:layout_weight=".5"
                         android:layout_marginEnd="20dp"
                         android:layout_width="wrap_content"

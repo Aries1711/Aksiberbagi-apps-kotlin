@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ListDonasi
+import com.inddevid.aksiberbagi_donatur.services.Converter
 import kotlinx.android.synthetic.main.donasi_program_item.view.*
 
 class ListDonasiAdapter (val arrayList: ArrayList<ListDonasi>, val context: Context) :
@@ -16,15 +17,14 @@ class ListDonasiAdapter (val arrayList: ArrayList<ListDonasi>, val context: Cont
     class ViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(220, 157)
+            .override(100, 100)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.drawable.pengguna)
 
         fun bindItems(model: ListDonasi){
             Glide.with(itemView.imageDonatur.context).load(model.imgDonatur).apply(options).into(itemView.imageDonatur)
             itemView.nameDonatur.text = model.name
-            val money:String = model.donate
-            itemView.amountDonatur.text = "Rp $money"
+            itemView.amountDonatur.text = Converter.rupiah(model.donate)
             if (model.pray == ""){
                hidden(itemView.prayDonatur)
             }else{

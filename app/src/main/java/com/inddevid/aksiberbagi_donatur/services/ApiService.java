@@ -142,5 +142,16 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getProgramDetail(String data, String id){
+        token = data;
+        String endpoint = baseUrl("program/"+ id);
+        return get(endpoint);
+    }
+
+    public static ANRequest getDonatur(String data, String id){
+        token = data;
+        String endpoint = baseUrl("program/200-donasi-terbaru/"+ id);
+        return get(endpoint);
+    }
 
 }
