@@ -9,8 +9,7 @@
     tools:context=".view.ProgramDetailActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        >
+        android:layout_height="190dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -35,8 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/program_detail_menu"></androidx.appcompat.widget.Toolbar>
-
+                app:menu="@menu/program_detail_menu"/>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnAddFavorit"
                 android:layout_width="wrap_content"
@@ -423,7 +421,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:text="Donasi"
+                        android:text="Donatur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
@@ -433,7 +431,8 @@
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:text="(12)"
+                        android:id="@+id/jumlahDonasiTextProgram"
+                        android:text="(0)"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"

@@ -37,15 +37,15 @@ class ProgramDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val unit : Unit = setContentView(R.layout.program_detail_activity)
+        setContentView(R.layout.program_detail_activity)
 
         val sharedPreference: Preferences = Preferences(this)
         val imageProgram: ImageView = findViewById(R.id.toolbarImage)
         var allDonasi = findViewById<RecyclerView>(R.id.totalDonasiRecycler)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         val idProgram: String? = sharedPreference.getValueString("idProgram")
-
-        getKoneksi(retrivedToken, idProgram ,allDonasi)
+        val textJumlahDonatur: TextView = findViewById(R.id.jumlahDonasiTextProgram)
+        getKoneksi(retrivedToken, idProgram ,allDonasi, textJumlahDonatur)
 
         //appbar background Image options
         val options: RequestOptions = RequestOptions()
@@ -108,7 +108,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
 
         //Array pilihan nominal donasi
-        val nominalItems = listOf("Pilih Nominal Donasi","Rp 50000 Semua Bisa Sedekah",
+        val nominalItems = arrayListOf("Pilih Nominal Donasi","Rp 50000 Semua Bisa Sedekah",
             "Rp 100000 Sedekah Pilihan", "Rp 250000 Sedekah Terbaik", "Rp 500000 Sedekah Berkah",
             "Rp 1000000 Sedekah Pilihan", "Masukkan Nominal Lain")
         val adapterNominal = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, nominalItems)
@@ -164,9 +164,9 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         btnLanjutPembayaran.setOnClickListener { startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java)) }
 
-
         btnDonasi.setOnClickListener {
             dialogPembayaran.show()
+//            getPilihanNominal(retrivedToken, view)
         }
 
         btnDonasiClose.setOnClickListener {
@@ -217,19 +217,20 @@ class ProgramDetailActivity : AppCompatActivity() {
     }
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
-    private fun getKoneksi(tokenValue: String?, idProgram: String?, donatur: RecyclerView){
+    private fun getKoneksi(tokenValue: String?, idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-                getDonaturProgramA(tokenValue, idProgram ,donatur)
+                getDonaturProgramA(tokenValue, idProgram ,donatur, jumlahDonatur)
             }
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue ,idProgram ,donatur)
+                refreshToken(tokenValue ,idProgram ,donatur, jumlahDonatur)
             }
 
         })
     }
-    private fun refreshToken(tokenValue: String?,idProgram: String?, donatur: RecyclerView){
+
+    private fun refreshToken(tokenValue: String?,idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
         try {
@@ -241,13 +242,13 @@ class ProgramDetailActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonaturProgramA(tokenValue, idProgram ,donatur)
+                                getDonaturProgramA(tokenValue, idProgram ,donatur, jumlahDonatur)
                             }
                         }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
                             val token : String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonaturProgramA(tokenValue, idProgram ,donatur)
+                                getDonaturProgramA(tokenValue, idProgram ,donatur,jumlahDonatur)
                             }
                         }else{
                             Looper.myLooper()?.let {
@@ -290,10 +291,12 @@ class ProgramDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDonaturProgramA(tokenValue: String?, idProgram: String?, donatur: RecyclerView){
+    private fun getDonaturProgramA(tokenValue: String?, idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView){
         ApiService.getDonatur(tokenValue,idProgram).getAsJSONObject(object:JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val jsonArray =response?.getJSONArray("data")
+                val totalDonatur: String? = response?.getString("total_donatur")
+                jumlahDonatur.text = "($totalDonatur)"
                 if (jsonArray?.length()!! > 0){
                     for(i in 0 until 5){
                         val item = jsonArray.getJSONObject(i)
@@ -314,6 +317,10 @@ class ProgramDetailActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun getPilihanNominal(tokenValue: String?, view: View){
+
     }
 }
 
