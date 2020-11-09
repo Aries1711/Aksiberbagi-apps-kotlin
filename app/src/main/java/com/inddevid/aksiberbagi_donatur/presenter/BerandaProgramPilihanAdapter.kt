@@ -23,7 +23,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
 //        aturan untuk mengambil gambar etc resolusi dll
         private val options: RequestOptions = RequestOptions()
         .centerCrop()
-        .override(275, 135)
+        .override(275, 140)
         .placeholder(R.mipmap.ic_launcher_round)
         .error(R.mipmap.ic_launcher_round)
 //        fungsi untuk mengikat model dengan view yang akan ditampilkan pada recyclerView

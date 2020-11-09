@@ -1,6 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
 import com.inddevid.aksiberbagi_donatur.services.Converter
+import com.inddevid.aksiberbagi_donatur.services.Preferences
+import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.beranda_card_program_all.view.*
 
 class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val context:Context) :
@@ -19,7 +22,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(220, 157)
+            .override(220, 170)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
@@ -47,9 +50,22 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
 
     override fun onBindViewHolder(holder: BerandaProgramAllAdapter.ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
-
-        if (position == 2){
+        if (position == 4){
             holder.itemView.programAllLineList.invisible()
+        }
+
+        val sharedPreference: Preferences = Preferences(holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            val model = arrayList[position]
+            sharedPreference.save("idProgram", model.id)
+            sharedPreference.save("img", model.img)
+            sharedPreference.save("judul", model.title)
+            sharedPreference.save("capaian", model.fund.toString())
+            sharedPreference.save("sisaHari", model.dayFund)
+            sharedPreference.save("tanggalMulai", model.startFund)
+
+            val mIntent = Intent(context, ProgramDetailActivity::class.java)
+            context.startActivity(mIntent)
         }
     }
 }

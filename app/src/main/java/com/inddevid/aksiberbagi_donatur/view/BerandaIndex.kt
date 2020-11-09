@@ -323,12 +323,15 @@ class BerandaIndex : Fragment() {
                 if (jsonArray?.length()!! > 0){
                     for(i in 0 until jsonArray.length()){
                         val item = jsonArray.getJSONObject(i)
+                        val idProgram = item?.getString("tblprogram_id")
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
                         val ringkasan = item?.getString("tblprogram_ringkasan")
                         val volunter: String? = "Aksiberbagi.com"
                         val capaian = item?.getString("capaian_donasi")!!.toDouble()
-                        arrayProgram.add(BerandaProgramAll(img, judul,ringkasan,volunter,capaian/**,dayAll*/))
+                        val sisaHari = item?.getString("sisa_hari")
+                        val startProgram = item?.getString("tanggal_mulai_donasi")
+                        arrayProgram.add(BerandaProgramAll(idProgram,img,judul,ringkasan,volunter,capaian,sisaHari, startProgram))
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram,requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity())
                         view.adapter = myAdapterAll

@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ListDonasi
 import com.inddevid.aksiberbagi_donatur.presenter.ListDonasiAdapter
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Converter
 import com.inddevid.aksiberbagi_donatur.services.Preferences
@@ -34,6 +35,7 @@ class ProgramDetailActivity : AppCompatActivity() {
 
     private val arrayDonatur = ArrayList<ListDonasi>()
     private val TAG = "Program Detail"
+    private val nominalItems: ArrayList<String> = arrayListOf("Pilih Nominal Donasi")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         val idProgram: String? = sharedPreference.getValueString("idProgram")
         val textJumlahDonatur: TextView = findViewById(R.id.jumlahDonasiTextProgram)
-        getKoneksi(retrivedToken, idProgram ,allDonasi, textJumlahDonatur)
 
         //appbar background Image options
         val options: RequestOptions = RequestOptions()
@@ -105,15 +106,11 @@ class ProgramDetailActivity : AppCompatActivity() {
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
+
+        //ambil semua atribut nilai yang di tampilkan dari database server
         val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
-
-        //Array pilihan nominal donasi
-        val nominalItems = arrayListOf("Pilih Nominal Donasi","Rp 50000 Semua Bisa Sedekah",
-            "Rp 100000 Sedekah Pilihan", "Rp 250000 Sedekah Terbaik", "Rp 500000 Sedekah Berkah",
-            "Rp 1000000 Sedekah Pilihan", "Masukkan Nominal Lain")
-        val adapterNominal = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, nominalItems)
-        pilihNominal.adapter = adapterNominal
-
+        getKoneksi(retrivedToken, idProgram ,allDonasi, textJumlahDonatur,pilihNominal)
+        Log.d(TAG, "value pada pilihan nominal $nominalItems")
         //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
         var spinnerPilihNominal : String? = ""
 
@@ -140,13 +137,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
         var imgPilihan: String? = intent.getStringExtra("imagePilihan")
-        var spinner: String? = intent.getStringExtra("spinner")
-
-        if (spinner == "Masukkan Nominal Lain"){
-            pilihNominal.setSelection(adapterNominal.getPosition("Masukkan Nominal Lain"))
-        }else{
-            pilihNominal.setSelection(adapterNominal.getPosition("Pilih Nominal Donasi"))
-        }
 
         if (dialogPembayaranAktif == "true"  && pilihanPembayaran != ""){
             dialogPembayaran.show()
@@ -166,7 +156,6 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         btnDonasi.setOnClickListener {
             dialogPembayaran.show()
-//            getPilihanNominal(retrivedToken, view)
         }
 
         btnDonasiClose.setOnClickListener {
@@ -215,13 +204,15 @@ class ProgramDetailActivity : AppCompatActivity() {
     private fun hidden(view: View){
         view.visibility = View.INVISIBLE
     }
+
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
-    private fun getKoneksi(tokenValue: String?, idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView){
+    private fun getKoneksi(tokenValue: String?, idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView, spinner: Spinner){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 getDonaturProgramA(tokenValue, idProgram ,donatur, jumlahDonatur)
+                getNominal(tokenValue,idProgram,spinner)
             }
             override fun onError(anError: ANError?) {
                 refreshToken(tokenValue ,idProgram ,donatur, jumlahDonatur)
@@ -319,8 +310,46 @@ class ProgramDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun getPilihanNominal(tokenValue: String?, view: View){
+    private fun getNominal(tokenValue: String?, idProgram: String?, spinner: Spinner ){
+            ApiService.getPilihanNominal(tokenValue,idProgram).getAsJSONObject(object :JSONObjectRequestListener{
+                override fun onResponse(response: JSONObject?) {
+                    val jsonArray = response?.getJSONArray("data")
+                    if (jsonArray?.length()!! > 0){
+                        for (i in 0 until jsonArray.length()){
+                            val item = jsonArray.getJSONObject(i)
+                            val nominalRaw = item?.getString("tblnominal_nominal")!!.toDouble()
+                            val nominal = Converter.rupiah(nominalRaw)
+                            val keterangan = item?.getString("tblnominal_keterangan")
+                            val pilihanAdapter = "$nominal $keterangan"
+                            nominalItems.add(pilihanAdapter)
+                        }
+                        var spinnerString: String? = intent.getStringExtra("spinner")
+                        nominalItems.add("Masukkan Nominal Lain")
+                        val adapterNominal = ArrayAdapter(this@ProgramDetailActivity, R.layout.list_pilih_program_dropdown, nominalItems)
+                        spinner.adapter = adapterNominal
 
+                        nominalItems.forEach{
+                            if (spinnerString == it){
+                                spinner.setSelection(adapterNominal.getPosition(it))
+                            }
+                        }
+//                        if (spinnerString == "Masukkan Nominal Lain"){
+//                            spinner.setSelection(adapterNominal.getPosition("Masukkan Nominal Lain"))
+//                        }else{
+//                            spinner.setSelection(adapterNominal.getPosition("Pilih Nominal Donasi"))
+//                        }
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                    apiError?.message == "Nomor telepon telah terdaftar"
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
+
+            })
     }
 }
 

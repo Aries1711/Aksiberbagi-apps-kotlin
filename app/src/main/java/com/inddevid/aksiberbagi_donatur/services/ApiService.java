@@ -154,4 +154,10 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getPilihanNominal(String data, String id){
+        token = data;
+        String endpoint = baseUrl("pilihan-nominal/"+ id);
+        return get(endpoint);
+    }
+
 }
