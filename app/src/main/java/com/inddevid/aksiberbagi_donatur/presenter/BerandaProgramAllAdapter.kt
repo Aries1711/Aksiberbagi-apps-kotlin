@@ -22,7 +22,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(220, 170)
+            .override(220, 175)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
@@ -63,7 +63,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             sharedPreference.save("capaian", model.fund.toString())
             sharedPreference.save("sisaHari", model.dayFund)
             sharedPreference.save("tanggalMulai", model.startFund)
-
+            sharedPreference.save("progresProgram", model.progresProgram)
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
         }

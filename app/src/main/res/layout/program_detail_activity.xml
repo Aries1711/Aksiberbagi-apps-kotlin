@@ -221,22 +221,11 @@
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imagePenggalang"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/logo_app"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/titlePenggalang" />
-
                         <TextView
                             android:id="@+id/kontenPenggalang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="80dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="50dp"
                             android:text="AksiBerbagi.com"
                             android:textStyle="bold"
@@ -246,7 +235,7 @@
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:layout_marginStart="2dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="50dp"
                             android:src="@drawable/verifikasi"
                             app:layout_constraintStart_toEndOf="@id/kontenPenggalang"
@@ -255,13 +244,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
                             android:text="Akun Sudah Terverifikasi"
                             android:textColor="@color/colorInputPressFalse"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toEndOf="@id/imagePenggalang"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/kontenPenggalang" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>

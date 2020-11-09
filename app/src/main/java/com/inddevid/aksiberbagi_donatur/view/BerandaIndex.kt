@@ -234,7 +234,7 @@ class BerandaIndex : Fragment() {
                         val item = jsonArray.getJSONObject(i)
                         val nominalItem = item?.getJSONObject("nominal")
                         val img: String? = item?.getString("gambar_url")
-                        val nominal: String? = nominalItem?.getString("nominal_flash_sale")
+                        val nominal: Double? = nominalItem?.getString("nominal_flash_sale")!!.toDouble()
                         val stok: String? = item?.getString("stok")
                         arrayLelang.add(BerandaLelang(img, stok?.toInt(),nominal))
                     }
@@ -270,7 +270,14 @@ class BerandaIndex : Fragment() {
                         val donasi: Double? = program?.getString("capaian_donasi")!!.toDouble()
                         val sisahari: String? = program?.getString("sisa_hari")
                         val tanggalMulai: String? = program?.getString("tanggal_mulai_donasi")
-                        arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai))
+                        val targetNominal: String? = program?.getString("tblprogram_targetnominal")
+                        var progressProgram: Int? = 0
+                        if (targetNominal == "TAK-TERTENTU"){
+                            progressProgram = 100
+                        }else{
+                            progressProgram = 50
+                        }
+                        arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram))
                     }
                     val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
                     view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
@@ -331,7 +338,14 @@ class BerandaIndex : Fragment() {
                         val capaian = item?.getString("capaian_donasi")!!.toDouble()
                         val sisaHari = item?.getString("sisa_hari")
                         val startProgram = item?.getString("tanggal_mulai_donasi")
-                        arrayProgram.add(BerandaProgramAll(idProgram,img,judul,ringkasan,volunter,capaian,sisaHari, startProgram))
+                        val targetNominal: String? = item?.getString("tblprogram_targetnominal")
+                        var progressProgram: Int? = 0
+                        if (targetNominal == "TAK-TERTENTU"){
+                            progressProgram = 100
+                        }else{
+                            progressProgram = 50
+                        }
+                        arrayProgram.add(BerandaProgramAll(idProgram,img,judul,ringkasan,volunter,capaian,sisaHari, startProgram,progressProgram))
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram,requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity())
                         view.adapter = myAdapterAll

@@ -46,22 +46,12 @@
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:textSize="12sp"
-                android:layout_weight=".1"
-                android:layout_marginEnd="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp"
-                android:textAlignment="textStart"
-                android:textStyle="bold"/>
-            <TextView
-                android:textSize="12sp"
-                android:layout_weight=".8"
                 android:layout_gravity="center"
                 android:id="@+id/hargaLelang"
                 android:layout_width="wrap_content"

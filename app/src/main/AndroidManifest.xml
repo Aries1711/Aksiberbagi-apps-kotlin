@@ -56,7 +56,8 @@
             android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.ProgramDetailActivity"
-            android:theme="@style/AppMaterial">
+            android:theme="@style/AppMaterial"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
             android:name=".view.SearchActivity"

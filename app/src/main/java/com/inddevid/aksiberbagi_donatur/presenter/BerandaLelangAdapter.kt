@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaLelang
+import com.inddevid.aksiberbagi_donatur.services.Converter
 import kotlinx.android.synthetic.main.beranda_card_lelang.view.*
 
 class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context: Context) :
@@ -26,7 +27,7 @@ class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context
             itemView.progressBar.progress = model.progress!!
             var sisa:Int = model.progress!!
             itemView.textInsideprogressBar.text = "Tersisa $sisa"
-            itemView.hargaLelang.text = model.hargaLelang
+            itemView.hargaLelang.text = Converter.rupiah(model.hargaLelang)
         }
     }
 

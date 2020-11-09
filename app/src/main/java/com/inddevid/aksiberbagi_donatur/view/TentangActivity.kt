@@ -2,6 +2,7 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.inddevid.aksiberbagi_donatur.R
@@ -20,6 +21,10 @@ class TentangActivity : AppCompatActivity() {
             mBundle.putString("penggunaAktif", "true")
             mIntent.putExtras(mBundle)
             startActivity(mIntent)}
+        val webView: WebView = findViewById(R.id.webviewBantuan)
+
+        webView.loadUrl("https://aksiberbagi.com/tentang")
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

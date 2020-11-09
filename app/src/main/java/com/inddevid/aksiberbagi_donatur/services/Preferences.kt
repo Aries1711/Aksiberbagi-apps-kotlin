@@ -16,10 +16,12 @@ class Preferences(val context: Context) {
         editor!!.commit()
     }
 
-    fun save(KEY_NAME: String, value: Int) {
+    fun save(KEY_NAME: String, value: Int?) {
         val editor: SharedPreferences.Editor = sharedPref.edit()
 
-        editor.putInt(KEY_NAME, value)
+        if (value != null) {
+            editor.putInt(KEY_NAME, value)
+        }
 
         editor.commit()
     }

@@ -61,7 +61,7 @@ class SyaratKetentuanActivity : AppCompatActivity() {
             textRelawan.setTextColor(Color.parseColor("#15BBDA"));
             btnDonatur.background = getDrawable(R.drawable.rounded_linear_layout)
             textDonatur.setTextColor(Color.parseColor("#FFFFFF"));
-            stringUrl = "https://aksiberbagi.com/donasi"
+            stringUrl = "https://aksiberbagi.com/s&k"
             myWebSyarat.loadUrl(stringUrl)
         }
 

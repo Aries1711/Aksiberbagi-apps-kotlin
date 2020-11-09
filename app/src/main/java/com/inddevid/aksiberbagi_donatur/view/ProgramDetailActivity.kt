@@ -1,5 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,6 +9,7 @@ import android.os.Looper
 import android.text.Editable
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +54,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         //appbar background Image options
         val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(900, 470)
+            .override(900, 475)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
@@ -62,7 +65,13 @@ class ProgramDetailActivity : AppCompatActivity() {
             val capaianProgram: String? = sharedPreference.getValueString("capaian")
             val sisaHariProgram: String? =sharedPreference.getValueString("sisaHari")
             val tanggalMulaiProgram: String? =sharedPreference.getValueString("tanggalMulai")
+            val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
+            val progresProgramValue: Int? = sharedPreference.getValueInt("progresProgram")
+
             Glide.with(this).load(imgProgram).apply(options).into(imageProgram)
+            //progresbar
+            var progresBarProgram: ProgressBar = findViewById(R.id.progressBar)
+            progresBarProgram.progress = progresProgramValue!!
             //judul
             var textTitle: TextView = findViewById(R.id.titleTextProgram)
             textTitle.text = judulProgram
@@ -106,10 +115,15 @@ class ProgramDetailActivity : AppCompatActivity() {
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
+        val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
+
+        if (switchAnonimValue == "TRUE"){
+            switchAnonimSet.isChecked = true
+        }
 
         //ambil semua atribut nilai yang di tampilkan dari database server
         val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
-        getKoneksi(retrivedToken, idProgram ,allDonasi, textJumlahDonatur,pilihNominal)
+        getKoneksi(retrivedToken, idProgram, allDonasi, textJumlahDonatur, pilihNominal)
         Log.d(TAG, "value pada pilihan nominal $nominalItems")
         //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
         var spinnerPilihNominal : String? = ""
@@ -152,7 +166,12 @@ class ProgramDetailActivity : AppCompatActivity() {
             dialogPembayaran.dismiss()
         }
 
-        btnLanjutPembayaran.setOnClickListener { startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java)) }
+        btnLanjutPembayaran.setOnClickListener { startActivity(
+            Intent(
+                this@ProgramDetailActivity,
+                InvoiceActivity::class.java
+            )
+        ) }
 
         btnDonasi.setOnClickListener {
             dialogPembayaran.show()
@@ -177,12 +196,13 @@ class ProgramDetailActivity : AppCompatActivity() {
         val doaBtn: Switch = view.findViewById(R.id.doaDonasiBtn)
         val inputLayoutDoa: TextInputLayout = view.findViewById(R.id.doaDonasi)
         gone(inputLayoutDoa)
-        doaBtn?.setOnCheckedChangeListener { _, isChecked ->
+        doaBtn.setOnCheckedChangeListener { _, isChecked ->
             val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
             if (message == "Switch1:ON"){
                 show(inputLayoutDoa)
             }else{
                 gone(inputLayoutDoa)
+                hideSoftKeyboard(this, inputLayoutDoa)
             }
         }
 
@@ -207,50 +227,67 @@ class ProgramDetailActivity : AppCompatActivity() {
 
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
-    private fun getKoneksi(tokenValue: String?, idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView, spinner: Spinner){
+    private fun getKoneksi(
+        tokenValue: String?,
+        idProgram: String?,
+        donatur: RecyclerView,
+        jumlahDonatur: TextView,
+        spinner: Spinner
+    ){
         val header: String? = tokenValue
-        ApiService.getKoneksi(header).getAsJSONObject(object: JSONObjectRequestListener{
+        ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getDonaturProgramA(tokenValue, idProgram ,donatur, jumlahDonatur)
-                getNominal(tokenValue,idProgram,spinner)
+                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur)
+                getNominal(tokenValue, idProgram, spinner)
             }
+
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue ,idProgram ,donatur, jumlahDonatur)
+                refreshToken(tokenValue, idProgram, donatur, jumlahDonatur)
             }
 
         })
     }
 
-    private fun refreshToken(tokenValue: String?,idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView){
+    private fun refreshToken(
+        tokenValue: String?,
+        idProgram: String?,
+        donatur: RecyclerView,
+        jumlahDonatur: TextView
+    ){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
         try {
             ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     try {
-                        if (response?.getString("message").equals("Refresh berhasil")){
-                            val token : String? = response?.getString("token")
+                        if (response?.getString("message").equals("Refresh berhasil")) {
+                            val token: String? = response?.getString("token")
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonaturProgramA(tokenValue, idProgram ,donatur, jumlahDonatur)
+                                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur)
                             }
-                        }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
-                            val token : String? = response?.getString("token")
+                        } else if (response?.getString("message")
+                                .equals("Token expired berhasil di refresh")
+                        ) {
+                            val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonaturProgramA(tokenValue, idProgram ,donatur,jumlahDonatur)
+                                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur)
                             }
-                        }else{
+                        } else {
                             Looper.myLooper()?.let {
                                 Handler(it).postDelayed({
-                                    val intent = Intent(this@ProgramDetailActivity, IntroActivity::class.java)
+                                    val intent = Intent(
+                                        this@ProgramDetailActivity,
+                                        IntroActivity::class.java
+                                    )
                                     startActivity(intent)
                                 }, 2500)
                             }
                         }
 
-                    }catch (e : JSONException){
+                    } catch (e: JSONException) {
                         val toast = Toast.makeText(
                             this@ProgramDetailActivity,
                             "Invalid Json",
@@ -259,10 +296,14 @@ class ProgramDetailActivity : AppCompatActivity() {
                         toast.show()
                     }
                 }
+
                 override fun onError(anError: ANError?) {
                     Looper.myLooper()?.let {
                         Handler(it).postDelayed({
-                            val intent = Intent(this@ProgramDetailActivity, IntroActivity::class.java)
+                            val intent = Intent(
+                                this@ProgramDetailActivity,
+                                IntroActivity::class.java
+                            )
                             startActivity(intent)
                         }, 2500)
                     }
@@ -282,27 +323,46 @@ class ProgramDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDonaturProgramA(tokenValue: String?, idProgram: String?, donatur: RecyclerView, jumlahDonatur: TextView){
-        ApiService.getDonatur(tokenValue,idProgram).getAsJSONObject(object:JSONObjectRequestListener{
+    private fun getDonaturProgramA(
+        tokenValue: String?,
+        idProgram: String?,
+        donatur: RecyclerView,
+        jumlahDonatur: TextView
+    ){
+        ApiService.getDonatur(tokenValue, idProgram).getAsJSONObject(object :
+            JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                val jsonArray =response?.getJSONArray("data")
+                val jsonArray = response?.getJSONArray("data")
                 val totalDonatur: String? = response?.getString("total_donatur")
                 jumlahDonatur.text = "($totalDonatur)"
-                if (jsonArray?.length()!! > 0){
-                    for(i in 0 until 5){
+                if (jsonArray?.length()!! > 0) {
+                    for (i in 0 until 5) {
                         val item = jsonArray.getJSONObject(i)
                         val img: String? = "https://aksiberbagi.com/assets/images/user_akber.png"
-                        val namaDonatur : String? = item?.getString("tbldonatur_nama")
-                        val donasiDonatur: Double? = item?.getString("tbldonasi_nominal")!!.toDouble()
+                        val namaDonatur: String? = item?.getString("tbldonatur_nama")
+                        val donasiDonatur: Double? =
+                            item?.getString("tbldonasi_nominal")!!.toDouble()
                         val doaDonatur: String? = item?.getString("tbldonasi_doa")
                         val waktuDonasi: String? = item?.getString("tbldonasi_tglinsert")
-                        arrayDonatur.add(ListDonasi(img, namaDonatur,donasiDonatur,doaDonatur, waktuDonasi))
-                        val myAdapterListDonasi = ListDonasiAdapter(arrayDonatur, applicationContext)
+                        arrayDonatur.add(
+                            ListDonasi(
+                                img,
+                                namaDonatur,
+                                donasiDonatur,
+                                doaDonatur,
+                                waktuDonasi
+                            )
+                        )
+                        val myAdapterListDonasi = ListDonasiAdapter(
+                            arrayDonatur,
+                            applicationContext
+                        )
                         donatur.layoutManager = LinearLayoutManager(applicationContext)
                         donatur.adapter = myAdapterListDonasi
                     }
                 }
             }
+
             override fun onError(anError: ANError?) {
                 TODO("Not yet implemented")
             }
@@ -310,12 +370,13 @@ class ProgramDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun getNominal(tokenValue: String?, idProgram: String?, spinner: Spinner ){
-            ApiService.getPilihanNominal(tokenValue,idProgram).getAsJSONObject(object :JSONObjectRequestListener{
+    private fun getNominal(tokenValue: String?, idProgram: String?, spinner: Spinner){
+            ApiService.getPilihanNominal(tokenValue, idProgram).getAsJSONObject(object :
+                JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     val jsonArray = response?.getJSONArray("data")
-                    if (jsonArray?.length()!! > 0){
-                        for (i in 0 until jsonArray.length()){
+                    if (jsonArray?.length()!! > 0) {
+                        for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
                             val nominalRaw = item?.getString("tblnominal_nominal")!!.toDouble()
                             val nominal = Converter.rupiah(nominalRaw)
@@ -325,19 +386,18 @@ class ProgramDetailActivity : AppCompatActivity() {
                         }
                         var spinnerString: String? = intent.getStringExtra("spinner")
                         nominalItems.add("Masukkan Nominal Lain")
-                        val adapterNominal = ArrayAdapter(this@ProgramDetailActivity, R.layout.list_pilih_program_dropdown, nominalItems)
+                        val adapterNominal = ArrayAdapter(
+                            this@ProgramDetailActivity,
+                            R.layout.list_pilih_program_dropdown,
+                            nominalItems
+                        )
                         spinner.adapter = adapterNominal
 
-                        nominalItems.forEach{
-                            if (spinnerString == it){
+                        nominalItems.forEach {
+                            if (spinnerString == it) {
                                 spinner.setSelection(adapterNominal.getPosition(it))
                             }
                         }
-//                        if (spinnerString == "Masukkan Nominal Lain"){
-//                            spinner.setSelection(adapterNominal.getPosition("Masukkan Nominal Lain"))
-//                        }else{
-//                            spinner.setSelection(adapterNominal.getPosition("Pilih Nominal Donasi"))
-//                        }
                     }
                 }
 
@@ -350,6 +410,11 @@ class ProgramDetailActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    private fun hideSoftKeyboard(context: Context, view: View) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
 

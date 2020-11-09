@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.inddevid.aksiberbagi_donatur.R
 
-@Suppress("DEPRECATION")
 class BantuanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,14 +22,9 @@ class BantuanActivity : AppCompatActivity() {
             mIntent.putExtras(mBundle)
             startActivity(mIntent)}
 
-//        val btnRelawan: Button = findViewById(R.id.relawanSyarat)
-//        val btnDonatur: Button = findViewById(R.id.donaturSyarat)
-//        val btnGalang: Button = findViewById(R.id.galangSyarat)
-
         val myWebView: WebView = findViewById(R.id.webviewBantuan)
-        myWebView.loadUrl("https://aksiberbagi.com/blog")
-//        btnRelawan.setBackgroundColor(resources.getColor(R.color.colorBtnChecked))
-//        btnRelawan.setTextColor(resources.getColor(R.color.colorIndicatorPrimary))
+        myWebView.loadUrl("https://aksiberbagi.com/bantuan")
+
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

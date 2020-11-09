@@ -23,7 +23,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
 //        aturan untuk mengambil gambar etc resolusi dll
         private val options: RequestOptions = RequestOptions()
         .centerCrop()
-        .override(275, 140)
+        .override(280, 140)
         .placeholder(R.mipmap.ic_launcher_round)
         .error(R.mipmap.ic_launcher_round)
 //        fungsi untuk mengikat model dengan view yang akan ditampilkan pada recyclerView
@@ -56,7 +56,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
             sharedPreference.save("capaian", model.fund.toString())
             sharedPreference.save("sisaHari", model.dayFund)
             sharedPreference.save("tanggalMulai", model.dateStart)
-
+            sharedPreference.save("progressProgram", model.progress)
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
         }
