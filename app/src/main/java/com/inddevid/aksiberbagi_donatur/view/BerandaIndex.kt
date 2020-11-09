@@ -272,12 +272,14 @@ class BerandaIndex : Fragment() {
                         val tanggalMulai: String? = program?.getString("tanggal_mulai_donasi")
                         val targetNominal: String? = program?.getString("tblprogram_targetnominal")
                         var progressProgram: Int? = 0
-                        if (targetNominal == "TAK-TERTENTU"){
+                        if(targetNominal == "TAK-TERTENTU"){
                             progressProgram = 100
+                            arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram,progressProgram))
                         }else{
-                            progressProgram = 50
+                            val isianTargetNominal: Int? = program?.getString("tblprogram_isiantargetnominal").toInt()
+                            progressProgram = (donasi!!.toInt() % isianTargetNominal!!  ) * 100
+                            arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram,isianTargetNominal))
                         }
-                        arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram))
                     }
                     val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
                     view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
@@ -333,7 +335,6 @@ class BerandaIndex : Fragment() {
                         val idProgram = item?.getString("tblprogram_id")
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
-                        val ringkasan = item?.getString("tblprogram_ringkasan")
                         val volunter: String? = "Aksiberbagi.com"
                         val capaian = item?.getString("capaian_donasi")!!.toDouble()
                         val sisaHari = item?.getString("sisa_hari")
@@ -342,10 +343,12 @@ class BerandaIndex : Fragment() {
                         var progressProgram: Int? = 0
                         if (targetNominal == "TAK-TERTENTU"){
                             progressProgram = 100
+                            arrayProgram.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,progressProgram))
                         }else{
-                            progressProgram = 50
+                            val isianTargetNominal: Int? = item?.getString("tblprogram_isiantargetnominal").toInt()
+                            progressProgram = (capaian.toInt() % isianTargetNominal!!) * 100
+                            arrayProgram.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,isianTargetNominal))
                         }
-                        arrayProgram.add(BerandaProgramAll(idProgram,img,judul,ringkasan,volunter,capaian,sisaHari, startProgram,progressProgram))
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram,requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity())
                         view.adapter = myAdapterAll

@@ -29,7 +29,6 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
         fun bindItems(model: BerandaProgramAll){
             Glide.with(itemView.imageProgramAll.context).load(model.img).apply(options).into(itemView.imageProgramAll)
             itemView.titleProgramAll.text = model.title
-            itemView.summaryProgramAll.text = model.summary
             itemView.volunteerProgamAll.text = model.volunteer
             itemView.fundProgramAll.text = Converter.rupiah(model.fund)
 //            itemView.dayProgramAll.text = model.dayFund
@@ -64,6 +63,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             sharedPreference.save("sisaHari", model.dayFund)
             sharedPreference.save("tanggalMulai", model.startFund)
             sharedPreference.save("progresProgram", model.progresProgram)
+            sharedPreference.save("targetProgram", model.targetNominal)
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
         }

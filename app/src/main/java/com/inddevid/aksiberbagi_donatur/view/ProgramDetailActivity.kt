@@ -67,6 +67,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             val tanggalMulaiProgram: String? =sharedPreference.getValueString("tanggalMulai")
             val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
             val progresProgramValue: Int? = sharedPreference.getValueInt("progresProgram")
+            val targetProgram: Int = sharedPreference.getValueInt("targetProgram")
 
             Glide.with(this).load(imgProgram).apply(options).into(imageProgram)
             //progresbar
@@ -80,7 +81,11 @@ class ProgramDetailActivity : AppCompatActivity() {
             textCapaian.text = Converter.rupiah(capaianProgram?.toDouble())
             //target Donasi
             var textTargetCapain: TextView = findViewById(R.id.targetTextProgram)
-            textTargetCapain.text = "\u221E"
+            if(targetProgram == 100) {
+                textTargetCapain.text = "\u221E"
+            }else{
+                textTargetCapain.text = targetProgram.toString()
+            }
             //sisa hari
             var textSisaHari: TextView = findViewById(R.id.sisaHariTextProgram)
             //tanggal mulai
