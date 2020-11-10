@@ -160,4 +160,10 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getAllProgram(String data){
+        token = data;
+        String endpoint = baseUrl("program");
+        return get(endpoint);
+    }
+
 }

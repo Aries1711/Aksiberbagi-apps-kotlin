@@ -135,7 +135,7 @@ class BerandaIndex : Fragment() {
         //set button lihat semua
         val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
         btnLihatAllProgram.setOnClickListener{ startActivity(Intent(requireActivity(), ProgramDetailActivity::class.java))}
-    //set banner for footer beranda
+        //set banner for footer beranda
         var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
         return view
     }
@@ -267,19 +267,18 @@ class BerandaIndex : Fragment() {
                         val id: String? = program?.getString("tblprogram_id")
                         val img: String? = program?.getString("thumbnail_url")
                         val judul: String? = program?.getString("tblprogram_judul")
-                        val donasi: Double? = program?.getString("capaian_donasi")!!.toDouble()
+                        val donasi: String? = program?.getString("capaian_donasi")
                         val sisahari: String? = program?.getString("sisa_hari")
                         val tanggalMulai: String? = program?.getString("tanggal_mulai_donasi")
-                        val targetNominal: String? = program?.getString("tblprogram_targetnominal")
-                        var progressProgram: Int? = 0
-                        if(targetNominal == "TAK-TERTENTU"){
-                            progressProgram = 100
-                            arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram,progressProgram))
+                        val targetNominal: String? = program?.getString("tblprogram_isiantargetnominal")
+                        var progressProgram: Int? = program?.getInt("progress")
+                        var targetDonasi : String?
+                        if (targetNominal == "null" || targetNominal == "0" ){
+                            targetDonasi = "100"
                         }else{
-                            val isianTargetNominal: Int? = program?.getString("tblprogram_isiantargetnominal").toInt()
-                            progressProgram = (donasi!!.toInt() % isianTargetNominal!!  ) * 100
-                            arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram,isianTargetNominal))
+                            targetDonasi = program?.getString("target_nominal")
                         }
+                        arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram,targetDonasi))
                     }
                     val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
                     view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
@@ -306,9 +305,9 @@ class BerandaIndex : Fragment() {
                         val item = jsonArray.getJSONObject(i)
                         val img: String? = "https://aksiberbagi.com/storage/program/berita/"+item?.getString("tblupdateprogram_file")
                         val judul: String? = item?.getString("tblupdateprogram_judul")
-                        val lokasi: String? = "unknown"
-                        val date: String? = item?.getString("tblupdateprogam_tanggal")
-                        arrayLaporan.add(BerandaLaporan(img,judul,lokasi,date))
+                        val relawan: String? = item?.getString("tblcabang_nama")
+                        val date: String? = item?.getString("tanggal_laporan")
+                        arrayLaporan.add(BerandaLaporan(img,judul,relawan,date))
                         val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
                         view.adapter = myAdapterLaporan
@@ -332,23 +331,22 @@ class BerandaIndex : Fragment() {
                 if (jsonArray?.length()!! > 0){
                     for(i in 0 until jsonArray.length()){
                         val item = jsonArray.getJSONObject(i)
-                        val idProgram = item?.getString("tblprogram_id")
+                            val idProgram = item?.getString("tblprogram_id")
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
                         val volunter: String? = "Aksiberbagi.com"
-                        val capaian = item?.getString("capaian_donasi")!!.toDouble()
+                        val capaian = item?.getString("capaian_donasi")
                         val sisaHari = item?.getString("sisa_hari")
                         val startProgram = item?.getString("tanggal_mulai_donasi")
-                        val targetNominal: String? = item?.getString("tblprogram_targetnominal")
-                        var progressProgram: Int? = 0
-                        if (targetNominal == "TAK-TERTENTU"){
-                            progressProgram = 100
-                            arrayProgram.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,progressProgram))
+                        val targetNominal: String? = item?.getString("tblprogram_isiantargetnominal")
+                        var progressProgram: Int? = item?.getInt("progress")
+                        var targetDonasi : String?
+                        if (targetNominal == "null" || targetNominal == "0" ){
+                             targetDonasi = "100"
                         }else{
-                            val isianTargetNominal: Int? = item?.getString("tblprogram_isiantargetnominal").toInt()
-                            progressProgram = (capaian.toInt() % isianTargetNominal!!) * 100
-                            arrayProgram.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,isianTargetNominal))
+                            targetDonasi = item?.getString("target_nominal")
                         }
+                        arrayProgram.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi))
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram,requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity())
                         view.adapter = myAdapterAll

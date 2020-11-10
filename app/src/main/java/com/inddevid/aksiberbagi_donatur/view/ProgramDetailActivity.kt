@@ -66,8 +66,11 @@ class ProgramDetailActivity : AppCompatActivity() {
             val sisaHariProgram: String? =sharedPreference.getValueString("sisaHari")
             val tanggalMulaiProgram: String? =sharedPreference.getValueString("tanggalMulai")
             val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
-            val progresProgramValue: Int? = sharedPreference.getValueInt("progresProgram")
-            val targetProgram: Int = sharedPreference.getValueInt("targetProgram")
+            val progresProgramValue: Int? = sharedPreference.getValueInt("progressProgram")
+            val targetProgram: String? = sharedPreference.getValueString("targetProgram")
+
+//            val toast = Toast.makeText(this, progresProgramValue.toString(), Toast.LENGTH_LONG)
+//            toast.show()
 
             Glide.with(this).load(imgProgram).apply(options).into(imageProgram)
             //progresbar
@@ -78,13 +81,14 @@ class ProgramDetailActivity : AppCompatActivity() {
             textTitle.text = judulProgram
             //capaian donasi
             var textCapaian: TextView = findViewById(R.id.capaianTextProgram)
-            textCapaian.text = Converter.rupiah(capaianProgram?.toDouble())
+            textCapaian.text = "Rp $capaianProgram"
             //target Donasi
             var textTargetCapain: TextView = findViewById(R.id.targetTextProgram)
-            if(targetProgram == 100) {
+            if(targetProgram == "100") {
                 textTargetCapain.text = "\u221E"
             }else{
-                textTargetCapain.text = targetProgram.toString()
+                val target = targetProgram.toString()
+                textTargetCapain.text = "Rp $target"
             }
             //sisa hari
             var textSisaHari: TextView = findViewById(R.id.sisaHariTextProgram)

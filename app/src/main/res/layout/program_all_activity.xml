@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="top"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        android:theme="@style/ToolbarProgramDetail"
         android:background="@color/colorInputStrokeBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

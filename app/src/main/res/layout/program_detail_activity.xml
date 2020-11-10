@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:text="Rp24321313768"
                         android:textAlignment="center"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorInputStrokeBlue"/>
                     <TextView
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="%"
                         android:textAlignment="center"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorInputStrokeBlue"/>
                     <TextView
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:text="%"
                         android:textAlignment="center"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorInputStrokeBlue"/>
                 </LinearLayout>
@@ -221,11 +221,12 @@
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <TextView
                             android:id="@+id/kontenPenggalang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="20dp"
                             android:layout_marginTop="50dp"
                             android:text="AksiBerbagi.com"
                             android:textStyle="bold"
@@ -244,8 +245,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
                             android:layout_marginTop="5dp"
-                            android:layout_marginStart="10dp"
                             android:text="Akun Sudah Terverifikasi"
                             android:textColor="@color/colorInputPressFalse"
                             android:textSize="12sp"

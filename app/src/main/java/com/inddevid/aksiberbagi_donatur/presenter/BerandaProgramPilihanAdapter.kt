@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramPilihan
-import com.inddevid.aksiberbagi_donatur.services.Converter
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.beranda_card_program_pilihan.view.*
@@ -31,7 +30,9 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
         fun bindItems(model: BerandaProgramPilihan){
             Glide.with(itemView.imageProgramPilihan.context).load(model.img).apply(options).into(itemView.imageProgramPilihan)
             itemView.titleProgramPilihan.text = model.titleChoose
-            itemView.terkumpulCardPilihan.text = Converter.rupiah(model.fund)
+            val donasi = model.fund
+            itemView.terkumpulCardPilihan.text = "Rp $donasi"
+            itemView.progressBar.progress = model.progress!!
             itemView.sisaDayCardPilihan.text = model.dayFund
         }
     }
@@ -53,7 +54,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
             sharedPreference.save("idProgram", model.id)
             sharedPreference.save("img", model.img)
             sharedPreference.save("judul", model.titleChoose)
-            sharedPreference.save("capaian", model.fund.toString())
+            sharedPreference.save("capaian", model.fund)
             sharedPreference.save("sisaHari", model.dayFund)
             sharedPreference.save("tanggalMulai", model.dateStart)
             sharedPreference.save("progressProgram", model.progress)

@@ -46,6 +46,17 @@
             android:textSize="12sp"
             android:textStyle="bold" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/programAllLineList">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,24 +87,16 @@
             android:progress="40"
             android:progressDrawable="@drawable/progress_bar_style" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/fundProgramAll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-
-
-            <TextView
-                android:id="@+id/fundProgramAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="456.978.086"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:text="456.978.086"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
     <View

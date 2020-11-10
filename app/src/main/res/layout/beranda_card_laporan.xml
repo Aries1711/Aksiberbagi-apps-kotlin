@@ -37,13 +37,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:layout_weight=".6"
                 android:layout_gravity="center"
                 android:id="@+id/lokasiLaporan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Situbondo, Jawa Timur."
+                android:text="aksiberbagi.com"
                 android:textStyle="bold"/>
             <FrameLayout
                 android:layout_weight=".4"
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="27 Sep"
                     android:textColor="@color/colorInputStrokeBlue"
-                    android:textSize="10sp"
+                    android:textSize="8sp"
                     android:textStyle="bold"/>
             </FrameLayout>
         </LinearLayout>

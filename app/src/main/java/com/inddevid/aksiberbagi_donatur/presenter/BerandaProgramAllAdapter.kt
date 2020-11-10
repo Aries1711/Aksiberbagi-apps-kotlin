@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
-import com.inddevid.aksiberbagi_donatur.services.Converter
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.beranda_card_program_all.view.*
@@ -30,7 +29,9 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             Glide.with(itemView.imageProgramAll.context).load(model.img).apply(options).into(itemView.imageProgramAll)
             itemView.titleProgramAll.text = model.title
             itemView.volunteerProgamAll.text = model.volunteer
-            itemView.fundProgramAll.text = Converter.rupiah(model.fund)
+            itemView.progressBar.progress = model.progresProgram!!
+            val donasi = model.fund
+            itemView.fundProgramAll.text = "Rp $donasi"
 //            itemView.dayProgramAll.text = model.dayFund
         }
     }
@@ -62,7 +63,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             sharedPreference.save("capaian", model.fund.toString())
             sharedPreference.save("sisaHari", model.dayFund)
             sharedPreference.save("tanggalMulai", model.startFund)
-            sharedPreference.save("progresProgram", model.progresProgram)
+            sharedPreference.save("progressProgram", model.progresProgram)
             sharedPreference.save("targetProgram", model.targetNominal)
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
