@@ -9,6 +9,7 @@ import android.os.Looper
 import android.text.Editable
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.*
@@ -109,8 +110,31 @@ class ProgramDetailActivity : AppCompatActivity() {
                 DashboardActivity::class.java
             )
         )}
+        //tampilan webview keterangan
         val myWebView: WebView = findViewById(R.id.keteranganProgram)
         myWebView.loadUrl("https://aksiberbagi.com/sedekahair")
+        //btn lihat semua keterangan
+        val btnKeteranganLihat : Button = findViewById(R.id.btnKeteranganProgram)
+        val layoutKeterangan : LinearLayout = findViewById(R.id.layoutKeteranganDetail)
+        var btnKeteranganStatus: String = ""
+        if(btnKeteranganStatus == ""){
+            btnKeteranganLihat.setOnClickListener {
+                val params: ViewGroup.LayoutParams = layoutKeterangan.layoutParams
+                params.height = ViewGroup.LayoutParams.MATCH_PARENT
+                layoutKeterangan.layoutParams = params
+                btnKeteranganLihat.text = "Sembunyikan"
+                btnKeteranganStatus = "on"
+            }
+        }else{
+            btnKeteranganLihat.setOnClickListener {
+                val params: ViewGroup.LayoutParams = layoutKeterangan.layoutParams
+                params.height = 350
+                layoutKeterangan.layoutParams = params
+                btnKeteranganLihat.text = "Lihat Semua"
+                btnKeteranganStatus = ""
+            }
+        }
+
 
         //deklarasi btn Donasi dan dialog swipe
         val btnDonasi: Button = findViewById(R.id.donasiBtn)

@@ -51,7 +51,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
             spinnerSet = spinnerPilihan.toString()
         }
 
-        getKoneksi(retrivedToken, this)
+        getKoneksi(retrivedToken, this, nominalSet, spinnerSet)
 
 
         toolbar.setNavigationOnClickListener{
@@ -64,46 +64,23 @@ class PilihPembayaranActivity : AppCompatActivity() {
             startActivity(mIntent)
         }
 
-
-        arrayEwallet.add(ModelPembayaran("1","Gopay","https://aksiberbagi.com/storage/bank/gopay-new.png"))
-        arrayEwallet.add(ModelPembayaran("2","Dana","https://aksiberbagi.com/storage/bank/vi2Vr1CBPDczTvFlMIybb6bqQIjEKUmQvHAkhbqW.png"))
-        arrayEwallet.add(ModelPembayaran("3","OVO","https://aksiberbagi.com/storage/bank/logo-ovo.png"))
-        arrayEwallet.add(ModelPembayaran("4","Link Aja","https://aksiberbagi.com/storage/bank/8uOgHqnWJByhe5p3QMFzCTYxmTLBJpuKGtku3djn.png"))
-        arrayEwallet.add(ModelPembayaran("5","ShopeePay","https://aksiberbagi.com/storage/bank/8QZzJV93mHSsDCEEMicKg985ba5MMbBjbsXvACDG.png"))
-        val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this, nominalSet, spinnerSet )
-        var mainMenuEwallet = findViewById<RecyclerView>(R.id.recyclerEwallet)
-        mainMenuEwallet.layoutManager = LinearLayoutManager(this)
-        mainMenuEwallet.adapter = myAdapterEwallet
-
-
-
-        arrayTranfer.add(ModelPembayaran("6","BNI/BNI Syariah", "https://aksiberbagi.com/storage/bank/bni-syariah.png"))
-        arrayTranfer.add(ModelPembayaran("7","Mandiri Syariah", "https://aksiberbagi.com/storage/bank/mandiri.png"))
-        arrayTranfer.add(ModelPembayaran("8","BCA", "https://aksiberbagi.com/storage/bank/ajZ7LEACpYkW1mVJ6VsuWFdGudbcgusWKCnxiVi2.png"))
-        arrayTranfer.add(ModelPembayaran("9","BRI", "https://aksiberbagi.com/storage/bank/YqbwMgj8qh6DiowN8ZYgaKHWGMg29XUJUdzV1iwj.png"))
-        arrayTranfer.add(ModelPembayaran("10","Mandiri", "https://aksiberbagi.com/storage/bank/logo-mandiri.png"))
-        arrayTranfer.add(ModelPembayaran("11","Muamalat", "https://aksiberbagi.com/storage/bank/Qdtf4FswhYjSyRyMcod8U59FQ6w5peVKyfHrtNHk.png"))
-        arrayTranfer.add(ModelPembayaran("12","CIMB Niaga / Syariah", "https://aksiberbagi.com/storage/bank/eSxD2RemwuxkNdjIIAfZWpEeaioePxX4LfybUujK.png"))
-        val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this, nominalSet , spinnerSet)
-        var mainMenuTranfer = findViewById<RecyclerView>(R.id.recyclerTransfer)
-        mainMenuTranfer.layoutManager = LinearLayoutManager(this)
-        mainMenuTranfer.adapter = myAdapterTransfer
-
     }
 
 
     private fun getKoneksi(
         tokenValue: String?,
-        context: PilihPembayaranActivity
+        context: PilihPembayaranActivity,
+        nominal: String,
+        spinner: String
     ){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getPilihPembayaran(tokenValue, context)
+                getPilihPembayaran(tokenValue, context, nominal, spinner)
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue,context)
+                refreshToken(tokenValue,context,nominal, spinner)
             }
 
         })
@@ -111,7 +88,9 @@ class PilihPembayaranActivity : AppCompatActivity() {
 
     private fun refreshToken(
         tokenValue: String?,
-        context: PilihPembayaranActivity
+        context: PilihPembayaranActivity,
+        nominal: String,
+        spinner: String
     ){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
@@ -124,7 +103,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-
+                                getKoneksi(token,context,nominal,spinner)
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -132,7 +111,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                             val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-
+                                getKoneksi(token,context,nominal,spinner)
                             }
                         } else {
                             Looper.myLooper()?.let {
@@ -182,7 +161,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPilihPembayaran(tokenValue: String?, context: PilihPembayaranActivity){
+    private fun getPilihPembayaran(tokenValue: String?, context: PilihPembayaranActivity, nominal: String, spinner: String){
 
         ApiService.getPembayaran(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
@@ -191,13 +170,29 @@ class PilihPembayaranActivity : AppCompatActivity() {
                 val jsonArrayBank = jsonObject?.getJSONArray("bank")
                 if (jsonArrayEwallet?.length()!! > 0) {
                     for (i in 0 until jsonArrayEwallet.length()) {
-
+                        val item = jsonArrayEwallet.getJSONObject(i)
+                        val idPembayaran = item?.getString("tblbank_id")
+                        val namaPembayaran = item?.getString("tblbank_nama")
+                        val gambarPembayaran = item?.getString("logo_url")
+                        arrayEwallet.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran))
+                        val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this@PilihPembayaranActivity, nominal, spinner)
+                        var mainMenuEwallet = context.findViewById<RecyclerView>(R.id.recyclerEwallet)
+                        mainMenuEwallet.layoutManager = LinearLayoutManager(this@PilihPembayaranActivity)
+                        mainMenuEwallet.adapter = myAdapterEwallet
                     }
                 }
 
                 if (jsonArrayBank?.length()!! > 0) {
                     for (i in 0 until jsonArrayBank.length()) {
-
+                        val item = jsonArrayBank.getJSONObject(i)
+                        val idPembayaran = item?.getString("tblbank_id")
+                        val namaPembayaran = item?.getString("tblbank_nama")
+                        val gambarPembayaran = item?.getString("logo_url")
+                        arrayTranfer.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran))
+                        val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this@PilihPembayaranActivity, nominal , spinner)
+                        var mainMenuTranfer = findViewById<RecyclerView>(R.id.recyclerTransfer)
+                        mainMenuTranfer.layoutManager = LinearLayoutManager(this@PilihPembayaranActivity)
+                        mainMenuTranfer.adapter = myAdapterTransfer
                     }
                 }
             }

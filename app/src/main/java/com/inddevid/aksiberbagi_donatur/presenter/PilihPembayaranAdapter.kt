@@ -32,9 +32,9 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
 
         holder.itemView.setOnClickListener {
             val model = arrayList[position]
-            val id : String = model.id
-            val pTitle : String = model.title
-            val imgPilihan : String = model.img
+            val id : String? = model.id
+            val pTitle : String? = model.title
+            val imgPilihan : String? = model.img
             val nominalSet: String = nominal
             val spinnerSet: String = spinner
 
