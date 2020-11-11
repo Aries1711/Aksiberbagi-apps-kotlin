@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,51 +7,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ProgramDetailActivity">
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/toolbarImage"
+            android:layout_height="190dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Gambar Program"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/toolbarImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Gambar Program"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/upAppbarProgramDetail"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                android:background="@drawable/background_transparent"
-                android:theme="@style/ToolbarProgramDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/program_detail_menu"/>
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAddFavorit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/launcher_icon2"
-                app:maxImageSize="35dp"
-                app:elevation="5dp"
-                android:backgroundTint="@color/colorInputStrokeBlue"
-                app:tint="@color/colorIndicatorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/upAppbarProgramDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                    android:background="@drawable/background_transparent"
+                    android:theme="@style/ToolbarProgramDetail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:menu="@menu/program_detail_menu"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnAddFavorit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="120dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/launcher_icon2"
+                    app:maxImageSize="35dp"
+                    app:elevation="5dp"
+                    android:backgroundTint="@color/colorInputStrokeBlue"
+                    app:tint="@color/colorIndicatorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="220dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
@@ -152,23 +157,6 @@
                         android:textSize="14sp"
                         android:textColor="@color/colorInputPressFalse"/>
                 </LinearLayout>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/donasiBtn"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="2dp"
-                    android:backgroundTint="#f86048"
-                    android:fontFamily="@font/actor"
-                    android:minWidth="250dp"
-                    android:minHeight="60dp"
-                    android:text="Donasi Sekarang"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="10dp" />
             </LinearLayout>
             <View
                 android:id="@+id/breakHeaderDetail"
@@ -481,6 +469,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="80dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
@@ -519,15 +508,45 @@
                         android:textStyle="bold"
                         app:cornerRadius="10dp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:background="@color/colorBreakLine"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+    
+    <LinearLayout
+        android:background="@color/colorIndicatorPrimary"
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareWhatsappBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight=".3"
+            android:backgroundTint="#3ddb4b"
+            android:fontFamily="@font/actor"
+            android:text="Share"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/donasiBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight=".7"
+            android:backgroundTint="#f86048"
+            android:fontFamily="@font/actor"
+            android:text="DONASI SEKARANG"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+</RelativeLayout>

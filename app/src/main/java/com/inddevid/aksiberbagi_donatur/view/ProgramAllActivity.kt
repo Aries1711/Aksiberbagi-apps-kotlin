@@ -115,7 +115,9 @@ class ProgramAllActivity : AppCompatActivity() {
     private fun getAllprogram(tokenValue: String?, view: RecyclerView){
         ApiService.getAllProgram(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-                val jsonArray =response?.getJSONArray("data")
+                val jsonObject =response?.getJSONObject("data")
+                val page = jsonObject?.getString("current_page")
+                val jsonArray =jsonObject?.getJSONArray("data")
                 if (jsonArray?.length()!! > 0){
                     for(i in 0 until jsonArray.length()){
                         val item = jsonArray.getJSONObject(i)

@@ -166,4 +166,10 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getPembayaran(String data){
+        token = data;
+        String endpoint = baseUrl("pilihan-nominal/metode-pembayaran");
+        return get(endpoint);
+    }
+
 }
