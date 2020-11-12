@@ -40,6 +40,7 @@ class ProgramDetailActivity : AppCompatActivity() {
     private val arrayDonatur = ArrayList<ListDonasi>()
     private val TAG = "Program Detail"
     private val nominalItems: ArrayList<String> = arrayListOf("Pilih Nominal Donasi")
+    private val idNominal: ArrayList<Int> = arrayListOf(0)
     private var btnKeteranganStatus : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,7 +137,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         Log.d(TAG, "value pada pilihan nominal $nominalItems")
         //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
         var spinnerPilihNominal : String? = ""
-
+        var spinnerNominalId : Int = 0
         pilihNominal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if ( nominalItems[p2] == "Masukkan Nominal Lain"){
@@ -145,6 +146,9 @@ class ProgramDetailActivity : AppCompatActivity() {
                 }else{
                     gone(textNominalLayout)
                     spinnerPilihNominal = nominalItems[p2]
+                    spinnerNominalId = idNominal[p2]
+                    val toast = Toast.makeText(this@ProgramDetailActivity, "$spinnerNominalId", Toast.LENGTH_LONG)
+                    toast.show()
                 }
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -401,14 +405,17 @@ class ProgramDetailActivity : AppCompatActivity() {
                     if (jsonArray?.length()!! > 0) {
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
+                            val nominalId = item?.getInt("tblnominal_id")
                             val nominalRaw = item?.getString("tblnominal_nominal")!!.toDouble()
                             val nominal = Converter.rupiah(nominalRaw)
                             val keterangan = item?.getString("tblnominal_keterangan")
                             val pilihanAdapter = "$nominal $keterangan"
                             nominalItems.add(pilihanAdapter)
+                            idNominal.add(nominalId!!)
                         }
                         var spinnerString: String? = intent.getStringExtra("spinner")
                         nominalItems.add("Masukkan Nominal Lain")
+                        idNominal.add(0)
                         val adapterNominal = ArrayAdapter(
                             this@ProgramDetailActivity,
                             R.layout.list_pilih_program_dropdown,
