@@ -40,6 +40,7 @@ class ProgramDetailActivity : AppCompatActivity() {
     private val arrayDonatur = ArrayList<ListDonasi>()
     private val TAG = "Program Detail"
     private val nominalItems: ArrayList<String> = arrayListOf("Pilih Nominal Donasi")
+    private var btnKeteranganStatus : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,31 +111,6 @@ class ProgramDetailActivity : AppCompatActivity() {
                 DashboardActivity::class.java
             )
         )}
-        //tampilan webview keterangan
-        val myWebView: WebView = findViewById(R.id.keteranganProgram)
-        myWebView.loadUrl("https://aksiberbagi.com/sedekahair")
-        //btn lihat semua keterangan
-        val btnKeteranganLihat : Button = findViewById(R.id.btnKeteranganProgram)
-        val layoutKeterangan : LinearLayout = findViewById(R.id.layoutKeteranganDetail)
-        var btnKeteranganStatus: String = ""
-        if(btnKeteranganStatus == ""){
-            btnKeteranganLihat.setOnClickListener {
-                val params: ViewGroup.LayoutParams = layoutKeterangan.layoutParams
-                params.height = ViewGroup.LayoutParams.MATCH_PARENT
-                layoutKeterangan.layoutParams = params
-                btnKeteranganLihat.text = "Sembunyikan"
-                btnKeteranganStatus = "on"
-            }
-        }else{
-            btnKeteranganLihat.setOnClickListener {
-                val params: ViewGroup.LayoutParams = layoutKeterangan.layoutParams
-                params.height = 350
-                layoutKeterangan.layoutParams = params
-                btnKeteranganLihat.text = "Lihat Semua"
-                btnKeteranganStatus = ""
-            }
-        }
-
 
         //deklarasi btn Donasi dan dialog swipe
         val btnDonasi: Button = findViewById(R.id.donasiBtn)
@@ -236,6 +212,20 @@ class ProgramDetailActivity : AppCompatActivity() {
             }else{
                 gone(inputLayoutDoa)
                 hideSoftKeyboard(this, inputLayoutDoa)
+            }
+        }
+
+        //tampilan webview keterangan
+        val myWebView: WebView = findViewById(R.id.keteranganProgram)
+        myWebView.loadUrl("https://aksiberbagi.com/sedekahair")
+        //btn lihat semua keterangan
+        val btnKeteranganLihat : Button = findViewById(R.id.btnKeteranganProgram)
+        val layoutKeterangan : LinearLayout = findViewById(R.id.layoutKeteranganDetail)
+        btnKeteranganLihat.setOnClickListener {
+            if(btnKeteranganStatus == ""){
+                btnShowLayout(btnKeteranganLihat, layoutKeterangan)
+            }else{
+                btnHideLayout(btnKeteranganLihat, layoutKeterangan)
             }
         }
 
@@ -448,6 +438,22 @@ class ProgramDetailActivity : AppCompatActivity() {
     private fun hideSoftKeyboard(context: Context, view: View) {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun btnShowLayout(btn: Button , layout: LinearLayout){
+            val params: ViewGroup.LayoutParams = layout.layoutParams
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT
+            layout.layoutParams = params
+            btn.text = "Sembunyikan"
+            btnKeteranganStatus = "On"
+    }
+
+    private fun btnHideLayout(btn: Button , layout: LinearLayout){
+            val params: ViewGroup.LayoutParams = layout.layoutParams
+            params.height = 1000
+            layout.layoutParams = params
+            btn.text = "Lihat Semua"
+            btnKeteranganStatus = ""
     }
 }
 
