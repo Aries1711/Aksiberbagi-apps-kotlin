@@ -128,10 +128,32 @@ class LoginActivity : AppCompatActivity() {
                             if (response?.getString("message").equals("Data donatur ditemukan")) {
                                 val data: JSONObject? = response?.getJSONObject("data")
                                 val token: String? = data?.getString("token")
+                                val dataDonatur: JSONObject? = data?.getJSONObject("donatur")
+                                val donaturWa = dataDonatur?.getString("tbldonatur_nowa")
+                                val donaturNama = dataDonatur?.getString("tbldonatur_nama")
+                                val donaturEmail = dataDonatur?.getString("tbldonatur_email")
+                                var donaturKodeNegara = dataDonatur?.getString("kode_negara_no_hp")
+                                val donaturPanggilan = "Kak"
+                                val donaturLinkAja = dataDonatur?.getString("no_link_aja")
+                                val donaturDana = dataDonatur?.getString("no_dana")
+                                val donaturOvo = dataDonatur?.getString("no_ovo")
 
                                 //save token and donatur id on preferences
                                 if (token != null) {
                                     sharedPreference.save("TOKEN", token)
+                                    sharedPreference.save("penggunaWA", donaturWa )
+                                    sharedPreference.save("penggunaNAMA", donaturNama )
+                                    sharedPreference.save("penggunaEmail", donaturEmail )
+                                    if (donaturKodeNegara == "null"){
+                                        donaturKodeNegara = "+62"
+                                    }
+                                    sharedPreference.save("penggunaKodeNegara", donaturKodeNegara )
+                                    sharedPreference.save("penggunaPanggilan", donaturPanggilan )
+                                    sharedPreference.save("penggunaInfluencer", "null" )
+                                    sharedPreference.save("penggunaLinkAja", donaturLinkAja)
+                                    sharedPreference.save("penggunaDana", donaturDana)
+                                    sharedPreference.save("penggunaOvo", donaturOvo)
+                                    sharedPreference.save("penggunaKodeNegara", donaturKodeNegara )
                                     startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
                                 }
                             }
@@ -162,13 +184,16 @@ class LoginActivity : AppCompatActivity() {
                             )
                             layoutPass.helperText = apiError?.message
                         } else {
-                            var kodeError: Int? = apiError?.kode
-                            val toast = Toast.makeText(
-                                applicationContext,
-                                "Kesalahan kode $kodeError",
-                                Toast.LENGTH_LONG
-                            )
-                            toast.show()
+                            val jsonObject = JSONObject(anError?.errorBody);
+                            val jsonArray = jsonObject.getJSONArray("password");
+                            if(jsonArray[0] == "The password must be at least 5 characters."){
+                                layoutPass.requestFocus()
+                                layoutPass.boxStrokeColor = getColor(
+                                    this@LoginActivity,
+                                    R.color.error_color
+                                )
+                                layoutPass.helperText = "Password setidaknya berisi 5 karakter"
+                            }
                         }
                         Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                         Log.d(TAG, "OnErrorCode " + anError?.errorCode)

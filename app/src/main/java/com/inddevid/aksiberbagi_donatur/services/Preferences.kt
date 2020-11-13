@@ -26,7 +26,7 @@ class Preferences(val context: Context) {
         editor.commit()
     }
 
-    fun save(KEY_NAME: String, status: Boolean) {
+    fun saveStatus(KEY_NAME: String, status: Boolean?) {
 
         val editor: SharedPreferences.Editor = sharedPref.edit()
 
