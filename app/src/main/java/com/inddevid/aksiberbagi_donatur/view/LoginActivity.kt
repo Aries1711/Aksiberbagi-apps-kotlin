@@ -144,9 +144,7 @@ class LoginActivity : AppCompatActivity() {
                                     sharedPreference.save("penggunaWA", donaturWa )
                                     sharedPreference.save("penggunaNAMA", donaturNama )
                                     sharedPreference.save("penggunaEmail", donaturEmail )
-                                    if (donaturKodeNegara == "null"){
-                                        donaturKodeNegara = "+62"
-                                    }
+                                    if (donaturKodeNegara == "null") donaturKodeNegara = "+62"
                                     sharedPreference.save("penggunaKodeNegara", donaturKodeNegara )
                                     sharedPreference.save("penggunaPanggilan", donaturPanggilan )
                                     sharedPreference.save("penggunaInfluencer", "null" )

@@ -41,6 +41,7 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
             val mIntent = Intent1(context, ProgramDetailActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("dialogAktif", "true")
+            mBundle.putString("idPembayaran", id)
             mBundle.putString("pilihanPembayaran", pTitle)
             mBundle.putString("imagePilihan", imgPilihan)
             mBundle.putString("nominalDonasi", nominalSet)

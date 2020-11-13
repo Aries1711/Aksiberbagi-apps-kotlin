@@ -33,6 +33,7 @@ import com.inddevid.aksiberbagi_donatur.services.Converter
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
 import org.json.JSONObject
+import kotlin.toString as toString1
 
 
 class ProgramDetailActivity : AppCompatActivity() {
@@ -90,7 +91,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             if(targetProgram == "100") {
                 textTargetCapain.text = "\u221E"
             }else{
-                val target = targetProgram.toString()
+                val target = targetProgram.toString1()
                 textTargetCapain.text = "Rp $target"
             }
             //sisa hari
@@ -120,8 +121,11 @@ class ProgramDetailActivity : AppCompatActivity() {
         dialogPembayaran.setContentView(view)
         val textNominalLayout: TextInputLayout = view.findViewById(R.id.nominalDonasiLayout)
         val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
+        val textDoaDonatur : TextInputEditText = view.findViewById(R.id.doaDonatur)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
         val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
+        val btnPilihBayarB: LinearLayout = view.findViewById(R.id.layoutImageBank)
+        val btnPilihBayarC: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
@@ -137,18 +141,17 @@ class ProgramDetailActivity : AppCompatActivity() {
         Log.d(TAG, "value pada pilihan nominal $nominalItems")
         //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
         var spinnerPilihNominal : String? = ""
-        var spinnerNominalId : Int = 0
+        var spinnerNominal : Int = 0
         pilihNominal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if ( nominalItems[p2] == "Masukkan Nominal Lain"){
                     spinnerPilihNominal = nominalItems[p2]
+                    spinnerNominal = idNominal[p2]
                     show(textNominalLayout)
                 }else{
                     gone(textNominalLayout)
                     spinnerPilihNominal = nominalItems[p2]
-                    spinnerNominalId = idNominal[p2]
-                    val toast = Toast.makeText(this@ProgramDetailActivity, "$spinnerNominalId", Toast.LENGTH_LONG)
-                    toast.show()
+                    spinnerNominal = idNominal[p2]
                 }
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -162,6 +165,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         // Receiver intent data
         var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
+        var idPembayaran: String? = intent.getStringExtra("idPembayaran")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
         var imgPilihan: String? = intent.getStringExtra("imagePilihan")
 
@@ -179,13 +183,6 @@ class ProgramDetailActivity : AppCompatActivity() {
             dialogPembayaran.dismiss()
         }
 
-        btnLanjutPembayaran.setOnClickListener { startActivity(
-            Intent(
-                this@ProgramDetailActivity,
-                InvoiceActivity::class.java
-            )
-        ) }
-
         btnDonasi.setOnClickListener {
             dialogPembayaran.show()
         }
@@ -199,21 +196,42 @@ class ProgramDetailActivity : AppCompatActivity() {
         btnPilihBayar.setOnClickListener {
             val mIntent = Intent(this, PilihPembayaranActivity::class.java)
             val mBundle = Bundle()
-            mBundle.putString("nominal", textNominalDonasi.text.toString())
+            mBundle.putString("nominal", textNominalDonasi.text.toString1())
             mBundle.putString("spinnerValue", spinnerPilihNominal)
             mIntent.putExtras(mBundle)
             startActivity(mIntent)
         }
 
+        btnPilihBayarB.setOnClickListener {
+            val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("nominal", textNominalDonasi.text.toString1())
+            mBundle.putString("spinnerValue", spinnerPilihNominal)
+            mIntent.putExtras(mBundle)
+            startActivity(mIntent)
+        }
+
+        btnPilihBayarC.setOnClickListener {
+            val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("nominal", textNominalDonasi.text.toString1())
+            mBundle.putString("spinnerValue", spinnerPilihNominal)
+            mIntent.putExtras(mBundle)
+            startActivity(mIntent)
+        }
+        //end multiple btn untuk pilih pembayaran.
 
         val doaBtn: Switch = view.findViewById(R.id.doaDonasiBtn)
         val inputLayoutDoa: TextInputLayout = view.findViewById(R.id.doaDonasi)
+        var doaStatus = ""
         gone(inputLayoutDoa)
         doaBtn.setOnCheckedChangeListener { _, isChecked ->
             val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
             if (message == "Switch1:ON"){
+                doaStatus = "True"
                 show(inputLayoutDoa)
             }else{
+                doaStatus = "False"
                 gone(inputLayoutDoa)
                 hideSoftKeyboard(this, inputLayoutDoa)
             }
@@ -231,6 +249,28 @@ class ProgramDetailActivity : AppCompatActivity() {
             }else{
                 btnHideLayout(btnKeteranganLihat, layoutKeterangan)
             }
+        }
+
+        // mengambil seluruh deklarasi data yang di perlukan untuk donasi
+        var nominalDonasiDonatur = 0
+        var doaDonatur = ""
+
+        //klik button lanjut pembayaran post ke server
+        btnLanjutPembayaran.setOnClickListener {
+
+            if(doaStatus == "True"){
+                doaDonatur = textDoaDonatur.text?.toString()!!
+            }
+
+            if(spinnerNominal == 0 ){
+                nominalDonasiDonatur = Integer.parseInt(textNominalDonasi.text!!.toString())
+            }else{
+                nominalDonasiDonatur = spinnerNominal
+            }
+            val messagePembayaran  =
+                "id program : $idProgram \n metode pembayaran id : $idPembayaran \n nominal : $nominalDonasiDonatur \n doa donatur : $doaDonatur"
+            val toast = Toast.makeText(this@ProgramDetailActivity, messagePembayaran, Toast.LENGTH_LONG)
+            toast.show()
         }
 
     }
@@ -411,7 +451,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                             val keterangan = item?.getString("tblnominal_keterangan")
                             val pilihanAdapter = "$nominal $keterangan"
                             nominalItems.add(pilihanAdapter)
-                            idNominal.add(nominalId!!)
+                            idNominal.add(nominalRaw!!.toInt())
                         }
                         var spinnerString: String? = intent.getStringExtra("spinner")
                         nominalItems.add("Masukkan Nominal Lain")
@@ -463,4 +503,5 @@ class ProgramDetailActivity : AppCompatActivity() {
             btnKeteranganStatus = ""
     }
 }
+
 
