@@ -3,6 +3,7 @@ package com.inddevid.aksiberbagi_donatur.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -130,9 +131,19 @@ class ProgramDetailActivity : AppCompatActivity() {
         val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
         val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
+        val helperNominal : TextView = view.findViewById(R.id.helperNominal)
 
         if (switchAnonimValue == "TRUE"){
             switchAnonimSet.isChecked = true
+        }
+
+        switchAnonimSet.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
+            if (message == "Switch1:ON"){
+                sharedPreference.save("ANONIM", "TRUE")
+            }else{
+                sharedPreference.save("ANONIM", "FALSE")
+            }
         }
 
         //ambil semua atribut nilai yang di tampilkan dari database server
@@ -165,7 +176,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         // Receiver intent data
         var dialogPembayaranAktif: String? = intent.getStringExtra("dialogAktif")
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
-        var idPembayaran: String? = intent.getStringExtra("idPembayaran")
+        var idPembayaran: String? = sharedPreference.getValueString("idPembayaran")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
         var imgPilihan: String? = intent.getStringExtra("imagePilihan")
 
@@ -257,20 +268,39 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         //klik button lanjut pembayaran post ke server
         btnLanjutPembayaran.setOnClickListener {
-
-            if(doaStatus == "True"){
-                doaDonatur = textDoaDonatur.text?.toString()!!
-            }
+//            set deklarasi variabel yang di perlukan
+            if(doaStatus == "True") doaDonatur = textDoaDonatur.text?.toString()!!
 
             if(spinnerNominal == 0 ){
-                nominalDonasiDonatur = Integer.parseInt(textNominalDonasi.text!!.toString())
+                if(textNominalDonasi.text!!.toString() == "" ){
+                    nominalDonasiDonatur = 0
+                }else{
+                    nominalDonasiDonatur = Integer.parseInt(textNominalDonasi.text!!.toString())
+                }
             }else{
                 nominalDonasiDonatur = spinnerNominal
             }
-            val messagePembayaran  =
-                "id program : $idProgram \n metode pembayaran id : $idPembayaran \n nominal : $nominalDonasiDonatur \n doa donatur : $doaDonatur"
-            val toast = Toast.makeText(this@ProgramDetailActivity, messagePembayaran, Toast.LENGTH_LONG)
-            toast.show()
+//            set validator untuk proses donasi
+            if(nominalDonasiDonatur < 1000) {
+                helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+                return@setOnClickListener
+            }else{
+                helperNominal.setTextColor(Color.parseColor("#86b4ba"))
+            }
+
+            if(idPembayaran == null){
+                btnPilihBayarC.setTextColor(Color.parseColor("#ed2a18"))
+                return@setOnClickListener
+            }else{
+//                sharedPreference.save("donasiProgramId",idProgram)
+//                sharedPreference.save("donasiPembayaranId", idPembayaran)
+//                sharedPreference.save("donasiNominal", nominalDonasiDonatur)
+//                sharedPreference.save("donasiDoa", doaDonatur)
+                val messagePembayaran  =
+                    "id program : $idProgram \n metode pembayaran id : $idPembayaran \n nominal : $nominalDonasiDonatur \n doa donatur : $doaDonatur"
+                val toast = Toast.makeText(this@ProgramDetailActivity, messagePembayaran, Toast.LENGTH_LONG)
+                toast.show()
+            }
         }
 
     }

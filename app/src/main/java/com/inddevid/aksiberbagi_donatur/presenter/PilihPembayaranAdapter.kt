@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ModelPembayaran
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.pilih_pembayaran_row.view.*
 import android.content.Intent as Intent1
@@ -31,6 +32,7 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
         holder.bindItems(arrayList[position])
 
         holder.itemView.setOnClickListener {
+            val sharedPreference: Preferences = Preferences(holder.itemView.context)
             val model = arrayList[position]
             val id : String? = model.id
             val pTitle : String? = model.title
@@ -38,10 +40,11 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
             val nominalSet: String = nominal
             val spinnerSet: String = spinner
 
+            sharedPreference.save("idPembayaran",id)
+
             val mIntent = Intent1(context, ProgramDetailActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("dialogAktif", "true")
-            mBundle.putString("idPembayaran", id)
             mBundle.putString("pilihanPembayaran", pTitle)
             mBundle.putString("imagePilihan", imgPilihan)
             mBundle.putString("nominalDonasi", nominalSet)
