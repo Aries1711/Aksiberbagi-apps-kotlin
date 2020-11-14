@@ -28,10 +28,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ListDonasi
 import com.inddevid.aksiberbagi_donatur.presenter.ListDonasiAdapter
-import com.inddevid.aksiberbagi_donatur.services.ApiError
-import com.inddevid.aksiberbagi_donatur.services.ApiService
-import com.inddevid.aksiberbagi_donatur.services.Converter
-import com.inddevid.aksiberbagi_donatur.services.Preferences
+import com.inddevid.aksiberbagi_donatur.services.*
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.toString as toString1
@@ -132,6 +129,31 @@ class ProgramDetailActivity : AppCompatActivity() {
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
         val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
         val helperNominal : TextView = view.findViewById(R.id.helperNominal)
+
+        textNominalDonasi.addTextChangedListener(NumberFormater(textNominalDonasi));
+//        textNominalDonasi.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(p0: Editable?) {
+//                var s: String? = null
+//                try {
+//                    s = String.format("%,d", p0?.toString()?.toLong())
+//                } catch (e: NumberFormatException) {
+//                    val toast = Toast.makeText(
+//                        this@ProgramDetailActivity,
+//                        "Error di formator",
+//                        Toast.LENGTH_LONG
+//                    )
+//                }
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//        })
 
         if (switchAnonimValue == "T"){
             switchAnonimSet.isChecked = true
@@ -298,7 +320,11 @@ class ProgramDetailActivity : AppCompatActivity() {
 //                sharedPreference.save("donasiDoa", doaDonatur)
                 val messagePembayaran  =
                     "id program : $idProgram \n metode pembayaran id : $idPembayaran \n nominal : $nominalDonasiDonatur \n doa donatur : $doaDonatur"
-                val toast = Toast.makeText(this@ProgramDetailActivity, messagePembayaran, Toast.LENGTH_LONG)
+                val toast = Toast.makeText(
+                    this@ProgramDetailActivity,
+                    messagePembayaran,
+                    Toast.LENGTH_LONG
+                )
                 toast.show()
             }
         }
@@ -327,7 +353,7 @@ class ProgramDetailActivity : AppCompatActivity() {
     private fun postDonasiDonatur(tokenValue: String?){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
-        body.put("program_id", sharedPreference.getValueString("donasiProgramId") )
+        body.put("program_id", sharedPreference.getValueString("donasiProgramId"))
         body.put("metode_pembayaran_id", sharedPreference.getValueString("donasiPembayaranId"))
         body.put("nominal", sharedPreference.getValueString("donasiNominal"))
         body.put("pesan_doa", sharedPreference.getValueString("donasiDoa"))
@@ -343,7 +369,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("no_ovo", sharedPreference.getValueString(""))
         body.put("no_dana", sharedPreference.getValueString(""))
         body.put("nominal_flash_sale_id", null)
-        ApiService.postDonasi(tokenValue, body).getAsJSONObject(object: JSONObjectRequestListener{
+        ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
 
             }
@@ -548,7 +574,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun btnShowLayout(btn: Button , layout: LinearLayout){
+    private fun btnShowLayout(btn: Button, layout: LinearLayout){
             val params: ViewGroup.LayoutParams = layout.layoutParams
             params.height = ViewGroup.LayoutParams.MATCH_PARENT
             layout.layoutParams = params
@@ -556,7 +582,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             btnKeteranganStatus = "On"
     }
 
-    private fun btnHideLayout(btn: Button , layout: LinearLayout){
+    private fun btnHideLayout(btn: Button, layout: LinearLayout){
             val params: ViewGroup.LayoutParams = layout.layoutParams
             params.height = 1000
             layout.layoutParams = params

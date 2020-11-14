@@ -51,7 +51,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //      start countdown timer android
     implementation 'com.github.happysingh23828:HappyTimer:1.0.1'
-    // start fast android networking
+    //      start fast android networking
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
