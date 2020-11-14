@@ -172,4 +172,10 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest postDonasi(String auth,  JSONObject data){
+        token = auth ;
+        String endpoint = baseUrl("donasi");
+        return post(endpoint, data);
+    }
+
 }

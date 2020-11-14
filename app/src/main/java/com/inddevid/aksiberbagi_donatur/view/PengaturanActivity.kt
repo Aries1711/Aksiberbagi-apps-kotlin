@@ -28,7 +28,7 @@ class PengaturanActivity : AppCompatActivity() {
 
         val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
 
-        if (switchAnonimValue == "TRUE"){
+        if (switchAnonimValue == "T"){
             switchAnonimSet.isChecked = true
         }
 
@@ -36,9 +36,9 @@ class PengaturanActivity : AppCompatActivity() {
         switchAnonimSet.setOnCheckedChangeListener { _, isChecked ->
             val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
             if (message == "Switch1:ON"){
-                sharedPreference.save("ANONIM", "TRUE")
+                sharedPreference.save("ANONIM", "T")
             }else{
-                sharedPreference.save("ANONIM", "FALSE")
+                sharedPreference.save("ANONIM", "F")
             }
         }
     }

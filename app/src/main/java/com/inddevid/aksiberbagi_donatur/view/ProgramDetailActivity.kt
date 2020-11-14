@@ -133,16 +133,16 @@ class ProgramDetailActivity : AppCompatActivity() {
         val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
         val helperNominal : TextView = view.findViewById(R.id.helperNominal)
 
-        if (switchAnonimValue == "TRUE"){
+        if (switchAnonimValue == "T"){
             switchAnonimSet.isChecked = true
         }
 
         switchAnonimSet.setOnCheckedChangeListener { _, isChecked ->
             val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
             if (message == "Switch1:ON"){
-                sharedPreference.save("ANONIM", "TRUE")
+                sharedPreference.save("ANONIM", "T")
             }else{
-                sharedPreference.save("ANONIM", "FALSE")
+                sharedPreference.save("ANONIM", "F")
             }
         }
 
@@ -323,6 +323,37 @@ class ProgramDetailActivity : AppCompatActivity() {
     }
 
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+
+    private fun postDonasiDonatur(tokenValue: String?){
+        val body = JSONObject()
+        val sharedPreference: Preferences = Preferences(this)
+        body.put("program_id", sharedPreference.getValueString("donasiProgramId") )
+        body.put("metode_pembayaran_id", sharedPreference.getValueString("donasiPembayaranId"))
+        body.put("nominal", sharedPreference.getValueString("donasiNominal"))
+        body.put("pesan_doa", sharedPreference.getValueString("donasiDoa"))
+        body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
+        body.put("is_android", true)
+        body.put("no_wa", sharedPreference.getValueString(""))
+        body.put("email", sharedPreference.getValueString(""))
+        body.put("nama_donatur", sharedPreference.getValueString(""))
+        body.put("kode_negara_no_hp", sharedPreference.getValueString(""))
+        body.put("panggilan", sharedPreference.getValueString(""))
+        body.put("influencer_id", null)
+        body.put("no_link_aja", sharedPreference.getValueString(""))
+        body.put("no_ovo", sharedPreference.getValueString(""))
+        body.put("no_dana", sharedPreference.getValueString(""))
+        body.put("nominal_flash_sale_id", null)
+        ApiService.postDonasi(tokenValue, body).getAsJSONObject(object: JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+
+            }
+
+            override fun onError(anError: ANError?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
     private fun getKoneksi(
         tokenValue: String?,
