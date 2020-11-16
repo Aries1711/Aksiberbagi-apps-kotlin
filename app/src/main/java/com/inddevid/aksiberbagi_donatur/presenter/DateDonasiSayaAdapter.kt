@@ -18,7 +18,7 @@ class DateDonasiSayaAdapter (val arrayList: ArrayList<DateDonasiSaya>, val conte
             itemView.dayDonasiSaya.text = model.day
             itemView.dateDonasiSaya.text = model.date
             // pengkondisian view untuk tanggal pada hari ini
-            if( model.date == "23"){
+            if( model.date == model.dateNow ){
                 itemView.frameADS.setBackgroundResource(R.drawable.rounded_linear_layout)
                 itemView.dateDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
                 itemView.dayDonasiSaya.setTextColor(Color.parseColor("#ffffff"));

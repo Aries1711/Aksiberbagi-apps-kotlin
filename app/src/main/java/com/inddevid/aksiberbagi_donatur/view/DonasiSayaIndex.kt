@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -42,6 +43,9 @@ class DonasiSayaIndex : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private val TAG = "Fragment Donasi Saya"
+    private val arrayDate = ArrayList<DateDonasiSaya>()
+    private val arrayHari: ArrayList<String> = arrayListOf("SEN", "SEL", "RAB", "KAM", "JUM", "SAB", "MIN")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,32 +59,9 @@ class DonasiSayaIndex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // set val for arraylist date donasi saya
-        val dayA:String = "SEN"
-        val dateA:String = "21"
-        val dayB:String = "SEL"
-        val dateB:String = "22"
-        val dayC:String = "RAB"
-        val dateC:String = "23"
-        val dayD:String = "KAM"
-        val dateD:String = "24"
-        val dayE:String = "JUM"
-        val dateE:String = "25"
-        val dayF:String = "SAB"
-        val dateF:String = "26"
-        val dayG:String = "MIN"
-        val dateG:String = "27"
-        // declare the arraylist as arraydate for date donasi saya
-        val arrayDate = ArrayList<DateDonasiSaya>()
-        arrayDate.add(DateDonasiSaya(dayA, dateA))
-        arrayDate.add(DateDonasiSaya(dayB, dateB))
-        arrayDate.add(DateDonasiSaya(dayC, dateC))
-        arrayDate.add(DateDonasiSaya(dayD, dateD))
-        arrayDate.add(DateDonasiSaya(dayE, dateE))
-        arrayDate.add(DateDonasiSaya(dayF, dateF))
-        arrayDate.add(DateDonasiSaya(dayG, dateG))
-        val myAdapterA = DateDonasiSayaAdapter(arrayDate, requireActivity())
+        //set preferences
+        val sharedPreference: Preferences = Preferences(requireContext())
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
         // set val for arraylist card donasi saya
         val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
@@ -108,37 +89,35 @@ class DonasiSayaIndex : Fragment() {
 
         btnLihatSemua.setOnClickListener { startActivity(Intent(requireActivity(), SemuaDonasiSayaActivity::class.java)) }
 
-        //inflate the recycler for Date donasi saya
-        var mainMenuA = view.findViewById(R.id.recyclerDonasiSayaDate) as RecyclerView
-        mainMenuA.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
-        mainMenuA.adapter = myAdapterA
         //inflate the recycler for cardview donasi saya
         var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
         mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
         mainMenuB.adapter = myAdapterB
-
+        getKoneksi(retrivedToken, view)
 
         return view
     }
 
     private fun getKoneksi(
-        tokenValue: String?
+        tokenValue: String?,
+        view: View
     ){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getDonasiSayaAtribut(tokenValue)
+                getDonasiSayaAtribut(tokenValue, view)
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue)
+                refreshToken(tokenValue,view)
             }
 
         })
     }
 
     private fun refreshToken(
-        tokenValue: String?
+        tokenValue: String?,
+        view: View
     ){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(requireContext())
@@ -151,7 +130,7 @@ class DonasiSayaIndex : Fragment() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonasiSayaAtribut(token)
+                                getDonasiSayaAtribut(token, view)
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -159,7 +138,7 @@ class DonasiSayaIndex : Fragment() {
                             val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonasiSayaAtribut(token)
+                                getDonasiSayaAtribut(token, view)
                             }
                         } else {
                             Looper.myLooper()?.let {
@@ -209,14 +188,53 @@ class DonasiSayaIndex : Fragment() {
         }
     }
 
-    private fun getDonasiSayaAtribut(tokenValue: String?){
+    private fun getDonasiSayaAtribut(
+        tokenValue: String?,
+        view: View
+    ){
         ApiService.getDonasiSaya(tokenValue).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-                TODO("Not yet implemented")
+                val headerWeek = response?.getString("header_week")
+                var headerText = view.findViewById<TextView>(R.id.monthYears)
+                headerText.text = headerWeek
+
+                val weekStart = response?.getString("weekStart")!!.toInt()
+                val weekEnd = response?.getString("weekEnd")!!.toInt()
+                val dateNow = response?.getString("dayActive")
+
+                for(i in 0 until 7){
+                    val tanggal = weekStart + i
+                    arrayDate.add(DateDonasiSaya(arrayHari[i], "$tanggal", dateNow))
+                }
+
+                val myAdapterA = DateDonasiSayaAdapter(arrayDate, requireActivity())
+                //inflate the recycler for Date donasi saya
+                var mainMenuA = view.findViewById(R.id.recyclerDonasiSayaDate) as RecyclerView
+                mainMenuA.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+                mainMenuA.adapter = myAdapterA
+
+                val nominalHariIni = response?.getString("nominal_hari_ini")
+                var nominalHariInitext = view.findViewById<TextView>(R.id.nominalDonasiHariIni)
+                nominalHariInitext.text = "Rp. $nominalHariIni"
+
+                val nominalMingguIni = response?.getString("nominal_minggu_ini")
+                var nominalMingguIniText = view.findViewById<TextView>(R.id.nominalDonasiMingguIni)
+                var tanggalMingguIniText = view.findViewById<TextView>(R.id.tanggalDonasiCard)
+                nominalMingguIniText.text = "Rp. $nominalMingguIni"
+                tanggalMingguIniText.text = "$weekStart / $weekEnd $headerWeek"
+
+                val totalJumlahDonasi = response?.getString("total_donasi_jumlah")
+                var totalJumlahDonasiText = view.findViewById<TextView>(R.id.totalJumlahDonasiText)
+                totalJumlahDonasiText.text = "Dari $totalJumlahDonasi X donasi"
+
+                val totalNominalDonasi = response?.getString("total_donasi_nominal")
+                var totalNominalDonasiText = view.findViewById<TextView>(R.id.totalNominalDonasiText)
+                totalNominalDonasiText.text = "Rp. $totalNominalDonasi"
             }
 
             override fun onError(anError: ANError?) {
-                TODO("Not yet implemented")
+                val toast = Toast.makeText(requireContext(), "ada Kesalahan ", Toast.LENGTH_LONG)
+                toast.show()
             }
 
         })

@@ -128,6 +128,7 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/colorInputPressFalse"/>
                                 <TextView
+                                    android:id="@+id/nominalDonasiHariIni"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Rp 0"
@@ -159,6 +160,7 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/colorInputPressFalse"/>
                                 <TextView
+                                    android:id="@+id/nominalDonasiMingguIni"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Rp 140.000"
@@ -166,6 +168,7 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/colorInputStrokeBlue"/>
                                 <TextView
+                                    android:id="@+id/tanggalDonasiCard"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="12/19 September"
@@ -197,6 +200,7 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/colorInputPressFalse"/>
                                 <TextView
+                                    android:id="@+id/totalNominalDonasiText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Rp 1.040.000"
@@ -204,6 +208,7 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/colorInputStrokeBlue"/>
                                 <TextView
+                                    android:id="@+id/totalJumlahDonasiText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Dari 6X donasi"
