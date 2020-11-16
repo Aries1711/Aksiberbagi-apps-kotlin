@@ -178,4 +178,10 @@ public class ApiService {
         return post(endpoint, data);
     }
 
+    public static ANRequest getDonasiSaya(String data){
+        token = data;
+        String endpoint = baseUrl("donasi/saya");
+        return get(endpoint);
+    }
+
 }

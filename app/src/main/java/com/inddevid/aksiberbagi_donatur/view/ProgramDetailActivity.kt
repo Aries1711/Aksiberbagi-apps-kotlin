@@ -130,7 +130,9 @@ class ProgramDetailActivity : AppCompatActivity() {
         val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
         val helperNominal : TextView = view.findViewById(R.id.helperNominal)
 
-        textNominalDonasi.addTextChangedListener(NumberFormater(textNominalDonasi));
+        val initialisasiNominal = "0"
+        textNominalDonasi.text = initialisasiNominal.toEditable()
+        textNominalDonasi.addTextChangedListener(NumberFormaterDot(textNominalDonasi))
 //        textNominalDonasi.addTextChangedListener(object : TextWatcher {
 //            override fun afterTextChanged(p0: Editable?) {
 //                var s: String? = null
@@ -297,7 +299,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                 if(textNominalDonasi.text!!.toString() == "" ){
                     nominalDonasiDonatur = 0
                 }else{
-                    nominalDonasiDonatur = Integer.parseInt(textNominalDonasi.text!!.toString())
+                    nominalDonasiDonatur = Integer.parseInt(textNominalDonasi.text!!.toString().replace(".", ""))
                 }
             }else{
                 nominalDonasiDonatur = spinnerNominal
@@ -318,14 +320,8 @@ class ProgramDetailActivity : AppCompatActivity() {
 //                sharedPreference.save("donasiPembayaranId", idPembayaran)
 //                sharedPreference.save("donasiNominal", nominalDonasiDonatur)
 //                sharedPreference.save("donasiDoa", doaDonatur)
-                val messagePembayaran  =
-                    "id program : $idProgram \n metode pembayaran id : $idPembayaran \n nominal : $nominalDonasiDonatur \n doa donatur : $doaDonatur"
-                val toast = Toast.makeText(
-                    this@ProgramDetailActivity,
-                    messagePembayaran,
-                    Toast.LENGTH_LONG
-                )
-                toast.show()
+//                postDonasiDonatur(retrivedToken)
+                startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java))
             }
         }
 
@@ -355,7 +351,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         val sharedPreference: Preferences = Preferences(this)
         body.put("program_id", sharedPreference.getValueString("donasiProgramId"))
         body.put("metode_pembayaran_id", sharedPreference.getValueString("donasiPembayaranId"))
-        body.put("nominal", sharedPreference.getValueString("donasiNominal"))
+        body.put("nominal", sharedPreference.getValueInt("donasiNominal"))
         body.put("pesan_doa", sharedPreference.getValueString("donasiDoa"))
         body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
         body.put("is_android", true)
@@ -371,11 +367,20 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("nominal_flash_sale_id", null)
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-
+                if(response?.getString("message").equals("Donasi berhasil")){
+                    val toast = Toast.makeText(
+                        this@ProgramDetailActivity,
+                        "Oke Donasi Done",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                }
             }
 
             override fun onError(anError: ANError?) {
-                TODO("Not yet implemented")
+                Log.d(TAG, "OnErrorProsesDonasiBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorProsesDonasiCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorProsesDonasiDetail " + anError?.errorDetail)
             }
 
         })
