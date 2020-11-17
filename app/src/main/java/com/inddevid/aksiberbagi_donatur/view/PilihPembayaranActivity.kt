@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -36,9 +37,11 @@ class PilihPembayaranActivity : AppCompatActivity() {
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         var valueNominal: String? = intent.getStringExtra("nominal")
         var spinnerPilihan: String? = intent.getStringExtra("spinnerValue")
+        var layoutEwallet: LinearLayout = findViewById(R.id.layoutEwallet)
+        var layoutTransfer: LinearLayout = findViewById(R.id.layoutTransfer)
 
-//        val toast = Toast.makeText(this, spinnerPilihan, Toast.LENGTH_LONG)
-//        toast.show()
+        val toast = Toast.makeText(this, valueNominal, Toast.LENGTH_LONG)
+        toast.show()
 
         var nominalSet: String = ""
         var spinnerSet: String = ""
@@ -47,6 +50,18 @@ class PilihPembayaranActivity : AppCompatActivity() {
             nominalSet = "0"
             spinnerSet = spinnerPilihan.toString()
         }else{
+            valueNominal = valueNominal!!.replace(".", "")
+            val toast = Toast.makeText(this, "masuk ke nominal input $valueNominal", Toast.LENGTH_LONG)
+            toast.show()
+            if(valueNominal!!.toInt() < 1000 ){
+                layoutEwallet.setBackgroundColor(Color.parseColor("#33FFFFFF"))
+                layoutEwallet.bringToFront()
+                layoutTransfer.setBackgroundColor(Color.parseColor("#33FFFFFF"))
+                layoutTransfer.bringToFront()
+            }else if(valueNominal!!.toInt() in 1001..9999){
+                layoutTransfer.setBackgroundColor(Color.parseColor("#33FFFFFF"))
+                layoutTransfer.bringToFront()
+            }
             nominalSet = valueNominal.toString()
             spinnerSet = spinnerPilihan.toString()
         }

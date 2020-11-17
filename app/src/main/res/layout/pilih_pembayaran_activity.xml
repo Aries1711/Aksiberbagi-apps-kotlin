@@ -45,23 +45,19 @@
                     android:textStyle="bold"
                     android:textSize="16sp"/>
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerEwallet"
+            <LinearLayout
+                android:id="@+id/layoutEwallet"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerEwallet" />
-
-<!--            <ListView-->
-<!--                android:id="@+id/listViewEwallet"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/headerEwallet" />-->
-
+                app:layout_constraintTop_toBottomOf="@id/headerEwallet">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerEwallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/headerEpayment"
@@ -71,7 +67,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerEwallet" >
+                app:layout_constraintTop_toBottomOf="@id/layoutEwallet" >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
@@ -80,23 +76,21 @@
                     android:textStyle="bold"
                     android:textSize="16sp"/>
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerTransfer"
+            <LinearLayout
+                android:id="@+id/layoutTransfer"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerEpayment"/>
+                app:layout_constraintTop_toBottomOf="@id/headerEpayment">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-<!--            <ListView-->
-<!--                android:id="@+id/listViewTransfer"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/headerEpayment" />-->
-        </androidx.constraintlayout.widget.ConstraintLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

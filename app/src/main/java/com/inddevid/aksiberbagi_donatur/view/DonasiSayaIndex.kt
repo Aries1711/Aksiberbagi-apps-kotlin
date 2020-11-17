@@ -201,10 +201,17 @@ class DonasiSayaIndex : Fragment() {
                 val weekStart = response?.getString("weekStart")!!.toInt()
                 val weekEnd = response?.getString("weekEnd")!!.toInt()
                 val dateNow = response?.getString("dayActive")
+                val dayDonasi = response?.getJSONArray("array_tgl_adadonasi")
+                val arrayDayDonasi : ArrayList<String> = arrayListOf()
+
+                for(i in 0 until dayDonasi.length()){
+                    val item = dayDonasi[i].toString()
+                    arrayDayDonasi.add(item)
+                }
 
                 for(i in 0 until 7){
                     val tanggal = weekStart + i
-                    arrayDate.add(DateDonasiSaya(arrayHari[i], "$tanggal", dateNow))
+                    arrayDate.add(DateDonasiSaya(arrayHari[i], "$tanggal", dateNow, arrayDayDonasi))
                 }
 
                 val myAdapterA = DateDonasiSayaAdapter(arrayDate, requireActivity())

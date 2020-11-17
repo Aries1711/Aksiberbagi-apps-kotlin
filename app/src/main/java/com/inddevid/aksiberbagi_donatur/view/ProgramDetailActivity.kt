@@ -133,29 +133,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         val initialisasiNominal = "0"
         textNominalDonasi.text = initialisasiNominal.toEditable()
         textNominalDonasi.addTextChangedListener(NumberFormaterDot(textNominalDonasi))
-//        textNominalDonasi.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(p0: Editable?) {
-//                var s: String? = null
-//                try {
-//                    s = String.format("%,d", p0?.toString()?.toLong())
-//                } catch (e: NumberFormatException) {
-//                    val toast = Toast.makeText(
-//                        this@ProgramDetailActivity,
-//                        "Error di formator",
-//                        Toast.LENGTH_LONG
-//                    )
-//                }
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//        })
 
         if (switchAnonimValue == "T"){
             switchAnonimSet.isChecked = true
