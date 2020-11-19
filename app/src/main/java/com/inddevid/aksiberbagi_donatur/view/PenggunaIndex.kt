@@ -31,6 +31,7 @@ class PenggunaIndex : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var backButtonCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +89,24 @@ class PenggunaIndex : Fragment() {
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         return view
     }
+
+//    private fun onBackPressed() {
+//        Toast.makeText(
+//            requireContext(),
+//            "Tekan Sekali",
+//            Toast.LENGTH_SHORT
+//        ).show()
+//        if (backButtonCount >= 1) {
+//            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+//        } else {
+//            Toast.makeText(
+//                requireContext(),
+//                "Press the back button once again to close the application.",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            backButtonCount++
+//        }
+//    }
 
     companion object {
         /**

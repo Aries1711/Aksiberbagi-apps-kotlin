@@ -48,6 +48,7 @@ class BerandaIndex : Fragment() {
     private val arrayLaporan = ArrayList<BerandaLaporan>()
     private val arrayProgram = ArrayList<BerandaProgramAll>()
     private var cekKoneksi : String = "testing"
+    private var backButtonCount = 0
     private var berandaSlideAdapter = BerandaSlideAdapter(
         listOf(
             BerandaSlideBanner(
@@ -80,14 +81,14 @@ class BerandaIndex : Fragment() {
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_beranda_index , container, false)
+        val view: View = inflater.inflate(R.layout.fragment_beranda_index, container, false)
 
         view.berandaSliderBanner.adapter = berandaSlideAdapter
-        setupIndicators( view )
-        setCurrentIndicator(0 , view)
+        setupIndicators(view)
+        setCurrentIndicator(0, view)
 
         view.berandaSliderBanner.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback(){
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 setCurrentIndicator(position, view)
@@ -96,20 +97,25 @@ class BerandaIndex : Fragment() {
 
         // tombol cari appbar
         val searcBtn: ImageView = view.findViewById(R.id.searchImageButton)
-        searcBtn.setOnClickListener( View.OnClickListener {
+        searcBtn.setOnClickListener(View.OnClickListener {
             startActivity(Intent(requireActivity(), SearchActivity::class.java))
         })
 
         //tombol gabung donasi rutin
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
-        btnGbgDonRut.setOnClickListener{ startActivity(Intent(requireActivity(), DonasiRutinActivity::class.java)) }
+        btnGbgDonRut.setOnClickListener{ startActivity(
+            Intent(
+                requireActivity(),
+                DonasiRutinActivity::class.java
+            )
+        ) }
 
         // tombol submenu beranda a-d
         // tombol lelang baik
         val imageSubA : ImageView = view.findViewById(R.id.subA)
         Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubA)
         imageSubA.setOnClickListener {
-            startActivity(Intent(requireActivity(), LelangActivity::class.java ))
+            startActivity(Intent(requireActivity(), LelangActivity::class.java))
             }
         // tombol zakat
         val imageSubB : ImageView = view.findViewById(R.id.subB)
@@ -134,13 +140,18 @@ class BerandaIndex : Fragment() {
 
         //set button lihat semua
         val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
-        btnLihatAllProgram.setOnClickListener{ startActivity(Intent(requireActivity(), ProgramDetailActivity::class.java))}
+        btnLihatAllProgram.setOnClickListener{ startActivity(
+            Intent(
+                requireActivity(),
+                ProgramDetailActivity::class.java
+            )
+        )}
         //set banner for footer beranda
         var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
         return view
     }
 
-    private fun setupIndicators( view: View){
+    private fun setupIndicators(view: View){
         val indicators = arrayOfNulls<ImageView>(berandaSlideAdapter.itemCount)
         val layoutParams: LinearLayout.LayoutParams =
             LinearLayout.LayoutParams(
@@ -190,32 +201,40 @@ class BerandaIndex : Fragment() {
 
     private fun getKoneksi(tokenValue: String?, view: View){
         val header : String? = tokenValue
-        ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener{
+        ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 //inflate view card Lelang baik
                 var mainMenuLelang = view.findViewById(R.id.recyclerLelangBaik) as RecyclerView
-                getLelangBaik(tokenValue, mainMenuLelang, view )
+                getLelangBaik(tokenValue, mainMenuLelang, view)
 
                 //inflate horizontal program Rekomendasi
                 var mainMenuPilihan = view.findViewById(R.id.recyclerProgramPilihan) as RecyclerView
-                getProgramRekomendasi(tokenValue, mainMenuPilihan )
+                getProgramRekomendasi(tokenValue, mainMenuPilihan)
 
                 //inflate horizontal laporan
                 var mainMenuLaporan = view.findViewById(R.id.recyclerLaporan) as RecyclerView
                 getLaporanTerbaru(tokenValue, mainMenuLaporan)
                 //button lihat semua laporan
                 val btnLihatLaporan: FrameLayout = view.findViewById(R.id.frameButtonSemuaLaporan)
-                btnLihatLaporan.setOnClickListener { startActivity(Intent(requireActivity(), SemuaLaporanActivity::class.java)) }
+                btnLihatLaporan.setOnClickListener {
+                    startActivity(
+                        Intent(
+                            requireActivity(),
+                            SemuaLaporanActivity::class.java
+                        )
+                    )
+                }
 
                 //inflate vertical program All
                 var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
                 getListProgram(tokenValue, mainMenuAll)
 
-                val imageBanner :ImageView = view.findViewById(R.id.berandaBanner)
-                val titleBanner : TextView = view.findViewById(R.id.bannerBerandaTitle)
+                val imageBanner: ImageView = view.findViewById(R.id.berandaBanner)
+                val titleBanner: TextView = view.findViewById(R.id.bannerBerandaTitle)
                 getBannerFooter(tokenValue, imageBanner, titleBanner)
 
             }
+
             override fun onError(anError: ANError?) {
                 refreshToken(tokenValue, view)
             }
@@ -223,26 +242,34 @@ class BerandaIndex : Fragment() {
         })
     }
 
-    private fun getLelangBaik(tokenValue: String?, view: RecyclerView, viewT : View){
+    private fun getLelangBaik(tokenValue: String?, view: RecyclerView, viewT: View){
         val header : String? = tokenValue
         ApiService.getLelang(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 val jsonArray = response?.getJSONArray("data")
                 val timer = response?.getString("timer")!!.toInt()
-                if (jsonArray?.length()!! > 0){
-                    for (i in 0 until jsonArray.length()){
+                if (jsonArray?.length()!! > 0) {
+                    for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
                         val nominalItem = item?.getJSONObject("nominal")
                         val img: String? = item?.getString("gambar_url")
-                        val nominal: Double? = nominalItem?.getString("nominal_flash_sale")!!.toDouble()
+                        val nominal: Double? =
+                            nominalItem?.getString("nominal_flash_sale")!!.toDouble()
                         val stok: String? = item?.getString("stok")
-                        arrayLelang.add(BerandaLelang(img, stok?.toInt(),nominal))
+                        arrayLelang.add(BerandaLelang(img, stok?.toInt(), nominal))
                     }
                     val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
-                    view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+                    view.layoutManager = LinearLayoutManager(
+                        requireActivity(),
+                        RecyclerView.HORIZONTAL,
+                        false
+                    )
                     view.adapter = myAdapterLelang
                     //
-                    viewT.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(requireActivity(), R.color.colorInputStrokeBlue)
+                    viewT.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(
+                        requireActivity(),
+                        R.color.colorInputStrokeBlue
+                    )
                     viewT.normalCountDownView.initTimer(timer)
                     viewT.normalCountDownView.startTimer()
                 }
@@ -260,8 +287,8 @@ class BerandaIndex : Fragment() {
         ApiService.getRekomendasi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 val jsonArray = response?.getJSONArray("data")
-                if (jsonArray?.length()!! > 0){
-                    for (i in 0 until jsonArray.length()){
+                if (jsonArray?.length()!! > 0) {
+                    for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
                         val program = item?.getJSONObject("program")
                         val id: String? = program?.getString("tblprogram_id")
@@ -270,22 +297,42 @@ class BerandaIndex : Fragment() {
                         val donasi: String? = program?.getString("capaian_donasi")
                         val sisahari: String? = program?.getString("sisa_hari")
                         val tanggalMulai: String? = program?.getString("tanggal_mulai_donasi")
-                        val targetNominal: String? = program?.getString("tblprogram_isiantargetnominal")
+                        val targetNominal: String? =
+                            program?.getString("tblprogram_isiantargetnominal")
                         var progressProgram: Int? = program?.getInt("progress")
-                        var targetDonasi : String?
-                        if (targetNominal == "null" || targetNominal == "0" ){
+                        var targetDonasi: String?
+                        if (targetNominal == "null" || targetNominal == "0") {
                             targetDonasi = "100"
-                        }else{
+                        } else {
                             targetDonasi = program?.getString("target_nominal")
                         }
-                        arrayRekomendasi.add(BerandaProgramPilihan(id,img,judul,donasi,sisahari,tanggalMulai, progressProgram,targetDonasi))
+                        arrayRekomendasi.add(
+                            BerandaProgramPilihan(
+                                id,
+                                img,
+                                judul,
+                                donasi,
+                                sisahari,
+                                tanggalMulai,
+                                progressProgram,
+                                targetDonasi
+                            )
+                        )
                     }
-                    val myAdapterPilihan = BerandaProgramPilihanAdapter(arrayRekomendasi, requireActivity())
-                    view.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+                    val myAdapterPilihan = BerandaProgramPilihanAdapter(
+                        arrayRekomendasi,
+                        requireActivity()
+                    )
+                    view.layoutManager = LinearLayoutManager(
+                        requireActivity(),
+                        RecyclerView.HORIZONTAL,
+                        false
+                    )
                     view.adapter = myAdapterPilihan
                 }
 
             }
+
             override fun onError(anError: ANError?) {
                 Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                 Log.d(TAG, "OnErrorCode " + anError?.errorCode)
@@ -297,19 +344,29 @@ class BerandaIndex : Fragment() {
 
     private fun getLaporanTerbaru(tokenValue: String?, view: RecyclerView){
         val header: String? = tokenValue
-        ApiService.getLaporan(header).getAsJSONObject(object : JSONObjectRequestListener{
+        ApiService.getLaporan(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                val jsonArray =response?.getJSONArray("data")
-                if (jsonArray?.length()!! > 0){
-                    for(i in 0 until jsonArray.length()){
+                val jsonArray = response?.getJSONArray("data")
+                if (jsonArray?.length()!! > 0) {
+                    for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
-                        val img: String? = "https://aksiberbagi.com/storage/program/berita/"+item?.getString("tblupdateprogram_file")
+                        val img: String? =
+                            "https://aksiberbagi.com/storage/program/berita/" + item?.getString(
+                                "tblupdateprogram_file"
+                            )
                         val judul: String? = item?.getString("tblupdateprogram_judul")
                         val relawan: String? = item?.getString("tblcabang_nama")
                         val date: String? = item?.getString("tanggal_laporan")
-                        arrayLaporan.add(BerandaLaporan(img,judul,relawan,date))
-                        val myAdapterLaporan = BerandaLaporanAdapter(arrayLaporan,requireActivity())
-                        view.layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.HORIZONTAL,false)
+                        arrayLaporan.add(BerandaLaporan(img, judul, relawan, date))
+                        val myAdapterLaporan = BerandaLaporanAdapter(
+                            arrayLaporan,
+                            requireActivity()
+                        )
+                        view.layoutManager = LinearLayoutManager(
+                            requireActivity(),
+                            RecyclerView.HORIZONTAL,
+                            false
+                        )
                         view.adapter = myAdapterLaporan
                     }
                 }
@@ -325,29 +382,42 @@ class BerandaIndex : Fragment() {
 
     private fun getListProgram(tokenValue: String?, view: RecyclerView){
         val header:String? = tokenValue
-        ApiService.getProgramTerbaru(header).getAsJSONObject(object : JSONObjectRequestListener{
+        ApiService.getProgramTerbaru(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                val jsonArray =response?.getJSONArray("data")
-                if (jsonArray?.length()!! > 0){
-                    for(i in 0 until jsonArray.length()){
+                val jsonArray = response?.getJSONArray("data")
+                if (jsonArray?.length()!! > 0) {
+                    for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
-                            val idProgram = item?.getString("tblprogram_id")
+                        val idProgram = item?.getString("tblprogram_id")
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
                         val volunter: String? = "Aksiberbagi.com"
                         val capaian = item?.getString("capaian_donasi")
                         val sisaHari = item?.getString("sisa_hari")
                         val startProgram = item?.getString("tanggal_mulai_donasi")
-                        val targetNominal: String? = item?.getString("tblprogram_isiantargetnominal")
+                        val targetNominal: String? =
+                            item?.getString("tblprogram_isiantargetnominal")
                         var progressProgram: Int? = item?.getInt("progress")
-                        var targetDonasi : String?
-                        if (targetNominal == "null" || targetNominal == "0" ){
-                             targetDonasi = "100"
-                        }else{
+                        var targetDonasi: String?
+                        if (targetNominal == "null" || targetNominal == "0") {
+                            targetDonasi = "100"
+                        } else {
                             targetDonasi = item?.getString("target_nominal")
                         }
-                        arrayProgram.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi))
-                        val myAdapterAll = BerandaProgramAllAdapter(arrayProgram,requireActivity())
+                        arrayProgram.add(
+                            BerandaProgramAll(
+                                idProgram,
+                                img,
+                                judul,
+                                volunter,
+                                capaian,
+                                sisaHari,
+                                startProgram,
+                                progressProgram,
+                                targetDonasi
+                            )
+                        )
+                        val myAdapterAll = BerandaProgramAllAdapter(arrayProgram, requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity())
                         view.adapter = myAdapterAll
                     }
@@ -363,14 +433,15 @@ class BerandaIndex : Fragment() {
 
     private fun getBannerFooter(tokenValue: String?, image: ImageView, title: TextView){
         val header: String? = tokenValue
-        ApiService.getBanner(header).getAsJSONObject(object : JSONObjectRequestListener{
+        ApiService.getBanner(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if(response?.getString("message").equals("Data banner berhasil diambil")){
+                if (response?.getString("message").equals("Data banner berhasil diambil")) {
                     var imgUrl: String? = response?.getString("data")
                     Glide.with(requireActivity()).load(imgUrl).into(image)
                     title.text = response?.getString("title")
                 }
             }
+
             override fun onError(anError: ANError?) {
                 TODO("Not yet implemented")
             }
@@ -385,20 +456,22 @@ class BerandaIndex : Fragment() {
             ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     try {
-                        if (response?.getString("message").equals("Refresh berhasil")){
-                            val token : String? = response?.getString("token")
+                        if (response?.getString("message").equals("Refresh berhasil")) {
+                            val token: String? = response?.getString("token")
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
                                 getKoneksi(token, view)
                             }
-                        }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
-                            val token : String? = response?.getString("token")
+                        } else if (response?.getString("message")
+                                .equals("Token expired berhasil di refresh")
+                        ) {
+                            val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
                                 getKoneksi(token, view)
                             }
-                        }else{
+                        } else {
                             Looper.myLooper()?.let {
                                 Handler(it).postDelayed({
                                     val intent = Intent(requireContext(), IntroActivity::class.java)
@@ -407,7 +480,7 @@ class BerandaIndex : Fragment() {
                             }
                         }
 
-                    }catch (e : JSONException){
+                    } catch (e: JSONException) {
                         val toast = Toast.makeText(
                             requireContext(),
                             "Invalid Json",
@@ -416,6 +489,7 @@ class BerandaIndex : Fragment() {
                         toast.show()
                     }
                 }
+
                 override fun onError(anError: ANError?) {
                     Looper.myLooper()?.let {
                         Handler(it).postDelayed({

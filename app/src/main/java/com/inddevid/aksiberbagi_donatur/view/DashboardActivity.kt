@@ -50,8 +50,26 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         val btnDonasiAll: FloatingActionButton = findViewById(R.id.floatingBtn)
-        btnDonasiAll.setOnClickListener{startActivity(Intent(this@DashboardActivity, ProgramAllActivity::class.java)) }
+        btnDonasiAll.setOnClickListener{startActivity(
+            Intent(
+                this@DashboardActivity,
+                ProgramAllActivity::class.java
+            )
+        ) }
     }
 
+    override fun onBackPressed() {
+        val count = supportFragmentManager.backStackEntryCount
+        if (count == 0) {
+            super.onBackPressed()
+            finishAffinity();
+            finish();
+        } else {
+            super.onBackPressed()
+            finishAffinity();
+            finish();
+//            supportFragmentManager.popBackStack()
+        }
+    }
 
 }

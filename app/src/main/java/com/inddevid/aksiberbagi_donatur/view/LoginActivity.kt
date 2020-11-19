@@ -150,7 +150,6 @@ class LoginActivity : AppCompatActivity() {
                                     sharedPreference.save("penggunaLinkAja", donaturLinkAja)
                                     sharedPreference.save("penggunaDana", donaturDana)
                                     sharedPreference.save("penggunaOvo", donaturOvo)
-                                    sharedPreference.save("penggunaKodeNegara", donaturKodeNegara )
                                     startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
                                 }
                             }

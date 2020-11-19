@@ -43,6 +43,7 @@ class DonasiSayaIndex : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private val TAG = "Fragment Donasi Saya"
+    private var backButtonCount = 0
     private val arrayDate = ArrayList<DateDonasiSaya>()
     private val arrayHari: ArrayList<String> = arrayListOf("SEN", "SEL", "RAB", "KAM", "JUM", "SAB", "MIN")
 

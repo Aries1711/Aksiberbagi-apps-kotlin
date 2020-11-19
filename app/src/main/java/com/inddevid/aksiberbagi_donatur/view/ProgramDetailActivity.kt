@@ -347,7 +347,12 @@ class ProgramDetailActivity : AppCompatActivity() {
                 if(textNominalDonasi.text!!.toString() == "" ){
                     nominalDonasiDonatur = 0
                 }else{
-                    nominalDonasiDonatur = Integer.parseInt(textNominalDonasi.text!!.toString().replace(".", ""))
+                    nominalDonasiDonatur = Integer.parseInt(
+                        textNominalDonasi.text!!.toString().replace(
+                            ".",
+                            ""
+                        )
+                    )
                 }
             }else{
                 nominalDonasiDonatur = spinnerNominal
@@ -369,7 +374,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                     btnPilihBayarC.text = "Pembayaran Tidak Valid"
                     return@setOnClickListener
                 }
-                sharedPreference.save("donasiProgramId",idProgram)
+                sharedPreference.save("donasiProgramId", idProgram)
                 sharedPreference.save("donasiPembayaranId", idPembayaran)
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)
                 sharedPreference.save("donasiDoa", doaDonatur)
@@ -399,7 +404,9 @@ class ProgramDetailActivity : AppCompatActivity() {
 
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
-    private fun postDonasiDonatur(tokenValue: String?){
+    private fun postDonasiDonatur(
+        tokenValue: String?
+    ){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
         body.put("program_id", sharedPreference.getValueString("donasiProgramId"))
@@ -408,25 +415,36 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("pesan_doa", sharedPreference.getValueString("donasiDoa"))
         body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
         body.put("is_android", true)
-        body.put("no_wa", sharedPreference.getValueString(""))
-        body.put("email", sharedPreference.getValueString(""))
-        body.put("nama_donatur", sharedPreference.getValueString(""))
-        body.put("kode_negara_no_hp", sharedPreference.getValueString(""))
-        body.put("panggilan", sharedPreference.getValueString(""))
+        body.put("no_wa", sharedPreference.getValueString("penggunaWA"))
+        body.put("email", sharedPreference.getValueString("penggunaEmail"))
+        body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
+        body.put("kode_negara_no_hp", sharedPreference.getValueString("penggunaKodeNegara"))
+        body.put("panggilan", sharedPreference.getValueString("penggunaPanggilan"))
         body.put("influencer_id", null)
-        body.put("no_link_aja", sharedPreference.getValueString(""))
-        body.put("no_ovo", sharedPreference.getValueString(""))
-        body.put("no_dana", sharedPreference.getValueString(""))
+        body.put("no_link_aja", sharedPreference.getValueString("penggunaLinkAja"))
+        body.put("no_ovo", sharedPreference.getValueString("penggunaDana"))
+        body.put("no_dana", sharedPreference.getValueString("penggunaOvo"))
         body.put("nominal_flash_sale_id", null)
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if(response?.getString("message").equals("Donasi berhasil")){
-                    val toast = Toast.makeText(
-                        this@ProgramDetailActivity,
-                        "Oke Donasi Done",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
+                if (response?.getString("message").equals("Donasi berhasil")) {
+                    val jsonObject: JSONObject? = response?.getJSONObject("data")
+                    val eWallet = jsonObject?.getString("isEwallet")
+                    if (eWallet == "false") {
+                        val toast = Toast.makeText(
+                            this@ProgramDetailActivity,
+                            "Oke Donasi Transfer",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                    } else {
+                        val toast = Toast.makeText(
+                            this@ProgramDetailActivity,
+                            "Oke Donasi Ewallet",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                    }
                 }
             }
 
@@ -646,6 +664,10 @@ class ProgramDetailActivity : AppCompatActivity() {
             layout.layoutParams = params
             btn.text = "Lihat Semua"
             btnKeteranganStatus = ""
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
     }
 }
 
