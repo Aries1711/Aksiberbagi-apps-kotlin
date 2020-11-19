@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -37,34 +37,32 @@ class PilihPembayaranActivity : AppCompatActivity() {
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         var valueNominal: String? = intent.getStringExtra("nominal")
         var spinnerPilihan: String? = intent.getStringExtra("spinnerValue")
-        var layoutEwallet: LinearLayout = findViewById(R.id.layoutEwallet)
-        var layoutTransfer: LinearLayout = findViewById(R.id.layoutTransfer)
+        var layoutEwallet: FrameLayout = findViewById(R.id.layoutEwallet)
+        var layoutTransfer: FrameLayout = findViewById(R.id.layoutTransfer)
 
-        val toast = Toast.makeText(this, valueNominal, Toast.LENGTH_LONG)
-        toast.show()
 
         var nominalSet: String = ""
         var spinnerSet: String = ""
 
-        if (valueNominal == ""){
-            nominalSet = "0"
-            spinnerSet = spinnerPilihan.toString()
-        }else{
-            valueNominal = valueNominal!!.replace(".", "")
-            val toast = Toast.makeText(this, "masuk ke nominal input $valueNominal", Toast.LENGTH_LONG)
-            toast.show()
-            if(valueNominal!!.toInt() < 1000 ){
-                layoutEwallet.setBackgroundColor(Color.parseColor("#33FFFFFF"))
-                layoutEwallet.bringToFront()
-                layoutTransfer.setBackgroundColor(Color.parseColor("#33FFFFFF"))
-                layoutTransfer.bringToFront()
-            }else if(valueNominal!!.toInt() in 1001..9999){
-                layoutTransfer.setBackgroundColor(Color.parseColor("#33FFFFFF"))
-                layoutTransfer.bringToFront()
+        if(spinnerPilihan == "Masukkan Nominal Lain"){
+            if (valueNominal == ""){
+                nominalSet = "0"
+                spinnerSet = spinnerPilihan.toString()
+            }else{
+                valueNominal = valueNominal!!.replace(".", "")
+                if(valueNominal!!.toInt() in 0..999 ){
+                    layoutEwallet.setBackgroundColor(Color.parseColor("#c5c7c7"))
+                    layoutEwallet.bringToFront()
+                    layoutTransfer.setBackgroundColor(Color.parseColor("#c5c7c7"))
+                    layoutTransfer.bringToFront()
+                }else if(valueNominal!!.toInt() in 1000..9999){
+                    layoutTransfer.setBackgroundColor(Color.parseColor("#c5c7c7"))
+                    layoutTransfer.bringToFront()
+                }
             }
-            nominalSet = valueNominal.toString()
-            spinnerSet = spinnerPilihan.toString()
         }
+        nominalSet = valueNominal.toString()
+        spinnerSet = spinnerPilihan.toString()
 
         getKoneksi(retrivedToken, this, nominalSet, spinnerSet)
 
@@ -189,8 +187,9 @@ class PilihPembayaranActivity : AppCompatActivity() {
                         val idPembayaran = item?.getString("tblbank_id")
                         val namaPembayaran = item?.getString("tblbank_nama")
                         val gambarPembayaran = item?.getString("logo_url")
+                        val tipePembayaran = "Ewallet"
                         arrayEwallet.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran))
-                        val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this@PilihPembayaranActivity, nominal, spinner)
+                        val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this@PilihPembayaranActivity, nominal, spinner,tipePembayaran)
                         var mainMenuEwallet = context.findViewById<RecyclerView>(R.id.recyclerEwallet)
                         mainMenuEwallet.layoutManager = LinearLayoutManager(this@PilihPembayaranActivity)
                         mainMenuEwallet.adapter = myAdapterEwallet
@@ -203,8 +202,9 @@ class PilihPembayaranActivity : AppCompatActivity() {
                         val idPembayaran = item?.getString("tblbank_id")
                         val namaPembayaran = item?.getString("tblbank_nama")
                         val gambarPembayaran = item?.getString("logo_url")
+                        val tipePembayaran = "Transfer"
                         arrayTranfer.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran))
-                        val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this@PilihPembayaranActivity, nominal , spinner)
+                        val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this@PilihPembayaranActivity, nominal , spinner,tipePembayaran)
                         var mainMenuTranfer = findViewById<RecyclerView>(R.id.recyclerTransfer)
                         mainMenuTranfer.layoutManager = LinearLayoutManager(this@PilihPembayaranActivity)
                         mainMenuTranfer.adapter = myAdapterTransfer

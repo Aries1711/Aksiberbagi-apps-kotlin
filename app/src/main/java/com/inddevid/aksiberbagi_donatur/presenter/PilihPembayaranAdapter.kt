@@ -1,6 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,8 @@ import com.inddevid.aksiberbagi_donatur.model.ModelPembayaran
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import com.inddevid.aksiberbagi_donatur.view.ProgramDetailActivity
 import kotlinx.android.synthetic.main.pilih_pembayaran_row.view.*
-import android.content.Intent as Intent1
 
-class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val context: Context, val nominal:String, val spinner:String) :
+class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val context: Context, val nominal:String, val spinner:String, var tipeBank: String) :
     RecyclerView.Adapter<PilihPembayaranAdapter.ViewHolder> () {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bindItems(model: ModelPembayaran){
@@ -38,15 +38,17 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
             val pTitle : String? = model.title
             val imgPilihan : String? = model.img
             val nominalSet: String = nominal
+            val tipeSet: String = tipeBank
             val spinnerSet: String = spinner
 
             sharedPreference.save("idPembayaran",id)
 
-            val mIntent = Intent1(context, ProgramDetailActivity::class.java)
+            val mIntent = Intent(context, ProgramDetailActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("dialogAktif", "true")
             mBundle.putString("pilihanPembayaran", pTitle)
             mBundle.putString("imagePilihan", imgPilihan)
+            mBundle.putString("tipeBank",  tipeSet)
             mBundle.putString("nominalDonasi", nominalSet)
             mBundle.putString("spinner", spinnerSet)
             mIntent.putExtras(mBundle)

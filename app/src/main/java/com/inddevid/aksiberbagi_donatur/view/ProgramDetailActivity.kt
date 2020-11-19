@@ -153,6 +153,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         Log.d(TAG, "value pada pilihan nominal $nominalItems")
         //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
         var spinnerPilihNominal : String? = ""
+        var spinnerPilihanKeterangan: String? = ""
         var spinnerNominal : Int = 0
         pilihNominal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -180,6 +181,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         var idPembayaran: String? = sharedPreference.getValueString("idPembayaran")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
         var imgPilihan: String? = intent.getStringExtra("imagePilihan")
+        var tipeBank: String? = intent.getStringExtra("tipeBank")
 
         if (dialogPembayaranAktif == "true"  && pilihanPembayaran != ""){
             dialogPembayaran.show()
@@ -206,30 +208,99 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         //deklarasi variabel untuk intent ke menu pilih pembayaran
         btnPilihBayar.setOnClickListener {
-            val mIntent = Intent(this, PilihPembayaranActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("nominal", textNominalDonasi.text.toString1())
-            mBundle.putString("spinnerValue", spinnerPilihNominal)
-            mIntent.putExtras(mBundle)
-            startActivity(mIntent)
+            if(spinnerPilihNominal == "Pilih Nominal Donasi"){
+                helperNominal.text = "Silahkan Pilih Nominal donasi"
+                helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+            }else{
+                var nominalCek = textNominalDonasi.text.toString1()
+                if(spinnerPilihNominal == "Masukkan Nominal Lain" ){
+                    if (nominalCek == ""){
+                        nominalCek = "0"
+                    }
+                    val nominalRaw: Int = nominalCek.replace(".", "").toInt()
+                    if(nominalRaw > 999){
+                        val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+                        val mBundle = Bundle()
+                        mBundle.putString("nominal", textNominalDonasi.text.toString1())
+                        mBundle.putString("spinnerValue", spinnerPilihNominal)
+                        mIntent.putExtras(mBundle)
+                        startActivity(mIntent)
+                    }else{
+                        helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+                        return@setOnClickListener
+                    }
+                }
+                val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("nominal", textNominalDonasi.text.toString1())
+                mBundle.putString("spinnerValue", spinnerPilihNominal)
+                mIntent.putExtras(mBundle)
+                startActivity(mIntent)
+            }
         }
 
         btnPilihBayarB.setOnClickListener {
-            val mIntent = Intent(this, PilihPembayaranActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("nominal", textNominalDonasi.text.toString1())
-            mBundle.putString("spinnerValue", spinnerPilihNominal)
-            mIntent.putExtras(mBundle)
-            startActivity(mIntent)
+            if(spinnerPilihNominal == "Pilih Nominal Donasi"){
+                helperNominal.text = "Silahkan Pilih Nominal donasi"
+                helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+            }else{
+                var nominalCek = textNominalDonasi.text.toString1()
+                if(spinnerPilihNominal == "Masukkan Nominal Lain" ){
+                    if (nominalCek == ""){
+                        nominalCek = "0"
+                    }
+                    val nominalRaw: Int = nominalCek.replace(".", "").toInt()
+                    if(nominalRaw > 999){
+                        val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+                        val mBundle = Bundle()
+                        mBundle.putString("nominal", textNominalDonasi.text.toString1())
+                        mBundle.putString("spinnerValue", spinnerPilihNominal)
+                        mIntent.putExtras(mBundle)
+                        startActivity(mIntent)
+                    }else{
+                        helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+                    }
+                }else{
+                    val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+                    val mBundle = Bundle()
+                    mBundle.putString("nominal", textNominalDonasi.text.toString1())
+                    mBundle.putString("spinnerValue", spinnerPilihNominal)
+                    mIntent.putExtras(mBundle)
+                    startActivity(mIntent)
+                }
+            }
         }
 
         btnPilihBayarC.setOnClickListener {
-            val mIntent = Intent(this, PilihPembayaranActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("nominal", textNominalDonasi.text.toString1())
-            mBundle.putString("spinnerValue", spinnerPilihNominal)
-            mIntent.putExtras(mBundle)
-            startActivity(mIntent)
+            if(spinnerPilihNominal == "Pilih Nominal Donasi"){
+                helperNominal.text = "Silahkan Pilih Nominal donasi"
+                helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+            }else{
+                var nominalCek = textNominalDonasi.text.toString1()
+                if(spinnerPilihNominal == "Masukkan Nominal Lain" ){
+                    if (nominalCek == ""){
+                        nominalCek = "0"
+                    }
+                    val nominalRaw: Int = nominalCek.replace(".", "").toInt()
+                    if(nominalRaw > 999){
+                        val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+                        val mBundle = Bundle()
+                        mBundle.putString("nominal", textNominalDonasi.text.toString1())
+                        mBundle.putString("spinnerValue", spinnerPilihNominal)
+                        mIntent.putExtras(mBundle)
+                        startActivity(mIntent)
+                    }else{
+                        helperNominal.setTextColor(Color.parseColor("#ed2a18"))
+                    }
+                }else{
+                    val mIntent = Intent(this, PilihPembayaranActivity::class.java)
+                    val mBundle = Bundle()
+                    mBundle.putString("nominal", textNominalDonasi.text.toString1())
+                    mBundle.putString("spinnerValue", spinnerPilihNominal)
+                    mIntent.putExtras(mBundle)
+                    startActivity(mIntent)
+                }
+            }
         }
         //end multiple btn untuk pilih pembayaran.
 
@@ -293,12 +364,17 @@ class ProgramDetailActivity : AppCompatActivity() {
                 btnPilihBayarC.setTextColor(Color.parseColor("#ed2a18"))
                 return@setOnClickListener
             }else{
-//                sharedPreference.save("donasiProgramId",idProgram)
-//                sharedPreference.save("donasiPembayaranId", idPembayaran)
-//                sharedPreference.save("donasiNominal", nominalDonasiDonatur)
-//                sharedPreference.save("donasiDoa", doaDonatur)
-//                postDonasiDonatur(retrivedToken)
-                startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java))
+                if(nominalDonasiDonatur in 1000..9999 && tipeBank == "Transfer") {
+                    btnPilihBayarC.setTextColor(Color.parseColor("#ed2a18"))
+                    btnPilihBayarC.text = "Pembayaran Tidak Valid"
+                    return@setOnClickListener
+                }
+                sharedPreference.save("donasiProgramId",idProgram)
+                sharedPreference.save("donasiPembayaranId", idPembayaran)
+                sharedPreference.save("donasiNominal", nominalDonasiDonatur)
+                sharedPreference.save("donasiDoa", doaDonatur)
+                postDonasiDonatur(retrivedToken)
+//                startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java))
             }
         }
 
