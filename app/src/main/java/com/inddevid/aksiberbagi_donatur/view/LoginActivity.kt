@@ -180,6 +180,9 @@ class LoginActivity : AppCompatActivity() {
                             )
                             layoutPass.helperText = apiError?.message
                         } else {
+                            Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                            Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                            Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
                             val jsonObject = JSONObject(anError?.errorBody);
                             val jsonArray = jsonObject.getJSONArray("password");
                             if(jsonArray[0] == "The password must be at least 5 characters."){

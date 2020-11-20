@@ -138,6 +138,7 @@
                             android:layout_height="wrap_content"
                             android:text="Jumlah donasi Anda"/>
                         <TextView
+                            android:id="@+id/invoiceNominalRaw"
                             android:layout_weight=".5"
                             android:textStyle="bold"
                             android:textAlignment="textEnd"
@@ -166,6 +167,7 @@
                             android:layout_height="wrap_content"
                             android:text="Kode Unik(*)"/>
                         <TextView
+                            android:id="@+id/invoiceNominalKode"
                             android:layout_weight=".5"
                             android:textStyle="bold"
                             android:textAlignment="textEnd"
@@ -200,6 +202,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakLayoutInstruksi">
                 <TextView
+                    android:id="@+id/invoiceBankHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Pembayaran dilakukan ke rekening A.n Yayasan Aksi Berbagi"
@@ -236,6 +239,7 @@
                             android:text="Nama Bank"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/invoiceBankNama"
                             android:layout_weight=".5"
                             android:textSize="16sp"
                             android:textAlignment="textEnd"
@@ -263,6 +267,7 @@
                             android:text="No Rekening"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/invoiceBankRekening"
                             android:layout_weight=".33"
                             android:textSize="16sp"
                             android:textAlignment="textEnd"
@@ -302,6 +307,7 @@
                             android:text="No Invoice"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/invoiceKode"
                             android:layout_weight=".5"
                             android:textSize="16sp"
                             android:textAlignment="textEnd"
@@ -331,6 +337,7 @@
                             android:textStyle="bold"
                             tools:ignore="RtlCompat" />
                         <TextView
+                            android:id="@+id/invoiceProgramJudul"
                             android:layout_weight=".5"
                             android:textSize="16sp"
                             android:textAlignment="textEnd"

@@ -322,7 +322,7 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         //tampilan webview keterangan
         val myWebView: WebView = findViewById(R.id.keteranganProgram)
-        myWebView.loadUrl("https://aksiberbagi.com/sedekahair")
+        myWebView.loadUrl("https://aksiberbagi.com/apk/keterangan/$idProgram")
         //btn lihat semua keterangan
         val btnKeteranganLihat : Button = findViewById(R.id.btnKeteranganProgram)
         val layoutKeterangan : LinearLayout = findViewById(R.id.layoutKeteranganDetail)
@@ -379,7 +379,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)
                 sharedPreference.save("donasiDoa", doaDonatur)
                 postDonasiDonatur(retrivedToken)
-//                startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java))
+//                startActivity(Intent(this@ProgramDetailActivity, WebviewInvoiceActivity::class.java))
             }
         }
 
@@ -428,22 +428,44 @@ class ProgramDetailActivity : AppCompatActivity() {
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 if (response?.getString("message").equals("Donasi berhasil")) {
-                    val jsonObject: JSONObject? = response?.getJSONObject("data")
-                    val eWallet = jsonObject?.getString("isEwallet")
+                    val data: JSONObject? = response?.getJSONObject("data")
+                    val eWallet = data?.getString("isEwallet")
                     if (eWallet == "false") {
-                        val toast = Toast.makeText(
-                            this@ProgramDetailActivity,
-                            "Oke Donasi Transfer",
-                            Toast.LENGTH_LONG
-                        )
-                        toast.show()
+                        val dataDonasi = data?.getJSONObject("donasi")
+                        sharedPreference.save("invoiceNominal", dataDonasi?.getString("tbldonasi_nominal"))
+                        sharedPreference.save("invoiceKodeUnik", dataDonasi?.getString("tbldonasi_nourut"))
+                        sharedPreference.save("invoiceKode", dataDonasi?.getString("tbldonasi_invoice") )
+                        val dataDonasiBank = dataDonasi?.getJSONObject("bank")
+                        sharedPreference.save("invoiceBank", dataDonasiBank?.getString("tblbank_nama"))
+                        sharedPreference.save("invoiceBankAN", dataDonasiBank?.getString("tblbank_namapemilik"))
+                        sharedPreference.save("invoiceBankUrl", dataDonasiBank?.getString("logo_url"))
+                        sharedPreference.save("invoiceBankRekening", dataDonasiBank?.getString("tblbank_rekening"))
+                        val dataDonasiProgram = dataDonasi?.getJSONObject("program")
+                        sharedPreference.save("invoiceProgramJudul", dataDonasiProgram?.getString("tblprogram_judul"))
+                        startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java))
                     } else {
-                        val toast = Toast.makeText(
-                            this@ProgramDetailActivity,
-                            "Oke Donasi Ewallet",
-                            Toast.LENGTH_LONG
-                        )
-                        toast.show()
+                        val midtransStatus = data?.getString("midtrans")
+                        var redirectUrl: String?  = ""
+                        if(midtransStatus == "null"){
+                            val xendit = data?.getJSONObject("xendit")
+                            redirectUrl = xendit?.getString("redirect_url")
+                        }else{
+                            val midtrans = data?.getJSONObject("midtrans")
+                            redirectUrl = midtrans?.getString("redirect_url")
+                        }
+                        val dataDonasi = data?.getJSONObject("donasi")
+                        sharedPreference.save("invoiceUrl", redirectUrl)
+                        sharedPreference.save("invoiceNominal", dataDonasi?.getString("tbldonasi_nominal"))
+                        sharedPreference.save("invoiceKodeUnik", dataDonasi?.getString("tbldonasi_nourut"))
+                        sharedPreference.save("invoiceKode", dataDonasi?.getString("tbldonasi_invoice") )
+                        val dataDonasiBank = dataDonasi?.getJSONObject("bank")
+                        sharedPreference.save("invoiceBank", dataDonasiBank?.getString("tblbank_nama"))
+                        sharedPreference.save("invoiceBankAN", dataDonasiBank?.getString("tblbank_namapemilik"))
+                        sharedPreference.save("invoiceBankUrl", dataDonasiBank?.getString("logo_url"))
+                        sharedPreference.save("invoiceBankRekening", dataDonasiBank?.getString("tblbank_rekening"))
+                        val dataDonasiProgram = dataDonasi?.getJSONObject("program")
+                        sharedPreference.save("invoiceProgramJudul", dataDonasiProgram?.getString("tblprogram_judul"))
+                        startActivity(Intent(this@ProgramDetailActivity, WebviewInvoiceActivity::class.java))
                     }
                 }
             }
@@ -669,6 +691,14 @@ class ProgramDetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
     }
+
+//                        val toast = Toast.makeText(
+//                            this@ProgramDetailActivity,
+//                            "Oke Donasi Ewallet",
+//                            Toast.LENGTH_LONG
+//                        )
+//                        toast.show()
+
 }
 
 
