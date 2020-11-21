@@ -269,16 +269,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_weight=".5"
-                        android:layout_marginStart="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Keterangan"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-                    <TextView
                         android:id="@+id/tanggalMulaiTextProgram"
-                        android:layout_weight=".5"
+                        android:layout_weight="1"
                         android:layout_marginEnd="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

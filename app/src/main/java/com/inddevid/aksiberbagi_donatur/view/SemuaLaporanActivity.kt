@@ -18,7 +18,7 @@ class SemuaLaporanActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener{ startActivity(Intent(this@SemuaLaporanActivity, DashboardActivity::class.java)) }
 
         val webViewLaporan: WebView = findViewById(R.id.laporanWebView)
-        webViewLaporan.loadUrl("https://aksiberbagi.com/donasi/berita/prayforsukabumi")
+        webViewLaporan.loadUrl("https://aksiberbagi.com/apk/berita")
     }
 
     override fun onSupportNavigateUp(): Boolean {

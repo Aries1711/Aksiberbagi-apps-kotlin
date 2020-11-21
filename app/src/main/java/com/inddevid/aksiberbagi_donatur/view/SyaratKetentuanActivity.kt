@@ -34,7 +34,7 @@ class SyaratKetentuanActivity : AppCompatActivity() {
         val btnAjukan: FrameLayout = findViewById(R.id.relawanAjukan)
         var textAjukan: TextView = findViewById(R.id.relawanAjukanText)
 
-        var stringUrl:String = "https://aksiberbagi.com/relawan"
+        var stringUrl:String = "https://aksiberbagi.com/apk/s&k"
 
         val myWebSyarat: WebView = findViewById(R.id.webviewSyarat)
         myWebSyarat.loadUrl(stringUrl)

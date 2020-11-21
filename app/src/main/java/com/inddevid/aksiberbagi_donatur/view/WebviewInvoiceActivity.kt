@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.inddevid.aksiberbagi_donatur.R
@@ -26,6 +28,8 @@ class WebviewInvoiceActivity : AppCompatActivity() {
         val webview: WebView = findViewById(R.id.eWalletURL)
         webview.settings.javaScriptEnabled = true
         webview.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
+
+        val layoutLanjut : LinearLayout = findViewById(R.id.layoutLanjutApkPembayaran)
 
 
 
@@ -49,6 +53,7 @@ class WebviewInvoiceActivity : AppCompatActivity() {
             ) {
                 Log.e(TAG, "Error: $description")
                 Log.e(TAG, "UrlError: $failingUrl")
+                gone(view)
                 val uri = Uri.parse(failingUrl)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 try {
@@ -61,5 +66,13 @@ class WebviewInvoiceActivity : AppCompatActivity() {
         }
         webview.loadUrl(urlPayment)
 
+    }
+
+    fun gone(view: View){
+        view.visibility = View.GONE
+    }
+
+    fun show(view: View){
+        view.visibility = View.VISIBLE
     }
 }

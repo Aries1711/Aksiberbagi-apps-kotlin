@@ -23,7 +23,7 @@ class TentangActivity : AppCompatActivity() {
             startActivity(mIntent)}
         val webView: WebView = findViewById(R.id.webviewBantuan)
 
-        webView.loadUrl("https://aksiberbagi.com/tentang")
+        webView.loadUrl("https://aksiberbagi.com/apk/tentang")
 
     }
 
