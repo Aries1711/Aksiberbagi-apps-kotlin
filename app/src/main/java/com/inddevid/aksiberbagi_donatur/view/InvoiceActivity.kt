@@ -1,5 +1,6 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -48,5 +49,9 @@ class InvoiceActivity : AppCompatActivity() {
         val invoiceProgramJudulText : TextView = findViewById(R.id.invoiceProgramJudul)
         invoiceProgramJudulText.text = invoiceProgramJudul
 
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@InvoiceActivity, DashboardActivity::class.java))
     }
 }

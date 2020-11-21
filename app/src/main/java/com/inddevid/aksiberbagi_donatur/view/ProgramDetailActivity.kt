@@ -119,20 +119,23 @@ class ProgramDetailActivity : AppCompatActivity() {
         dialogPembayaran.setContentView(view)
         val textNominalLayout: TextInputLayout = view.findViewById(R.id.nominalDonasiLayout)
         val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
+        val textNoLayout: TextInputLayout = view.findViewById(R.id.noPembayaranLayout)
+        val textNoTelepon : TextInputEditText = view.findViewById(R.id.noPembayaran)
         val textDoaDonatur : TextInputEditText = view.findViewById(R.id.doaDonatur)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
         val btnPilihBayar: TextView = view.findViewById(R.id.pilihPembayaranBtn)
         val btnPilihBayarB: LinearLayout = view.findViewById(R.id.layoutImageBank)
         val btnPilihBayarC: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
-        val textPembayaran: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
         val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
         val helperNominal : TextView = view.findViewById(R.id.helperNominal)
 
+
         val initialisasiNominal = "0"
         textNominalDonasi.text = initialisasiNominal.toEditable()
         textNominalDonasi.addTextChangedListener(NumberFormaterDot(textNominalDonasi))
+
 
         if (switchAnonimValue == "T"){
             switchAnonimSet.isChecked = true
@@ -180,13 +183,28 @@ class ProgramDetailActivity : AppCompatActivity() {
         var nominalPembayaran: String? = intent.getStringExtra("nominalDonasi")
         var idPembayaran: String? = sharedPreference.getValueString("idPembayaran")
         var pilihanPembayaran: String? = intent.getStringExtra("pilihanPembayaran")
+        var idPilihan: String? = intent.getStringExtra("idPilihan")
         var imgPilihan: String? = intent.getStringExtra("imagePilihan")
         var tipeBank: String? = intent.getStringExtra("tipeBank")
+
+        //input no ovo, link aja, dan dana
+        gone(textNoLayout)
+        if (idPilihan == "1001"){
+            show(textNoLayout)
+            textNoLayout.hint = "Masukkan No akun Link Aja"
+        }else if(idPilihan == "1002"){
+            show(textNoLayout)
+            textNoLayout.hint = "Masukkan No akun Ovo"
+        }else if(idPilihan == "1003"){
+            show(textNoLayout)
+            textNoLayout.hint = "Masukkan No akun DANA"
+        }
+
 
         if (dialogPembayaranAktif == "true"  && pilihanPembayaran != ""){
             dialogPembayaran.show()
             show(textNominalLayout)
-            textPembayaran.text = pilihanPembayaran
+            btnPilihBayarC.text = pilihanPembayaran
             show(imgPembayaran)
             Glide.with(this).load(imgPilihan).into(imgPembayaran)
             textNominalDonasi.text = nominalPembayaran?.toEditable()
@@ -374,6 +392,17 @@ class ProgramDetailActivity : AppCompatActivity() {
                     btnPilihBayarC.text = "Pembayaran Tidak Valid"
                     return@setOnClickListener
                 }
+                if (idPilihan == "1001"){
+                    val noLinkAja = textNoTelepon.text?.toString()
+                    sharedPreference.save("penggunaLinkAja", noLinkAja)
+                }else if(idPilihan == "1002"){
+                    val noOvo = textNoTelepon.text?.toString()
+                    sharedPreference.save("penggunaOvo", noOvo)
+                }else if(idPilihan == "1003"){
+                    val noDana = textNoTelepon.text?.toString()
+                    sharedPreference.save("penggunaDana", noDana)
+                }
+
                 sharedPreference.save("donasiProgramId", idProgram)
                 sharedPreference.save("donasiPembayaranId", idPembayaran)
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)

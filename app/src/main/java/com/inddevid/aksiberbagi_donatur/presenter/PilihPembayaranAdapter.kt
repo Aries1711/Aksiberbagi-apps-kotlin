@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
@@ -31,29 +32,40 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
 
-        holder.itemView.setOnClickListener {
-            val sharedPreference: Preferences = Preferences(holder.itemView.context)
-            val model = arrayList[position]
-            val id : String? = model.id
-            val pTitle : String? = model.title
-            val imgPilihan : String? = model.img
-            val nominalSet: String = nominal
-            val tipeSet: String = tipeBank
-            val spinnerSet: String = spinner
+            holder.itemView.setOnClickListener {
+                val sharedPreference: Preferences = Preferences(holder.itemView.context)
+                val model = arrayList[position]
+                val id: String? = model.id
+                val pTitle: String? = model.title
+                val imgPilihan: String? = model.img
+                val nominalSet: String = nominal
+                val tipeSet: String = tipeBank
+                val spinnerSet: String = spinner
+                if (nominalSet.toInt() in 1000..9999 && tipeBank == "Transfer") {
+                    val toast = Toast.makeText(
+                        holder.itemView.context,
+                        "Mohon Maaf Metode pembayaran tidak Valid",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                } else {
+                    sharedPreference.save("idPembayaran", id)
 
-            sharedPreference.save("idPembayaran",id)
+                    val mIntent = Intent(context, ProgramDetailActivity::class.java)
+                    val mBundle = Bundle()
+                    mBundle.putString("dialogAktif", "true")
+                    mBundle.putString("idPilihan", id)
+                    mBundle.putString("pilihanPembayaran", pTitle)
+                    mBundle.putString("imagePilihan", imgPilihan)
+                    mBundle.putString("tipeBank", tipeSet)
+                    mBundle.putString("nominalDonasi", nominalSet)
+                    mBundle.putString("spinner", spinnerSet)
+                    mIntent.putExtras(mBundle)
+                    context.startActivity(mIntent)
+                }
 
-            val mIntent = Intent(context, ProgramDetailActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("dialogAktif", "true")
-            mBundle.putString("pilihanPembayaran", pTitle)
-            mBundle.putString("imagePilihan", imgPilihan)
-            mBundle.putString("tipeBank",  tipeSet)
-            mBundle.putString("nominalDonasi", nominalSet)
-            mBundle.putString("spinner", spinnerSet)
-            mIntent.putExtras(mBundle)
-            context.startActivity(mIntent)
-        }
+            }
+
     }
 
     override fun getItemCount(): Int {

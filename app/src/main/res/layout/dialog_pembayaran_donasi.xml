@@ -145,6 +145,41 @@
             android:background="@color/colorBreakLine"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/noPembayaranLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/colorInputStrokeBlue"
+            android:hint="Masukkan No Telepon akun Ovo"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:textColorHint="@color/colorTextSecondary"
+            app:boxStrokeColor="@color/colorInputStrokeBlue"
+            app:errorEnabled="true"
+            android:focusableInTouchMode="true"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/colorInputStrokeBlue">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noPembayaran"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:inputType="number"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="20sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
