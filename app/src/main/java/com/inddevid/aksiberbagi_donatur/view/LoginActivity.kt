@@ -156,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
                         } catch (e: JSONException) {
                             val toast = Toast.makeText(
                                 applicationContext,
-                                "Kesalahan pengaturan kondisi di try",
+                                "Kesalahan Sistem",
                                 Toast.LENGTH_LONG
                             )
                             toast.show()
@@ -165,6 +165,15 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onError(anError: ANError?) {
                         val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                        if(anError?.errorDetail!!.equals("connectionError")){
+                            val toast = Toast.makeText(
+                            this@LoginActivity,
+                            "Ada masalah dengan Koneksi Internetmu",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+
+                        }
                         if (apiError?.message == "Nomor telepon tidak terdaftar") {
                             layoutPhone.requestFocus()
                             layoutPhone.boxStrokeColor = getColor(

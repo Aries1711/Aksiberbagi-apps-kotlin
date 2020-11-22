@@ -38,9 +38,13 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
                 val id: String? = model.id
                 val pTitle: String? = model.title
                 val imgPilihan: String? = model.img
-                val nominalSet: String = nominal
+                var nominalSet: String = nominal
                 val tipeSet: String = tipeBank
                 val spinnerSet: String = spinner
+
+                if(nominalSet == ""){
+                    nominalSet = "0"
+                }
                 if (nominalSet.toInt() in 1000..9999 && tipeBank == "Transfer") {
                     val toast = Toast.makeText(
                         holder.itemView.context,

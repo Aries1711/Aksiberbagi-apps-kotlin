@@ -16,6 +16,7 @@ import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.error.ANError
@@ -191,12 +192,18 @@ class ProgramDetailActivity : AppCompatActivity() {
         gone(textNoLayout)
         if (idPilihan == "1001"){
             show(textNoLayout)
+            textNoLayout.requestFocus()
+            textNoLayout.requestFocus()
             textNoLayout.hint = "Masukkan No akun Link Aja"
         }else if(idPilihan == "1002"){
             show(textNoLayout)
+            textNoLayout.requestFocus()
+            textNoLayout.requestFocus()
             textNoLayout.hint = "Masukkan No akun Ovo"
         }else if(idPilihan == "1003"){
             show(textNoLayout)
+            textNoLayout.requestFocus()
+            textNoLayout.requestFocus()
             textNoLayout.hint = "Masukkan No akun DANA"
         }
 
@@ -407,7 +414,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                 sharedPreference.save("donasiPembayaranId", idPembayaran)
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)
                 sharedPreference.save("donasiDoa", doaDonatur)
-                postDonasiDonatur(retrivedToken)
+                postDonasiDonatur(retrivedToken, textNoLayout)
 //                startActivity(Intent(this@ProgramDetailActivity, WebviewInvoiceActivity::class.java))
             }
         }
@@ -435,6 +442,7 @@ class ProgramDetailActivity : AppCompatActivity() {
 
     private fun postDonasiDonatur(
         tokenValue: String?
+        , inputLayout: TextInputLayout
     ){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
@@ -451,8 +459,8 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("panggilan", sharedPreference.getValueString("penggunaPanggilan"))
         body.put("influencer_id", null)
         body.put("no_link_aja", sharedPreference.getValueString("penggunaLinkAja"))
-        body.put("no_ovo", sharedPreference.getValueString("penggunaDana"))
-        body.put("no_dana", sharedPreference.getValueString("penggunaOvo"))
+        body.put("no_ovo", sharedPreference.getValueString("penggunaOvo"))
+        body.put("no_dana", sharedPreference.getValueString("penggunaDana"))
         body.put("nominal_flash_sale_id", null)
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
@@ -500,6 +508,17 @@ class ProgramDetailActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(apiError?.message == "Silakan masukkan no ovo yang valid dan sudah terdaftar"){
+                    val toast = Toast.makeText(this@ProgramDetailActivity, "Silakan masukkan no ovo yang valid dan sudah terdaftar",Toast.LENGTH_LONG)
+                        toast.show()
+                    inputLayout.requestFocus()
+                    inputLayout.boxStrokeColor = ContextCompat.getColor(
+                        this@ProgramDetailActivity,
+                        R.color.error_color
+                    )
+                    inputLayout.helperText = "Silakan masukkan no ovo yang valid dan sudah terdaftar"
+                }
                 Log.d(TAG, "OnErrorProsesDonasiBody " + anError?.errorBody)
                 Log.d(TAG, "OnErrorProsesDonasiCode " + anError?.errorCode)
                 Log.d(TAG, "OnErrorProsesDonasiDetail " + anError?.errorDetail)

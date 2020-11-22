@@ -143,7 +143,7 @@ class BerandaIndex : Fragment() {
         btnLihatAllProgram.setOnClickListener{ startActivity(
             Intent(
                 requireActivity(),
-                ProgramDetailActivity::class.java
+                ProgramAllActivity::class.java
             )
         )}
         //set banner for footer beranda
