@@ -168,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
                         if(anError?.errorDetail!!.equals("connectionError")){
                             val toast = Toast.makeText(
                             this@LoginActivity,
-                            "Ada masalah dengan Koneksi Internetmu",
+                            "Ada masalah dengan Koneksi Internet Anda",
                             Toast.LENGTH_LONG
                         )
                         toast.show()

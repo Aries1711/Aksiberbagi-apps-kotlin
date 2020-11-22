@@ -77,12 +77,7 @@ class DonasiSayaIndex : Fragment() {
 
         btnLihatSemua.setOnClickListener { startActivity(Intent(requireActivity(), SemuaDonasiSayaActivity::class.java)) }
 
-        //inflate the recycler for cardview donasi saya
-        var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
-        mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
-        mainMenuB.adapter = myAdapterB
         getKoneksi(retrivedToken, view)
-
         return view
     }
 
@@ -230,10 +225,21 @@ class DonasiSayaIndex : Fragment() {
                 if (invoiceDonasi?.length()!! > 0){
                     for(i in 0 until 5){
                         val item = invoiceDonasi.getJSONObject(i)
-                        val judul = item?.getString("")
-                        arrayDonasi.add(CardDonasiSaya(titleCardDonasiA,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
-                        val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
+                        val program = item?.getJSONObject("program")
+                        val judulProgram = program?.getString("tblprogram_judul")
+                        val bank = item?.getJSONObject("bank")
+                        val namaBank = bank?.getString("tblbank_nama")
+                        val nominaldonasi = item?.getString("tbldonasi_nominal")
+                        val waktuDonasi = item?.getString("tbldonasi_tglinsert")
+                        val donasiStatus = item?.getString("tbldonasi_status")
+                        val gambarProgram = program?.getString("tblprogram_file")
+                        arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram))
                     }
+                    //inflate the recycler for cardview donasi saya
+                    val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
+                    var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
+                    mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
+                    mainMenuB.adapter = myAdapterB
                 }
 
             }

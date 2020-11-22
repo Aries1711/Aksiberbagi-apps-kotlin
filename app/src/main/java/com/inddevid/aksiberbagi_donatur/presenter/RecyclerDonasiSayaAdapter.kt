@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
+import com.inddevid.aksiberbagi_donatur.services.Converter
 import kotlinx.android.synthetic.main.card_donasi_saya.view.*
 
 class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val context: Context) :
@@ -22,12 +23,20 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
 
         fun bindItems(model: CardDonasiSaya){
             // try glide image loading from url
-            Glide.with(itemView.imageDonasiSayaCard.context).load(model.img).apply(options).into(itemView.imageDonasiSayaCard)
+            val modelUrl = model.img
+            val url = "https://aksiberbagi.com/storage/program/$modelUrl"
+            Glide.with(itemView.imageDonasiSayaCard.context).load(url).apply(options).into(itemView.imageDonasiSayaCard)
             itemView.cardTitleDonasiSaya.text = model.title
             itemView.paymentDonasiSaya.text = model.payment
             itemView.waktuDonasiSaya.text = model.timePay
-            itemView.donasiRupiah.text = model.moneyPay
+            val nominalFormated = Converter.ribuan(model.moneyPay!!.toDouble())
+            itemView.donasiRupiah.text = "Rp $nominalFormated"
             itemView.donasiSayaStatus.text = model.status
+            if (model.status != "SUKSES"){
+                itemView.downloadPDf.visibility = View.GONE
+            }else{
+                itemView.downloadPDf.visibility = View.VISIBLE
+            }
         }
     }
 
