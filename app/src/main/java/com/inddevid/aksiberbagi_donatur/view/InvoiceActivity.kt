@@ -1,14 +1,19 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.Converter
 import com.inddevid.aksiberbagi_donatur.services.Preferences
+
 
 class InvoiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +49,35 @@ class InvoiceActivity : AppCompatActivity() {
         invoiceBankNamaText.text = invoiceBank
         val invoiceKodeText: TextView = findViewById(R.id.invoiceKode)
         invoiceKodeText.text = invoiceKode
-        val invoiceBankRekeningText : TextView = findViewById(R.id.invoiceBankRekening)
+        val invoiceBankRekeningText : TextView = findViewById(R.id.invoiceRekening)
         invoiceBankRekeningText.text = invoiceBankRekening
         val invoiceProgramJudulText : TextView = findViewById(R.id.invoiceProgramJudul)
         invoiceProgramJudulText.text = invoiceProgramJudul
+
+        //deklarasi btn copy to clipboard
+        val btnSalinNominal : TextView = findViewById(R.id.salinBtnNominal)
+        val btnSalinRekening : TextView = findViewById(R.id.salinBtnRekening)
+
+        btnSalinNominal.setOnClickListener {
+            val clipboard: ClipboardManager =
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Berhasil Menyalin Nominal Transfer", invoiceNominal )
+            clipboard.setPrimaryClip(clip)
+
+            val toast = Toast.makeText(this@InvoiceActivity,"Nominal Transfer Disalin",Toast.LENGTH_LONG)
+            toast.show()
+        }
+
+        btnSalinRekening.setOnClickListener {
+            val clipboard: ClipboardManager =
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Berhasil Menyalin Rekening Bank", invoiceBankRekening)
+            clipboard.setPrimaryClip(clip)
+
+            val toast = Toast.makeText(this@InvoiceActivity,"No Rekening Disalin",Toast.LENGTH_LONG)
+            toast.show()
+        }
+
 
     }
 

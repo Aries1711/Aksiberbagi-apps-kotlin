@@ -44,6 +44,7 @@ class DonasiSayaIndex : Fragment() {
     private var param2: String? = null
     private val TAG = "Fragment Donasi Saya"
     private var backButtonCount = 0
+    private val arrayDonasi = ArrayList<CardDonasiSaya>()
     private val arrayDate = ArrayList<DateDonasiSaya>()
     private val arrayHari: ArrayList<String> = arrayListOf("SEN", "SEL", "RAB", "KAM", "JUM", "SAB", "MIN")
 
@@ -64,20 +65,6 @@ class DonasiSayaIndex : Fragment() {
         val sharedPreference: Preferences = Preferences(requireContext())
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
-        // set val for arraylist card donasi saya
-        val imageUrl:String = "https://aksiberbagi.com/storage/program/Raih%20Keutamaan%20Bulan%20Muharram;%20Perbanyak%20Amal%20Shalih-banner.jpg"
-        val titleCardDonasi:String = "Sedekah Air untuk Pesantren Pelosok dan ..."
-        val titleCardDonasiA:String = "Oke"
-        val paymentDonasi:String = "Gopay"
-        val timePayment:String = "1 jam lalu"
-        val donasiSum:String = "Rp 100.789"
-        val donasiSayaStat:String = "Berhasil"
-        //declare the arraylist for card donasi saya
-        val arrayList = ArrayList<CardDonasiSaya>()
-        arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
-        arrayList.add(CardDonasiSaya(titleCardDonasiA,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
-        arrayList.add(CardDonasiSaya(titleCardDonasi,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
-        val myAdapterB = RecyclerDonasiSayaAdapter(arrayList, requireActivity())
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_donasi_saya_index , container, false)
@@ -238,6 +225,17 @@ class DonasiSayaIndex : Fragment() {
                 val totalNominalDonasi = response?.getString("total_donasi_nominal")
                 var totalNominalDonasiText = view.findViewById<TextView>(R.id.totalNominalDonasiText)
                 totalNominalDonasiText.text = "Rp. $totalNominalDonasi"
+                // get 5 donasi terakhir user
+                val invoiceDonasi = response?.getJSONArray("data")
+                if (invoiceDonasi?.length()!! > 0){
+                    for(i in 0 until 5){
+                        val item = invoiceDonasi.getJSONObject(i)
+                        val judul = item?.getString("")
+                        arrayDonasi.add(CardDonasiSaya(titleCardDonasiA,paymentDonasi,donasiSum,timePayment,donasiSayaStat,imageUrl))
+                        val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
+                    }
+                }
+
             }
 
             override fun onError(anError: ANError?) {
