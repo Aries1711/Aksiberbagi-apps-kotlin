@@ -1,6 +1,8 @@
 package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
 import com.inddevid.aksiberbagi_donatur.services.Converter
+import com.inddevid.aksiberbagi_donatur.view.DonasiDetailActivity
 import kotlinx.android.synthetic.main.card_donasi_saya.view.*
 
 class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val context: Context) :
@@ -32,10 +35,12 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
             val nominalFormated = Converter.ribuan(model.moneyPay!!.toDouble())
             itemView.donasiRupiah.text = "Rp $nominalFormated"
             itemView.donasiSayaStatus.text = model.status
-            if (model.status != "SUKSES"){
-                itemView.downloadPDf.visibility = View.GONE
+            if (model.status == "GAGAL" || model.status == "EXPIRED" ){
+                itemView.donasiStatusframe.setBackgroundResource(R.drawable.rounded_donasi_download)
+                itemView.donasiSayaStatus.setTextColor(Color.parseColor("#eb6b34"))
             }else{
-                itemView.downloadPDf.visibility = View.VISIBLE
+                itemView.donasiStatusframe.setBackgroundResource(R.drawable.rounded_status_donasi)
+                itemView.donasiSayaStatus.setTextColor(Color.parseColor("#15BBDA"))
             }
         }
     }
@@ -51,5 +56,10 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
+
+        holder.itemView.setOnClickListener{
+            val mIntent = Intent(context, DonasiDetailActivity::class.java)
+            context.startActivity(mIntent)
+        }
     }
 }

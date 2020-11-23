@@ -13,8 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".view.DonasiDetailActivity"
+            android:theme="@style/AppMaterial" />
+        <activity
             android:name=".view.WebviewInvoiceActivity"
-            android:theme="@style/AppMaterial"/>
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.InvoiceActivity"
             android:theme="@style/AppMaterial" />
@@ -60,7 +63,7 @@
         <activity
             android:name=".view.ProgramDetailActivity"
             android:theme="@style/AppMaterial"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.SearchActivity"
             android:theme="@style/AppMaterial"

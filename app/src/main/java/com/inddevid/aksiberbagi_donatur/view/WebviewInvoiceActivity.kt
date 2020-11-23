@@ -27,6 +27,7 @@ class WebviewInvoiceActivity : AppCompatActivity() {
 
         val webview: WebView = findViewById(R.id.eWalletURL)
         webview.settings.javaScriptEnabled = true
+        webview.settings.domStorageEnabled = true;
         webview.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
 
         val layoutLanjut : LinearLayout = findViewById(R.id.layoutLanjutApkPembayaran)
