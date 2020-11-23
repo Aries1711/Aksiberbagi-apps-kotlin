@@ -32,6 +32,7 @@
         android:text="Terima Kasih!"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="#403939"
         android:textAlignment="center"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="15dp"/>
@@ -41,67 +42,238 @@
             android:layout_height="wrap_content"
             android:text="Donasimu telah kami terima dan akan kami salurkan"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:textAlignment="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/frameDetailDonasi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/detailDonasiKonten"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:background="@drawable/rounded_status_donasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_linear_layout_width"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailDonasiHeader">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight=".5"
+            android:padding="5dp">
             <TextView
-                android:textAlignment="textStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
                 android:text="Tanggal"
-                android:textSize="16sp"/>
+                android:layout_marginBottom="5dp"
+                android:textAlignment="textStart"/>
+
             <TextView
-                android:textAlignment="textStart"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:text="22 November 2020"
-                android:textSize="16sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textAlignment="textStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
                 android:text="Metode Pembayaran"
-                android:textSize="16sp"/>
+                android:layout_marginBottom="5dp"
+                android:textAlignment="textEnd"/>
+
             <TextView
-                android:textAlignment="textStart"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:text="Nominal Donasi"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="textEnd"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:orientation="vertical"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20 November 2020"
+                android:layout_marginBottom="5dp"
+                android:textColor="#403939"
+                android:textAlignment="textStart"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/invoiceNominalRaw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Gopay"
-                android:textSize="16sp"/>
+                android:textColor="#403939"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="textStart"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 100.453"
+                android:textColor="#403939"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="textStart"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/donasiStatusframe"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@drawable/rounded_status_donasi"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp">
+                <TextView
+                    android:id="@+id/donasiSayaStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Berhasil"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorInputStrokeBlue"
+                    android:textSize="10sp" />
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailDonasiKonten">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/programAllDesc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageDetailDonasi"
+                android:layout_width="140dp"
+                android:layout_height="110dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/programAllDesc"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/titleProgramAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sedekah Terbaik Untuk Anak Yatim .."
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/programAllLineList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/volunteerProgamAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aksiberbagi.com"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/verifikasi" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/programAllLineList"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/colorBreakLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorIndicatorPrimary"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/donasiBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="#f86048"
+            android:fontFamily="@font/actor"
+            android:text="DONASI LAGI"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
