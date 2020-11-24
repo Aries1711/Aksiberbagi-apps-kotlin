@@ -61,7 +61,7 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
         val sharedPreference: Preferences = Preferences(holder.itemView.context)
         holder.itemView.setOnClickListener{
             val model = arrayList[position]
-            sharedPreference.save("idProgramDonasiDetail", model.idProgram)
+            sharedPreference.save("idDonasiDetail", model.idDonasi)
             sharedPreference.save("detailDonasiWaktu", model.timePay)
             sharedPreference.save("detailDonasiPembayaran", model.payment)
             sharedPreference.save("detailDonasiNominal", model.moneyPay)

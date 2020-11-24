@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.androidnetworking.error.ANError
@@ -92,7 +90,7 @@ class DonasiDetailActivity : AppCompatActivity() {
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getProgramByID(tokenValue, context)
+                getDonasiByID(tokenValue, context)
             }
 
             override fun onError(anError: ANError?) {
@@ -126,7 +124,7 @@ class DonasiDetailActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-//                                getDonasiSayaAtribut(token, view)
+                                getDonasiByID(tokenValue, context)
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -134,7 +132,7 @@ class DonasiDetailActivity : AppCompatActivity() {
                             val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-//                                getDonasiSayaAtribut(token, view)
+                                getDonasiByID(tokenValue, context)
                             }
                         } else {
                             Looper.myLooper()?.let {
@@ -184,7 +182,7 @@ class DonasiDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getProgramByID(
+    private fun getDonasiByID(
         tokenValue: String?,
         context: DonasiDetailActivity
     ){
@@ -194,16 +192,27 @@ class DonasiDetailActivity : AppCompatActivity() {
             .override(220, 175)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
-        val idProgram: String? = sharedPreference.getValueString("idProgramDonasiDetail")
-        ApiService.getProgramDetail(tokenValue,idProgram).getAsJSONObject(object: JSONObjectRequestListener{
+        val idDonasi: String? = sharedPreference.getValueString("idDonasiDetail")
+        ApiService.getDonasiDetail(tokenValue,idDonasi).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-
+                val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
+                val data = response?.getJSONObject("dataDonasi")
+                if(response?.getString("jenisDonasi").equals("Transfer") && data?.getString("tbldonasi_status").equals("MENUNGGU") ){
+                    btnPembayaran.visibility = View.VISIBLE
+                }else{
+                    btnPembayaran.visibility = View.GONE
+                }
+                val dataProgram = data?.getJSONObject("program")
+                val imgProgram = dataProgram?.getString("thumbnail_url")
                 val imageProgram = context.findViewById<ImageView>(R.id.imageDetailDonasi)
-                Glide.with(context.applicationContext).load("https://aksiberbagi.com/storage/program/Sedekah%20Terbaik%20untuk%20Anak%20Yatim-banner.jpg").apply(options).into(imageProgram)
+                Glide.with(context.applicationContext).load(imgProgram).apply(options).into(imageProgram)
+                val idProgram = dataProgram?.getString("tblprogram_id")
             }
 
             override fun onError(anError: ANError?) {
-                TODO("Not yet implemented")
+                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
             }
 
         })

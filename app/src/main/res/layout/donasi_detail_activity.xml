@@ -48,6 +48,21 @@
             android:textAlignment="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPembayaran"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:backgroundTint="#34a8eb"
+            android:fontFamily="@font/actor"
+            android:textAllCaps="false"
+            android:text="Lakukan Pembayaran >"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
     </LinearLayout>
 
     <LinearLayout

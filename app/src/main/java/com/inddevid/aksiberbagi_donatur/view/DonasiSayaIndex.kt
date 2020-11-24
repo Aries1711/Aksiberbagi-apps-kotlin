@@ -226,15 +226,15 @@ class DonasiSayaIndex : Fragment() {
                     for(i in 0 until 5){
                         val item = invoiceDonasi.getJSONObject(i)
                         val program = item?.getJSONObject("program")
-                        val idProgram = program?.getString("tblprogram_id")
                         val judulProgram = program?.getString("tblprogram_judul")
                         val bank = item?.getJSONObject("bank")
                         val namaBank = bank?.getString("tblbank_nama")
+                        val idDonasi = item?.getString("tbldonasi_id")
                         val nominaldonasi = item?.getString("tbldonasi_nominal")
                         val waktuDonasi = item?.getString("tbldonasi_tglinsert")
                         val donasiStatus = item?.getString("tbldonasi_status")
                         val gambarProgram = program?.getString("tblprogram_file")
-                        arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idProgram))
+                        arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idDonasi))
                     }
                     //inflate the recycler for cardview donasi saya
                     val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
