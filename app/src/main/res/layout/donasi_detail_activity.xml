@@ -27,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upAppbarDetailDonasi">
     <TextView
+        android:id="@+id/detailHeaderText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Terima Kasih!"
@@ -38,6 +39,7 @@
         android:layout_marginTop="15dp"/>
 
         <TextView
+            android:id="@+id/detailHeaderSummaryText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Donasimu telah kami terima dan akan kami salurkan"
@@ -84,21 +86,21 @@
                 android:layout_height="wrap_content"
                 android:text="Metode Pembayaran"
                 android:layout_marginBottom="5dp"
-                android:textAlignment="textEnd"/>
+                android:textAlignment="textStart"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nominal Donasi"
                 android:layout_marginBottom="5dp"
-                android:textAlignment="textEnd"/>
+                android:textAlignment="textStart"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Status"
                 android:layout_marginBottom="5dp"
-                android:textAlignment="textEnd"/>
+                android:textAlignment="textStart"/>
         </LinearLayout>
 
 
@@ -109,6 +111,7 @@
             android:orientation="vertical"
             android:padding="5dp">
             <TextView
+                android:id="@+id/detailDonasiTanggal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 November 2020"
@@ -118,7 +121,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/invoiceNominalRaw"
+                android:id="@+id/detailDonasiPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gopay"
@@ -128,6 +131,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/detailDonasiNominal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 100.453"
@@ -137,7 +141,7 @@
                 android:textStyle="bold" />
 
             <FrameLayout
-                android:id="@+id/donasiStatusframe"
+                android:id="@+id/detailDonasiStatusframe"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -145,7 +149,7 @@
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp">
                 <TextView
-                    android:id="@+id/donasiSayaStatus"
+                    android:id="@+id/detailDonasiSayaStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Berhasil"
@@ -197,7 +201,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/titleProgramAll"
+                android:id="@+id/detailDonasiProgramJudul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sedekah Terbaik Untuk Anak Yatim .."
@@ -223,7 +227,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/volunteerProgamAll"
+                    android:id="@+id/detailDonasiRelawan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aksiberbagi.com"
@@ -263,7 +267,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/donasiBtn"
+            android:id="@+id/detailDonasiLagiBtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"

@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
 import com.inddevid.aksiberbagi_donatur.services.Converter
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 import com.inddevid.aksiberbagi_donatur.view.DonasiDetailActivity
 import kotlinx.android.synthetic.main.card_donasi_saya.view.*
 
@@ -57,7 +58,14 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
 
+        val sharedPreference: Preferences = Preferences(holder.itemView.context)
         holder.itemView.setOnClickListener{
+            val model = arrayList[position]
+            sharedPreference.save("idProgramDonasiDetail", model.idProgram)
+            sharedPreference.save("detailDonasiWaktu", model.timePay)
+            sharedPreference.save("detailDonasiPembayaran", model.payment)
+            sharedPreference.save("detailDonasiNominal", model.moneyPay)
+            sharedPreference.save("detailDonasiStatus", model.status)
             val mIntent = Intent(context, DonasiDetailActivity::class.java)
             context.startActivity(mIntent)
         }
