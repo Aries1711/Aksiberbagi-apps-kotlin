@@ -54,6 +54,9 @@ class DonasiDetailActivity : AppCompatActivity() {
             titleSummary.text = "Donasimu telah kami terima dan akan kami salurkan"
         }
 
+        val btnPembayaran : Button = findViewById(R.id.btnPembayaran)
+        btnPembayaran.visibility = View.GONE
+
         var tanggalDonasi : TextView = findViewById(R.id.detailDonasiTanggal)
         val tanggalValue: String? = sharedPreference.getValueString("detailDonasiWaktu")
         tanggalDonasi.text = tanggalValue
