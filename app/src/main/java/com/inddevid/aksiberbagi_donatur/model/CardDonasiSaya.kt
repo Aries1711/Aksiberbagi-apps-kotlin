@@ -7,6 +7,7 @@ class CardDonasiSaya (
     val timePay:String?,
     val status: String?,
     val img: String?,
-    val idDonasi: String?) {
+    val idDonasi: String?,
+    val jenisDonasi: String?) {
 
 }

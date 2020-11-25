@@ -43,7 +43,7 @@ class DonasiDetailActivity : AppCompatActivity() {
         var titleHeader : TextView = findViewById(R.id.detailHeaderText)
         var titleSummary : TextView = findViewById(R.id.detailHeaderSummaryText)
         val statusValue: String? = sharedPreference.getValueString("detailDonasiStatus")
-        if (statusValue == "GAGAL" && statusValue == "EXPIRED" ){
+        if (statusValue == "GAGAL" || statusValue == "EXPIRED" ){
             titleHeader.text = "Donasi Dibatalkan"
             titleSummary.text = "Batas waktu pembayaran telah berakhir atau donasi gagal tercatat di sistem"
         }else if(statusValue == "MENUNGGU"){
@@ -54,8 +54,13 @@ class DonasiDetailActivity : AppCompatActivity() {
             titleSummary.text = "Donasimu telah kami terima dan akan kami salurkan"
         }
 
+        val jenisValue: String? = sharedPreference.getValueString("detailDonasiJenis")
         val btnPembayaran : Button = findViewById(R.id.btnPembayaran)
-        btnPembayaran.visibility = View.GONE
+        if(jenisValue == "Transfer" && statusValue == "MENUNGGU"){
+            btnPembayaran.visibility = View.VISIBLE
+        }else{
+            btnPembayaran.visibility = View.GONE
+        }
 
         var tanggalDonasi : TextView = findViewById(R.id.detailDonasiTanggal)
         val tanggalValue: String? = sharedPreference.getValueString("detailDonasiWaktu")
@@ -198,18 +203,29 @@ class DonasiDetailActivity : AppCompatActivity() {
         val idDonasi: String? = sharedPreference.getValueString("idDonasiDetail")
         ApiService.getDonasiDetail(tokenValue,idDonasi).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-                val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
                 val data = response?.getJSONObject("dataDonasi")
-                if(response?.getString("jenisDonasi").equals("Transfer") && data?.getString("tbldonasi_status").equals("MENUNGGU") ){
-                    btnPembayaran.visibility = View.VISIBLE
-                }else{
-                    btnPembayaran.visibility = View.GONE
-                }
                 val dataProgram = data?.getJSONObject("program")
+                val dataBank = data?.getJSONObject("bank")
                 val imgProgram = dataProgram?.getString("thumbnail_url")
                 val imageProgram = context.findViewById<ImageView>(R.id.imageDetailDonasi)
                 Glide.with(context.applicationContext).load(imgProgram).apply(options).into(imageProgram)
                 val idProgram = dataProgram?.getString("tblprogram_id")
+                val judulProgram = dataProgram?.getString("tblprogram_judul")
+                var judulProgramText = context.findViewById<TextView>(R.id.detailDonasiProgramJudul)
+                judulProgramText.text = judulProgram
+
+                val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
+                btnPembayaran.setOnClickListener {
+                    sharedPreference.save("invoiceNominal", sharedPreference.getValueString("detailDonasiNominal"))
+                    sharedPreference.save("invoiceKodeUnik", data?.getString("tbldonasi_nourut") )
+                    sharedPreference.save("invoiceKode", data?.getString("tbldonasi_invoice"))
+                    sharedPreference.save("invoiceBank", dataBank?.getString("tblbank_nama"))
+                    sharedPreference.save("invoiceBankAN", dataBank?.getString("tblbank_namapemilik") )
+                    sharedPreference.save("invoiceBankUrl", dataBank?.getString("logo_url") )
+                    sharedPreference.save("invoiceBankRekening", dataBank?.getString("tblbank_rekening"))
+                    sharedPreference.save("invoiceProgramJudul", judulProgram)
+                    startActivity(Intent(this@DonasiDetailActivity, InvoiceActivity::class.java))
+                }
             }
 
             override fun onError(anError: ANError?) {

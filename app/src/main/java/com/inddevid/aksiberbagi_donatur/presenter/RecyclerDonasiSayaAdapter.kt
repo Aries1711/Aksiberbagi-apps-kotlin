@@ -65,6 +65,7 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
             sharedPreference.save("detailDonasiWaktu", model.timePay)
             sharedPreference.save("detailDonasiPembayaran", model.payment)
             sharedPreference.save("detailDonasiNominal", model.moneyPay)
+            sharedPreference.save("detailDonasiJenis", model.jenisDonasi)
             sharedPreference.save("detailDonasiStatus", model.status)
             val mIntent = Intent(context, DonasiDetailActivity::class.java)
             context.startActivity(mIntent)

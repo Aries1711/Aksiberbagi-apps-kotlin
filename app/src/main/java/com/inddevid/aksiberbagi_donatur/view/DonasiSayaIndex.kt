@@ -232,10 +232,11 @@ class DonasiSayaIndex : Fragment() {
                         val namaBank = bank?.getString("tblbank_nama")
                         val idDonasi = item?.getString("tbldonasi_id")
                         val nominaldonasi = item?.getString("tbldonasi_nominal")
-                        val waktuDonasi = item?.getString("tbldonasi_tglinsert")
+                        val waktuDonasi = item?.getString("tanggal_donasi")
+                        val jenisDonasi = item?.getString("jenis_donasi")
                         val donasiStatus = item?.getString("tbldonasi_status")
                         val gambarProgram = program?.getString("tblprogram_file")
-                        arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idDonasi))
+                        arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idDonasi, jenisDonasi))
                     }
                     //inflate the recycler for cardview donasi saya
                     val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())

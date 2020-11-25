@@ -150,7 +150,7 @@ public class ApiService {
 
     public static ANRequest getDonasiDetail(String data, String id){
         token = data;
-        String endpoint = baseUrl("detail/"+ id);
+        String endpoint = baseUrl("donasi/detail/"+ id);
         return get(endpoint);
     }
 

@@ -57,7 +57,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         //appbar background Image options
         val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(900, 475)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
@@ -737,7 +736,7 @@ class ProgramDetailActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
+//        startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
     }
 
 //                        val toast = Toast.makeText(
