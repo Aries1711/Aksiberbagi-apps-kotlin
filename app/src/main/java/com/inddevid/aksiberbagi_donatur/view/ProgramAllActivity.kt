@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
 import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramAllAdapter
@@ -30,28 +32,32 @@ class ProgramAllActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.upAppbarAllProgram)
         toolbar.title = "Program Galang Dana"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
-        var mainMenuAll = findViewById(R.id.recyclerProgramAllSearch) as RecyclerView
+        var mainMenuAll = findViewById<RecyclerView>(R.id.recyclerProgramAllSearch)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
-        getKoneksi(retrivedToken, mainMenuAll)
+        val shimmerLayout: ShimmerFrameLayout = findViewById(R.id.shimmerProgramAll)
+        shimmerLayout.startShimmer()
+        mainMenuAll.visibility = View.GONE
+
+        getKoneksi(retrivedToken, mainMenuAll, this)
 
         toolbar.setNavigationOnClickListener{startActivity(Intent(this@ProgramAllActivity, DashboardActivity::class.java))}
 
     }
 
-    private fun getKoneksi(tokenValue: String?, view: RecyclerView){
+    private fun getKoneksi(tokenValue: String?, view: RecyclerView, context: ProgramAllActivity){
         ApiService.getKoneksi(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-                getAllprogram(tokenValue, view)
+                getAllprogram(tokenValue, view, context)
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue,view)
+                refreshToken(tokenValue,view, context)
             }
 
         })
     }
 
-    private fun refreshToken(tokenValue: String?, view: RecyclerView){
+    private fun refreshToken(tokenValue: String?, view: RecyclerView, context: ProgramAllActivity){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
         try {
@@ -63,13 +69,13 @@ class ProgramAllActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(token, view)
+                                getKoneksi(token, view,context)
                             }
                         }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
                             val token : String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(token, view)
+                                getKoneksi(token, view,context)
                             }
                         }else{
                             Looper.myLooper()?.let {
@@ -112,7 +118,7 @@ class ProgramAllActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAllprogram(tokenValue: String?, view: RecyclerView){
+    private fun getAllprogram(tokenValue: String?, view: RecyclerView, context: ProgramAllActivity){
         ApiService.getAllProgram(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val jsonObject =response?.getJSONObject("data")
@@ -140,6 +146,10 @@ class ProgramAllActivity : AppCompatActivity() {
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgramAll,this@ProgramAllActivity)
                         view.layoutManager = LinearLayoutManager(this@ProgramAllActivity)
                         view.adapter = myAdapterAll
+                        view.visibility = View.VISIBLE
+                        val shimmer = context.findViewById<ShimmerFrameLayout>(R.id.shimmerProgramAll)
+                        shimmer.stopShimmer()
+                        shimmer.visibility = View.GONE
                     }
                 }
             }
