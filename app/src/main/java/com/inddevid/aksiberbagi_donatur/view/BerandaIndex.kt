@@ -1,6 +1,8 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +14,7 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +22,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.*
 import com.inddevid.aksiberbagi_donatur.presenter.*
@@ -133,9 +137,23 @@ class BerandaIndex : Fragment() {
         val imageSubD : ImageView = view.findViewById(R.id.subD)
         Glide.with(requireActivity()).load(R.drawable.submenue).into(imageSubD)
         imageSubD.setOnClickListener {
-            startActivity(Intent(requireActivity(), SapaActivity::class.java))
+            val phoneNumber = "+6285725268775"
+            val text = "Halo Kakak Aksiberbagi.com "
+            val textEncode = java.net.URLEncoder.encode(text, "utf-8")
+            val uri = Uri.parse("whatsapp://send?text=$textEncode&phone=$phoneNumber")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                val toast = Toast.makeText(requireContext(), "Oke Donasi Ewallet", Toast.LENGTH_LONG)
+                toast.show()
+                return@setOnClickListener
+            }
         }
-
+        val scrollBeranda: NestedScrollView = view.findViewById(R.id.truekonten)
+        scrollBeranda.visibility = View.GONE
+        val shimmerLayout: ShimmerFrameLayout = view.findViewById(R.id.shimmerBeranda)
+        shimmerLayout.startShimmer()
         getKoneksi(retrivedToken, view)
 
         //set button lihat semua
@@ -227,7 +245,7 @@ class BerandaIndex : Fragment() {
 
                 //inflate vertical program All
                 var mainMenuAll = view.findViewById(R.id.recyclerProgramAll) as RecyclerView
-                getListProgram(tokenValue, mainMenuAll)
+                getListProgram(tokenValue, mainMenuAll,view)
 
                 val imageBanner: ImageView = view.findViewById(R.id.berandaBanner)
                 val titleBanner: TextView = view.findViewById(R.id.bannerBerandaTitle)
@@ -246,32 +264,38 @@ class BerandaIndex : Fragment() {
         val header : String? = tokenValue
         ApiService.getLelang(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                val jsonArray = response?.getJSONArray("data")
-                val timer = response?.getString("timer")!!.toInt()
-                if (jsonArray?.length()!! > 0) {
-                    for (i in 0 until jsonArray.length()) {
-                        val item = jsonArray.getJSONObject(i)
-                        val nominalItem = item?.getJSONObject("nominal")
-                        val img: String? = item?.getString("gambar_url")
-                        val nominal: Double? =
-                            nominalItem?.getString("nominal_flash_sale")!!.toDouble()
-                        val stok: String? = item?.getString("stok")
-                        arrayLelang.add(BerandaLelang(img, stok?.toInt(), nominal))
+                val layout = viewT.findViewById<LinearLayout>(R.id.lelangKonten)
+                if(response?.getString("message").equals("Data flashsale berhasil diambil")){
+                    layout.visibility = View.VISIBLE
+                    val jsonArray = response?.getJSONArray("data")
+                    val timer = response?.getString("timer")!!.toInt()
+                    if (jsonArray?.length()!! > 0) {
+                        for (i in 0 until jsonArray.length()) {
+                            val item = jsonArray.getJSONObject(i)
+                            val nominalItem = item?.getJSONObject("nominal")
+                            val img: String? = item?.getString("gambar_url")
+                            val nominal: Double? =
+                                nominalItem?.getString("nominal_flash_sale")!!.toDouble()
+                            val stok: String? = item?.getString("stok")
+                            arrayLelang.add(BerandaLelang(img, stok?.toInt(), nominal))
+                        }
+                        val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
+                        view.layoutManager = LinearLayoutManager(
+                            requireActivity(),
+                            RecyclerView.HORIZONTAL,
+                            false
+                        )
+                        view.adapter = myAdapterLelang
+                        //
+                        viewT.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(
+                            requireActivity(),
+                            R.color.colorInputStrokeBlue
+                        )
+                        viewT.normalCountDownView.initTimer(timer)
+                        viewT.normalCountDownView.startTimer()
                     }
-                    val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
-                    view.layoutManager = LinearLayoutManager(
-                        requireActivity(),
-                        RecyclerView.HORIZONTAL,
-                        false
-                    )
-                    view.adapter = myAdapterLelang
-                    //
-                    viewT.normalCountDownView.timerTextBackgroundTintColor = ContextCompat.getColor(
-                        requireActivity(),
-                        R.color.colorInputStrokeBlue
-                    )
-                    viewT.normalCountDownView.initTimer(timer)
-                    viewT.normalCountDownView.startTimer()
+                }else{
+                    layout.visibility = View.GONE
                 }
             }
 
@@ -380,7 +404,7 @@ class BerandaIndex : Fragment() {
 
     }
 
-    private fun getListProgram(tokenValue: String?, view: RecyclerView){
+    private fun getListProgram(tokenValue: String?, view: RecyclerView, viewT: View){
         val header:String? = tokenValue
         ApiService.getProgramTerbaru(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
@@ -420,6 +444,12 @@ class BerandaIndex : Fragment() {
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram, requireActivity())
                         view.layoutManager = LinearLayoutManager(requireActivity())
                         view.adapter = myAdapterAll
+                        val scrollBeranda: NestedScrollView = viewT.findViewById(R.id.truekonten)
+                        scrollBeranda.visibility = View.VISIBLE
+
+                        val shimmer = viewT.findViewById<ShimmerFrameLayout>(R.id.shimmerBeranda)
+                        shimmer.stopShimmer()
+                        shimmer.visibility = View.GONE
                     }
                 }
             }
