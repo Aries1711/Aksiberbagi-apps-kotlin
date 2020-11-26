@@ -1,16 +1,28 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
-import com.inddevid.aksiberbagi_donatur.model.CardHorizontalRecycler
-import com.inddevid.aksiberbagi_donatur.presenter.RecyclerHorizontalAdapter
+import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
+import com.inddevid.aksiberbagi_donatur.presenter.ProgramFavoritAdapter
+import com.inddevid.aksiberbagi_donatur.services.ApiService
+import com.inddevid.aksiberbagi_donatur.services.Preferences
+import org.json.JSONException
+import org.json.JSONObject
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,7 +39,8 @@ class FavoritIndex : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var backButtonCount = 0
+    private val arrayProgramAll = ArrayList<BerandaProgramAll>()
+    private val TAG = "Program Favorit"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +55,6 @@ class FavoritIndex : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // get val for arraylist
-        val imageUrl:String = "https://aksiberbagi.com/storage/program/Sedekah%20Air%20untuk%20Pesantren%20dan%20Masjid%20-%20Alirkan%20Pahala%20Tak%20Terputus-banner.jpg"
-        val titleCard:String = "Bangun Rumah Di Surga dengan menyantuni anak yatim"
-        val volunteerCard:String = "AksiBerbagi.com"
-        val moneyCard:String = "Rp 162.700.000"
-        val dayCard:String = "17"
-
-        // inflate the list cardview for favorite program
-        val arrayList = ArrayList<CardHorizontalRecycler>()
-        arrayList.add(CardHorizontalRecycler(titleCard, volunteerCard , moneyCard, dayCard, imageUrl ))
-        arrayList.add(CardHorizontalRecycler(titleCard, volunteerCard , moneyCard, dayCard, imageUrl ))
-        val myAdapter = RecyclerHorizontalAdapter(arrayList, requireActivity())
 
         // Inflate the layout for this fragment
         val title = "Favorit"
@@ -61,12 +63,139 @@ class FavoritIndex : Fragment() {
         toolbar.inflateMenu(R.menu.favorit_upbar_menu)
         toolbar.title = title
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
-
-        var mainMenu = view.findViewById(R.id.recyclerFavorit) as RecyclerView
-        mainMenu.layoutManager = LinearLayoutManager(requireActivity())
-        mainMenu.adapter = myAdapter
+        val shimmerLayout: ShimmerFrameLayout = view.findViewById(R.id.shimmerProgramFavorit)
+        shimmerLayout.startShimmer()
+        val recyclerFavorit = view.findViewById<RecyclerView>(R.id.recyclerProgramFavorit)
+        recyclerFavorit.visibility = View.GONE
+        val sharedPreference: Preferences = Preferences(requireContext())
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+        getKoneksi(retrivedToken, view)
 
         return view
+    }
+
+    private fun getKoneksi(tokenValue: String?, view: View){
+        ApiService.getKoneksi(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
+            override fun onResponse(response: JSONObject?) {
+                getAllProgramFavorit(tokenValue, view)
+            }
+
+            override fun onError(anError: ANError?) {
+                refreshToken(tokenValue,view)
+            }
+
+        })
+    }
+
+    private fun refreshToken(tokenValue: String?, view: View){
+        val header : String? = tokenValue
+        val sharedPreference: Preferences = Preferences(requireContext())
+        try {
+            ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    try {
+                        if (response?.getString("message").equals("Refresh berhasil")){
+                            val token : String? = response?.getString("token")
+                            //save token
+                            if (token != null) {
+                                sharedPreference.save("TOKEN", token)
+                                getKoneksi(token, view)
+                            }
+                        }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
+                            val token : String? = response?.getString("token")
+                            if (token != null) {
+                                sharedPreference.save("TOKEN", token)
+                                getKoneksi(token, view)
+                            }
+                        }else{
+                            Looper.myLooper()?.let {
+                                Handler(it).postDelayed({
+                                    val intent = Intent(requireContext(), IntroActivity::class.java)
+                                    startActivity(intent)
+                                }, 2500)
+                            }
+                        }
+
+                    }catch (e : JSONException){
+                        val toast = Toast.makeText(
+                            requireContext(),
+                            "Invalid Json",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                    }
+                }
+                override fun onError(anError: ANError?) {
+                    Looper.myLooper()?.let {
+                        Handler(it).postDelayed({
+                            val intent = Intent(requireContext(), IntroActivity::class.java)
+                            startActivity(intent)
+                        }, 2500)
+                    }
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
+
+            })
+        }catch (e: JSONException){
+            val toast = Toast.makeText(
+                requireContext(),
+                "Kesalahan Header",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+        }
+    }
+
+    private fun getAllProgramFavorit(tokenValue: String?, view: View){
+        ApiService.getProgramFavorit(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if(response?.getString("message").equals("Program favorit saya berhasil didapatkan")){
+                    val jsonArray =response?.getJSONArray("data")
+                    if (jsonArray?.length()!! > 0){
+                        for(i in 0 until jsonArray.length()){
+                            val item = jsonArray.getJSONObject(i)
+                            val dataProgram = item?.getJSONObject("program")
+                            val idProgram = dataProgram?.getString("tblprogram_id")
+                            val img = dataProgram?.getString("thumbnail_url")
+                            val judul = dataProgram?.getString("tblprogram_judul")
+                            val volunter: String? = "Aksiberbagi.com"
+                            val capaian = dataProgram?.getString("capaian_donasi")
+                            val sisaHari = dataProgram?.getString("sisa_hari")
+                            val startProgram = dataProgram?.getString("tanggal_mulai_donasi")
+                            val targetNominal: String? = dataProgram?.getString("tblprogram_isiantargetnominal")
+                            var progressProgram: Int? = dataProgram?.getInt("progress")
+                            var targetDonasi : String?
+                            if (targetNominal == "null" || targetNominal == "0" ){
+                                targetDonasi = "100"
+                            }else{
+                                targetDonasi = dataProgram?.getString("target_nominal")
+                            }
+                            arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi))
+                            val myAdapterAll = ProgramFavoritAdapter(arrayProgramAll,requireContext())
+                            val recyclerFavorit = view.findViewById<RecyclerView>(R.id.recyclerProgramFavorit)
+                            recyclerFavorit.layoutManager = LinearLayoutManager(requireContext())
+                            recyclerFavorit.adapter = myAdapterAll
+                            recyclerFavorit.visibility = View.VISIBLE
+                            val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmerProgramFavorit)
+                            shimmer.stopShimmer()
+                            shimmer.visibility = View.GONE
+                        }
+                    }
+                }else if(response?.getString("message").equals("Program favorit tidak ditemukan")){
+                    //Do Something
+                }
+
+            }
+
+            override fun onError(anError: ANError?) {
+                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+            }
+
+        })
     }
 
     companion object {

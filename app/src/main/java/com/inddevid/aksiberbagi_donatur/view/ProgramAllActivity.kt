@@ -155,7 +155,9 @@ class ProgramAllActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
-
+                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
             }
 
         })

@@ -634,7 +634,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                 val jsonArray = response?.getJSONArray("data")
                 val totalDonatur: String? = response?.getString("total_donatur")
                 jumlahDonatur.text = "($totalDonatur)"
-                if (jsonArray?.length()!! > 0) {
+                if (jsonArray?.length()!! > 4) {
                     for (i in 0 until 5) {
                         val item = jsonArray.getJSONObject(i)
                         val img: String? = "https://aksiberbagi.com/assets/images/user_akber.png"
