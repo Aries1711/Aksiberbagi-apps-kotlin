@@ -24,6 +24,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
@@ -59,6 +60,13 @@ class ProgramDetailActivity : AppCompatActivity() {
             .centerCrop()
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
+
+        //btn set program ke program FAvorit
+        val btnFavoritSet : FloatingActionButton = findViewById(R.id.btnAddFavorit)
+
+        btnFavoritSet.setOnClickListener {
+            postProgramFavorit(retrivedToken, this, idProgram)
+        }
 
         //deklarasi value tampilan mulai dari gambar judul dll
             //gambar
@@ -524,6 +532,35 @@ class ProgramDetailActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun postProgramFavorit(tokenValue: String? , context: ProgramDetailActivity, idProgram: String?){
+        val body = JSONObject()
+        val sharedPreference: Preferences = Preferences(this)
+        body.put("program_id", idProgram)
+        ApiService.postFavorit(tokenValue, body).getAsJSONObject( object: JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if( response?.getString("message").equals("Program favorit berhasil disimpan")){
+                    val toast = Toast.makeText(this@ProgramDetailActivity,"Berhasil Menyimpan Program Favorit",Toast.LENGTH_LONG)
+                     toast.show()
+                }else{
+                    val toast = Toast.makeText(this@ProgramDetailActivity,"Ada Kesalahan Sistem",Toast.LENGTH_LONG)
+                    toast.show()
+                }
+            }
+            override fun onError(anError: ANError?) {
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if (apiError?.message == "Token expired"){
+                    val donatur = context.findViewById<RecyclerView>(R.id.totalDonasiRecycler)
+                    val jumlahDonatur = context.findViewById<TextView>(R.id.jumlahDonasiTextProgram)
+                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur)
+                    val toast = Toast.makeText(this@ProgramDetailActivity,"Cobalah beberapa saat lagi",Toast.LENGTH_LONG)
+                    toast.show()
+                }
+            }
+
+        })
+
     }
 
     private fun getKoneksi(

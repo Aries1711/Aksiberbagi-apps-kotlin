@@ -114,7 +114,7 @@ public class ApiService {
 
     public static ANRequest getLelang(String data){
         token = data;
-        String endpoint = baseUrl("flashsale");
+        String endpoint = baseUrl("flashsale/hari-ini");
         return get(endpoint);
     }
 
@@ -187,6 +187,12 @@ public class ApiService {
     public static ANRequest postDonasi(String auth,  JSONObject data){
         token = auth ;
         String endpoint = baseUrl("donasi");
+        return post(endpoint, data);
+    }
+
+    public static ANRequest postFavorit(String auth,  JSONObject data){
+        token = auth ;
+        String endpoint = baseUrl("program/favorit");
         return post(endpoint, data);
     }
 

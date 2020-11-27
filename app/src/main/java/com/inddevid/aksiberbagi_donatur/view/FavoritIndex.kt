@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
 import com.inddevid.aksiberbagi_donatur.presenter.ProgramFavoritAdapter
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
@@ -151,6 +153,7 @@ class FavoritIndex : Fragment() {
     private fun getAllProgramFavorit(tokenValue: String?, view: View){
         ApiService.getProgramFavorit(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
+                val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmerProgramFavorit)
                 if(response?.getString("message").equals("Program favorit saya berhasil didapatkan")){
                     val jsonArray =response?.getJSONArray("data")
                     if (jsonArray?.length()!! > 0){
@@ -178,18 +181,28 @@ class FavoritIndex : Fragment() {
                             recyclerFavorit.layoutManager = LinearLayoutManager(requireContext())
                             recyclerFavorit.adapter = myAdapterAll
                             recyclerFavorit.visibility = View.VISIBLE
-                            val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmerProgramFavorit)
                             shimmer.stopShimmer()
                             shimmer.visibility = View.GONE
                         }
                     }
-                }else if(response?.getString("message").equals("Program favorit tidak ditemukan")){
-                    //Do Something
+                }else{
+                    val layoutKosong  = view.findViewById<LinearLayout>(R.id.layoutFavoritKosong)
+                    layoutKosong.visibility = View.VISIBLE
+                    shimmer.stopShimmer()
+                    shimmer.visibility = View.GONE
                 }
 
             }
 
             override fun onError(anError: ANError?) {
+                val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmerProgramFavorit)
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(apiError?.message == "Program favorit tidak ditemukan"){
+                    val layoutKosong  = view.findViewById<LinearLayout>(R.id.layoutFavoritKosong)
+                    layoutKosong.visibility = View.VISIBLE
+                    shimmer.stopShimmer()
+                    shimmer.visibility = View.GONE
+                }
                 Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                 Log.d(TAG, "OnErrorCode " + anError?.errorCode)
                 Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)

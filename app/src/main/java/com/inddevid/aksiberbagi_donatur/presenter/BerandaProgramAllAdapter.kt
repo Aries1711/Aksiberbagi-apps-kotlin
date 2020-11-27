@@ -18,8 +18,6 @@ import kotlinx.android.synthetic.main.beranda_card_program_all.view.*
 class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val context:Context) :
     RecyclerView.Adapter<BerandaProgramAllAdapter.ViewHolder> (){
 
-    private val isShimer: Boolean = true
-    private val shimmerNumb = arrayList.size
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
@@ -49,18 +47,10 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
 
     override fun getItemCount(): Int {
         return arrayList.size
-//        return if (isShimer) shimmerNumb else arrayList.size
     }
 
     override fun onBindViewHolder(holder: BerandaProgramAllAdapter.ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
-
-//        if (isShimer){
-//            holder.itemView.shimmerProgramAll.startShimmer()
-//        }else{
-//            holder.itemView.shimmerProgramAll.stopShimmer()
-//            holder.itemView.shimmerProgramAll.visibility = View.GONE
-//        }
 
         if (position == 4){
             holder.itemView.programAllLineList.invisible()
