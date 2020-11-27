@@ -12,11 +12,13 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
 import com.inddevid.aksiberbagi_donatur.model.DateDonasiSaya
@@ -72,6 +74,9 @@ class DonasiSayaIndex : Fragment() {
         toolbar.inflateMenu(R.menu.donasisaya_upbar_menu)
         toolbar.title = "Donasi Saya"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        val shimmerFrame : ShimmerFrameLayout = view.findViewById(R.id.shimmerDonasiSaya)
+        shimmerFrame.startShimmer()
+
         //tombol lihat semua donasi
         val btnLihatSemua : Button = view.findViewById(R.id.lihatSemua)
 
@@ -243,6 +248,13 @@ class DonasiSayaIndex : Fragment() {
                     var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
                     mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
                     mainMenuB.adapter = myAdapterB
+
+                    val shimmerFrame : ShimmerFrameLayout = view.findViewById(R.id.shimmerDonasiSaya)
+                    val layoutUtama : NestedScrollView = view.findViewById(R.id.layoutUtama)
+                    shimmerFrame.stopShimmer()
+                    shimmerFrame.visibility = View.GONE
+                    layoutUtama.visibility = View.VISIBLE
+
                 }
 
             }

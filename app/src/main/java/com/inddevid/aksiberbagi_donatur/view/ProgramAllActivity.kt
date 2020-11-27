@@ -16,7 +16,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
-import com.inddevid.aksiberbagi_donatur.presenter.BerandaProgramAllAdapter
+import com.inddevid.aksiberbagi_donatur.presenter.ProgramAllAdapter
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
@@ -143,7 +143,7 @@ class ProgramAllActivity : AppCompatActivity() {
                             targetDonasi = item?.getString("target_nominal")
                         }
                         arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi))
-                        val myAdapterAll = BerandaProgramAllAdapter(arrayProgramAll,this@ProgramAllActivity)
+                        val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@ProgramAllActivity)
                         view.layoutManager = LinearLayoutManager(this@ProgramAllActivity)
                         view.adapter = myAdapterAll
                         view.visibility = View.VISIBLE

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.CardDonasiSaya
 import com.inddevid.aksiberbagi_donatur.presenter.RecyclerDonasiSayaAdapter
@@ -41,6 +43,9 @@ class SemuaDonasiSayaActivity : AppCompatActivity() {
             mBundle.putString("donasiSayaAktif", "true")
             mIntent.putExtras(mBundle)
             startActivity(mIntent)}
+
+        val shimmerFrame: ShimmerFrameLayout = findViewById(R.id.shimmerSemuaDonasi)
+        shimmerFrame.startShimmer()
 
         getKoneksi(retrivedToken!!, this)
 
@@ -170,6 +175,11 @@ class SemuaDonasiSayaActivity : AppCompatActivity() {
                     var mainMenu = context.findViewById<RecyclerView>(R.id.recyclerDonasiSayaAll)
                     mainMenu.layoutManager = LinearLayoutManager(this@SemuaDonasiSayaActivity)
                     mainMenu.adapter = myAdapterB
+                    val shimmerFrame: ShimmerFrameLayout = context.findViewById(R.id.shimmerSemuaDonasi)
+                    val layoutUtama = context.findViewById<RecyclerView>(R.id.recyclerDonasiSayaAll)
+                    shimmerFrame.stopShimmer()
+                    shimmerFrame.visibility = View.GONE
+                    layoutUtama.visibility = View.VISIBLE
                 }
 
             }

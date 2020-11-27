@@ -714,7 +714,6 @@ class ProgramDetailActivity : AppCompatActivity() {
                     if (jsonArray?.length()!! > 0) {
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
-                            val nominalId = item?.getInt("tblnominal_id")
                             val nominalRaw = item?.getString("tblnominal_nominal")!!.toDouble()
                             val nominal = Converter.rupiah(nominalRaw)
                             val keterangan = item?.getString("tblnominal_keterangan")
