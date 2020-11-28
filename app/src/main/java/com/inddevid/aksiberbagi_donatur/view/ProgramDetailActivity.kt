@@ -64,9 +64,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         //btn set program ke program FAvorit
         val btnFavoritSet : FloatingActionButton = findViewById(R.id.btnAddFavorit)
 
-        btnFavoritSet.setOnClickListener {
-            postProgramFavorit(retrivedToken, this, idProgram)
-        }
 
         //deklarasi value tampilan mulai dari gambar judul dll
             //gambar
@@ -160,7 +157,11 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         //ambil semua atribut nilai yang di tampilkan dari database server
         val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
-        getKoneksi(retrivedToken, idProgram, allDonasi, textJumlahDonatur, pilihNominal)
+        getKoneksi(retrivedToken, idProgram, allDonasi, textJumlahDonatur, pilihNominal, this)
+        btnFavoritSet.setOnClickListener {
+            postProgramFavorit(retrivedToken, idProgram,  allDonasi, textJumlahDonatur, pilihNominal, this)
+        }
+
         Log.d(TAG, "value pada pilihan nominal $nominalItems")
         //set spinner untuk set keadaan dan nilai variabel yg terpengaruh spinner
         var spinnerPilihNominal : String? = ""
@@ -534,7 +535,14 @@ class ProgramDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun postProgramFavorit(tokenValue: String? , context: ProgramDetailActivity, idProgram: String?){
+    private fun postProgramFavorit(
+        tokenValue: String?,
+        idProgram: String?,
+        donatur: RecyclerView,
+        jumlahDonatur: TextView,
+        spinner: Spinner,
+        context: ProgramDetailActivity
+    ){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
         body.put("program_id", idProgram)
@@ -553,7 +561,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                 if (apiError?.message == "Token expired"){
                     val donatur = context.findViewById<RecyclerView>(R.id.totalDonasiRecycler)
                     val jumlahDonatur = context.findViewById<TextView>(R.id.jumlahDonasiTextProgram)
-                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur)
+                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
                     val toast = Toast.makeText(this@ProgramDetailActivity,"Cobalah beberapa saat lagi",Toast.LENGTH_LONG)
                     toast.show()
                 }
@@ -568,17 +576,18 @@ class ProgramDetailActivity : AppCompatActivity() {
         idProgram: String?,
         donatur: RecyclerView,
         jumlahDonatur: TextView,
-        spinner: Spinner
+        spinner: Spinner,
+        context: ProgramDetailActivity
     ){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur)
+                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur, context)
                 getNominal(tokenValue, idProgram, spinner)
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue, idProgram, donatur, jumlahDonatur)
+                refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
             }
 
         })
@@ -588,7 +597,9 @@ class ProgramDetailActivity : AppCompatActivity() {
         tokenValue: String?,
         idProgram: String?,
         donatur: RecyclerView,
-        jumlahDonatur: TextView
+        jumlahDonatur: TextView,
+        spinner: Spinner,
+        context: ProgramDetailActivity
     ){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
@@ -601,7 +612,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur)
+                                getKoneksi(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -609,7 +620,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                             val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur)
+                                getKoneksi(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
                             }
                         } else {
                             Looper.myLooper()?.let {
@@ -659,15 +670,29 @@ class ProgramDetailActivity : AppCompatActivity() {
         }
     }
 
+
     private fun getDonaturProgramA(
         tokenValue: String?,
         idProgram: String?,
         donatur: RecyclerView,
-        jumlahDonatur: TextView
+        jumlahDonatur: TextView,
+        context: ProgramDetailActivity
     ){
         ApiService.getDonatur(tokenValue, idProgram).getAsJSONObject(object :
             JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
+
+                val laporanLayoutKosong = context.findViewById<LinearLayout>(R.id.kontenLaporanDetailA)
+                val laporanLayoutAda = context.findViewById<LinearLayout>(R.id.kontenLaporanDetailB)
+                val webViewLaporan = context.findViewById<WebView>(R.id.laporanWeb)
+
+                if(response?.getString("berita").equals("true")){
+                    laporanLayoutAda.visibility = View.VISIBLE
+                    webViewLaporan.loadUrl("https://aksiberbagi.com/apk/berita/$idProgram")
+                }else{
+                    laporanLayoutKosong.visibility = View.VISIBLE
+                }
+
                 val jsonArray = response?.getJSONArray("data")
                 val totalDonatur: String? = response?.getString("total_donatur")
                 jumlahDonatur.text = "($totalDonatur)"

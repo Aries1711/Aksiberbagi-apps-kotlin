@@ -314,6 +314,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/layoutKeteranganDetail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
             <View
                 android:id="@+id/breakLaporanDetail"
                 android:layout_width="match_parent"
@@ -340,14 +341,14 @@
                     android:layout_marginStart="20dp"
                     android:textStyle="bold"
                     />
-                <LinearLayout
-                    android:id="@+id/kontenLaporanDetail"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    <LinearLayout
+                        android:id="@+id/kontenLaporanDetailA"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
@@ -364,7 +365,40 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textAlignment="center"/>
-                </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/kontenLaporanDetailB"
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginTop="10dp">
+                        <WebView
+                            android:id="@+id/laporanWeb"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="40dp"
+                            android:layout_height="wrap_content">
+                        </WebView>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLaporanProgram"
+                            android:layout_gravity="center"
+                            android:layout_width="120dp"
+                            android:layout_height="45dp"
+                            android:text="Lihat Semua"
+                            android:textSize="10sp"
+                            app:cornerRadius="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="10dp"
+                            app:backgroundTint="@color/colorInputStrokeBlue"
+                            app:layout_constraintBottom_toBottomOf="@id/layoutKeteranganDetail"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+                    </LinearLayout>
+
             </LinearLayout>
 
             <View
