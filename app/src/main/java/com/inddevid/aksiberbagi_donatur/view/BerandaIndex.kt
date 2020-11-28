@@ -105,33 +105,64 @@ class BerandaIndex : Fragment() {
             startActivity(Intent(requireActivity(), SearchActivity::class.java))
         })
 
+        val notifBtn: ImageView = view.findViewById(R.id.notifikasiIcon)
+        notifBtn.setOnClickListener{
+            startActivity(Intent(requireActivity(), NotifikasiActivity::class.java))
+        }
+
         //tombol gabung donasi rutin
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
-        btnGbgDonRut.setOnClickListener{ startActivity(
-            Intent(
-                requireActivity(),
-                DonasiRutinActivity::class.java
+        btnGbgDonRut.setOnClickListener{
+            val toast = Toast.makeText(
+                requireContext(),
+                "Segera",
+                Toast.LENGTH_LONG
             )
-        ) }
+            toast.show()
+//            startActivity(
+//            Intent(
+//                requireActivity(),
+//                DonasiRutinActivity::class.java
+//            )
+//        )
+        }
 
         // tombol submenu beranda a-d
         // tombol lelang baik
         val imageSubA : ImageView = view.findViewById(R.id.subA)
         Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubA)
         imageSubA.setOnClickListener {
-            startActivity(Intent(requireActivity(), LelangActivity::class.java))
+            val toast = Toast.makeText(
+                requireContext(),
+                "Segera",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+//            startActivity(Intent(requireActivity(), LelangActivity::class.java))
             }
         // tombol zakat
         val imageSubB : ImageView = view.findViewById(R.id.subB)
         Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
         imageSubB.setOnClickListener {
-            startActivity(Intent(requireActivity(), ZakatActivity::class.java))
+            val toast = Toast.makeText(
+                requireContext(),
+                "Segera",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+//            startActivity(Intent(requireActivity(), ZakatActivity::class.java))
         }
         // tombol publik ajukan
         val imageSubC : ImageView = view.findViewById(R.id.subC)
         Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubC)
         imageSubC.setOnClickListener {
-            startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
+            val toast = Toast.makeText(
+                requireContext(),
+                "Segera",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+//            startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
         }
         // tombol sapa kami
         val imageSubD : ImageView = view.findViewById(R.id.subD)

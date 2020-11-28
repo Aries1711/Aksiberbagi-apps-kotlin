@@ -37,7 +37,7 @@ class ProfilActivity : AppCompatActivity() {
             //Alamat donatur
         val penggunaAlamat : TextView = findViewById(R.id.profilAlamat)
         val alamatValue: String? = sharedPreference.getValueString("penggunaAlamat")
-        if(alamatValue == ""){
+        if(alamatValue == "" || alamatValue == "null"){
             penggunaAlamat.text = "--"
         }else{
             penggunaAlamat.text = alamatValue
@@ -45,7 +45,7 @@ class ProfilActivity : AppCompatActivity() {
             //Email donatur
         val penggunaProfesi : TextView = findViewById(R.id.profilProfesi)
         val profesiValue: String? = sharedPreference.getValueString("penggunaProfesi")
-        if(profesiValue == ""){
+        if(profesiValue == "" || profesiValue == "null"){
             penggunaProfesi.text = "--"
         }else{
             penggunaProfesi.text = profesiValue
