@@ -43,6 +43,7 @@ class ProgramDetailActivity : AppCompatActivity() {
     private val nominalItems: ArrayList<String> = arrayListOf("Pilih Nominal Donasi")
     private val idNominal: ArrayList<Int> = arrayListOf(0)
     private var btnKeteranganStatus : String = ""
+    private var btnLaporanStatus : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -684,11 +685,21 @@ class ProgramDetailActivity : AppCompatActivity() {
 
                 val laporanLayoutKosong = context.findViewById<LinearLayout>(R.id.kontenLaporanDetailA)
                 val laporanLayoutAda = context.findViewById<LinearLayout>(R.id.kontenLaporanDetailB)
+                val buttonLihatLaporan = context.findViewById<Button>(R.id.btnLaporanProgram)
                 val webViewLaporan = context.findViewById<WebView>(R.id.laporanWeb)
 
                 if(response?.getString("berita").equals("true")){
                     laporanLayoutAda.visibility = View.VISIBLE
+                    buttonLihatLaporan.visibility = View.VISIBLE
                     webViewLaporan.loadUrl("https://aksiberbagi.com/apk/berita/$idProgram")
+                    buttonLihatLaporan.setOnClickListener {
+                        if(btnLaporanStatus == ""){
+                            btnShowLayout(buttonLihatLaporan, laporanLayoutAda)
+                        }else{
+                            btnHideLayout(buttonLihatLaporan, laporanLayoutAda)
+                        }
+                    }
+
                 }else{
                     laporanLayoutKosong.visibility = View.VISIBLE
                 }
@@ -786,6 +797,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             layout.layoutParams = params
             btn.text = "Sembunyikan"
             btnKeteranganStatus = "On"
+            btnLaporanStatus = "On"
     }
 
     private fun btnHideLayout(btn: Button, layout: LinearLayout){
@@ -794,6 +806,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             layout.layoutParams = params
             btn.text = "Lihat Semua"
             btnKeteranganStatus = ""
+            btnLaporanStatus = ""
     }
 
     override fun onBackPressed() {

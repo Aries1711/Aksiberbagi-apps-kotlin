@@ -131,6 +131,8 @@ class LoginActivity : AppCompatActivity() {
                                 val dataDonatur: JSONObject? = data?.getJSONObject("donatur")
                                 val donaturWa = dataDonatur?.getString("tbldonatur_nowa")
                                 val donaturNama = dataDonatur?.getString("tbldonatur_nama")
+                                val donaturAlamat = dataDonatur?.getString("tbldonatur_alamat")
+                                val donaturProfesi = dataDonatur?.getString("tbldonatur_pekerjaan")
                                 val donaturEmail = dataDonatur?.getString("tbldonatur_email")
                                 var donaturKodeNegara = dataDonatur?.getString("kode_negara_no_hp")
                                 val donaturPanggilan = "Kak"
@@ -143,6 +145,8 @@ class LoginActivity : AppCompatActivity() {
                                     sharedPreference.save("TOKEN", token)
                                     sharedPreference.save("penggunaWA", donaturWa )
                                     sharedPreference.save("penggunaNAMA", donaturNama )
+                                    sharedPreference.save("penggunaAlamat", donaturAlamat )
+                                    sharedPreference.save("penggunaProfesi", donaturProfesi )
                                     sharedPreference.save("penggunaEmail", donaturEmail )
                                     if (donaturKodeNegara == "null") donaturKodeNegara = "+62"
                                     sharedPreference.save("penggunaKodeNegara", donaturKodeNegara )

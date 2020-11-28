@@ -368,8 +368,8 @@
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/kontenLaporanDetailB"
-                        android:visibility="gone"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
                         android:layout_marginTop="10dp">
@@ -379,25 +379,22 @@
                             android:layout_width="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="40dp"
                             android:layout_height="wrap_content">
                         </WebView>
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnLaporanProgram"
-                            android:layout_gravity="center"
-                            android:layout_width="120dp"
-                            android:layout_height="45dp"
-                            android:text="Lihat Semua"
-                            android:textSize="10sp"
-                            app:cornerRadius="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
-                            app:backgroundTint="@color/colorInputStrokeBlue"
-                            app:layout_constraintBottom_toBottomOf="@id/layoutKeteranganDetail"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            />
                     </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLaporanProgram"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_width="120dp"
+                    android:layout_height="45dp"
+                    android:text="Lihat Semua"
+                    android:textSize="10sp"
+                    app:cornerRadius="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:backgroundTint="@color/colorInputStrokeBlue"
+                    tools:ignore="SmallSp" />
 
             </LinearLayout>
 

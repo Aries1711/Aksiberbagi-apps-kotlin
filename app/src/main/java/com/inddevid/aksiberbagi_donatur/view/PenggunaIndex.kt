@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.inddevid.aksiberbagi_donatur.R
@@ -91,10 +88,18 @@ class PenggunaIndex : Fragment() {
             }
         }
 
+        val layoutProfil : LinearLayout = view.findViewById(R.id.pengaturanProfil)
+        layoutProfil.setOnClickListener{
+            startActivity(Intent(requireContext(), ProfilActivity::class.java))
+        }
+
         val penggunaNamaValue = sharedPreference.getValueString("penggunaNAMA")
+        val penggunaTotalDonasiValue = sharedPreference.getValueString("penggunaTotalDonasi")
 
         val penggunaText : TextView = view.findViewById(R.id.penggunaNamaText)
         penggunaText.text = penggunaNamaValue
+        val totalDonasiText : TextView = view.findViewById(R.id.penggunaTotalDonasiText)
+        totalDonasiText.text = "Rp $penggunaTotalDonasiValue"
 
         return view
     }

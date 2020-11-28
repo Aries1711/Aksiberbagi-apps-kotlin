@@ -180,6 +180,7 @@ class DonasiSayaIndex : Fragment() {
         tokenValue: String?,
         view: View
     ){
+        val sharedPreference: Preferences = Preferences(requireContext())
         ApiService.getDonasiSaya(tokenValue).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val headerWeek = response?.getString("header_week")
@@ -224,6 +225,7 @@ class DonasiSayaIndex : Fragment() {
                 totalJumlahDonasiText.text = "Dari $totalJumlahDonasi X donasi"
 
                 val totalNominalDonasi = response?.getString("total_donasi_nominal")
+                sharedPreference.save("penggunaTotalDonasi", totalNominalDonasi)
                 var totalNominalDonasiText = view.findViewById<TextView>(R.id.totalNominalDonasiText)
                 totalNominalDonasiText.text = "Rp. $totalNominalDonasi"
                 // get 5 donasi terakhir user

@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".view.ProfilActivity"
+            android:theme="@style/AppMaterial"/>
+        <activity
             android:name=".view.DonasiDetailActivity"
             android:theme="@style/AppMaterial" />
         <activity
