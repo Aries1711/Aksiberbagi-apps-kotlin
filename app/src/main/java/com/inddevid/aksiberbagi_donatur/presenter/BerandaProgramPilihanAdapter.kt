@@ -59,6 +59,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
             sharedPreference.save("tanggalMulai", model.dateStart)
             sharedPreference.save("progressProgram", model.progress)
             sharedPreference.save("targetProgram", model.targetNominal)
+            sharedPreference.save("navigasi", model.poinAkses)
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
         }

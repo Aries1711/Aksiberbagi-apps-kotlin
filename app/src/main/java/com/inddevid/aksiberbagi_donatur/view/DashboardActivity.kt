@@ -41,6 +41,12 @@ class DashboardActivity : AppCompatActivity() {
             navController.navigate(R.id.donasiSayaIndex)
             bottomNav.menu.getItem(3).isChecked = true
         }
+        //retrieve intent from DonasiRutinActivity
+        var valueFavorit: String? = intent.getStringExtra("favoritAktif")
+        if (valueFavorit == "true"){
+            navController.navigate(R.id.favoritIndex)
+            bottomNav.menu.getItem(1).isChecked = true
+        }
 
         //retrieve intent from DonasiRutinActivity
         var valueDonasiRutin: String? = intent.getStringExtra("berandaIndex")

@@ -175,7 +175,8 @@ class FavoritIndex : Fragment() {
                             }else{
                                 targetDonasi = dataProgram?.getString("target_nominal")
                             }
-                            arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi))
+                            val nav = "Favorit"
+                            arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi,nav))
                             val myAdapterAll = ProgramFavoritAdapter(arrayProgramAll,requireContext())
                             val recyclerFavorit = view.findViewById<RecyclerView>(R.id.recyclerProgramFavorit)
                             recyclerFavorit.layoutManager = LinearLayoutManager(requireContext())

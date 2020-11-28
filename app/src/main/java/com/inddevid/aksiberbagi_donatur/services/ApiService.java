@@ -112,6 +112,12 @@ public class ApiService {
         return post(endpoint);
     }
 
+    public static ANRequest postLogout(String data){
+        token = data ;
+        String endpoint = baseUrl("autentikasi/keluar");
+        return post(endpoint);
+    }
+
     public static ANRequest getLelang(String data){
         token = data;
         String endpoint = baseUrl("flashsale/hari-ini");

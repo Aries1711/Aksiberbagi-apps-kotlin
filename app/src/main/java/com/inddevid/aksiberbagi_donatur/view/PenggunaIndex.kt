@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.PenggunaSettings
 import com.inddevid.aksiberbagi_donatur.presenter.CustomDialogFragment
 import com.inddevid.aksiberbagi_donatur.presenter.PenggunaSettingsAdapter
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +51,12 @@ class PenggunaIndex : Fragment() {
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_pengguna_index, container, false)
+        val sharedPreference: Preferences = Preferences(requireContext())
+        val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
+        toolbar.inflateMenu(R.menu.pengguna_upbar_menu)
+        toolbar.title = "Akun"
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+
         var listView: ListView = view.findViewById(R.id.listViewPengguna)
         listView.divider = this.resources.getDrawable(R.drawable.listview_divider_transparent)
         var list = mutableListOf<PenggunaSettings>()
@@ -61,7 +69,7 @@ class PenggunaIndex : Fragment() {
 
         listView.adapter = PenggunaSettingsAdapter(requireActivity(), R.layout.pengguna_settings_row1,list)
 
-        listView.setOnItemClickListener{ _:AdapterView<*>, _:View, position:Int, _:Long ->
+        listView.setOnItemClickListener{ _: AdapterView<*>, _:View, position:Int, _:Long ->
             if (position == 0){
                 startActivity(Intent(requireActivity(),PengaturanActivity::class.java))
             }
@@ -83,30 +91,13 @@ class PenggunaIndex : Fragment() {
             }
         }
 
-        val toolbar: Toolbar = view.findViewById(R.id.upAppbar)
-        toolbar.inflateMenu(R.menu.pengguna_upbar_menu)
-        toolbar.title = "Akun"
-        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        val penggunaNamaValue = sharedPreference.getValueString("penggunaNAMA")
+
+        val penggunaText : TextView = view.findViewById(R.id.penggunaNamaText)
+        penggunaText.text = penggunaNamaValue
+
         return view
     }
-
-//    private fun onBackPressed() {
-//        Toast.makeText(
-//            requireContext(),
-//            "Tekan Sekali",
-//            Toast.LENGTH_SHORT
-//        ).show()
-//        if (backButtonCount >= 1) {
-//            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-//        } else {
-//            Toast.makeText(
-//                requireContext(),
-//                "Press the back button once again to close the application.",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            backButtonCount++
-//        }
-//    }
 
     companion object {
         /**

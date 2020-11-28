@@ -772,7 +772,21 @@ class ProgramDetailActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-//        startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
+        val sharedPreference: Preferences = Preferences(this)
+        val navigasi: String? = sharedPreference.getValueString("navigasi")
+        if(navigasi == "Beranda"){
+            startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
+        }else if(navigasi == "ProgramAll"){
+            startActivity(Intent(this@ProgramDetailActivity, ProgramAllActivity::class.java))
+        }else if(navigasi == "Favorit"){
+            val mIntent = Intent(this, DashboardActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("favoritAktif", "true" )
+            mIntent.putExtras(mBundle)
+            startActivity(mIntent)
+        }else{
+            startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
+        }
     }
 
 //                        val toast = Toast.makeText(

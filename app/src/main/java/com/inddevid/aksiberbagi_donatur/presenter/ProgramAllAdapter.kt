@@ -62,6 +62,7 @@ class ProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val contex
             sharedPreference.save("tanggalMulai", model.startFund)
             sharedPreference.save("progressProgram", model.progresProgram)
             sharedPreference.save("targetProgram", model.targetNominal)
+            sharedPreference.save("navigasi", model.poinAkses)
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
         }

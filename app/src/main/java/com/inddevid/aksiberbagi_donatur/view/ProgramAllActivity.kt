@@ -142,7 +142,8 @@ class ProgramAllActivity : AppCompatActivity() {
                         }else{
                             targetDonasi = item?.getString("target_nominal")
                         }
-                        arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi))
+                        val nav = "ProgramAll"
+                        arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav))
                         val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@ProgramAllActivity)
                         view.layoutManager = LinearLayoutManager(this@ProgramAllActivity)
                         view.adapter = myAdapterAll

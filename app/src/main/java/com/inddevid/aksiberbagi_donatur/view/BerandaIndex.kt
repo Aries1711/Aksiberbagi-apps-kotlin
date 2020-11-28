@@ -330,6 +330,7 @@ class BerandaIndex : Fragment() {
                         } else {
                             targetDonasi = program?.getString("target_nominal")
                         }
+                        val nav = "Beranda"
                         arrayRekomendasi.add(
                             BerandaProgramPilihan(
                                 id,
@@ -339,7 +340,8 @@ class BerandaIndex : Fragment() {
                                 sisahari,
                                 tanggalMulai,
                                 progressProgram,
-                                targetDonasi
+                                targetDonasi,
+                                nav
                             )
                         )
                     }
@@ -428,6 +430,7 @@ class BerandaIndex : Fragment() {
                         } else {
                             targetDonasi = item?.getString("target_nominal")
                         }
+                        val nav = "Beranda"
                         arrayProgram.add(
                             BerandaProgramAll(
                                 idProgram,
@@ -438,7 +441,8 @@ class BerandaIndex : Fragment() {
                                 sisaHari,
                                 startProgram,
                                 progressProgram,
-                                targetDonasi
+                                targetDonasi,
+                                nav
                             )
                         )
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram, requireActivity())
