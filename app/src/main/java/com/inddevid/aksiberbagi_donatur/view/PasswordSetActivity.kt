@@ -6,13 +6,14 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
@@ -43,10 +44,42 @@ class PasswordSetActivity : AppCompatActivity() {
 
         val submitPassword: Button = findViewById(R.id.passwordSubmit)
         submitPassword.setOnClickListener {
-            getKoneksi(retrivedToken, this)
+            validatePassword(retrivedToken,this)
         }
 
 
+    }
+
+    private fun validatePassword(tokenValue: String?, context: PasswordSetActivity){
+        //deklarasi value password
+        val layoutPasswordInputA : TextInputLayout = context.findViewById(R.id.passwordConfirmation1)
+        val inputPasswordA: TextInputEditText = context.findViewById(R.id.passwordA)
+        val layoutPasswordInputB : TextInputLayout = context.findViewById(R.id.passwordConfirmation2)
+        val inputPasswordB: TextInputEditText = context.findViewById(R.id.passwordB)
+
+        val passwordValueA = inputPasswordA.text.toString()
+        val passwordValueB = inputPasswordB.text.toString()
+
+
+        if(passwordValueA != "" && passwordValueB != ""){
+            val countChar = passwordValueA.length
+            if (countChar > 5){
+                if(passwordValueA == passwordValueB){
+                    getKoneksi(tokenValue, context)
+                }else{
+                    layoutPasswordInputB.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+                    layoutPasswordInputB.helperText = "Harap masukkan konfirmasi password yang benar"
+                }
+            }else{
+                layoutPasswordInputA.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+                layoutPasswordInputA.helperText = "Password minimal terdiri dari 6 karakter"
+            }
+        }else{
+            layoutPasswordInputA.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+            layoutPasswordInputA.helperText = "Password baru tidak boleh kosong"
+            layoutPasswordInputB.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
+            layoutPasswordInputB.helperText = "Password konfirmasi tidak boleh kosong"
+        }
     }
 
     private fun getKoneksi(tokenValue: String?, context: PasswordSetActivity){
@@ -58,8 +91,6 @@ class PasswordSetActivity : AppCompatActivity() {
             override fun onError(anError: ANError?) {
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
                 if (apiError?.message == "Token expired"){
-                    val donatur = context.findViewById<RecyclerView>(R.id.totalDonasiRecycler)
-                    val jumlahDonatur = context.findViewById<TextView>(R.id.jumlahDonasiTextProgram)
                     refreshToken(tokenValue, context)
                     val toast = Toast.makeText(this@PasswordSetActivity,"Cobalah beberapa saat lagi",
                         Toast.LENGTH_LONG)
