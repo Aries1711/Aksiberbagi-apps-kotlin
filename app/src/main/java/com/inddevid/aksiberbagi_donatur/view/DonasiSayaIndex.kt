@@ -228,35 +228,73 @@ class DonasiSayaIndex : Fragment() {
                 sharedPreference.save("penggunaTotalDonasi", totalNominalDonasi)
                 var totalNominalDonasiText = view.findViewById<TextView>(R.id.totalNominalDonasiText)
                 totalNominalDonasiText.text = "Rp. $totalNominalDonasi"
-                // get 5 donasi terakhir user
-                val invoiceDonasi = response?.getJSONArray("data")
-                if (invoiceDonasi?.length()!! > 0){
-                    for(i in 0 until 5){
-                        val item = invoiceDonasi.getJSONObject(i)
-                        val program = item?.getJSONObject("program")
-                        val judulProgram = program?.getString("tblprogram_judul")
-                        val bank = item?.getJSONObject("bank")
-                        val namaBank = bank?.getString("tblbank_nama")
-                        val idDonasi = item?.getString("tbldonasi_id")
-                        val nominaldonasi = item?.getString("tbldonasi_nominal")
-                        val waktuDonasi = item?.getString("tanggal_donasi")
-                        val jenisDonasi = item?.getString("jenis_donasi")
-                        val donasiStatus = item?.getString("tbldonasi_status")
-                        val gambarProgram = program?.getString("tblprogram_file")
-                        arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idDonasi, jenisDonasi))
-                    }
-                    //inflate the recycler for cardview donasi saya
-                    val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
-                    var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
-                    mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
-                    mainMenuB.adapter = myAdapterB
 
+                if(response?.getString("message").equals("Donasi saya tidak ditemukan")){
+                    val btnLihatSemua : Button = view.findViewById(R.id.lihatSemua)
                     val shimmerFrame : ShimmerFrameLayout = view.findViewById(R.id.shimmerDonasiSaya)
                     val layoutUtama : NestedScrollView = view.findViewById(R.id.layoutUtama)
                     shimmerFrame.stopShimmer()
+                    btnLihatSemua.visibility = View.GONE
                     shimmerFrame.visibility = View.GONE
                     layoutUtama.visibility = View.VISIBLE
+                }else{
+                    // get 5 donasi terakhir user
+                    val invoiceDonasi = response?.getJSONArray("data")
+                    if (invoiceDonasi?.length()!! > 4){
+                        for(i in 0 until 5){
+                            val item = invoiceDonasi.getJSONObject(i)
+                            val program = item?.getJSONObject("program")
+                            val judulProgram = program?.getString("tblprogram_judul")
+                            val bank = item?.getJSONObject("bank")
+                            val namaBank = bank?.getString("tblbank_nama")
+                            val idDonasi = item?.getString("tbldonasi_id")
+                            val nominaldonasi = item?.getString("tbldonasi_nominal")
+                            val waktuDonasi = item?.getString("tanggal_donasi")
+                            val jenisDonasi = item?.getString("jenis_donasi")
+                            val donasiStatus = item?.getString("tbldonasi_status")
+                            val gambarProgram = program?.getString("tblprogram_file")
+                            arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idDonasi, jenisDonasi))
+                        }
+                        //inflate the recycler for cardview donasi saya
+                        val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
+                        var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
+                        mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
+                        mainMenuB.adapter = myAdapterB
 
+                        val shimmerFrame : ShimmerFrameLayout = view.findViewById(R.id.shimmerDonasiSaya)
+                        val layoutUtama : NestedScrollView = view.findViewById(R.id.layoutUtama)
+                        shimmerFrame.stopShimmer()
+                        shimmerFrame.visibility = View.GONE
+                        layoutUtama.visibility = View.VISIBLE
+
+                    }else if (invoiceDonasi?.length()!! > 0){
+                        // get donasi terakhir user seadanya
+                        for(i in 0 until invoiceDonasi?.length() ){
+                            val item = invoiceDonasi.getJSONObject(i)
+                            val program = item?.getJSONObject("program")
+                            val judulProgram = program?.getString("tblprogram_judul")
+                            val bank = item?.getJSONObject("bank")
+                            val namaBank = bank?.getString("tblbank_nama")
+                            val idDonasi = item?.getString("tbldonasi_id")
+                            val nominaldonasi = item?.getString("tbldonasi_nominal")
+                            val waktuDonasi = item?.getString("tanggal_donasi")
+                            val jenisDonasi = item?.getString("jenis_donasi")
+                            val donasiStatus = item?.getString("tbldonasi_status")
+                            val gambarProgram = program?.getString("tblprogram_file")
+                            arrayDonasi.add(CardDonasiSaya(judulProgram,namaBank,nominaldonasi,waktuDonasi,donasiStatus,gambarProgram, idDonasi, jenisDonasi))
+                        }
+                        //inflate the recycler for cardview donasi saya
+                        val myAdapterB = RecyclerDonasiSayaAdapter(arrayDonasi, requireActivity())
+                        var mainMenuB = view.findViewById(R.id.recyclerDonasiSaya) as RecyclerView
+                        mainMenuB.layoutManager = LinearLayoutManager(requireActivity())
+                        mainMenuB.adapter = myAdapterB
+
+                        val shimmerFrame : ShimmerFrameLayout = view.findViewById(R.id.shimmerDonasiSaya)
+                        val layoutUtama : NestedScrollView = view.findViewById(R.id.layoutUtama)
+                        shimmerFrame.stopShimmer()
+                        shimmerFrame.visibility = View.GONE
+                        layoutUtama.visibility = View.VISIBLE
+                    }
                 }
 
             }

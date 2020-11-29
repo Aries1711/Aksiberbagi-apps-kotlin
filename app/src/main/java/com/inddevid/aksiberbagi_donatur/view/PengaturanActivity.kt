@@ -3,6 +3,7 @@ package com.inddevid.aksiberbagi_donatur.view
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Switch
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.inddevid.aksiberbagi_donatur.R
@@ -41,6 +42,17 @@ class PengaturanActivity : AppCompatActivity() {
                 sharedPreference.save("ANONIM", "F")
             }
         }
+
+        val penggunaWAText : TextView = findViewById(R.id.penggunaWAText)
+        val penggunaWa = sharedPreference.getValueString("penggunaWA")
+        penggunaWAText.text = penggunaWa
+
+        val ubahPasswordBtn : TextView = findViewById(R.id.penggunaUbahPasswordBtn)
+        ubahPasswordBtn.setOnClickListener {
+            startActivity(Intent(this ,PasswordSetActivity::class.java))
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

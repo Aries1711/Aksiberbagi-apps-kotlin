@@ -88,6 +88,11 @@ class PenggunaIndex : Fragment() {
             }
         }
 
+
+//        val penggunaWa = sharedPreference.getValueString("penggunaWA")
+//        val toast = Toast.makeText(requireContext(), "NO WA $penggunaWa",Toast.LENGTH_LONG)
+//        toast.show()
+
         val layoutProfil : LinearLayout = view.findViewById(R.id.pengaturanProfil)
         layoutProfil.setOnClickListener{
             startActivity(Intent(requireContext(), ProfilActivity::class.java))
@@ -100,6 +105,7 @@ class PenggunaIndex : Fragment() {
         penggunaText.text = penggunaNamaValue
         val totalDonasiText : TextView = view.findViewById(R.id.penggunaTotalDonasiText)
         totalDonasiText.text = "Rp $penggunaTotalDonasiValue"
+
 
         return view
     }
