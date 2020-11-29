@@ -35,7 +35,12 @@ class SearchActivity : AppCompatActivity() {
 
         fieldSearch.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
-                show(btnClearSearch)
+                val query = fieldSearch.text.toString()
+                if(query != ""){
+                    show(btnClearSearch)
+                }else{
+                    hidden(btnClearSearch)
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -63,6 +68,8 @@ class SearchActivity : AppCompatActivity() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
+
+    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
     fun EditText.clear() {
         text.clear()

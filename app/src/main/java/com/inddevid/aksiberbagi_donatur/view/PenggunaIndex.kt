@@ -1,12 +1,17 @@
 package com.inddevid.aksiberbagi_donatur.view
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.inddevid.aksiberbagi_donatur.R
@@ -80,7 +85,19 @@ class PenggunaIndex : Fragment() {
                 startActivity(Intent(requireActivity(),SyaratKetentuanActivity::class.java))
             }
             if (position == 4){
-                Toast.makeText(requireActivity(), "Rating Kami", Toast.LENGTH_LONG).show()
+                val packageName = "com.inddevid.aksiberbagi_donatur"
+                val uri: Uri = Uri.parse("market://details?id=$packageName")
+                val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                try {
+                    startActivity(goToMarket)
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://play.google.com/store/apps/details?id=$packageName")))
+                }
             }
             if (position == 5){
                 var dialog = CustomDialogFragment()

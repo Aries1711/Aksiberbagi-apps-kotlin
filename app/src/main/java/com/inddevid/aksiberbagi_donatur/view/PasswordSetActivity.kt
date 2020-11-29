@@ -176,13 +176,41 @@ class PasswordSetActivity : AppCompatActivity() {
 
     private fun postResetPassword(tokenValue: String?, context: PasswordSetActivity){
         val body = JSONObject()
+        val sharedPreference: Preferences = Preferences(this)
+        val penggunaWA: String? = sharedPreference.getValueString("penggunaWA")
+
+        //deklarasi value password from view
+        val inputPasswordA: TextInputEditText = context.findViewById(R.id.passwordA)
+        val inputPasswordB: TextInputEditText = context.findViewById(R.id.passwordB)
+
+        body.put("nomor_telepon", penggunaWA)
+        body.put("password", inputPasswordA.text.toString())
+        body.put("konfirmasi_password", inputPasswordB.text.toString())
         ApiService.postPasswordReset(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
-                TODO("Not yet implemented")
+                if(response?.getString("message").equals("Password berhasil direset")){
+                    val toast = Toast.makeText(
+                        this@PasswordSetActivity,
+                        "Password berhasil di reset",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    Looper.myLooper()?.let {
+                        Handler(it).postDelayed({
+                            val intent = Intent(
+                                this@PasswordSetActivity,
+                                PengaturanActivity::class.java
+                            )
+                            startActivity(intent)
+                        }, 3000)
+                    }
+                }
             }
 
             override fun onError(anError: ANError?) {
-                TODO("Not yet implemented")
+                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
             }
 
         })

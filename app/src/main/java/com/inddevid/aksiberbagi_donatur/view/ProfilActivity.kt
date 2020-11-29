@@ -2,11 +2,13 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.presenter.CustomDialogBatal
 import com.inddevid.aksiberbagi_donatur.services.Preferences
@@ -34,25 +36,55 @@ class ProfilActivity : AppCompatActivity() {
         val penggunaNamaText : TextView = findViewById(R.id.profilNama)
         val namaValue: String? = sharedPreference.getValueString("penggunaNAMA")
         penggunaNamaText.text = namaValue
+
             //Alamat donatur
         val penggunaAlamat : TextView = findViewById(R.id.profilAlamat)
         val alamatValue: String? = sharedPreference.getValueString("penggunaAlamat")
+        val alamatStatus: ImageView = findViewById(R.id.alamatStatus)
         if(alamatValue == "" || alamatValue == "null"){
             penggunaAlamat.text = "--"
+            alamatStatus.visibility = View.GONE
         }else{
             penggunaAlamat.text = alamatValue
         }
+
             //Email donatur
+        val penggunaEmail : TextView = findViewById(R.id.profilEmail)
+        val emailValue: String? = sharedPreference.getValueString("penggunaEmail")
+        val emailStatus: ImageView = findViewById(R.id.emailStatus)
+        if(emailValue == "" || emailValue == "null"){
+            penggunaEmail.text = "--"
+            emailStatus.visibility = View.GONE
+        }else{
+            penggunaEmail.text = emailValue
+        }
+            //Profesi donatur
         val penggunaProfesi : TextView = findViewById(R.id.profilProfesi)
         val profesiValue: String? = sharedPreference.getValueString("penggunaProfesi")
+        val profesiStatus: ImageView = findViewById(R.id.profesiStatus)
         if(profesiValue == "" || profesiValue == "null"){
             penggunaProfesi.text = "--"
+            profesiStatus.visibility = View.GONE
         }else{
             penggunaProfesi.text = profesiValue
         }
 
         //deklarasi layoutUbah
         val layoutUbah : ConstraintLayout = findViewById(R.id.layoutUbah)
+        val inputNama: TextInputEditText = findViewById(R.id.namaLengkapInput)
+        val inputEmail: TextInputEditText = findViewById(R.id.emailInput)
+        val inputAlamat: TextInputEditText = findViewById(R.id.alamatInput)
+
+        if(namaValue != "" || namaValue != "null"){
+            inputNama.text = namaValue?.toEditable()
+        }
+        if(emailValue != "" || emailValue != "null"){
+            inputEmail.text = emailValue?.toEditable()
+        }
+        if (alamatValue != "" || alamatValue != "null"){
+            inputAlamat.text = alamatValue?.toEditable()
+        }
+
         val profesiItems = listOf("Pilih Profesi","Dokter", "Guru", "Wiraswasta", "PNS", "Lainnya")
         val adapterProfesi = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, profesiItems)
         val spinnerProfesi : Spinner = findViewById(R.id.spinerProfesiInput)
@@ -99,4 +131,6 @@ class ProfilActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 }

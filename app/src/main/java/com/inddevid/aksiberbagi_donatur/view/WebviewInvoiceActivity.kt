@@ -57,6 +57,9 @@ class WebviewInvoiceActivity : AppCompatActivity() {
                 gone(view)
                 val uri = Uri.parse(failingUrl)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
                 try {
                     startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
