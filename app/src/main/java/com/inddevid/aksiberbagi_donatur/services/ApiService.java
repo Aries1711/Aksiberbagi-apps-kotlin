@@ -165,6 +165,12 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getProgramWord(String data, String word){
+        token = data;
+        String endpoint = baseUrl("program/judul/"+ word);
+        return get(endpoint);
+    }
+
     public static ANRequest getDonasiDetail(String data, String id){
         token = data;
         String endpoint = baseUrl("donasi/detail/"+ id);

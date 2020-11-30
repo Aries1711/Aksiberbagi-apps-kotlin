@@ -26,6 +26,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
         supportActionBar?.hide()
+
         val backButton: Button = findViewById(R.id.closeDaftar)
         backButton.setOnClickListener{ startActivity(
             Intent(
@@ -40,6 +41,11 @@ class SignUpActivity : AppCompatActivity() {
                 LoginActivity::class.java
             )
         )}
+
+        val syaratBtn : Button = findViewById(R.id.syaratBtn)
+        syaratBtn.setOnClickListener {
+            startActivity(Intent(this,SyaratKetentuanActivity::class.java))
+        }
 
         //variabel submit signup
         var phoneInput: TextInputEditText = findViewById(R.id.phoneInput)

@@ -122,7 +122,6 @@ class ProgramAllActivity : AppCompatActivity() {
         ApiService.getAllProgram(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val jsonObject =response?.getJSONObject("data")
-                val page = jsonObject?.getString("current_page")
                 val jsonArray =jsonObject?.getJSONArray("data")
                 if (jsonArray?.length()!! > 0){
                     for(i in 0 until jsonArray.length()){

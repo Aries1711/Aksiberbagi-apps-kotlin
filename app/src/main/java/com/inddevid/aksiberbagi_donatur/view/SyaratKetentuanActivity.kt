@@ -9,21 +9,29 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.Preferences
 
 class SyaratKetentuanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.syarat_ketentuan_activity)
 
+        val sharedPreference: Preferences = Preferences(this)
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         val toolbar: Toolbar = findViewById(R.id.upAppbarSyaratKetentuan)
         toolbar.title = "Syarat dan Ketentuan Aksiberbagi.com"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         toolbar.setNavigationOnClickListener{
-            val mIntent = Intent(this, DashboardActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("penggunaAktif", "true")
-            mIntent.putExtras(mBundle)
-            startActivity(mIntent)}
+            if (retrivedToken == "" || retrivedToken == "null"){
+                startActivity(Intent(this, SignUpActivity::class.java))
+            }else{
+                val mIntent = Intent(this, DashboardActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("penggunaAktif", "true")
+                mIntent.putExtras(mBundle)
+                startActivity(mIntent)
+            }
+        }
 
         val btnRelawan: FrameLayout = findViewById(R.id.relawanSyarat)
         var textRelawan: TextView = findViewById(R.id.relawanSyaratText)
