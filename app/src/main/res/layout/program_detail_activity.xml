@@ -494,25 +494,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="80dp"
                     android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/shareWhatsapp"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_weight=".5"
-                        android:backgroundTint="#3ddb4b"
-                        android:fontFamily="@font/actor"
-                        android:minWidth="250dp"
-                        android:minHeight="60dp"
-                        android:text="Share"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="10dp" />
-
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/shareFacebook"
                         android:layout_width="100dp"
@@ -520,8 +501,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_weight=".5"
-                        android:backgroundTint="#1f62bf"
+                        android:layout_weight="1"
+                        android:backgroundTint="#03A9F4"
                         android:fontFamily="@font/actor"
                         android:minWidth="250dp"
                         android:minHeight="60dp"

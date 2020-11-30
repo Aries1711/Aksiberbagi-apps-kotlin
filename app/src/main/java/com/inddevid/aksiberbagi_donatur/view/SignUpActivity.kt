@@ -259,5 +259,10 @@ class SignUpActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, IntroActivity::class.java))
+    }
+
 }
 

@@ -428,6 +428,23 @@ class ProgramDetailActivity : AppCompatActivity() {
             }
         }
 
+//        deklarasi tombol share ke facebook dan whatsapp
+        val btnShareFacebook : Button = findViewById(R.id.shareFacebook)
+        btnShareFacebook.setOnClickListener {
+            val shareIntent = Intent()
+            val pesan = "Mari bersedekah melalui platform aksiberbagi, dengan aksiberbagi bersedekah jadi lebih mudah."
+            val url = "https://aksiberbagi.com/wujudkanpembangunanrumahtahfidz"
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, pesan)
+            shareIntent.putExtra(Intent.EXTRA_TEXT, url)
+            shareIntent.type = "text/plain"
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+            startActivity(Intent.createChooser(shareIntent, "Bagikan kemulian bersedekah"))
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

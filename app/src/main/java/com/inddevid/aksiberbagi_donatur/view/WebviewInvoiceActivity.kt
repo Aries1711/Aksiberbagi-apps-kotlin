@@ -17,6 +17,7 @@ import com.inddevid.aksiberbagi_donatur.services.Preferences
 
 class WebviewInvoiceActivity : AppCompatActivity() {
     private val TAG = "Program Detail"
+    public val  USER_AGENT = "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class WebviewInvoiceActivity : AppCompatActivity() {
         val urlPayment:String = sharedPreference.getValueString("invoiceUrl")!!
 
         val webview: WebView = findViewById(R.id.eWalletURL)
+        webview.settings.userAgentString = USER_AGENT
         webview.settings.javaScriptEnabled = true
         webview.settings.domStorageEnabled = true;
         webview.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY

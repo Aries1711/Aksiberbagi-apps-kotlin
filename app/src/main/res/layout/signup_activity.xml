@@ -74,6 +74,7 @@
                     android:layout_height="50dp"
                     android:lines="1"
                     android:maxLines="1"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
@@ -103,6 +104,7 @@
                     android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
                     android:textSize="18sp" />
@@ -133,6 +135,7 @@
                     android:inputType="textPassword"
                     android:lines="1"
                     android:maxLines="1"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:singleLine="true"
                     android:textColor="@color/colorIndicatorPrimary"
                     android:textSize="18sp" />
@@ -164,6 +167,7 @@
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:textColor="@color/colorIndicatorPrimary"
                     android:textSize="18sp" />
 
