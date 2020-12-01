@@ -68,6 +68,7 @@ class SearchActivity : AppCompatActivity() {
                     layoutViewFalse.visibility = View.GONE
                     val layoutView: LinearLayout = findViewById(R.id.layoutSearchTrue)
                     layoutView.visibility = View.GONE
+                    arrayProgramSearch.clear()
                     getKoneksi(retrivedToken, this@SearchActivity)
                 }else{
                     val shimmer: ShimmerFrameLayout = findViewById(R.id.shimmerProgramSearch)
@@ -97,6 +98,17 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onError(anError: ANError?) {
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        this@SearchActivity,
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+                    refreshToken(tokenValue,context)
+                }
                 if (apiError?.message == "Token expired"){
                     refreshToken(tokenValue, context)
                     val toast = Toast.makeText(this@SearchActivity,"Cobalah beberapa saat lagi",

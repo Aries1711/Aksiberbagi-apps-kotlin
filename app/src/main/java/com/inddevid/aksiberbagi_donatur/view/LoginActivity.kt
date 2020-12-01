@@ -175,6 +175,15 @@ class LoginActivity : AppCompatActivity() {
                         val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
                         if(anError?.errorDetail!!.equals("connectionError")){
                             val toast = Toast.makeText(
+                                this@LoginActivity,
+                                "Ada masalah dengan Koneksi Internet Anda",
+                                Toast.LENGTH_LONG
+                            )
+                            toast.show()
+                            return
+                        }
+                        if(anError?.errorDetail!!.equals("connectionError")){
+                            val toast = Toast.makeText(
                             this@LoginActivity,
                             "Ada masalah dengan Koneksi Internet Anda",
                             Toast.LENGTH_LONG

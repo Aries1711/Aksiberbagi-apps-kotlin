@@ -26,6 +26,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.*
 import com.inddevid.aksiberbagi_donatur.presenter.*
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
@@ -285,7 +286,18 @@ class BerandaIndex : Fragment() {
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue, view)
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        requireContext(),
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+                    refreshToken(tokenValue, view)
+                }
             }
 
         })

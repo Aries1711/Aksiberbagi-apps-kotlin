@@ -89,7 +89,19 @@ class FavoritIndex : Fragment() {
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue,view)
+
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        requireContext(),
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+                    refreshToken(tokenValue,view)
+                }
             }
 
         })

@@ -606,7 +606,18 @@ class ProgramDetailActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        this@ProgramDetailActivity,
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
+                }
             }
 
         })

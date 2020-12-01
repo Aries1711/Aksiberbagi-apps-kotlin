@@ -65,6 +65,7 @@ class SemuaDonasiSayaActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     )
                     toast.show()
+                    return
                 }else{
                     refreshToken(tokenValue,context)
                 }

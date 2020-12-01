@@ -17,6 +17,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ModelPembayaran
 import com.inddevid.aksiberbagi_donatur.presenter.PilihPembayaranAdapter
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
@@ -93,7 +94,18 @@ class PilihPembayaranActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue,context,nominal, spinner)
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        this@PilihPembayaranActivity,
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+                    refreshToken(tokenValue,context,nominal, spinner)
+                }
             }
 
         })

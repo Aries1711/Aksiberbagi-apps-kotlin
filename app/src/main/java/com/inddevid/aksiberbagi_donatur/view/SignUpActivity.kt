@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.androidnetworking.error.ANError
@@ -230,6 +231,15 @@ class SignUpActivity : AppCompatActivity() {
 
                     override fun onError(anError: ANError?) {
                         val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                        if(anError?.errorDetail!!.equals("connectionError")){
+                            val toast = Toast.makeText(
+                                this@SignUpActivity,
+                                "Ada masalah dengan Koneksi Internet Anda",
+                                Toast.LENGTH_LONG
+                            )
+                            toast.show()
+                            return
+                        }
                         if (apiError?.message == "Nomor telepon telah terdaftar") {
                             phoneLayout.requestFocus()
                             phoneLayout.boxStrokeColor = ContextCompat.getColor(

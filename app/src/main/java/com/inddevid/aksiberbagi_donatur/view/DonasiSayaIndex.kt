@@ -97,7 +97,17 @@ class DonasiSayaIndex : Fragment() {
             }
 
             override fun onError(anError: ANError?) {
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        requireContext(),
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
                 refreshToken(tokenValue,view)
+                }
             }
 
         })

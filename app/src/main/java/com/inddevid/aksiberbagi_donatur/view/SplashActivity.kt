@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
@@ -101,11 +102,23 @@ class SplashActivity : AppCompatActivity() {
                     }
                 }
                 override fun onError(anError: ANError?) {
-                    Looper.myLooper()?.let {
-                        Handler(it).postDelayed({
-                            val intent = Intent(this@SplashActivity, IntroActivity::class.java)
-                            startActivity(intent)
-                        }, 2500)
+
+                    val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                    if(anError?.errorDetail!!.equals("connectionError")){
+                        val toast = Toast.makeText(
+                            this@SplashActivity,
+                            "Ada masalah dengan Koneksi Internet Anda",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                        return
+                    }else{
+                        Looper.myLooper()?.let {
+                            Handler(it).postDelayed({
+                                val intent = Intent(this@SplashActivity, IntroActivity::class.java)
+                                startActivity(intent)
+                            }, 2500)
+                        }
                     }
                     Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                     Log.d(TAG, "OnErrorCode " + anError?.errorCode)

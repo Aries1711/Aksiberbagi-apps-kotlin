@@ -17,6 +17,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.BerandaProgramAll
 import com.inddevid.aksiberbagi_donatur.presenter.ProgramAllAdapter
+import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import org.json.JSONException
@@ -51,7 +52,18 @@ class ProgramAllActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
-                refreshToken(tokenValue,view, context)
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        this@ProgramAllActivity,
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+                    refreshToken(tokenValue,view, context)
+                }
             }
 
         })
