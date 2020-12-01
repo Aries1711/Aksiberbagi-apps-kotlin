@@ -9,6 +9,7 @@ class BerandaProgramPilihan(
     var dateStart: String?,
     var progress: Int?,
     var targetNominal: String?,
-    var poinAkses: String?) {
+    var poinAkses: String?,
+    var link: String?) {
 
 }

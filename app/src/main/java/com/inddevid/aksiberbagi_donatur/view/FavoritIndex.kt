@@ -169,6 +169,7 @@ class FavoritIndex : Fragment() {
                             val idProgram = dataProgram?.getString("tblprogram_id")
                             val img = dataProgram?.getString("thumbnail_url")
                             val judul = dataProgram?.getString("tblprogram_judul")
+                            val link = dataProgram?.getString("tblprogram_namalink")
                             val volunter: String? = "Aksiberbagi.com"
                             val capaian = dataProgram?.getString("capaian_donasi")
                             val sisaHari = dataProgram?.getString("sisa_hari")
@@ -182,7 +183,7 @@ class FavoritIndex : Fragment() {
                                 targetDonasi = dataProgram?.getString("target_nominal")
                             }
                             val nav = "Favorit"
-                            arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi,nav))
+                            arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi,nav,link))
                             val myAdapterAll = ProgramFavoritAdapter(arrayProgramAll,requireContext())
                             val recyclerFavorit = view.findViewById<RecyclerView>(R.id.recyclerProgramFavorit)
                             recyclerFavorit.layoutManager = LinearLayoutManager(requireContext())

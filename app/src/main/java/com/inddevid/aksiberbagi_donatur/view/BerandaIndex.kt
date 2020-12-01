@@ -348,6 +348,7 @@ class BerandaIndex : Fragment() {
                         val program = item?.getJSONObject("program")
                         val id: String? = program?.getString("tblprogram_id")
                         val img: String? = program?.getString("thumbnail_url")
+                        val link: String? = program?.getString("tblprogram_namalink")
                         val judul: String? = program?.getString("tblprogram_judul")
                         val donasi: String? = program?.getString("capaian_donasi")
                         val sisahari: String? = program?.getString("sisa_hari")
@@ -372,7 +373,8 @@ class BerandaIndex : Fragment() {
                                 tanggalMulai,
                                 progressProgram,
                                 targetDonasi,
-                                nav
+                                nav,
+                                link
                             )
                         )
                     }
@@ -448,6 +450,7 @@ class BerandaIndex : Fragment() {
                         val idProgram = item?.getString("tblprogram_id")
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
+                        val link = item?.getString("tblprogram_namalink")
                         val volunter: String? = "Aksiberbagi.com"
                         val capaian = item?.getString("capaian_donasi")
                         val sisaHari = item?.getString("sisa_hari")
@@ -473,7 +476,8 @@ class BerandaIndex : Fragment() {
                                 startProgram,
                                 progressProgram,
                                 targetDonasi,
-                                nav
+                                nav,
+                                link
                             )
                         )
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram, requireActivity())

@@ -61,6 +61,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             val model = arrayList[position]
             sharedPreference.save("idProgram", model.id)
             sharedPreference.save("img", model.img)
+            sharedPreference.save("urlProgram", model.link)
             sharedPreference.save("judul", model.title)
             sharedPreference.save("capaian", model.fund.toString())
             sharedPreference.save("sisaHari", model.dayFund)

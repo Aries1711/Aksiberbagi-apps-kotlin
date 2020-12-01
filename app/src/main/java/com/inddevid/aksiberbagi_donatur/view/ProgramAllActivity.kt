@@ -129,6 +129,7 @@ class ProgramAllActivity : AppCompatActivity() {
                         val idProgram = item?.getString("tblprogram_id")
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
+                        val link = item?.getString("tblprogram_namalink")
                         val volunter: String? = "Aksiberbagi.com"
                         val capaian = item?.getString("capaian_donasi")
                         val sisaHari = item?.getString("sisa_hari")
@@ -142,7 +143,7 @@ class ProgramAllActivity : AppCompatActivity() {
                             targetDonasi = item?.getString("target_nominal")
                         }
                         val nav = "ProgramAll"
-                        arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav))
+                        arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav, link))
                         val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@ProgramAllActivity)
                         view.layoutManager = LinearLayoutManager(this@ProgramAllActivity)
                         view.adapter = myAdapterAll

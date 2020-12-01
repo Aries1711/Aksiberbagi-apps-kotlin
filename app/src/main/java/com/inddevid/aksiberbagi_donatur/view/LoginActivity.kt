@@ -37,6 +37,10 @@ class LoginActivity : AppCompatActivity() {
             )
         ) }
 
+        val btnForgotPassword : Button = findViewById(R.id.lupaAkun)
+        btnForgotPassword.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, LupaPasswordActivity::class.java))
+        }
 
         var phoneNumber: TextInputEditText = findViewById(R.id.phoneNumber)
         var layoutPhone: TextInputLayout = findViewById(R.id.namePhone)

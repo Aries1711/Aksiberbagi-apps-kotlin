@@ -10,6 +10,7 @@ class BerandaProgramAll(
     var startFund:String?,
     var progresProgram: Int?,
     var targetNominal: String?,
-    var poinAkses: String?) {
+    var poinAkses: String?,
+    var link: String?) {
 
 }

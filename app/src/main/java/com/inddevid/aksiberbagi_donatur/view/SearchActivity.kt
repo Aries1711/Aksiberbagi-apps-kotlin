@@ -196,6 +196,7 @@ class SearchActivity : AppCompatActivity() {
                             val idProgram = item?.getString("tblprogram_id")
                             val img = item?.getString("thumbnail_url")
                             val judul = item?.getString("tblprogram_judul")
+                            val link = item?.getString("tblprogram_namalink")
                             val volunter: String? = "Aksiberbagi.com"
                             val capaian = item?.getString("capaian_donasi")
                             val sisaHari = item?.getString("sisa_hari")
@@ -209,7 +210,7 @@ class SearchActivity : AppCompatActivity() {
                                 targetDonasi = item?.getString("target_nominal")
                             }
                             val nav = "ProgramAll"
-                            arrayProgramSearch.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav))
+                            arrayProgramSearch.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav,link))
                             val myAdapterAll = ProgramAllAdapter(arrayProgramSearch,this@SearchActivity)
                             val view = context.findViewById<RecyclerView>(R.id.recyclerProgramSearch)
                             view.layoutManager = LinearLayoutManager(this@SearchActivity)
