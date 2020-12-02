@@ -23,7 +23,7 @@ class BantuanActivity : AppCompatActivity() {
             startActivity(mIntent)}
 
         val myWebView: WebView = findViewById(R.id.webviewBantuan)
-        myWebView.loadUrl("https://aksiberbagi.com/bantuan")
+        myWebView.loadUrl("https://aksiberbagi.com/kontak")
 
     }
     override fun onSupportNavigateUp(): Boolean {

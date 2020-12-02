@@ -39,8 +39,10 @@ import kotlin.toString as toString1
 class ProgramDetailActivity : AppCompatActivity() {
 
     private val arrayDonatur = ArrayList<ListDonasi>()
+    private val arrayDonaturDialog = ArrayList<ListDonasi>()
     private val TAG = "Program Detail"
     private val nominalItems: ArrayList<String> = arrayListOf("Pilih Nominal Donasi")
+    private val dialogDonaturPilihan: ArrayList<String> = arrayListOf("200 donasi terbaru")
     private val idNominal: ArrayList<Int> = arrayListOf(0)
     private var btnKeteranganStatus : String = ""
     private var btnLaporanStatus : String = ""
@@ -118,11 +120,38 @@ class ProgramDetailActivity : AppCompatActivity() {
             )
         )}
 
+        toolbar.setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.programShare -> {
+                    val shareIntent = Intent()
+                    val pesan = "Mari bersedekah melalui platform aksiberbagi, dengan aksiberbagi bersedekah jadi lebih mudah."
+                    val url = sharedPreference.getValueString("urlProgram")
+                    val urlProgram = "https://aksiberbagi.com/$url"
+                    shareIntent.action = Intent.ACTION_SEND
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, pesan)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, urlProgram)
+                    shareIntent.type = "text/plain"
+                    shareIntent.addFlags(
+                        Intent.FLAG_ACTIVITY_NO_HISTORY or
+                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                    )
+                    startActivity(Intent.createChooser(shareIntent, "Bagikan kemulian bersedekah"))
+                }
+            }
+            true
+        })
+
         //deklarasi btn Donasi dan dialog swipe
         val btnDonasi: Button = findViewById(R.id.donasiBtn)
+        val btnLihatDonatur: Button = findViewById(R.id.lihatSemuaDonasi)
         val dialogPembayaran = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val dialogLihatDonatur = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view : View  = layoutInflater.inflate(R.layout.dialog_pembayaran_donasi, null)
+        val viewDonatur : View  = layoutInflater.inflate(R.layout.dialog_lihat_donatur, null)
         dialogPembayaran.setContentView(view)
+        dialogLihatDonatur.setContentView(viewDonatur)
+        //view dialog pembayaran donasi
         val textNominalLayout: TextInputLayout = view.findViewById(R.id.nominalDonasiLayout)
         val textNominalDonasi : TextInputEditText = view.findViewById(R.id.nominalDonasi)
         val textNoLayout: TextInputLayout = view.findViewById(R.id.noPembayaranLayout)
@@ -136,8 +165,9 @@ class ProgramDetailActivity : AppCompatActivity() {
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
         val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
         val helperNominal : TextView = view.findViewById(R.id.helperNominal)
-
-
+        //view dialog donasi donatur
+        val btnCloseDialog: LinearLayout = viewDonatur.findViewById(R.id.btnCloseDialogDonatur)
+        val recyclerDonatur: RecyclerView = viewDonatur.findViewById(R.id.recycler200Donasi)
         val initialisasiNominal = "0"
         textNominalDonasi.text = initialisasiNominal.toEditable()
         textNominalDonasi.addTextChangedListener(NumberFormaterDot(textNominalDonasi))
@@ -158,9 +188,17 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         //ambil semua atribut nilai yang di tampilkan dari database server
         val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
-        getKoneksi(retrivedToken, idProgram, allDonasi, textJumlahDonatur, pilihNominal, this)
+        getKoneksi(retrivedToken, idProgram, allDonasi, textJumlahDonatur, pilihNominal, this, viewDonatur)
         btnFavoritSet.setOnClickListener {
-            postProgramFavorit(retrivedToken, idProgram,  allDonasi, textJumlahDonatur, pilihNominal, this)
+            postProgramFavorit(
+                retrivedToken,
+                idProgram,
+                allDonasi,
+                textJumlahDonatur,
+                pilihNominal,
+                this,
+                viewDonatur
+            )
         }
 
         Log.d(TAG, "value pada pilihan nominal $nominalItems")
@@ -237,6 +275,14 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         btnDonasiClose.setOnClickListener {
             dialogPembayaran.dismiss()
+        }
+
+        btnLihatDonatur.setOnClickListener {
+            dialogLihatDonatur.show()
+        }
+
+        btnCloseDialog.setOnClickListener {
+            dialogLihatDonatur.dismiss()
         }
 
 
@@ -439,9 +485,11 @@ class ProgramDetailActivity : AppCompatActivity() {
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, pesan)
             shareIntent.putExtra(Intent.EXTRA_TEXT, urlProgram)
             shareIntent.type = "text/plain"
-            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
-                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+            shareIntent.addFlags(
+                Intent.FLAG_ACTIVITY_NO_HISTORY or
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+            )
             startActivity(Intent.createChooser(shareIntent, "Bagikan kemulian bersedekah"))
         }
 
@@ -468,8 +516,7 @@ class ProgramDetailActivity : AppCompatActivity() {
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
     private fun postDonasiDonatur(
-        tokenValue: String?
-        , inputLayout: TextInputLayout
+        tokenValue: String?, inputLayout: TextInputLayout
     ){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
@@ -496,55 +543,118 @@ class ProgramDetailActivity : AppCompatActivity() {
                     val eWallet = data?.getString("isEwallet")
                     if (eWallet == "false") {
                         val dataDonasi = data?.getJSONObject("donasi")
-                        sharedPreference.save("invoiceNominal", dataDonasi?.getString("tbldonasi_nominal"))
-                        sharedPreference.save("invoiceKodeUnik", dataDonasi?.getString("tbldonasi_nourut"))
-                        sharedPreference.save("invoiceKode", dataDonasi?.getString("tbldonasi_invoice") )
+                        sharedPreference.save(
+                            "invoiceNominal",
+                            dataDonasi?.getString("tbldonasi_nominal")
+                        )
+                        sharedPreference.save(
+                            "invoiceKodeUnik",
+                            dataDonasi?.getString("tbldonasi_nourut")
+                        )
+                        sharedPreference.save(
+                            "invoiceKode",
+                            dataDonasi?.getString("tbldonasi_invoice")
+                        )
                         val dataDonasiBank = dataDonasi?.getJSONObject("bank")
-                        sharedPreference.save("invoiceBank", dataDonasiBank?.getString("tblbank_nama"))
-                        sharedPreference.save("invoiceBankAN", dataDonasiBank?.getString("tblbank_namapemilik"))
-                        sharedPreference.save("invoiceBankUrl", dataDonasiBank?.getString("logo_url"))
-                        sharedPreference.save("invoiceBankRekening", dataDonasiBank?.getString("tblbank_rekening"))
+                        sharedPreference.save(
+                            "invoiceBank",
+                            dataDonasiBank?.getString("tblbank_nama")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankAN",
+                            dataDonasiBank?.getString("tblbank_namapemilik")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankUrl",
+                            dataDonasiBank?.getString("logo_url")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankRekening",
+                            dataDonasiBank?.getString("tblbank_rekening")
+                        )
                         val dataDonasiProgram = dataDonasi?.getJSONObject("program")
-                        sharedPreference.save("invoiceProgramJudul", dataDonasiProgram?.getString("tblprogram_judul"))
-                        startActivity(Intent(this@ProgramDetailActivity, InvoiceActivity::class.java))
+                        sharedPreference.save(
+                            "invoiceProgramJudul",
+                            dataDonasiProgram?.getString("tblprogram_judul")
+                        )
+                        startActivity(
+                            Intent(
+                                this@ProgramDetailActivity,
+                                InvoiceActivity::class.java
+                            )
+                        )
                     } else {
                         val midtransStatus = data?.getString("midtrans")
-                        var redirectUrl: String?  = ""
-                        if(midtransStatus == "null"){
+                        var redirectUrl: String? = ""
+                        if (midtransStatus == "null") {
                             val xendit = data?.getJSONObject("xendit")
                             redirectUrl = xendit?.getString("redirect_url")
-                        }else{
+                        } else {
                             val midtrans = data?.getJSONObject("midtrans")
                             redirectUrl = midtrans?.getString("redirect_url")
                         }
                         val dataDonasi = data?.getJSONObject("donasi")
                         sharedPreference.save("invoiceUrl", redirectUrl)
-                        sharedPreference.save("invoiceNominal", dataDonasi?.getString("tbldonasi_nominal"))
-                        sharedPreference.save("invoiceKodeUnik", dataDonasi?.getString("tbldonasi_nourut"))
-                        sharedPreference.save("invoiceKode", dataDonasi?.getString("tbldonasi_invoice") )
+                        sharedPreference.save(
+                            "invoiceNominal",
+                            dataDonasi?.getString("tbldonasi_nominal")
+                        )
+                        sharedPreference.save(
+                            "invoiceKodeUnik",
+                            dataDonasi?.getString("tbldonasi_nourut")
+                        )
+                        sharedPreference.save(
+                            "invoiceKode",
+                            dataDonasi?.getString("tbldonasi_invoice")
+                        )
                         val dataDonasiBank = dataDonasi?.getJSONObject("bank")
-                        sharedPreference.save("invoiceBank", dataDonasiBank?.getString("tblbank_nama"))
-                        sharedPreference.save("invoiceBankAN", dataDonasiBank?.getString("tblbank_namapemilik"))
-                        sharedPreference.save("invoiceBankUrl", dataDonasiBank?.getString("logo_url"))
-                        sharedPreference.save("invoiceBankRekening", dataDonasiBank?.getString("tblbank_rekening"))
+                        sharedPreference.save(
+                            "invoiceBank",
+                            dataDonasiBank?.getString("tblbank_nama")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankAN",
+                            dataDonasiBank?.getString("tblbank_namapemilik")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankUrl",
+                            dataDonasiBank?.getString("logo_url")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankRekening",
+                            dataDonasiBank?.getString("tblbank_rekening")
+                        )
                         val dataDonasiProgram = dataDonasi?.getJSONObject("program")
-                        sharedPreference.save("invoiceProgramJudul", dataDonasiProgram?.getString("tblprogram_judul"))
-                        startActivity(Intent(this@ProgramDetailActivity, WebviewInvoiceActivity::class.java))
+                        sharedPreference.save(
+                            "invoiceProgramJudul",
+                            dataDonasiProgram?.getString("tblprogram_judul")
+                        )
+                        startActivity(
+                            Intent(
+                                this@ProgramDetailActivity,
+                                WebviewInvoiceActivity::class.java
+                            )
+                        )
                     }
                 }
             }
 
             override fun onError(anError: ANError?) {
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                if(apiError?.message == "Silakan masukkan no ovo yang valid dan sudah terdaftar"){
-                    val toast = Toast.makeText(this@ProgramDetailActivity, "Silakan masukkan no ovo yang valid dan sudah terdaftar",Toast.LENGTH_LONG)
-                        toast.show()
+                if (apiError?.message == "Silakan masukkan no ovo yang valid dan sudah terdaftar") {
+                    val toast = Toast.makeText(
+                        this@ProgramDetailActivity,
+                        "Silakan masukkan no ovo yang valid dan sudah terdaftar",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
                     inputLayout.requestFocus()
                     inputLayout.boxStrokeColor = ContextCompat.getColor(
                         this@ProgramDetailActivity,
                         R.color.error_color
                     )
-                    inputLayout.helperText = "Silakan masukkan no ovo yang valid dan sudah terdaftar"
+                    inputLayout.helperText =
+                        "Silakan masukkan no ovo yang valid dan sudah terdaftar"
                 }
                 Log.d(TAG, "OnErrorProsesDonasiBody " + anError?.errorBody)
                 Log.d(TAG, "OnErrorProsesDonasiCode " + anError?.errorCode)
@@ -560,28 +670,43 @@ class ProgramDetailActivity : AppCompatActivity() {
         donatur: RecyclerView,
         jumlahDonatur: TextView,
         spinner: Spinner,
-        context: ProgramDetailActivity
+        context: ProgramDetailActivity,
+        donaturDialog : View
     ){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
         body.put("program_id", idProgram)
-        ApiService.postFavorit(tokenValue, body).getAsJSONObject( object: JSONObjectRequestListener{
+        ApiService.postFavorit(tokenValue, body).getAsJSONObject(object :
+            JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if( response?.getString("message").equals("Program favorit berhasil disimpan")){
-                    val toast = Toast.makeText(this@ProgramDetailActivity,"Berhasil Menyimpan Program Favorit",Toast.LENGTH_LONG)
-                     toast.show()
-                }else{
-                    val toast = Toast.makeText(this@ProgramDetailActivity,"Ada Kesalahan Sistem",Toast.LENGTH_LONG)
+                if (response?.getString("message").equals("Program favorit berhasil disimpan")) {
+                    val toast = Toast.makeText(
+                        this@ProgramDetailActivity,
+                        "Berhasil Menyimpan Program Favorit",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                } else {
+                    val toast = Toast.makeText(
+                        this@ProgramDetailActivity,
+                        "Ada Kesalahan Sistem",
+                        Toast.LENGTH_LONG
+                    )
                     toast.show()
                 }
             }
+
             override fun onError(anError: ANError?) {
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                if (apiError?.message == "Token expired"){
+                if (apiError?.message == "Token expired") {
                     val donatur = context.findViewById<RecyclerView>(R.id.totalDonasiRecycler)
                     val jumlahDonatur = context.findViewById<TextView>(R.id.jumlahDonasiTextProgram)
-                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
-                    val toast = Toast.makeText(this@ProgramDetailActivity,"Cobalah beberapa saat lagi",Toast.LENGTH_LONG)
+                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context, donaturDialog)
+                    val toast = Toast.makeText(
+                        this@ProgramDetailActivity,
+                        "Cobalah beberapa saat lagi",
+                        Toast.LENGTH_LONG
+                    )
                     toast.show()
                 }
             }
@@ -596,18 +721,19 @@ class ProgramDetailActivity : AppCompatActivity() {
         donatur: RecyclerView,
         jumlahDonatur: TextView,
         spinner: Spinner,
-        context: ProgramDetailActivity
+        context: ProgramDetailActivity,
+        donaturDialog: View
     ){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur, context)
+                getDonaturProgramA(tokenValue, idProgram, donatur, jumlahDonatur, context, donaturDialog)
                 getNominal(tokenValue, idProgram, spinner)
             }
 
             override fun onError(anError: ANError?) {
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                if(anError?.errorDetail!!.equals("connectionError")){
+                if (anError?.errorDetail!!.equals("connectionError")) {
                     val toast = Toast.makeText(
                         this@ProgramDetailActivity,
                         "Ada masalah dengan Koneksi Internet Anda",
@@ -615,8 +741,8 @@ class ProgramDetailActivity : AppCompatActivity() {
                     )
                     toast.show()
                     return
-                }else{
-                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
+                } else {
+                    refreshToken(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context, donaturDialog)
                 }
             }
 
@@ -629,7 +755,8 @@ class ProgramDetailActivity : AppCompatActivity() {
         donatur: RecyclerView,
         jumlahDonatur: TextView,
         spinner: Spinner,
-        context: ProgramDetailActivity
+        context: ProgramDetailActivity,
+        donaturDialog: View
     ){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
@@ -642,7 +769,15 @@ class ProgramDetailActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
+                                getKoneksi(
+                                    tokenValue,
+                                    idProgram,
+                                    donatur,
+                                    jumlahDonatur,
+                                    spinner,
+                                    context,
+                                    donaturDialog
+                                )
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -650,7 +785,15 @@ class ProgramDetailActivity : AppCompatActivity() {
                             val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(tokenValue, idProgram, donatur, jumlahDonatur, spinner, context)
+                                getKoneksi(
+                                    tokenValue,
+                                    idProgram,
+                                    donatur,
+                                    jumlahDonatur,
+                                    spinner,
+                                    context,
+                                    donaturDialog
+                                )
                             }
                         } else {
                             Looper.myLooper()?.let {
@@ -706,30 +849,32 @@ class ProgramDetailActivity : AppCompatActivity() {
         idProgram: String?,
         donatur: RecyclerView,
         jumlahDonatur: TextView,
-        context: ProgramDetailActivity
+        context: ProgramDetailActivity,
+        donaturDialog: View
     ){
         ApiService.getDonatur(tokenValue, idProgram).getAsJSONObject(object :
             JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
 
-                val laporanLayoutKosong = context.findViewById<LinearLayout>(R.id.kontenLaporanDetailA)
+                val laporanLayoutKosong =
+                    context.findViewById<LinearLayout>(R.id.kontenLaporanDetailA)
                 val laporanLayoutAda = context.findViewById<LinearLayout>(R.id.kontenLaporanDetailB)
                 val buttonLihatLaporan = context.findViewById<Button>(R.id.btnLaporanProgram)
                 val webViewLaporan = context.findViewById<WebView>(R.id.laporanWeb)
 
-                if(response?.getString("berita").equals("true")){
+                if (response?.getString("berita").equals("true")) {
                     laporanLayoutAda.visibility = View.VISIBLE
                     buttonLihatLaporan.visibility = View.VISIBLE
                     webViewLaporan.loadUrl("https://aksiberbagi.com/apk/berita/$idProgram")
                     buttonLihatLaporan.setOnClickListener {
-                        if(btnLaporanStatus == ""){
+                        if (btnLaporanStatus == "") {
                             btnShowLayout(buttonLihatLaporan, laporanLayoutAda)
-                        }else{
+                        } else {
                             btnHideLayout(buttonLihatLaporan, laporanLayoutAda)
                         }
                     }
 
-                }else{
+                } else {
                     laporanLayoutKosong.visibility = View.VISIBLE
                 }
 
@@ -754,14 +899,51 @@ class ProgramDetailActivity : AppCompatActivity() {
                                 waktuDonasi
                             )
                         )
-                        val myAdapterListDonasi = ListDonasiAdapter(
-                            arrayDonatur,
-                            applicationContext
-                        )
-                        donatur.layoutManager = LinearLayoutManager(applicationContext)
-                        donatur.adapter = myAdapterListDonasi
                     }
+                    val myAdapterListDonasi = ListDonasiAdapter(
+                        arrayDonatur,
+                        applicationContext
+                    )
+                    donatur.layoutManager = LinearLayoutManager(applicationContext)
+                    donatur.adapter = myAdapterListDonasi
+
+                    for(i in 0 until jsonArray?.length()){
+                        val item = jsonArray.getJSONObject(i)
+                        val img: String? = "https://aksiberbagi.com/assets/images/user_akber.png"
+                        val namaDonatur: String? = item?.getString("tbldonatur_nama")
+                        val donasiDonatur: Double? =
+                            item?.getString("tbldonasi_nominal")!!.toDouble()
+                        val doaDonatur: String? = item?.getString("tbldonasi_doa")
+                        val waktuDonasi: String? = item?.getString("tbldonasi_tglinsert")
+                        arrayDonaturDialog.add(
+                            ListDonasi(
+                                img,
+                                namaDonatur,
+                                donasiDonatur,
+                                doaDonatur,
+                                waktuDonasi
+                            )
+                        )
+                    }
+                    val myAdapterListDonasiDialog = ListDonasiAdapter(
+                        arrayDonaturDialog,
+                        applicationContext
+                    )
+                    val dialogTotalDonatur =donaturDialog.findViewById<TextView>(R.id.dialogDonaturTextTotal)
+                    dialogTotalDonatur.text = "Donasi ($totalDonatur)"
+                    val recyclerViewDialog = donaturDialog.findViewById<RecyclerView>(R.id.recycler200Donasi)
+                    recyclerViewDialog.layoutManager = LinearLayoutManager(applicationContext)
+                    recyclerViewDialog.adapter = myAdapterListDonasiDialog
+                    val spinnerDialogDonatur = donaturDialog.findViewById<Spinner>(R.id.spinerPilihJenis)
+                    val adapterNominal = ArrayAdapter(
+                        this@ProgramDetailActivity,
+                        R.layout.list_pilih_program_dropdown,
+                        dialogDonaturPilihan
+                    )
+                    spinnerDialogDonatur.adapter = adapterNominal
                 }
+
+
             }
 
             override fun onError(anError: ANError?) {
@@ -848,7 +1030,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         }else if(navigasi == "Favorit"){
             val mIntent = Intent(this, DashboardActivity::class.java)
             val mBundle = Bundle()
-            mBundle.putString("favoritAktif", "true" )
+            mBundle.putString("favoritAktif", "true")
             mIntent.putExtras(mBundle)
             startActivity(mIntent)
         }else{
@@ -856,7 +1038,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         }
     }
 
-//                        val toast = Toast.makeText(
+    //                        val toast = Toast.makeText(
 //                            this@ProgramDetailActivity,
 //                            "Oke Donasi Ewallet",
 //                            Toast.LENGTH_LONG
