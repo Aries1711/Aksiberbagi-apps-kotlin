@@ -219,4 +219,10 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getDonasiRutin(String data){
+        token = data;
+        String endpoint = baseUrl("donasi-rutin");
+        return get(endpoint);
+    }
+
 }

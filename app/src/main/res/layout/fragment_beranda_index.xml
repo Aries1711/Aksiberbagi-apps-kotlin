@@ -37,7 +37,7 @@
                 </LinearLayout>
 
                 <include
-                    layout="@layout/donasi_rutin_btn"
+                    layout="@layout/card_donasi_rutin_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="20dp"
@@ -259,7 +259,7 @@
                     android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/headerLaporan">
+                    app:layout_constraintTop_toBottomOf="@id/headerLaporanShimmer">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerLaporanShimmer"

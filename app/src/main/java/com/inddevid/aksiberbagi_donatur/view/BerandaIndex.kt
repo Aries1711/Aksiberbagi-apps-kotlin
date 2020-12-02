@@ -114,18 +114,18 @@ class BerandaIndex : Fragment() {
         //tombol gabung donasi rutin
         val btnGbgDonRut: CardView = view.findViewById(R.id.searchBantu)
         btnGbgDonRut.setOnClickListener{
-            val toast = Toast.makeText(
-                requireContext(),
-                "Segera",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-//            startActivity(
-//            Intent(
-//                requireActivity(),
-//                DonasiRutinActivity::class.java
+//            val toast = Toast.makeText(
+//                requireContext(),
+//                "Segera",
+//                Toast.LENGTH_LONG
 //            )
-//        )
+//            toast.show()
+            startActivity(
+            Intent(
+                requireActivity(),
+                DonasiRutinActivity::class.java
+            )
+        )
         }
 
         // tombol submenu beranda a-d

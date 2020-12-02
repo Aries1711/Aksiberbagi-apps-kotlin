@@ -20,130 +20,220 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upAppbarDonasiRutin">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/donasiRutinBanner"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/headerDonasiRutin"
+            android:layout_height="match_parent">
+            <!--            layout create donasi rutin-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/createLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:text="Form Pendaftaran Donasi Rutin"
-                android:textColor="@color/colorInputPressFalse"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/donasiRutinBanner" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/LayoutFormDonasiRutin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerDonasiRutin">
-
-                <Spinner
-                    android:id="@+id/spinerProgram"
+                <ImageView
+                    android:id="@+id/donasiRutinBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/dropdown_custom"
-                    android:layout_margin="10dp"/>
+                    android:layout_height="180dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
-                    android:id="@+id/spinerFrekuensi"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/dropdown_custom"
-                    android:layout_margin="10dp"/>
-                <LinearLayout
-                    android:id="@+id/layoutMingguan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:text="Pada Hari"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorInputPressFalse"
-                        android:textSize="18sp"
-                        android:layout_weight=".4"
-                        android:layout_marginStart="20dp"
-                        android:layout_gravity="center"/>
-                    <Spinner
-                        android:id="@+id/frekuensiMingguan"
-                        android:layout_width="150dp"
-                        android:layout_weight=".6"
-                        android:layout_height="50dp"
-                        android:background="@drawable/dropdown_custom"
-                        android:layout_margin="10dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:id="@+id/layoutBulanan"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:text="Pada Tanggal "
-                        android:textStyle="bold"
-                        android:textColor="@color/colorInputPressFalse"
-                        android:textSize="18sp"
-                        android:layout_weight=".4"
-                        android:layout_marginStart="20dp"
-                        android:layout_gravity="center"/>
-                    <Spinner
-                        android:layout_weight=".6"
-                        android:id="@+id/frekuensiBulanan"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/dropdown_custom"
-                        android:layout_margin="10dp"/>
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/login_btn"
-                    android:layout_marginTop="20dp"
+                <TextView
+                    android:id="@+id/headerDonasiRutin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="2dp"
-                    android:backgroundTint="#f86048"
-                    android:fontFamily="@font/actor"
-                    android:minWidth="250dp"
-                    android:minHeight="60dp"
-                    android:text="Daftar Sekarang"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:text="Form Pendaftaran Donasi Rutin"
+                    android:textColor="@color/colorInputPressFalse"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:cornerRadius="10dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/donasiRutinBanner" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/LayoutFormDonasiRutin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/headerDonasiRutin">
+
+                    <Spinner
+                        android:id="@+id/spinerProgram"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/dropdown_custom" />
+
+                    <Spinner
+                        android:id="@+id/spinerFrekuensi"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/dropdown_custom" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutMingguan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_weight=".4"
+                            android:text="Pada Hari"
+                            android:textColor="@color/colorInputPressFalse"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <Spinner
+                            android:id="@+id/frekuensiMingguan"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight=".6"
+                            android:background="@drawable/dropdown_custom" />
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:id="@+id/layoutBulanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_weight=".4"
+                            android:text="Pada Tanggal "
+                            android:textColor="@color/colorInputPressFalse"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <Spinner
+                            android:id="@+id/frekuensiBulanan"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight=".6"
+                            android:background="@drawable/dropdown_custom" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/login_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="2dp"
+                        android:backgroundTint="#f86048"
+                        android:fontFamily="@font/actor"
+                        android:minWidth="250dp"
+                        android:minHeight="60dp"
+                        android:text="Daftar Sekarang"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="10dp" />
+
+                </LinearLayout>
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--            layout List donasi rutin-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutList"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                    </LinearLayout>
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:id="@+id/recyclerDonasiRutin"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"/>-->
+                </androidx.core.widget.NestedScrollView>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingTambahDonasiRutin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@color/colorInputStrokeBlue"
+                    android:src="@drawable/launcher_icon2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:maxImageSize="35dp"
+                    app:tint="@color/colorIndicatorPrimary" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--            layout shimmer donasi rutin-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutShimmer"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerDonasiRutin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:shimmer_duration="800"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <include layout="@layout/donasi_rutin_listcard"/>
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
