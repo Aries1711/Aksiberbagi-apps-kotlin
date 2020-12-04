@@ -35,11 +35,16 @@ class PasswordSetActivity : AppCompatActivity() {
         toolbar.title = "Reset Password"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         toolbar.setNavigationOnClickListener{
-            val mIntent = Intent(this, DashboardActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("penggunaAktif", "true")
-            mIntent.putExtras(mBundle)
-            startActivity(mIntent)}
+            if (retrivedToken == "" ||retrivedToken == null ){
+                startActivity(Intent(this@PasswordSetActivity, IntroActivity::class.java))
+            }else{
+                val mIntent = Intent(this, DashboardActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("penggunaAktif", "true")
+                mIntent.putExtras(mBundle)
+                startActivity(mIntent)
+            }
+        }
 
 
         val submitPassword: Button = findViewById(R.id.passwordSubmit)
@@ -65,7 +70,11 @@ class PasswordSetActivity : AppCompatActivity() {
             val countChar = passwordValueA.length
             if (countChar > 5){
                 if(passwordValueA == passwordValueB){
-                    getKoneksi(tokenValue, context)
+                    if (tokenValue == "" || tokenValue == null ){
+                        postResetPassword(context)
+                    }else{
+                        getKoneksi(tokenValue, context)
+                    }
                 }else{
                     layoutPasswordInputB.boxStrokeColor = ContextCompat.getColor(this, R.color.error_color)
                     layoutPasswordInputB.helperText = "Harap masukkan konfirmasi password yang benar"
@@ -85,7 +94,7 @@ class PasswordSetActivity : AppCompatActivity() {
     private fun getKoneksi(tokenValue: String?, context: PasswordSetActivity){
         ApiService.getKoneksi(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                postResetPassword(tokenValue, context)
+                postResetPassword(context)
             }
 
             override fun onError(anError: ANError?) {
@@ -174,35 +183,58 @@ class PasswordSetActivity : AppCompatActivity() {
         }
     }
 
-    private fun postResetPassword(tokenValue: String?, context: PasswordSetActivity){
+    private fun postResetPassword(context: PasswordSetActivity){
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         val penggunaWA: String? = sharedPreference.getValueString("penggunaWA")
+        val penggunaNoTelp: String? = sharedPreference.getValueString("noPenggunaReset")
 
         //deklarasi value password from view
         val inputPasswordA: TextInputEditText = context.findViewById(R.id.passwordA)
         val inputPasswordB: TextInputEditText = context.findViewById(R.id.passwordB)
-
-        body.put("nomor_telepon", penggunaWA)
+        if (retrivedToken == "" || retrivedToken == null){
+            body.put("nomor_telepon", penggunaNoTelp)
+        }else{
+            body.put("nomor_telepon", penggunaWA)
+        }
         body.put("password", inputPasswordA.text.toString())
         body.put("konfirmasi_password", inputPasswordB.text.toString())
-        ApiService.postPasswordReset(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener{
+        ApiService.postPasswordReset(body).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 if(response?.getString("message").equals("Password berhasil direset")){
-                    val toast = Toast.makeText(
-                        this@PasswordSetActivity,
-                        "Password berhasil di reset",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
-                    Looper.myLooper()?.let {
-                        Handler(it).postDelayed({
-                            val intent = Intent(
-                                this@PasswordSetActivity,
-                                PengaturanActivity::class.java
-                            )
-                            startActivity(intent)
-                        }, 3000)
+                    if (retrivedToken == "" || retrivedToken == null){
+                        val toast = Toast.makeText(
+                            this@PasswordSetActivity,
+                            "Password berhasil di reset",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                        Looper.myLooper()?.let {
+                            Handler(it).postDelayed({
+                                val intent = Intent(
+                                    this@PasswordSetActivity,
+                                    LoginActivity::class.java
+                                )
+                                startActivity(intent)
+                            }, 3000)
+                        }
+                    }else{
+                        val toast = Toast.makeText(
+                            this@PasswordSetActivity,
+                            "Password berhasil di reset",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                        Looper.myLooper()?.let {
+                            Handler(it).postDelayed({
+                                val intent = Intent(
+                                    this@PasswordSetActivity,
+                                    PengaturanActivity::class.java
+                                )
+                                startActivity(intent)
+                            }, 3000)
+                        }
                     }
                 }
             }
@@ -216,9 +248,18 @@ class PasswordSetActivity : AppCompatActivity() {
         })
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+    override fun onBackPressed() {
+        val sharedPreference: Preferences = Preferences(this)
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+        if (retrivedToken == "" ||retrivedToken == null ){
+            startActivity(Intent(this@PasswordSetActivity, IntroActivity::class.java))
+        }else{
+            val mIntent = Intent(this, DashboardActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("penggunaAktif", "true")
+            mIntent.putExtras(mBundle)
+            startActivity(mIntent)
+        }
     }
 
 }

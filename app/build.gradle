@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     // implement facebook shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    // implement otpview
+    implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

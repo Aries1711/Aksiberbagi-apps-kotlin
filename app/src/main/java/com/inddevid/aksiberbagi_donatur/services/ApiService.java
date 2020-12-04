@@ -106,8 +106,18 @@ public class ApiService {
         return post(endpoint, data);
     }
 
-    public static ANRequest postPasswordReset(String auth,  JSONObject data){
+    public static ANRequest postPasswordReset(JSONObject data){
         String endpoint = baseUrl("autentikasi/reset-password");
+        return post(endpoint, data);
+    }
+
+    public static ANRequest postLupaPassword(JSONObject data){
+        String endpoint = baseUrl("autentikasi/lupa-password");
+        return post(endpoint, data);
+    }
+
+    public static ANRequest postKodeOTPVerifikasi(JSONObject data){
+        String endpoint = baseUrl("autentikasi/konfirmasi-kode-reset");
         return post(endpoint, data);
     }
 
