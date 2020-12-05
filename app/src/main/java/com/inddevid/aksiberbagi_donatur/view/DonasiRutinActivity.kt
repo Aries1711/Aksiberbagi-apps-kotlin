@@ -23,6 +23,9 @@ import org.json.JSONObject
 
 class DonasiRutinActivity : AppCompatActivity() {
     private val TAG = "Donasi Rutin"
+    private val idProgram: ArrayList<Int> = arrayListOf(0)
+    private val programJudul: ArrayList<String> = arrayListOf("Pilih program favorit anda")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.donasi_rutin_activity)
@@ -47,13 +50,11 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         getKoneksi(retrivedToken, this@DonasiRutinActivity)
 
-//         set pilihan program dropdown
-        val items = listOf("Wujudkan Pondok Pesantren Tahfidz Qur’an Hadist Internasional Pekanbaru, Riau", "Simpan Hartamu dilangit, Sedekah Jariyah Atas Nama Keluarga", "Bangun Rumah di Surga: Sedekah Jariah Renovasi Masjid Pelosok", "Android")
-        val adapterProgram = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, items)
+        //
         val dropDownProgram : Spinner = findViewById(R.id.spinerProgram)
-        dropDownProgram.adapter = adapterProgram
 
         val frekuensiItems = listOf("Harian", "Mingguan", "Bulanan")
+        val frekuensiItemsPilihan = listOf("harian", "mingguan", "bulanan")
         val adapterFrekuensi = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiItems)
         val dropDownFrekuensi : Spinner = findViewById(R.id.spinerFrekuensi)
         dropDownFrekuensi.adapter = adapterFrekuensi
@@ -69,12 +70,34 @@ class DonasiRutinActivity : AppCompatActivity() {
         val adapterBulanan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown,frekuensiBulanans)
         dropDownBulanan.adapter = adapterBulanan
 
+        val btnSubmit: Button = findViewById(R.id.btnSubmit)
+
         //set layout hidden untuk frekuensi yang dipilih
         val layoutB : LinearLayout = findViewById(R.id.layoutBulanan)
         val layoutM : LinearLayout = findViewById(R.id.layoutMingguan)
 
+
+        var idProgramPilihan: Int = 0
+        dropDownProgram.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                idProgramPilihan = idProgram[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        var rentangWaktuPilihan = ""
         dropDownFrekuensi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                rentangWaktuPilihan  = frekuensiItemsPilihan[p2]
                 if (frekuensiItems[p2] == "Mingguan"){
                     show(layoutM)
                     gone(layoutB)
@@ -92,12 +115,103 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         }
 
+        var rentangWaktuMingguanPilihan = ""
+        dropDownMingguan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                rentangWaktuMingguanPilihan = frekuensiMingguans[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        var rentangWaktuBulanan = ""
+        dropDownBulanan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                rentangWaktuBulanan = frekuensiBulanans[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        val helperProgram: TextView = findViewById(R.id.helperProgram)
+        btnSubmit.setOnClickListener {
+            if(idProgramPilihan == 0 ){
+                helperProgram.visibility = View.VISIBLE
+                helperProgram.text = "Pilih program penggalangan"
+            }else{
+                if(rentangWaktuPilihan == "bulanan"){
+                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
+                    sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                    sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuBulanan)
+                }else if(rentangWaktuPilihan == "mingguan"){
+                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
+                    sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                    sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuMingguanPilihan)
+                }else{
+                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
+                    sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                }
+            }
+        }
+
+    }
+
+    private fun postDonasiRutin(tokenValue: String?, context: DonasiRutinActivity){
+        val sharedPreference: Preferences = Preferences(this)
+        val body = JSONObject()
+        body.put("rentang_waktu", sharedPreference.getValueString("donasiRutinRentangWaktu"))
+        body.put("opsi_rentang_waktu", sharedPreference.getValueString("donasiRutinOpsiWaktu"))
+        body.put("program_id", sharedPreference.getValueString("donasiRutinProgram")!!.toInt())
+        ApiService.postDonasiRutin(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if(response?.getString("message").equals("Donasi rutin berhasil disimpan")){
+                    val toast = Toast.makeText(
+                        this@DonasiRutinActivity,
+                        "Pendaftaran donasi rutin berhasil, menunggu verifikasi dari admin",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    getDonasiRutinList(tokenValue, context)
+                }else{
+                    val message = response?.getString("message")
+                    val toast = Toast.makeText(
+                        this@DonasiRutinActivity,
+                        "Kesalahan sistem $message",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }
+            }
+
+            override fun onError(anError: ANError?) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun getKoneksi(tokenValue: String?, context: DonasiRutinActivity){
         ApiService.getKoneksi(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 getDonasiRutinList(tokenValue, context)
+                getProgramAll(tokenValue,context)
             }
 
             override fun onError(anError: ANError?) {
@@ -182,10 +296,11 @@ class DonasiRutinActivity : AppCompatActivity() {
     private fun getDonasiRutinList(tokenValue: String?, context: DonasiRutinActivity){
         ApiService.getDonasiRutin(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if (response?.getString("message").equals("Donasi rutin tidak ditemukan")){
+                if (response?.getString("message").equals("Donasi rutin berhasil diambil")){
+                    val jsonArray = response?.getJSONArray("data")
+                    for(i in 0 until jsonArray!!.length()){
 
-                }else{
-
+                    }
                 }
             }
 
@@ -203,6 +318,39 @@ class DonasiRutinActivity : AppCompatActivity() {
                 Log.d(TAG, "OnErrorBody " + anError?.errorBody)
                 Log.d(TAG, "OnErrorCode " + anError?.errorCode)
                 Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+            }
+
+        })
+    }
+
+    private fun getProgramAll(tokenValue: String?, context: DonasiRutinActivity){
+        ApiService.getAllProgram(tokenValue).getAsJSONObject(object: JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if(response?.getString("message").equals("Data program berhasil diambil")){
+                    val dataObject = response?.getJSONObject("data")
+                    val dataArray = dataObject?.getJSONArray("data")
+                    for (i in 0 until dataArray!!.length()){
+                        val dataProgram = dataArray.getJSONObject(i)
+                        val idProgramData = dataProgram.getString("tblprogram_id").toInt()
+                        val judulProgramData = dataProgram.getString("tblprogram_judul")
+                        idProgram.add(idProgramData)
+                        programJudul.add(judulProgramData)
+                    }
+
+                    val adapterProgram = ArrayAdapter(
+                        this@DonasiRutinActivity,
+                        R.layout.list_pilih_program_dropdown,
+                        programJudul
+                    )
+
+                    val dropDownProgram : Spinner = context.findViewById(R.id.spinerProgram)
+                    dropDownProgram.adapter = adapterProgram
+
+                }
+            }
+
+            override fun onError(anError: ANError?) {
+                getKoneksi(tokenValue, context)
             }
 
         })

@@ -36,28 +36,62 @@
                 android:id="@+id/createLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/donasiRutinBanner"
+                <TextView
+                    android:id="@+id/greetingTextA"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:text="Yuk mulai kebiasaan baik."
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/greetingText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Dengan donasi rutin kebiasaan baikmu makin lancar"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/greetingTextA" />
+
+                <ImageView
+                    android:id="@+id/donasiRutinBanner"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_height="180dp"
+                    android:src="@drawable/banner_donasi_rutin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/greetingText" />
 
                 <TextView
                     android:id="@+id/headerDonasiRutin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="25dp"
                     android:text="Form Pendaftaran Donasi Rutin"
-                    android:textColor="@color/colorInputPressFalse"
-                    android:textSize="18sp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -75,14 +109,23 @@
                     <Spinner
                         android:id="@+id/spinerProgram"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/dropdown_custom" />
+                    <TextView
+                        android:id="@+id/helperProgram"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="helper spinner program"
+                        android:textStyle="bold"
+                        android:textColor="@color/error_color"
+                        android:layout_marginStart="10dp"/>
 
                     <Spinner
                         android:id="@+id/spinerFrekuensi"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/dropdown_custom" />
 
@@ -100,7 +143,7 @@
                             android:layout_weight=".4"
                             android:text="Pada Hari"
                             android:textColor="@color/colorInputPressFalse"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <Spinner
@@ -127,7 +170,7 @@
                             android:layout_weight=".4"
                             android:text="Pada Tanggal "
                             android:textColor="@color/colorInputPressFalse"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <Spinner
@@ -140,7 +183,7 @@
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/login_btn"
+                        android:id="@+id/btnSubmit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"

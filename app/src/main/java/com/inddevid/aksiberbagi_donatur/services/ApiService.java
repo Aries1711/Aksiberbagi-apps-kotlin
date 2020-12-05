@@ -235,4 +235,10 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest postDonasiRutin(String auth,  JSONObject data){
+        token = auth ;
+        String endpoint = baseUrl("donasi-rutin/simpan");
+        return post(endpoint, data);
+    }
+
 }
