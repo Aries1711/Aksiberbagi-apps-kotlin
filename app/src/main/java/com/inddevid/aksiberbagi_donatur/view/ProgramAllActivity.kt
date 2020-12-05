@@ -32,7 +32,7 @@ class ProgramAllActivity : AppCompatActivity() {
         val sharedPreference: Preferences = Preferences(this)
         val toolbar: Toolbar = findViewById(R.id.upAppbarAllProgram)
         toolbar.title = "Program Galang Dana"
-        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE)
         var mainMenuAll = findViewById<RecyclerView>(R.id.recyclerProgramAllSearch)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         val shimmerLayout: ShimmerFrameLayout = findViewById(R.id.shimmerProgramAll)

@@ -27,13 +27,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upAppbarDonasiRutin">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!--            layout create donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/createLayout"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -224,16 +224,12 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <include layout="@layout/donasi_rutin_listcard"/>
-                        <include layout="@layout/donasi_rutin_listcard"/>
-                        <include layout="@layout/donasi_rutin_listcard"/>
-                        <include layout="@layout/donasi_rutin_listcard"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:orientation="vertical"
+                            android:id="@+id/recyclerDonasiRutin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:id="@+id/recyclerDonasiRutin"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"/>-->
                 </androidx.core.widget.NestedScrollView>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/floatingTambahDonasiRutin"

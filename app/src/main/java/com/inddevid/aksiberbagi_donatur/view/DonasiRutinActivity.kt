@@ -11,10 +11,15 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.model.ModelDonasiRutin
+import com.inddevid.aksiberbagi_donatur.presenter.DonasiRutinListAdapter
 import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
@@ -23,6 +28,7 @@ import org.json.JSONObject
 
 class DonasiRutinActivity : AppCompatActivity() {
     private val TAG = "Donasi Rutin"
+    private val arrayDonasiRutinList = ArrayList<ModelDonasiRutin>()
     private val idProgram: ArrayList<Int> = arrayListOf(0)
     private val programJudul: ArrayList<String> = arrayListOf("Pilih program favorit anda")
 
@@ -44,6 +50,8 @@ class DonasiRutinActivity : AppCompatActivity() {
         }
 
         val layoutShimmer: ConstraintLayout = findViewById(R.id.layoutShimmer)
+        val layoutList: ConstraintLayout = findViewById(R.id.layoutList)
+        val layoutCreate: ConstraintLayout = findViewById(R.id.createLayout)
         val shimmer: ShimmerFrameLayout = findViewById(R.id.shimmerDonasiRutin)
         layoutShimmer.visibility = View.VISIBLE
         shimmer.startShimmer()
@@ -72,6 +80,12 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         val btnSubmit: Button = findViewById(R.id.btnSubmit)
 
+        //btn tambah donasi rutin list
+        val btnTambah: FloatingActionButton = findViewById(R.id.floatingTambahDonasiRutin)
+        btnTambah.setOnClickListener{
+            layoutList.visibility = View.GONE
+            layoutCreate.visibility = View.VISIBLE
+        }
         //set layout hidden untuk frekuensi yang dipilih
         val layoutB : LinearLayout = findViewById(R.id.layoutBulanan)
         val layoutM : LinearLayout = findViewById(R.id.layoutMingguan)
@@ -154,18 +168,22 @@ class DonasiRutinActivity : AppCompatActivity() {
             if(idProgramPilihan == 0 ){
                 helperProgram.visibility = View.VISIBLE
                 helperProgram.text = "Pilih program penggalangan"
+                return@setOnClickListener
             }else{
                 if(rentangWaktuPilihan == "bulanan"){
                     sharedPreference.save("donasiRutinProgram", idProgramPilihan )
                     sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
                     sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuBulanan)
+                    postDonasiRutin(retrivedToken, this)
                 }else if(rentangWaktuPilihan == "mingguan"){
                     sharedPreference.save("donasiRutinProgram", idProgramPilihan )
                     sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
                     sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuMingguanPilihan)
+                    postDonasiRutin(retrivedToken, this)
                 }else{
                     sharedPreference.save("donasiRutinProgram", idProgramPilihan )
                     sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                    postDonasiRutin(retrivedToken, this)
                 }
             }
         }
@@ -177,7 +195,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         val body = JSONObject()
         body.put("rentang_waktu", sharedPreference.getValueString("donasiRutinRentangWaktu"))
         body.put("opsi_rentang_waktu", sharedPreference.getValueString("donasiRutinOpsiWaktu"))
-        body.put("program_id", sharedPreference.getValueString("donasiRutinProgram")!!.toInt())
+        body.put("program_id", sharedPreference.getValueInt("donasiRutinProgram"))
         ApiService.postDonasiRutin(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 if(response?.getString("message").equals("Donasi rutin berhasil disimpan")){
@@ -187,6 +205,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     )
                     toast.show()
+                    arrayDonasiRutinList.clear()
                     getDonasiRutinList(tokenValue, context)
                 }else{
                     val message = response?.getString("message")
@@ -299,8 +318,29 @@ class DonasiRutinActivity : AppCompatActivity() {
                 if (response?.getString("message").equals("Donasi rutin berhasil diambil")){
                     val jsonArray = response?.getJSONArray("data")
                     for(i in 0 until jsonArray!!.length()){
-
+                        val dataDonasiRutin = jsonArray.getJSONObject(i)
+                        val dataProgram = dataDonasiRutin.getJSONObject("program_nama")
+                        val idDonasiRutin = dataDonasiRutin?.getString("id")
+                        val judulProgram = dataProgram?.getString("tblprogram_judul")
+                        val rentangWaktu = dataDonasiRutin.getString("rentang_waktu")
+                        val opsiWaktu = dataDonasiRutin.getString("opsi_rentang_waktu")
+                        val imageProgram = dataProgram?.getString("thumbnail_url")
+                        val status = dataDonasiRutin?.getString("status")
+                        arrayDonasiRutinList.add(ModelDonasiRutin(idDonasiRutin,judulProgram,rentangWaktu,opsiWaktu,imageProgram,status))
                     }
+                    val myAdapterDonasi = DonasiRutinListAdapter(arrayDonasiRutinList, this@DonasiRutinActivity)
+                    val recyclerView = context.findViewById<RecyclerView>(R.id.recyclerDonasiRutin)
+                    recyclerView.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
+                    recyclerView.adapter = myAdapterDonasi
+                    //close layout lain dan show layout
+                    val layoutCreate : ConstraintLayout = context.findViewById(R.id.createLayout)
+                    val layoutShimmer: ConstraintLayout = context.findViewById(R.id.layoutShimmer)
+                    val shimmer: ShimmerFrameLayout = context.findViewById(R.id.shimmerDonasiRutin)
+                    shimmer.stopShimmer()
+                    val layoutList: ConstraintLayout = context.findViewById(R.id.layoutList)
+                    layoutList.visibility = View.VISIBLE
+                    layoutShimmer.visibility = View.GONE
+                    layoutCreate.visibility = View.GONE
                 }
             }
 

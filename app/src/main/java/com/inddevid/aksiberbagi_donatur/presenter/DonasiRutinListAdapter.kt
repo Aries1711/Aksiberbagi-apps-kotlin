@@ -12,7 +12,6 @@ import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ModelDonasiRutin
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import kotlinx.android.synthetic.main.card_donasi_rutin.view.*
-import kotlinx.android.synthetic.main.card_donasi_saya.view.*
 import kotlinx.android.synthetic.main.card_donasi_saya.view.donasiStatusframe
 
 class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val context: Context) :
@@ -20,23 +19,40 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
-            .override(210, 210)
+            .override(230, 185)
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
         fun bindItems(model: ModelDonasiRutin){
             // try glide image loading from url
             val modelUrl = model.imgProgram
-            val url = "https://aksiberbagi.com/storage/program/$modelUrl"
-            Glide.with(itemView.imageProgram.context).load(url).apply(options).into(itemView.imageProgram)
+            Glide.with(itemView.imageProgram.context).load(modelUrl).apply(options).into(itemView.imageProgram)
             itemView.judulProgram.text = model.judulProgram
             itemView.donasiRutinStatus.text = model.statusDonasi
+            val rentangWaktu = model.rentangWaktu
+            val opsiWaktu = model.opsiWaktu
+            if (rentangWaktu == "harian"){
+                itemView.rentangWaktu.text = rentangWaktu
+            }else{
+                if (rentangWaktu == "bulanan"){
+                    itemView.rentangWaktu.text = "Bulanan, pada tanggal $opsiWaktu"
+                }else{
+                    itemView.rentangWaktu.text = "Mingguan, pada hari $opsiWaktu"
+                }
+            }
+
             if (model.statusDonasi == "tidak aktif" || model.statusDonasi == "ditolak" ){
                 itemView.donasiStatusframe.setBackgroundResource(R.drawable.rounded_donasi_download)
-                itemView.donasiSayaStatus.setTextColor(Color.parseColor("#eb6b34"))
+                itemView.donasiRutinStatus.setTextColor(Color.parseColor("#eb6b34"))
             }else{
-                itemView.donasiStatusframe.setBackgroundResource(R.drawable.rounded_status_donasi)
-                itemView.donasiSayaStatus.setTextColor(Color.parseColor("#15BBDA"))
+                if (model.statusDonasi == "-"){
+                    itemView.donasiStatusframe.setBackgroundResource(R.drawable.rounded_donasi_download)
+                    itemView.donasiRutinStatus.setTextColor(Color.parseColor("#eb6b34"))
+                    itemView.donasiRutinStatus.text = "Menunggu"
+                }else{
+                    itemView.donasiStatusframe.setBackgroundResource(R.drawable.rounded_status_donasi)
+                    itemView.donasiRutinStatus.setTextColor(Color.parseColor("#15BBDA"))
+                }
             }
         }
     }
