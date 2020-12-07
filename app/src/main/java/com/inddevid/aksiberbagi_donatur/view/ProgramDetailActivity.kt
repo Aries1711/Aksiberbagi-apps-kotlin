@@ -538,7 +538,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("nominal_flash_sale_id", null)
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if (response?.getString("message").equals("Donasi berhasil")) {
+                if (response?.getString("message").equals("Donasi berhasil diproses")) {
                     val data: JSONObject? = response?.getJSONObject("data")
                     val eWallet = data?.getString("isEwallet")
                     if (eWallet == "false") {
@@ -585,13 +585,18 @@ class ProgramDetailActivity : AppCompatActivity() {
                         )
                     } else {
                         val midtransStatus = data?.getString("midtrans")
+                        val xenditStatus = data?.getString("xendit")
+                        val faspayStatus = data?.getString("faspay")
                         var redirectUrl: String? = ""
-                        if (midtransStatus == "null") {
+                        if (midtransStatus == "null" && faspayStatus == "null") {
                             val xendit = data?.getJSONObject("xendit")
                             redirectUrl = xendit?.getString("redirect_url")
-                        } else {
+                        } else if(xenditStatus == "null" && faspayStatus == "null"){
                             val midtrans = data?.getJSONObject("midtrans")
                             redirectUrl = midtrans?.getString("redirect_url")
+                        } else if(xenditStatus == "null" && midtransStatus == "null"){
+                            val faspay = data?.getJSONObject("faspay")
+                            redirectUrl = faspay?.getString("deeplink")
                         }
                         val dataDonasi = data?.getJSONObject("donasi")
                         sharedPreference.save("invoiceUrl", redirectUrl)
@@ -1039,11 +1044,11 @@ class ProgramDetailActivity : AppCompatActivity() {
     }
 
     //                        val toast = Toast.makeText(
-//                            this@ProgramDetailActivity,
-//                            "Oke Donasi Ewallet",
-//                            Toast.LENGTH_LONG
-//                        )
-//                        toast.show()
+////                            this@ProgramDetailActivity,
+////                            "Oke Donasi Ewallet",
+////                            Toast.LENGTH_LONG
+////                        )
+////                        toast.show()
 
 }
 

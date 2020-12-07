@@ -69,7 +69,7 @@ public class ApiService {
         }
         return AndroidNetworking.post(endpoint)
                 .addJSONObjectBody(data)
-                .addHeaders("Accept", "application/json").build();
+                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).build();
     }
 
     /**
@@ -239,6 +239,12 @@ public class ApiService {
         token = auth ;
         String endpoint = baseUrl("donasi-rutin/simpan");
         return post(endpoint, data);
+    }
+
+    public static ANRequest putProfil(String auth,  JSONObject data){
+        token = auth ;
+        String endpoint = baseUrl("pengguna/saya");
+        return put(endpoint, data);
     }
 
 }

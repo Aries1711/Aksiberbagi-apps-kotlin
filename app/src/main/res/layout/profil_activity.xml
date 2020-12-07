@@ -425,7 +425,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/colorInputStrokeBlue"
-                    android:hint="Alamat atau Kota"
+                    android:hint="Alamat rumah atau Kota"
                     android:textColorHint="@color/colorInputStrokeBlue"
                     app:boxStrokeColor="@color/colorInputStrokeBlue"
                     app:errorEnabled="true"
@@ -451,6 +451,15 @@
                     android:layout_height="50dp"
                     android:background="@drawable/dropdown_custom"
                     android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/helperSpinner"
+                    android:layout_marginStart="20dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mohon pilih profesi anda"
+                    android:textStyle="bold"
+                    android:textColor="@color/error_color"/>
 
             </LinearLayout>
 

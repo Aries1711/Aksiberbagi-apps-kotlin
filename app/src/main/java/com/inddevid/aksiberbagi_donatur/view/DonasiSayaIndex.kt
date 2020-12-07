@@ -214,7 +214,7 @@ class DonasiSayaIndex : Fragment() {
                         weekDay[i] as String, dateNow!!, arrayDayDonasi))
                 }
 
-                val myAdapterA = DateDonasiSayaAdapter(arrayDate, requireActivity())
+                val myAdapterA = DateDonasiSayaAdapter(arrayDate, requireContext())
                 //inflate the recycler for Date donasi saya
                 var mainMenuA = view.findViewById(R.id.recyclerDonasiSayaDate) as RecyclerView
                 mainMenuA.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
