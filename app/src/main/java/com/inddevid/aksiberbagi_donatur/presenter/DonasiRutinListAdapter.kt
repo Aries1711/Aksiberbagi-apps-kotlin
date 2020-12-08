@@ -2,9 +2,12 @@ package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
 import android.graphics.Color
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -72,7 +75,21 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
         val sharedPreference: Preferences = Preferences(holder.itemView.context)
         holder.itemView.setOnClickListener{
             val model = arrayList[position]
+            dialogPanel(model.idDonasi.toString(), holder.itemView.context)
+        }
+    }
 
+    private fun dialogPanel( id: String, context: Context){
+        var dialog = DialogDonasiRutinList(id)
+        val fragment = getFragmentManager(context)
+        fragment!!.let { dialog.show(it, "dialogBatal") }
+    }
+
+    fun getFragmentManager(context: Context?): FragmentManager? {
+        return when (context) {
+            is AppCompatActivity -> context.supportFragmentManager
+            is ContextThemeWrapper -> getFragmentManager(context.baseContext)
+            else -> null
         }
     }
 }

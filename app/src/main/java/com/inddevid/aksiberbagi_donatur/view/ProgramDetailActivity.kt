@@ -894,7 +894,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                         val donasiDonatur: Double? =
                             item?.getString("tbldonasi_nominal")!!.toDouble()
                         val doaDonatur: String? = item?.getString("tbldonasi_doa")
-                        val waktuDonasi: String? = item?.getString("tbldonasi_tglinsert")
+                        val waktuDonasi: String? = item?.getString("waktu_donasi")
                         arrayDonatur.add(
                             ListDonasi(
                                 img,
@@ -919,7 +919,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                         val donasiDonatur: Double? =
                             item?.getString("tbldonasi_nominal")!!.toDouble()
                         val doaDonatur: String? = item?.getString("tbldonasi_doa")
-                        val waktuDonasi: String? = item?.getString("tbldonasi_tglinsert")
+                        val waktuDonasi: String? = item?.getString("waktu_donasi")
                         arrayDonaturDialog.add(
                             ListDonasi(
                                 img,

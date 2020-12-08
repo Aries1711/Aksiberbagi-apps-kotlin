@@ -25,7 +25,7 @@ class ListDonasiAdapter (val arrayList: ArrayList<ListDonasi>, val context: Cont
             Glide.with(itemView.imageDonatur.context).load(model.imgDonatur).apply(options).into(itemView.imageDonatur)
             itemView.nameDonatur.text = model.name
             itemView.amountDonatur.text = Converter.rupiah(model.donate)
-            if (model.pray == ""){
+            if (model.pray == "" || model.pray == "null" || model.pray == null){
                hidden(itemView.prayDonatur)
             }else{
                 itemView.prayDonatur.text = model.pray
