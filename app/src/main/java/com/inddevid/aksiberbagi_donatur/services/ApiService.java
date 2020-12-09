@@ -87,7 +87,7 @@ public class ApiService {
         }
         return AndroidNetworking.post(endpoint)
                 .addJSONObjectBody(data)
-                .addHeaders("Accept", "application/json").build();
+                .addHeaders("Accept", "application/json").addHeaders("Authorization", "Bearer "+ token).build();
     }
 
     public static ANRequest getKoneksi(String data){
@@ -223,6 +223,12 @@ public class ApiService {
         return post(endpoint, data);
     }
 
+    public static ANRequest deleteFavorit(String auth,  String data){
+        token = auth ;
+        String endpoint = baseUrl("program/favorit/"+ data);
+        return delete(endpoint);
+    }
+
     public static ANRequest getDonasiSaya(String data){
         token = data;
         String endpoint = baseUrl("donasi/saya");
@@ -241,10 +247,18 @@ public class ApiService {
         return post(endpoint, data);
     }
 
+    public static ANRequest deleteDonasiRutin(String auth,  String data){
+        token = auth ;
+        String endpoint = baseUrl("donasi-rutin/delete/"+ data);
+        return delete(endpoint);
+    }
+
     public static ANRequest putProfil(String auth,  JSONObject data){
         token = auth ;
         String endpoint = baseUrl("pengguna/saya");
         return put(endpoint, data);
     }
+
+
 
 }

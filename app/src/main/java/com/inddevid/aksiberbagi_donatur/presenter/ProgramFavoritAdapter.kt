@@ -2,9 +2,15 @@ package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androchef.happytimer.utils.extensions.invisible
 import com.bumptech.glide.Glide
@@ -77,5 +83,36 @@ class ProgramFavoritAdapter(val arrayList: ArrayList<BerandaProgramAll>, val con
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
             context.startActivity(mIntent)
         }
+
+        holder.itemView.setOnLongClickListener {
+            val model = arrayList[position]
+            dialogPanel(model.id.toString(), holder.itemView.context)
+            holder.itemView.context.vibratePhone()
+            return@setOnLongClickListener true
+        }
     }
+
+    private fun dialogPanel(id: String, context: Context){
+        var dialog = DialogFavoritSaya(id)
+        val fragment = getFragmentManager(context)
+        fragment!!.let { dialog.show(it, "dialogBatal") }
+    }
+
+    fun getFragmentManager(context: Context?): FragmentManager? {
+        return when (context) {
+            is AppCompatActivity -> context.supportFragmentManager
+            is ContextThemeWrapper -> getFragmentManager(context.baseContext)
+            else -> null
+        }
+    }
+
+    fun Context.vibratePhone() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
+        }
+    }
+
 }

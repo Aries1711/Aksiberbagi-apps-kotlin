@@ -2,6 +2,9 @@ package com.inddevid.aksiberbagi_donatur.presenter
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +19,7 @@ import com.inddevid.aksiberbagi_donatur.model.ModelDonasiRutin
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 import kotlinx.android.synthetic.main.card_donasi_rutin.view.*
 import kotlinx.android.synthetic.main.card_donasi_saya.view.donasiStatusframe
+
 
 class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val context: Context) :
     RecyclerView.Adapter<DonasiRutinListAdapter.ViewHolder>() {
@@ -61,7 +65,11 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.card_donasi_rutin, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(
+            R.layout.card_donasi_rutin,
+            parent,
+            false
+        )
         return DonasiRutinListAdapter.ViewHolder(v)
     }
 
@@ -73,13 +81,16 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
         holder.bindItems(arrayList[position])
 
         val sharedPreference: Preferences = Preferences(holder.itemView.context)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnLongClickListener{
             val model = arrayList[position]
+//            val activity = getActivity(holder.itemView.context)
             dialogPanel(model.idDonasi.toString(), holder.itemView.context)
+            holder.itemView.context.vibratePhone()
+            return@setOnLongClickListener true
         }
     }
 
-    private fun dialogPanel( id: String, context: Context){
+    private fun dialogPanel(id: String, context: Context){
         var dialog = DialogDonasiRutinList(id)
         val fragment = getFragmentManager(context)
         fragment!!.let { dialog.show(it, "dialogBatal") }
@@ -90,6 +101,28 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
             is AppCompatActivity -> context.supportFragmentManager
             is ContextThemeWrapper -> getFragmentManager(context.baseContext)
             else -> null
+        }
+    }
+
+//    private fun getActivity(context: Context?): Activity? {
+//        if (context == null) {
+//            return null
+//        } else if (context is ContextWrapper) {
+//            return if (context is Activity) {
+//                context
+//            } else {
+//                getActivity((context as ContextWrapper).baseContext)
+//            }
+//        }
+//        return null
+//    }
+
+    fun Context.vibratePhone() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
         }
     }
 }

@@ -13,24 +13,23 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.ApiService
 import com.inddevid.aksiberbagi_donatur.services.Preferences
-import com.inddevid.aksiberbagi_donatur.view.DonasiRutinActivity
+import com.inddevid.aksiberbagi_donatur.view.DashboardActivity
 import kotlinx.android.synthetic.main.dialog_donasi_rutin_list.view.*
 import org.json.JSONObject
 
-
-class DialogDonasiRutinList(val idDonasi: String) : DialogFragment() {
-    private val TAG = "Dialog Hapus Donasi Rutin"
+class DialogFavoritSaya (val idDonasi: String) : DialogFragment() {
+    private val TAG = "Dialog Hapus favorit"
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rootView: View = inflater.inflate(R.layout.dialog_donasi_rutin_list, container, false)
+        var rootView: View = inflater.inflate(R.layout.dialog_favorit_saya, container, false)
         val sharedPreference: Preferences = Preferences(requireContext())
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         rootView.btnHapusDonasiRutin.setOnClickListener{
-            deleteDonasiRutin(retrivedToken, idDonasi, rootView)
+            deleteFavoritSaya(retrivedToken, idDonasi, rootView)
         }
         rootView.btnCancelHapus.setOnClickListener {
             dismiss()
@@ -39,22 +38,26 @@ class DialogDonasiRutinList(val idDonasi: String) : DialogFragment() {
         return rootView
     }
 
-    private fun deleteDonasiRutin(tokenValue: String?, idRutin: String, view: View){
-        ApiService.deleteDonasiRutin(tokenValue, idRutin).getAsJSONObject(object :
+    private fun deleteFavoritSaya(tokenValue: String?, idRutin: String, view: View){
+        ApiService.deleteFavorit(tokenValue, idRutin).getAsJSONObject(object :
             JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if (response?.getString("message").equals("Donasi rutin berhasil di hapus")) {
+                if(response?.getString("message").equals("Program favorit saya berhasil dihapus")){
                     val toast = Toast.makeText(
                         requireContext(),
-                        "Data Donasi rutin berhasil di hapus",
+                        "Program favorit saya berhasil dihapus",
                         Toast.LENGTH_LONG
                     )
                     toast.show()
-                    startActivity(Intent(requireActivity(), DonasiRutinActivity::class.java))
-                } else if (response?.getString("message").equals("Data Donasi rutin tidak valid")) {
+                    val mIntent = Intent(requireContext(), DashboardActivity::class.java)
+                    val mBundle = Bundle()
+                    mBundle.putString("favoritAktif", "true")
+                    mIntent.putExtras(mBundle)
+                    startActivity(mIntent)
+                }else if(response?.getString("message").equals("Data tidak ditemukan")){
                     val toast = Toast.makeText(
                         requireContext(),
-                        "Maaf, data Donasi rutin tidak valid",
+                        "Maaf, data program tidak valid",
                         Toast.LENGTH_LONG
                     )
                     toast.show()

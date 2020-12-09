@@ -312,6 +312,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         }
     }
 
+
     private fun getDonasiRutinList(tokenValue: String?, context: DonasiRutinActivity){
         ApiService.getDonasiRutin(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
@@ -403,4 +404,9 @@ class DonasiRutinActivity : AppCompatActivity() {
     fun show(view: View){
         view.visibility = View.VISIBLE
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@DonasiRutinActivity, DashboardActivity::class.java))
+    }
+
 }
