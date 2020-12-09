@@ -157,13 +157,13 @@ class BerandaIndex : Fragment() {
         val imageSubC : ImageView = view.findViewById(R.id.subC)
         Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubC)
         imageSubC.setOnClickListener {
-            val toast = Toast.makeText(
-                requireContext(),
-                "Segera",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-//            startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
+//            val toast = Toast.makeText(
+//                requireContext(),
+//                "Segera",
+//                Toast.LENGTH_LONG
+//            )
+//            toast.show()
+            startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
         }
         // tombol sapa kami
         val imageSubD : ImageView = view.findViewById(R.id.subD)
