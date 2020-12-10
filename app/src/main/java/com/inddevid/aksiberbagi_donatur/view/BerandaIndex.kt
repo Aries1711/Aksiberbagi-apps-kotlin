@@ -145,13 +145,13 @@ class BerandaIndex : Fragment() {
         val imageSubB : ImageView = view.findViewById(R.id.subB)
         Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
         imageSubB.setOnClickListener {
-            val toast = Toast.makeText(
-                requireContext(),
-                "Segera",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-//            startActivity(Intent(requireActivity(), ZakatActivity::class.java))
+//            val toast = Toast.makeText(
+//                requireContext(),
+//                "Segera",
+//                Toast.LENGTH_LONG
+//            )
+//            toast.show()
+            startActivity(Intent(requireActivity(), ZakatActivity::class.java))
         }
         // tombol publik ajukan
         val imageSubC : ImageView = view.findViewById(R.id.subC)
