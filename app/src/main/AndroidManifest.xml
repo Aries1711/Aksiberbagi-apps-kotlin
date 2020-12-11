@@ -13,9 +13,11 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+        <activity android:name=".view.KalkulatorActivity"
+            android:theme="@style/AppMaterial"/>
         <activity
             android:name=".view.LupaPasswordActivity"
-            android:theme="@style/AppMaterial"/>
+            android:theme="@style/AppMaterial" />
         <activity
             android:name=".view.NotifikasiActivity"
             android:theme="@style/AppMaterial" />
