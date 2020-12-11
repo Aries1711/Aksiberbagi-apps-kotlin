@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorOrange">#f86048</color>
     <color name="colorPrimary">#15BBDA</color>
     <color name="colorIndicatorPrimary">#FFF</color>
     <color name="colorIndicatorSecondary">#062a66</color>
