@@ -3,18 +3,24 @@ package com.inddevid.aksiberbagi_donatur.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.inddevid.aksiberbagi_donatur.R
+import com.inddevid.aksiberbagi_donatur.services.ApiError
+import com.inddevid.aksiberbagi_donatur.services.ApiService
+import com.inddevid.aksiberbagi_donatur.services.Preferences
+import org.json.JSONObject
 
 class ZakatActivity : AppCompatActivity() {
     private var idProgramZakat : Int = 0
+    private val idPembayaran: ArrayList<Int> = arrayListOf(0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.zakat_activity)
@@ -31,6 +37,10 @@ class ZakatActivity : AppCompatActivity() {
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
+        //deklarasi token
+        val sharedPreference: Preferences = Preferences(this)
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+
         //tombol bayar zakat header dan kalkulator
         val btnBayarZakatHeader: LinearLayout = findViewById(R.id.btnZakatBayar)
         val btnZakatKalkulator: LinearLayout = findViewById(R.id.btnZakatHitung)
@@ -38,6 +48,8 @@ class ZakatActivity : AppCompatActivity() {
         val dialogPembayaran = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view : View = layoutInflater.inflate(R.layout.dialog_donasi_zakat, null)
         dialogPembayaran.setContentView(view)
+
+        val textTitleDialog = view.findViewById<TextView>(R.id.titleDialogDonasiZakat)
 
         btnBayarZakatHeader.setOnClickListener {
             dialogPembayaran.show()
@@ -55,6 +67,7 @@ class ZakatActivity : AppCompatActivity() {
         btnZakatTabungan.setOnClickListener {
             dialogPembayaran.show()
             idProgramZakat = 150
+            textTitleDialog.text = "Masukkan Nominal Zakat Tabungan Anda "
         }
 
 
@@ -64,6 +77,7 @@ class ZakatActivity : AppCompatActivity() {
         btnZakatEmas.setOnClickListener {
             dialogPembayaran.show()
             idProgramZakat = 152
+            textTitleDialog.text = "Masukkan Nominal Zakat Emas Anda "
         }
 
         val imageZakatDagang: ImageView = findViewById(R.id.imageZakatPerdagangan)
@@ -72,6 +86,7 @@ class ZakatActivity : AppCompatActivity() {
         btnZakatPerdagangan.setOnClickListener {
             dialogPembayaran.show()
             idProgramZakat = 151
+            textTitleDialog.text = "Masukkan Nominal Zakat Dagang Anda "
         }
 
         val imageZakatPenghasilan: ImageView = findViewById(R.id.imageZakatPenghasilan)
@@ -80,7 +95,44 @@ class ZakatActivity : AppCompatActivity() {
         btnZakatPenghasilan.setOnClickListener {
             dialogPembayaran.show()
             idProgramZakat = 153
+            textTitleDialog.text = "Masukkan Nominal Zakat Penghasilan Anda "
         }
 
+    }
+
+    private fun getKoneksi(tokenValue: String, context: ZakatActivity, view: View){
+        ApiService.getKoneksi(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+//                getPilihanPembayaran
+            }
+
+            override fun onError(anError: ANError?) {
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if(anError?.errorDetail!!.equals("connectionError")){
+                    val toast = Toast.makeText(
+                        this@ZakatActivity,
+                        "Ada masalah dengan Koneksi Internet Anda",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    return
+                }else{
+//                    refreshToken(tokenValue,view, context)
+                }
+
+            }
+        })
+    }
+
+    private fun getPembayaran(tokenValue: String, context: ZakatActivity, view: View){
+        ApiService.getPembayaran(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onError(anError: ANError?) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 }
