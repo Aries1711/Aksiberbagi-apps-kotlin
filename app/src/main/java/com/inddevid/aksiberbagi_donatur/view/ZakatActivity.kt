@@ -1,5 +1,7 @@
 package com.inddevid.aksiberbagi_donatur.view
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,6 +9,7 @@ import android.os.Looper
 import android.text.Editable
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.ApiError
 import com.inddevid.aksiberbagi_donatur.services.ApiService
@@ -47,9 +51,10 @@ class ZakatActivity : AppCompatActivity() {
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
 
-        //deklarasi token
+        //deklarasi token dan preference
         val sharedPreference: Preferences = Preferences(this)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+        val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
 
         //tombol bayar zakat header dan kalkulator
         val btnBayarZakatHeader: LinearLayout = findViewById(R.id.btnZakatBayar)
@@ -109,6 +114,80 @@ class ZakatActivity : AppCompatActivity() {
 
         }
 
+        val inputNominalZakat = view.findViewById<TextInputEditText>(R.id.nominalZakat)
+        val initialisasiNominal = "0"
+        inputNominalZakat.text = initialisasiNominal.toEditable()
+        inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
+
+        val spinnerPembayaran: Spinner = view.findViewById(R.id.spinnerPilihPembayaran)
+        val textNopembayaran: TextInputLayout = view.findViewById(R.id.noPembayaranLayout)
+        textNopembayaran.visibility = View.GONE
+        var idPembayaran: String = "0"
+        spinnerPembayaran.onItemSelectedListener = object :  AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (arrayIdPembayaran[position] == "0"){
+                    idPembayaran = "0"
+                }else if(arrayIdPembayaran[position] == "1001"){
+                    idPembayaran = arrayIdPembayaran[position]
+                    textNopembayaran.visibility = View.VISIBLE
+                    textNopembayaran.hint = "Masukkan No akun Link Aja"
+                }else if(arrayIdPembayaran[position] == "1002"){
+                    idPembayaran = arrayIdPembayaran[position]
+                    textNopembayaran.visibility = View.VISIBLE
+                    textNopembayaran.hint = "Masukkan No akun Ovo"
+                }else if(arrayIdPembayaran[position] == "1003"){
+                    idPembayaran = arrayIdPembayaran[position]
+                    textNopembayaran.visibility = View.VISIBLE
+                    textNopembayaran.hint = "Masukkan No akun Dana"
+                }else{
+                    idPembayaran = arrayIdPembayaran[position]
+                    textNopembayaran.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        val switchAnonimSet: Switch = view.findViewById(R.id.anonimDonasiBtn)
+        val switchDoaSet: Switch = view.findViewById(R.id.doaDonasiBtn)
+
+
+        if (switchAnonimValue == "T"){
+            switchAnonimSet.isChecked = true
+        }
+
+        switchAnonimSet.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
+            if (message == "Switch1:ON"){
+                sharedPreference.save("ANONIM", "T")
+            }else{
+                sharedPreference.save("ANONIM", "F")
+            }
+        }
+
+        val inputLayoutDoa: TextInputLayout = view.findViewById(R.id.doaDonasi)
+        var doaStatus = ""
+        inputLayoutDoa.visibility = View.GONE
+        switchDoaSet.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
+            if (message == "Switch1:ON"){
+                doaStatus = "True"
+                inputLayoutDoa.visibility = View.VISIBLE
+            }else{
+                doaStatus = "False"
+                inputLayoutDoa.visibility = View.GONE
+                hideSoftKeyboard(this, inputLayoutDoa)
+            }
+        }
+
 
         btnZakatKalkulator.setOnClickListener {
             startActivity(Intent(this@ZakatActivity, KalkulatorActivity::class.java))
@@ -157,14 +236,14 @@ class ZakatActivity : AppCompatActivity() {
             textTitleDialog.text = "Zakat Penghasilan"
         }
 
-        val inputNominalZakat = view.findViewById<TextInputEditText>(R.id.nominalZakat)
-        val initialisasiNominal = "0"
-        inputNominalZakat.text = initialisasiNominal.toEditable()
-        inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
-
 
         getKoneksi( retrivedToken!!, this, view)
 
+    }
+
+    private fun hideSoftKeyboard(context: Context, view: View) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun getKoneksi(tokenValue: String, context: ZakatActivity, view: View){

@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Nominal zakat minimal Rp 1000"
+                android:text="Nominal zakat minimal Rp 10.000"
                 android:textStyle="bold"
                 android:textColor="@color/colorInputPressFalse"
                 android:textSize="12sp"
