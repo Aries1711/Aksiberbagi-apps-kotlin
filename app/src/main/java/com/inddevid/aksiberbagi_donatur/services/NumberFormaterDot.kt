@@ -8,14 +8,17 @@ import com.google.android.material.textfield.TextInputEditText
  * Created by Shreekrishna on 12/14/2014.
  */
 class NumberFormaterDot(var editText: TextInputEditText) : TextWatcher {
-    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { }
     override fun afterTextChanged(s: Editable) {
         try {
             editText.removeTextChangedListener(this)
             val value = editText.text.toString()
+//            val newValue = value.replace("0","")
+//            for(i in 0 until 1){
+//                editText.setText(newValue)
+//            }
             if (value != null && value != "") {
-
                 if (value.startsWith("0")) {
                     editText.setText("")
                 }
@@ -35,7 +38,6 @@ class NumberFormaterDot(var editText: TextInputEditText) : TextWatcher {
 
         fun getDotFormatedValue(value: Double): Editable? {
             var valueFormated = Converter.ribuan(value)
-            println(valueFormated)
             return valueFormated.toEditable()
         }
 

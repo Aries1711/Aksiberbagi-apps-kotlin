@@ -132,6 +132,7 @@ class ZakatActivity : AppCompatActivity() {
         inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
 
         if(statusDialogPembayaranIntent == "aktif"){
+            dialogPembayaran.show()
             if (nominalIntent != "" || nominalIntent != "null" || nominalIntent != null ){
                 inputNominalZakat.text = nominalIntent?.replace(".", "")?.toEditable()
             }
