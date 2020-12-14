@@ -3,6 +3,7 @@ package com.inddevid.aksiberbagi_donatur.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
@@ -91,18 +93,22 @@ class ZakatActivity : AppCompatActivity() {
                 }else if(arrayJenisZakat[position] == "Zakat Tabungan"){
                     idProgramZakat = 150
                     textTitleDialog.text = "Zakat Tabungan"
+                    textTitleDialog.setTextColor(Color.parseColor("#546787"))
                     spinnerJenisZakat.visibility = View.GONE
                 }else if(arrayJenisZakat[position] == "Zakat Emas dan Perak"){
                     idProgramZakat = 152
                     textTitleDialog.text = "Zakat Emas dan Perak"
+                    textTitleDialog.setTextColor(Color.parseColor("#546787"))
                     spinnerJenisZakat.visibility = View.GONE
                 }else if(arrayJenisZakat[position] == "Zakat Perdagangan"){
                     idProgramZakat = 151
                     textTitleDialog.text = "Zakat Perdagangan"
+                    textTitleDialog.setTextColor(Color.parseColor("#546787"))
                     spinnerJenisZakat.visibility = View.GONE
                 }else if(arrayJenisZakat[position] == "Zakat Penghasilan"){
                     idProgramZakat = 153
                     textTitleDialog.text = "Zakat Penghasilan"
+                    textTitleDialog.setTextColor(Color.parseColor("#546787"))
                     spinnerJenisZakat.visibility = View.GONE
                 }
 
@@ -114,14 +120,16 @@ class ZakatActivity : AppCompatActivity() {
 
         }
 
+        val helperNominalZakat = view.findViewById<TextView>(R.id.helperNominal)
         val inputNominalZakat = view.findViewById<TextInputEditText>(R.id.nominalZakat)
         val initialisasiNominal = "0"
         inputNominalZakat.text = initialisasiNominal.toEditable()
         inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
 
         val spinnerPembayaran: Spinner = view.findViewById(R.id.spinnerPilihPembayaran)
-        val textNopembayaran: TextInputLayout = view.findViewById(R.id.noPembayaranLayout)
-        textNopembayaran.visibility = View.GONE
+        val textNoPembayaranLayout: TextInputLayout = view.findViewById(R.id.noPembayaranLayout)
+        val textNoPembayaranInput: TextInputEditText = view.findViewById(R.id.noPembayaran)
+        textNoPembayaranLayout.visibility = View.GONE
         var idPembayaran: String = "0"
         spinnerPembayaran.onItemSelectedListener = object :  AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
@@ -134,19 +142,19 @@ class ZakatActivity : AppCompatActivity() {
                     idPembayaran = "0"
                 }else if(arrayIdPembayaran[position] == "1001"){
                     idPembayaran = arrayIdPembayaran[position]
-                    textNopembayaran.visibility = View.VISIBLE
-                    textNopembayaran.hint = "Masukkan No akun Link Aja"
+                    textNoPembayaranLayout.visibility = View.VISIBLE
+                    textNoPembayaranLayout.hint = "Masukkan No akun Link Aja"
                 }else if(arrayIdPembayaran[position] == "1002"){
                     idPembayaran = arrayIdPembayaran[position]
-                    textNopembayaran.visibility = View.VISIBLE
-                    textNopembayaran.hint = "Masukkan No akun Ovo"
+                    textNoPembayaranLayout.visibility = View.VISIBLE
+                    textNoPembayaranLayout.hint = "Masukkan No akun Ovo"
                 }else if(arrayIdPembayaran[position] == "1003"){
                     idPembayaran = arrayIdPembayaran[position]
-                    textNopembayaran.visibility = View.VISIBLE
-                    textNopembayaran.hint = "Masukkan No akun Dana"
+                    textNoPembayaranLayout.visibility = View.VISIBLE
+                    textNoPembayaranLayout.hint = "Masukkan No akun Dana"
                 }else{
                     idPembayaran = arrayIdPembayaran[position]
-                    textNopembayaran.visibility = View.GONE
+                    textNoPembayaranLayout.visibility = View.GONE
                 }
             }
 
@@ -174,6 +182,8 @@ class ZakatActivity : AppCompatActivity() {
         }
 
         val inputLayoutDoa: TextInputLayout = view.findViewById(R.id.doaDonasi)
+        val inputDoa: TextInputEditText = view.findViewById(R.id.doaDonatur)
+
         var doaStatus = ""
         inputLayoutDoa.visibility = View.GONE
         switchDoaSet.setOnCheckedChangeListener { _, isChecked ->
@@ -239,11 +249,206 @@ class ZakatActivity : AppCompatActivity() {
 
         getKoneksi( retrivedToken!!, this, view)
 
+
+        //button lanjut pembayaran untuk ke invoice
+        val btnPembayaran : Button = view.findViewById(R.id.donasiLanjutPembayaran)
+        btnPembayaran.setOnClickListener {
+            var doaDonasi : String = ""
+            if (doaStatus == "True"){
+                doaDonasi = inputDoa.text.toString()
+            }
+
+            if (idPembayaran == "1001"){
+                val noLinkAja = textNoPembayaranInput.text?.toString()
+                sharedPreference.save("penggunaLinkAja", noLinkAja)
+            }else if(idPembayaran == "1002"){
+                val noOvo = textNoPembayaranInput.text?.toString()
+                sharedPreference.save("penggunaOvo", noOvo)
+            }else if(idPembayaran == "1003"){
+                val noDana = textNoPembayaranInput.text?.toString()
+                sharedPreference.save("penggunaDana", noDana)
+            }
+
+            val nominalZakat = inputNominalZakat.text.toString().replace(".", "")
+
+
+            if(idProgramZakat == 0){
+                textTitleDialog.text = "Mohon pilih jenis zakat anda"
+                textTitleDialog.setTextColor(Color.parseColor("#ed2a18"))
+                return@setOnClickListener
+            }
+
+            if(nominalZakat.toInt() < 9999 ){
+                helperNominalZakat.setTextColor(Color.parseColor("#ed2a18"))
+                return@setOnClickListener
+            }
+
+            sharedPreference.save("donasiProgramId", idProgramZakat.toString())
+            sharedPreference.save("donasiPembayaranId", idPembayaran)
+            sharedPreference.save("donasiNominal", nominalZakat.toInt())
+            sharedPreference.save("donasiDoa", doaDonasi)
+            postDonasiZakat(retrivedToken, this@ZakatActivity)
+        }
+
     }
 
     private fun hideSoftKeyboard(context: Context, view: View) {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun postDonasiZakat(tokenValue: String, context: ZakatActivity){
+        val body = JSONObject()
+        val inputNoLayout = context.findViewById<TextInputLayout>(R.id.noPembayaranLayout)
+        val sharedPreference: Preferences = Preferences(this)
+        body.put("program_id", sharedPreference.getValueString("donasiProgramId"))
+        body.put("metode_pembayaran_id", sharedPreference.getValueString("donasiPembayaranId"))
+        body.put("nominal", sharedPreference.getValueInt("donasiNominal"))
+        body.put("pesan_doa", sharedPreference.getValueString("donasiDoa"))
+        body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
+        body.put("is_android", true)
+        body.put("no_wa", sharedPreference.getValueString("penggunaWA"))
+        body.put("email", sharedPreference.getValueString("penggunaEmail"))
+        body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
+        body.put("kode_negara_no_hp", sharedPreference.getValueString("penggunaKodeNegara"))
+        body.put("panggilan", sharedPreference.getValueString("penggunaPanggilan"))
+        body.put("influencer_id", null)
+        body.put("no_link_aja", sharedPreference.getValueString("penggunaLinkAja"))
+        body.put("no_ovo", sharedPreference.getValueString("penggunaOvo"))
+        body.put("no_dana", sharedPreference.getValueString("penggunaDana"))
+        body.put("nominal_flash_sale_id", null)
+        ApiService.postDonasi(tokenValue, body).getAsJSONObject(object :JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if (response?.getString("message").equals("Donasi berhasil diproses")) {
+                    val data: JSONObject? = response?.getJSONObject("data")
+                    val eWallet = data?.getString("isEwallet")
+                    if (eWallet == "false") {
+                        val dataDonasi = data?.getJSONObject("donasi")
+                        sharedPreference.save(
+                            "invoiceNominal",
+                            dataDonasi?.getString("tbldonasi_nominal")
+                        )
+                        sharedPreference.save(
+                            "invoiceKodeUnik",
+                            dataDonasi?.getString("tbldonasi_nourut")
+                        )
+                        sharedPreference.save(
+                            "invoiceKode",
+                            dataDonasi?.getString("tbldonasi_invoice")
+                        )
+                        val dataDonasiBank = dataDonasi?.getJSONObject("bank")
+                        sharedPreference.save(
+                            "invoiceBank",
+                            dataDonasiBank?.getString("tblbank_nama")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankAN",
+                            dataDonasiBank?.getString("tblbank_namapemilik")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankUrl",
+                            dataDonasiBank?.getString("logo_url")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankRekening",
+                            dataDonasiBank?.getString("tblbank_rekening")
+                        )
+                        val dataDonasiProgram = dataDonasi?.getJSONObject("program")
+                        sharedPreference.save(
+                            "invoiceProgramJudul",
+                            dataDonasiProgram?.getString("tblprogram_judul")
+                        )
+                        startActivity(
+                            Intent(
+                                this@ZakatActivity,
+                                InvoiceActivity::class.java
+                            )
+                        )
+                    } else {
+                        val midtransStatus = data?.getString("midtrans")
+                        val xenditStatus = data?.getString("xendit")
+                        val faspayStatus = data?.getString("faspay")
+                        var redirectUrl: String? = ""
+                        if (midtransStatus == "null" && faspayStatus == "null") {
+                            val xendit = data?.getJSONObject("xendit")
+                            redirectUrl = xendit?.getString("redirect_url")
+                        } else if(xenditStatus == "null" && faspayStatus == "null"){
+                            val midtrans = data?.getJSONObject("midtrans")
+                            redirectUrl = midtrans?.getString("redirect_url")
+                        } else if(xenditStatus == "null" && midtransStatus == "null"){
+                            val faspay = data?.getJSONObject("faspay")
+                            redirectUrl = faspay?.getString("deeplink")
+                        }
+                        val dataDonasi = data?.getJSONObject("donasi")
+                        sharedPreference.save("invoiceUrl", redirectUrl)
+                        sharedPreference.save(
+                            "invoiceNominal",
+                            dataDonasi?.getString("tbldonasi_nominal")
+                        )
+                        sharedPreference.save(
+                            "invoiceKodeUnik",
+                            dataDonasi?.getString("tbldonasi_nourut")
+                        )
+                        sharedPreference.save(
+                            "invoiceKode",
+                            dataDonasi?.getString("tbldonasi_invoice")
+                        )
+                        val dataDonasiBank = dataDonasi?.getJSONObject("bank")
+                        sharedPreference.save(
+                            "invoiceBank",
+                            dataDonasiBank?.getString("tblbank_nama")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankAN",
+                            dataDonasiBank?.getString("tblbank_namapemilik")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankUrl",
+                            dataDonasiBank?.getString("logo_url")
+                        )
+                        sharedPreference.save(
+                            "invoiceBankRekening",
+                            dataDonasiBank?.getString("tblbank_rekening")
+                        )
+                        val dataDonasiProgram = dataDonasi?.getJSONObject("program")
+                        sharedPreference.save(
+                            "invoiceProgramJudul",
+                            dataDonasiProgram?.getString("tblprogram_judul")
+                        )
+                        startActivity(
+                            Intent(
+                                this@ZakatActivity,
+                                WebviewInvoiceActivity::class.java
+                            )
+                        )
+                    }
+                }
+
+            }
+
+            override fun onError(anError: ANError?) {
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if (apiError?.message == "Silakan masukkan no ovo yang valid dan sudah terdaftar") {
+                    val toast = Toast.makeText(
+                        this@ZakatActivity,
+                        "Silakan masukkan no ovo yang valid dan sudah terdaftar",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    inputNoLayout.requestFocus()
+                    inputNoLayout.boxStrokeColor = ContextCompat.getColor(
+                        this@ZakatActivity,
+                        R.color.error_color
+                    )
+                    inputNoLayout.helperText =
+                        "Silakan masukkan no ovo yang valid dan sudah terdaftar"
+                }
+                Log.d(TAG, "OnErrorProsesDonasiBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorProsesDonasiCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorProsesDonasiDetail " + anError?.errorDetail)
+            }
+        })
+
     }
 
     private fun getKoneksi(tokenValue: String, context: ZakatActivity, view: View){

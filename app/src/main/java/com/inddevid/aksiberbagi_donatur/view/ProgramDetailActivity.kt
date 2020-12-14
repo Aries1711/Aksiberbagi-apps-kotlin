@@ -470,7 +470,6 @@ class ProgramDetailActivity : AppCompatActivity() {
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)
                 sharedPreference.save("donasiDoa", doaDonatur)
                 postDonasiDonatur(retrivedToken, textNoLayout)
-//                startActivity(Intent(this@ProgramDetailActivity, WebviewInvoiceActivity::class.java))
             }
         }
 
