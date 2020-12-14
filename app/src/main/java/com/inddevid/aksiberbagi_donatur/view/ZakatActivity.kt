@@ -57,6 +57,10 @@ class ZakatActivity : AppCompatActivity() {
         val sharedPreference: Preferences = Preferences(this)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
         val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
+        var statusDialogPembayaranIntent: String? = intent.getStringExtra("dialogPembayaran")
+        var nominalIntent: String? = intent.getStringExtra("nominalZakatKalkulator")
+        var idZakatIntent: String? = intent.getStringExtra("idZakatKalkulator")
+        var jenisIntent: String? = intent.getStringExtra("jenisZakatKalkulator")
 
         //tombol bayar zakat header dan kalkulator
         val btnBayarZakatHeader: LinearLayout = findViewById(R.id.btnZakatBayar)
@@ -65,6 +69,7 @@ class ZakatActivity : AppCompatActivity() {
         val dialogPembayaran = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view : View = layoutInflater.inflate(R.layout.dialog_donasi_zakat, null)
         dialogPembayaran.setContentView(view)
+
 
         val spinnerJenisZakat : Spinner = view.findViewById(R.id.spinnerJenisZakat)
         val textTitleDialog = view.findViewById<TextView>(R.id.titleDialogDonasiZakat)
@@ -125,6 +130,20 @@ class ZakatActivity : AppCompatActivity() {
         val initialisasiNominal = "0"
         inputNominalZakat.text = initialisasiNominal.toEditable()
         inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
+
+        if(statusDialogPembayaranIntent == "aktif"){
+            if (nominalIntent != "" || nominalIntent != "null" || nominalIntent != null ){
+                inputNominalZakat.text = nominalIntent?.replace(".", "")?.toEditable()
+            }
+
+            if (idZakatIntent != "" || idZakatIntent != "null" || idZakatIntent != null ){
+                idProgramZakat = idZakatIntent!!.toInt()
+            }
+
+            if (jenisIntent != "" || jenisIntent != "null" || jenisIntent != null){
+                textTitleDialog.text = "Zakat $jenisIntent"
+            }
+        }
 
         val spinnerPembayaran: Spinner = view.findViewById(R.id.spinnerPilihPembayaran)
         val textNoPembayaranLayout: TextInputLayout = view.findViewById(R.id.noPembayaranLayout)
@@ -593,6 +612,10 @@ class ZakatActivity : AppCompatActivity() {
                 Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
             }
         })
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@ZakatActivity , DashboardActivity::class.java))
     }
 
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
