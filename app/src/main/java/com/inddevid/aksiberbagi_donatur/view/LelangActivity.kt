@@ -2,19 +2,25 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import com.androchef.happytimer.countdowntimer.DynamicCountDownView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 
+
 class LelangActivity : AppCompatActivity() {
+    private val TAG = "Lelang Activity Scroll"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lelang_activity)
@@ -32,11 +38,48 @@ class LelangActivity : AppCompatActivity() {
         val nominalLelang = sharedPreference.getValueString("nominalLelang")
         val idLelangProgram = sharedPreference.getValueString("idLelangProgram")
         val judulLelangProgram = sharedPreference.getValueString("judulLelangProgram")
-        val toolbar: Toolbar = findViewById(R.id.upAppbarLelang)
-        toolbar.title = "Lelang Baik"
-        toolbar.bringToFront()
-        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
-        toolbar.setNavigationOnClickListener{ startActivity(Intent(this@LelangActivity, DashboardActivity::class.java))}
+        val toolbarLelang : Toolbar = findViewById(R.id.toolbarLelang)
+        toolbarLelang.bringToFront()
+        val btnBack: LinearLayout = findViewById(R.id.backLelangBtn)
+        val btnShare: LinearLayout = findViewById(R.id.shareLelangBtn)
+        val btnOption: LinearLayout = findViewById(R.id.opsiLelangBtn)
+        val layoutScroll : NestedScrollView = findViewById(R.id.layoutLelangKonten)
+        layoutScroll.viewTreeObserver.addOnScrollChangedListener {
+            val scrollY: Int = layoutScroll.scrollY
+            if (scrollY >= 1020){
+                toolbarLelang.setBackgroundColor(ContextCompat.getColor(this, R.color.colorInputStrokeBlue))
+                btnBack.background = ContextCompat.getDrawable(this, R.drawable.background_transparent)
+                btnShare.background = ContextCompat.getDrawable(this, R.drawable.background_transparent)
+                btnOption.background = ContextCompat.getDrawable(this, R.drawable.background_transparent)
+            }else{
+                toolbarLelang.background = ContextCompat.getDrawable(this, R.drawable.background_transparent)
+                btnBack.background = ContextCompat.getDrawable(this, R.drawable.btn_toolbar_active)
+                btnShare.background = ContextCompat.getDrawable(this, R.drawable.btn_toolbar_active)
+                btnOption.background = ContextCompat.getDrawable(this, R.drawable.btn_toolbar_active)
+            }
+            Log.d(TAG, "scrollY: $scrollY")
+        }
+
+        btnBack.setOnClickListener {
+            startActivity(Intent(this@LelangActivity, DashboardActivity::class.java))
+        }
+
+        btnShare.setOnClickListener {
+            val shareIntent = Intent()
+            val pesan = "Yuk ikutan lelang baik Aksiberbagi.com, Bagikan kemulian dengan lelang baik"
+            val urlProgram = "https://aksiberbagi.com/lelang-baik"
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, pesan)
+            shareIntent.putExtra(Intent.EXTRA_TEXT, urlProgram)
+            shareIntent.type = "text/plain"
+            shareIntent.addFlags(
+                Intent.FLAG_ACTIVITY_NO_HISTORY or
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+            )
+            startActivity(Intent.createChooser(shareIntent, "Bagikan flashsale dengan kemulian bersedekah"))
+        }
+
 
         val imageLelang : ImageView = findViewById(R.id.toolbarImage)
         Glide.with(this).load(urlImage).apply(options).into(imageLelang)

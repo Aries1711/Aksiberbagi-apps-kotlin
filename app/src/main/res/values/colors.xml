@@ -9,6 +9,7 @@
     <color name="colorTextSecondary">#546787</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorToolbarBtnLelang">#F8C2AD</color>
     <color name="colorInputStrokeBlue">#15BBDA</color>
     <color name="colorInputPressFalse">#86b4ba</color>
     <color name="colorBtnChecked">#3cc3f0</color>
