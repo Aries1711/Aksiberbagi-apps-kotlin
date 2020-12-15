@@ -135,7 +135,7 @@ public class ApiService {
 
     public static ANRequest getLelang(String data){
         token = data;
-        String endpoint = baseUrl("flashsale/hari-ini");
+        String endpoint = baseUrl("flashsale/");
         return get(endpoint);
     }
 

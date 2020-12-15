@@ -130,10 +130,81 @@ class KalkulatorActivity : AppCompatActivity() {
             hasilAwal= (penghasilanPokok.toInt() + penghasilanBonus.toInt() - penghasilanPengeluaran.toInt())
             var statusZakat = "Tidak wajib"
             if(hasilAwal >= 5720000){
-                statusZakat = "Wajib"
+                statusZakat = "Wajib Membayar"
             }
             var dialog = DialogHasilKalkulatorZakat("153", "Penghasilan", hasilAkhir.toString(), statusZakat)
             supportFragmentManager.let { dialog.show(it, "dialogDonasiZakat") }
+        }
+        
+        btnSubmitPerdagangan.setOnClickListener{
+            var modal = inputModalPerdagangan.text.toString().replace(".","")
+            if(modal == ""){
+                modal = "0"
+            }
+
+            var keuntungan = inputKeuntunganPerdagangan.text.toString().replace(".","")
+            if(keuntungan == ""){
+                keuntungan = "0"
+            }
+
+            var piutang = inputPiutangPerdagangan.text.toString().replace(".", "")
+            if (piutang == ""){
+                piutang = "0"
+            }
+
+            var hutang = inputHutangPerdagangan.text.toString().replace(".","")
+            if (hutang == ""){
+                hutang ="0"
+            }
+
+            var kerugian = inputKerugianPerdagangan.text.toString().replace(".","")
+            if (kerugian == ""){
+                kerugian = "0"
+            }
+
+            var hasilAwal = 0
+            hasilAwal = (modal.toInt() + keuntungan.toInt()) - (hutang.toInt() + kerugian.toInt())
+            var hasilAkhir = 0
+            hasilAkhir = (hasilAwal * 0.025).toInt()
+            var statusZakat = "Tidak wajib"
+            if(hasilAwal >= 78200000){
+                statusZakat = "Wajib Membayar"
+            }
+
+            var dialog = DialogHasilKalkulatorZakat("151", "Perdagangan", hasilAkhir.toString(), statusZakat)
+            supportFragmentManager.let { dialog.show(it, "dialogDonasiZakat") }
+        }
+
+        btnSubmitEmas.setOnClickListener {
+            var beratEmas = inputEmas.text.toString().replace(".","")
+            if (beratEmas == ""){
+                beratEmas = "0"
+            }
+            var statusZakat = "Tidak wajib"
+            if (beratEmas.toInt() >= 85 ){
+                statusZakat = "Wajib Membayar"
+            }
+            var hasilAkhir = 0
+            hasilAkhir = ((beratEmas.toInt() * 920000) * 0.025).toInt()
+            var dialog = DialogHasilKalkulatorZakat("152", "Emas dan Perak", hasilAkhir.toString(), statusZakat)
+            supportFragmentManager.let { dialog.show(it, "dialogDonasiZakat") }
+        }
+
+        btnSubmitTabungan.setOnClickListener {
+            var tabungan = inputTabungan.text.toString().replace(".", "")
+            if (tabungan == ""){
+                tabungan = "0"
+            }
+
+            var statusZakat = "Tidak wajib"
+            if (tabungan.toInt() >= 78200000 ){
+                statusZakat = "Wajib Membayar"
+            }
+            var hasilAkhir = 0
+            hasilAkhir = (tabungan.toInt() * 0.0025).toInt()
+            var dialog = DialogHasilKalkulatorZakat("150", "Tabungan", hasilAkhir.toString(), statusZakat)
+            supportFragmentManager.let { dialog.show(it, "dialogDonasiZakat") }
+
         }
 
 

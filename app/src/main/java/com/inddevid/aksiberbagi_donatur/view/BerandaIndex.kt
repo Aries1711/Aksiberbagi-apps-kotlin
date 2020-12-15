@@ -316,11 +316,16 @@ class BerandaIndex : Fragment() {
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
                             val nominalItem = item?.getJSONObject("nominal")
+                            val idLelang :String? = item?.getString("id")
+                            val judulLelang: String? = item?.getString("nama_flash_sale")
                             val img: String? = item?.getString("gambar_url")
                             val nominal: Double? =
                                 nominalItem?.getString("nominal_flash_sale")!!.toDouble()
                             val stok: String? = item?.getString("stok")
-                            arrayLelang.add(BerandaLelang(img, stok?.toInt(), nominal))
+                            val dataProgram = item?.getJSONObject("program")
+                            val idLelangProgram = dataProgram?.getString("tblprogram_id")
+                            val judulLelangProgram = dataProgram?.getString("tblprogram_judul")
+                            arrayLelang.add(BerandaLelang(idLelang,judulLelang ,img, stok?.toInt(), nominal, idLelangProgram, judulLelangProgram))
                         }
                         val myAdapterLelang = BerandaLelangAdapter(arrayLelang, requireActivity())
                         view.layoutManager = LinearLayoutManager(
