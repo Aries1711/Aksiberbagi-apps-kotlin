@@ -139,6 +139,12 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getLelangNominal(String data, String Id){
+        token = data;
+        String endpoint = baseUrl("flashsale/nominal/"+ Id);
+        return get(endpoint);
+    }
+
     public static ANRequest getRekomendasi(String data){
         token = data ;
         String endpoint = baseUrl("slider/rekomendasi");

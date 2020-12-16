@@ -133,36 +133,19 @@ class BerandaIndex : Fragment() {
         val imageSubA : ImageView = view.findViewById(R.id.subA)
         Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubA)
         imageSubA.setOnClickListener {
-            val toast = Toast.makeText(
-                requireContext(),
-                "Segera",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-//            startActivity(Intent(requireActivity(), LelangActivity::class.java))
-            }
+            startActivity(Intent(requireActivity(), LelangListActivity::class.java))
+        }
+
         // tombol zakat
         val imageSubB : ImageView = view.findViewById(R.id.subB)
         Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
         imageSubB.setOnClickListener {
-//            val toast = Toast.makeText(
-//                requireContext(),
-//                "Segera",
-//                Toast.LENGTH_LONG
-//            )
-//            toast.show()
             startActivity(Intent(requireActivity(), ZakatActivity::class.java))
         }
         // tombol publik ajukan
         val imageSubC : ImageView = view.findViewById(R.id.subC)
         Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubC)
         imageSubC.setOnClickListener {
-//            val toast = Toast.makeText(
-//                requireContext(),
-//                "Segera",
-//                Toast.LENGTH_LONG
-//            )
-//            toast.show()
             startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
         }
         // tombol sapa kami
@@ -187,6 +170,12 @@ class BerandaIndex : Fragment() {
         val shimmerLayout: ShimmerFrameLayout = view.findViewById(R.id.shimmerBeranda)
         shimmerLayout.startShimmer()
         getKoneksi(retrivedToken, view)
+
+        val btnLihatLelang : Button = view.findViewById(R.id.lihatSemuaLelang)
+        btnLihatLelang.setOnClickListener {
+            startActivity(Intent(requireActivity(), LelangListActivity::class.java))
+        }
+
 
         //set button lihat semua
         val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
