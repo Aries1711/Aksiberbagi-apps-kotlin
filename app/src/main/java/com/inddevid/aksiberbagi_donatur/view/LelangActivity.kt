@@ -49,6 +49,8 @@ class LelangActivity : AppCompatActivity() {
         val idLelang = sharedPreference.getValueString("idLelang")
         val judulLelang = sharedPreference.getValueString("judulLelang")
         val urlImage = sharedPreference.getValueString("imgLelang")
+        val terdonasikan = sharedPreference.getValueString("terdonasiLelang")
+
         val nominalLelang = sharedPreference.getValueString("nominalLelang")
         val idLelangProgram = sharedPreference.getValueString("idLelangProgram")
         val judulLelangProgram = sharedPreference.getValueString("judulLelangProgram")
@@ -98,7 +100,9 @@ class LelangActivity : AppCompatActivity() {
         val imageLelang : ImageView = findViewById(R.id.toolbarImage)
         Glide.with(this).load(urlImage).apply(options).into(imageLelang)
         val nominalText : TextView = findViewById(R.id.nominalText)
-        nominalText.text = nominalLelang
+        nominalText.text = "$nominalLelang Paket terdonasikan"
+        val textTerdonasikan : TextView = findViewById(R.id.terdonasikanJumlahText)
+        textTerdonasikan.text = terdonasikan
 
         val countDown: DynamicCountDownView = findViewById(R.id.normalCountDownLelang)
         countDown.timerTextBackgroundTintColor = ContextCompat.getColor(

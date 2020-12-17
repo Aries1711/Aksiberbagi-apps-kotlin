@@ -112,11 +112,12 @@ class LelangListActivity : AppCompatActivity() {
                             val img: String? = item?.getString("gambar_url")
                             val nominal: Double? =
                                 nominalItem?.getString("nominal_flash_sale")!!.toDouble()
-                            val stok: String? = item?.getString("stok")
+                            val stokSekarang: String? = item?.getString("stok")
+                            val stokAwal: String? = item?.getString("stok_awal")
                             val dataProgram = item?.getJSONObject("program")
                             val idLelangProgram = dataProgram?.getString("tblprogram_id")
                             val judulLelangProgram = dataProgram?.getString("tblprogram_judul")
-                            arrayListLelang.add(BerandaLelang(idLelang,judulLelang ,img, stok?.toInt(), nominal, idLelangProgram, judulLelangProgram))
+                            arrayListLelang.add(BerandaLelang(idLelang,judulLelang ,img, stokSekarang?.toInt(), stokAwal?.toInt(), nominal,"" , idLelangProgram, judulLelangProgram))
                         }
                         val myAdapterLelang = ListLelangAdapter(arrayListLelang, this@LelangListActivity)
                         val viewLelang = context.findViewById<RecyclerView>(R.id.recyclerLelangAll)

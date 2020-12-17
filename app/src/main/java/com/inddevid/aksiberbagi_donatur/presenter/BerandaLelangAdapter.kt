@@ -19,6 +19,8 @@ class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context
     RecyclerView.Adapter<BerandaLelangAdapter.ViewHolder>(){
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        private val TAG = "Beranda lelang"
+
 
         private val options: RequestOptions = RequestOptions()
             .centerCrop()
@@ -27,8 +29,14 @@ class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context
             .error(R.mipmap.ic_launcher_round)
         fun bindItems(model: BerandaLelang){
             Glide.with(itemView.imageLelang.context).load(model.imgLelang).apply(options).into(itemView.imageLelang)
-            itemView.progressBar.progress = model.progress!!
-            var sisa:Int = model.progress!!
+            val stokNow = model.stokSekarang!!.toDouble()
+            val stokEarly = model.stokAwal!!.toDouble()
+            var terdonasi = model.stokAwal!! - model.stokSekarang!!
+            model.terdonasi = terdonasi.toString()
+            val progresRaw :Double  = stokNow / stokEarly * 100
+            val progresReal = 100 - progresRaw
+            itemView.progressBar.progress = progresReal.toInt()
+            var sisa:Int = model.stokSekarang!!
             itemView.textInsideprogressBar.text = "Tersisa $sisa"
             itemView.hargaLelang.text = Converter.rupiah(model.hargaLelang)
         }
@@ -52,6 +60,7 @@ class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context
             sharedPreference.save("idLelang", model.idLelang)
             sharedPreference.save("judulLelang", model.judulLelang)
             sharedPreference.save("imgLelang", model.imgLelang)
+            sharedPreference.save("terdonasiLelang", model.terdonasi)
             sharedPreference.save("nominalLelang", Converter.rupiah(model.hargaLelang))
             sharedPreference.save("idLelangProgram", model.idLelangProgram)
             sharedPreference.save("judulLelangProgram", model.judulLelangProgram)

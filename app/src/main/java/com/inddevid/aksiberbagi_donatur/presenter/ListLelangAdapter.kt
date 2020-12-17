@@ -29,9 +29,14 @@ class ListLelangAdapter(val arrayList: ArrayList<BerandaLelang>, val context: Co
         fun bindItems(model: BerandaLelang){
             Glide.with(itemView.imageLelangList.context).load(model.imgLelang).apply(options).into(itemView.imageLelangList)
             itemView.namaLelang.text = model.judulLelang
-
-            itemView.progressBar.progress = model.progress!!
-            var sisa:Int = model.progress!!
+            val stokNow = model.stokSekarang!!.toDouble()
+            val stokEarly = model.stokAwal!!.toDouble()
+            var terdonasi = model.stokAwal!! - model.stokSekarang!!
+            model.terdonasi = terdonasi.toString()
+            val progresRaw :Double  = stokNow / stokEarly * 100
+            val progresReal = 100 - progresRaw
+            itemView.progressBar.progress = progresReal.toInt()
+            var sisa:Int = model.stokSekarang!!
             itemView.terdonasiItemText.text = "Tersisa $sisa"
             itemView.hargaLelangList.text = Converter.rupiah(model.hargaLelang)
         }
@@ -55,6 +60,7 @@ class ListLelangAdapter(val arrayList: ArrayList<BerandaLelang>, val context: Co
             sharedPreference.save("idLelang", model.idLelang)
             sharedPreference.save("judulLelang", model.judulLelang)
             sharedPreference.save("imgLelang", model.imgLelang)
+            sharedPreference.save("terdonasiLelang", model.terdonasi)
             sharedPreference.save("nominalLelang", Converter.rupiah(model.hargaLelang))
             sharedPreference.save("idLelangProgram", model.idLelangProgram)
             sharedPreference.save("judulLelangProgram", model.judulLelangProgram)
