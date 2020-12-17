@@ -49,10 +49,20 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"/>
+            <TextView
+                android:id="@+id/helperNominal"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mohon pilih jenis nominal dan kuantitas item"
+                android:textStyle="bold"
+                android:textColor="#ed2a18"
+                android:layout_marginStart="20dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorBreakLine"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"/>
@@ -78,6 +88,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:id="@+id/helperPembayaran"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mohon pilih metode pembayaran anda"
+                android:textStyle="bold"
+                android:textColor="#ed2a18"
                 android:layout_marginStart="20dp"/>
 
             <com.google.android.material.textfield.TextInputLayout

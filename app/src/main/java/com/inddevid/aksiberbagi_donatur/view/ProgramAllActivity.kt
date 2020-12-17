@@ -175,4 +175,8 @@ class ProgramAllActivity : AppCompatActivity() {
 
         })
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@ProgramAllActivity, DashboardActivity::class.java ))
+    }
 }
