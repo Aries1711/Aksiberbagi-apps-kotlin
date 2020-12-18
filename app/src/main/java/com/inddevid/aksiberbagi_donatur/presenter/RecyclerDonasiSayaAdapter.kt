@@ -30,6 +30,9 @@ class RecyclerDonasiSayaAdapter (val arrayList: ArrayList<CardDonasiSaya>, val c
             val modelUrl = model.img
             val url = "https://aksiberbagi.com/storage/program/$modelUrl"
             Glide.with(itemView.imageDonasiSayaCard.context).load(url).apply(options).into(itemView.imageDonasiSayaCard)
+//            val titleDonasi = model.title
+//            titleDonasi!!.chunked(6)
+//            println(titleDonasi)
             itemView.cardTitleDonasiSaya.text = model.title
             itemView.paymentDonasiSaya.text = model.payment
             itemView.waktuDonasiSaya.text = model.timePay

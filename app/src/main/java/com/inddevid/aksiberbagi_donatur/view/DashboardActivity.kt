@@ -2,6 +2,7 @@ package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -66,15 +67,18 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val count = supportFragmentManager.backStackEntryCount
-        if (count == 0) {
-            super.onBackPressed()
-            finishAffinity();
-            finish();
+        if (count <= 1) {
+            val toast = Toast.makeText(
+                applicationContext,
+                "tekan sekali lagi untuk keluar",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
         } else {
             super.onBackPressed()
             finishAffinity();
             finish();
-//            supportFragmentManager.popBackStack()
+
         }
     }
 
