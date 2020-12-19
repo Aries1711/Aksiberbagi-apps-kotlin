@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ModelDonasiRutin
-import com.inddevid.aksiberbagi_donatur.services.Preferences
 import kotlinx.android.synthetic.main.card_donasi_rutin.view.*
 import kotlinx.android.synthetic.main.card_donasi_saya.view.donasiStatusframe
 
@@ -80,7 +79,6 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
 
-        val sharedPreference: Preferences = Preferences(holder.itemView.context)
         holder.itemView.setOnLongClickListener{
             val model = arrayList[position]
 //            val activity = getActivity(holder.itemView.context)
@@ -122,7 +120,7 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
         if (Build.VERSION.SDK_INT >= 26) {
             vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
-            vibrator.vibrate(200)
+            vibrator.vibrate(100)
         }
     }
 }

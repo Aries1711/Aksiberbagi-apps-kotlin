@@ -111,7 +111,7 @@ class ProgramFavoritAdapter(val arrayList: ArrayList<BerandaProgramAll>, val con
         if (Build.VERSION.SDK_INT >= 26) {
             vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
-            vibrator.vibrate(200)
+            vibrator.vibrate(100)
         }
     }
 

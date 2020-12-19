@@ -56,7 +56,25 @@ class DonasiRutinActivity : AppCompatActivity() {
         layoutShimmer.visibility = View.VISIBLE
         shimmer.startShimmer()
 
-        getKoneksi(retrivedToken, this@DonasiRutinActivity)
+        val frekuensiBulanans = listOf("1","2","3","5","6","7","8","9","10", "11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28")
+        val dropDownBulanan : Spinner = findViewById(R.id.frekuensiBulanan)
+        val adapterBulanan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown,frekuensiBulanans)
+        dropDownBulanan.adapter = adapterBulanan
+
+        var tanggalPengingat: String? = intent.getStringExtra("tanggalPengingat")
+        if(tanggalPengingat != "" || tanggalPengingat != null ){
+            layoutShimmer.visibility = View.GONE
+            shimmer.stopShimmer()
+            layoutCreate.visibility = View.VISIBLE
+            frekuensiBulanans.forEach {
+                if (tanggalPengingat == it) {
+                    dropDownBulanan.setSelection(adapterBulanan.getPosition(it))
+                }
+            }
+        }else{
+            getKoneksi(retrivedToken, this@DonasiRutinActivity)
+        }
+
 
         //
         val dropDownProgram : Spinner = findViewById(R.id.spinerProgram)
@@ -72,11 +90,6 @@ class DonasiRutinActivity : AppCompatActivity() {
         val dropDownMingguan : Spinner = findViewById(R.id.frekuensiMingguan)
         val adapterMingguan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiMingguans)
         dropDownMingguan.adapter = adapterMingguan
-
-        val frekuensiBulanans = listOf("1","2","3","5","6","7","8","9","10", "11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28")
-        val dropDownBulanan : Spinner = findViewById(R.id.frekuensiBulanan)
-        val adapterBulanan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown,frekuensiBulanans)
-        dropDownBulanan.adapter = adapterBulanan
 
         val btnSubmit: Button = findViewById(R.id.btnSubmit)
 
