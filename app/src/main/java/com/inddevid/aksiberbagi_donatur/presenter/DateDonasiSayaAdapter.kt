@@ -21,6 +21,7 @@ class DateDonasiSayaAdapter (val arrayList: ArrayList<DateDonasiSaya>, val conte
             // pengkondisian view untuk tanggal yang telah terlewati dan ada donasi
             for(i in 0 until model.dayDonasi.size){
                 if(model.date == model.dayDonasi[i]){
+                    itemView.frameADS.setBackgroundResource(R.drawable.donasi_saya_hariini)
                     itemView.dateDonasiSaya.setTextColor(Color.parseColor("#ed47e2"));
                     itemView.dayDonasiSaya.setTextColor(Color.parseColor("#ed47e2"));
                 }

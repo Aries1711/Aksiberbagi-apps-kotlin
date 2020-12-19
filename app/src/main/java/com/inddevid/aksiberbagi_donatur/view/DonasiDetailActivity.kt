@@ -217,6 +217,10 @@ class DonasiDetailActivity : AppCompatActivity() {
                 val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
                 btnPembayaran.setOnClickListener {
                     sharedPreference.save("invoiceNominal", sharedPreference.getValueString("detailDonasiNominal"))
+                    val kodeUnik =  data?.getString("tbldonasi_nourut")
+                    val nominalPlusKode = data?.getString("tbldonasi_nominal")
+                    var nominalRaw = nominalPlusKode!!.toInt() - kodeUnik!!.toInt()
+                    sharedPreference.save("donasiNominal", nominalRaw )
                     sharedPreference.save("invoiceKodeUnik", data?.getString("tbldonasi_nourut") )
                     sharedPreference.save("invoiceKode", data?.getString("tbldonasi_invoice"))
                     sharedPreference.save("invoiceBank", dataBank?.getString("tblbank_nama"))

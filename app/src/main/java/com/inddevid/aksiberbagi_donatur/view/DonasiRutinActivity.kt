@@ -406,7 +406,12 @@ class DonasiRutinActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@DonasiRutinActivity, DashboardActivity::class.java))
+        var prevNavigate: String? = intent.getStringExtra("prevNavigate")
+        if(prevNavigate == "Pengaturan"){
+            startActivity(Intent(this@DonasiRutinActivity, PengaturanActivity::class.java))
+        }else{
+            startActivity(Intent(this@DonasiRutinActivity, DashboardActivity::class.java))
+        }
     }
 
 }

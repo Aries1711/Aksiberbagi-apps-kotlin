@@ -14,7 +14,7 @@ class BantuanActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.upAppbarBantuan)
         toolbar.title = "Bantuan"
-        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE)
         toolbar.setNavigationOnClickListener{
             val mIntent = Intent(this, DashboardActivity::class.java)
             val mBundle = Bundle()

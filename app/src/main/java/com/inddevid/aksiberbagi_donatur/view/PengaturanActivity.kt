@@ -26,6 +26,7 @@ class PengaturanActivity : AppCompatActivity() {
             mIntent.putExtras(mBundle)
             startActivity(mIntent)}
         val switchAnonimSet: Switch = findViewById(R.id.switchAnonim)
+        val switchReminder: Switch = findViewById(R.id.switchReminder)
 
         val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
 
@@ -40,6 +41,20 @@ class PengaturanActivity : AppCompatActivity() {
                 sharedPreference.save("ANONIM", "T")
             }else{
                 sharedPreference.save("ANONIM", "F")
+            }
+        }
+
+        switchReminder.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
+            if (message == "Switch1:ON"){
+
+                val mIntent = Intent(this@PengaturanActivity, DonasiRutinActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("prevNavigate", "Pengaturan" )
+                mIntent.putExtras(mBundle)
+                this.startActivity(mIntent)
+            }else{
+                //todo
             }
         }
 
