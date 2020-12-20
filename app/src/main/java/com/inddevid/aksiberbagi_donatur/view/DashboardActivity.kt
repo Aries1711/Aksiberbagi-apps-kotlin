@@ -70,15 +70,14 @@ class DashboardActivity : AppCompatActivity() {
         if (count <= 1) {
             val toast = Toast.makeText(
                 applicationContext,
-                "tekan sekali lagi untuk keluar",
+                "tekan dua kali untuk keluar",
                 Toast.LENGTH_LONG
             )
             toast.show()
-        } else {
+        } else if (count > 1) {
             super.onBackPressed()
             finishAffinity();
             finish();
-
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +67,11 @@ class LelangListActivity : AppCompatActivity() {
         shimmerLayout.startShimmer()
         getKoneksi(retrivedToken!!, this)
 
+        val btnProgramAll : Button = findViewById(R.id.btnAllProgram)
+        btnProgramAll.setOnClickListener {
+            startActivity(Intent(this@LelangListActivity, ProgramAllActivity::class.java))
+        }
+
     }
 
     private fun getKoneksi(tokenValue: String, context: LelangListActivity){
@@ -100,38 +106,68 @@ class LelangListActivity : AppCompatActivity() {
         val header : String? = tokenValue
         ApiService.getLelang(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if(response?.getString("message").equals("Data flashsale berhasil diambil")){
-                    val jsonArray = response?.getJSONArray("data")
-                    val timer = response?.getString("timer")!!.toInt()
-                    if (jsonArray?.length()!! > 0) {
-                        for (i in 0 until jsonArray.length()) {
-                            val item = jsonArray.getJSONObject(i)
-                            val nominalItem = item?.getJSONObject("nominal")
-                            val idLelang :String? = item?.getString("id")
-                            val judulLelang: String? = item?.getString("nama_flash_sale")
-                            val img: String? = item?.getString("gambar_url")
-                            val nominal: Double? =
-                                nominalItem?.getString("nominal_flash_sale")!!.toDouble()
-                            val stokSekarang: String? = item?.getString("stok")
-                            val stokAwal: String? = item?.getString("stok_awal")
-                            val dataProgram = item?.getJSONObject("program")
-                            val idLelangProgram = dataProgram?.getString("tblprogram_id")
-                            val judulLelangProgram = dataProgram?.getString("tblprogram_judul")
-                            arrayListLelang.add(BerandaLelang(idLelang,judulLelang ,img, stokSekarang?.toInt(), stokAwal?.toInt(), nominal,"" , idLelangProgram, judulLelangProgram))
+                if(response?.getString("message").equals("Data flashsale berhasil diambil")) {
+                    if (response?.getString("timer")!!.toInt() >= 0) {
+                        val jsonArray = response?.getJSONArray("data")
+                        val timer = response?.getString("timer")!!.toInt()
+                        if (jsonArray?.length()!! > 0) {
+                            for (i in 0 until jsonArray.length()) {
+                                val item = jsonArray.getJSONObject(i)
+                                val nominalItem = item?.getJSONObject("nominal")
+                                val idLelang: String? = item?.getString("id")
+                                val judulLelang: String? = item?.getString("nama_flash_sale")
+                                val img: String? = item?.getString("gambar_url")
+                                val nominal: Double? =
+                                    nominalItem?.getString("nominal_flash_sale")!!.toDouble()
+                                val stokSekarang: String? = item?.getString("stok")
+                                val stokAwal: String? = item?.getString("stok_awal")
+                                val dataProgram = item?.getJSONObject("program")
+                                val idLelangProgram = dataProgram?.getString("tblprogram_id")
+                                val judulLelangProgram = dataProgram?.getString("tblprogram_judul")
+                                arrayListLelang.add(
+                                    BerandaLelang(
+                                        idLelang,
+                                        judulLelang,
+                                        img,
+                                        stokSekarang?.toInt(),
+                                        stokAwal?.toInt(),
+                                        nominal,
+                                        "",
+                                        idLelangProgram,
+                                        judulLelangProgram
+                                    )
+                                )
+                            }
+                            val myAdapterLelang =
+                                ListLelangAdapter(arrayListLelang, this@LelangListActivity)
+                            val viewLelang =
+                                context.findViewById<RecyclerView>(R.id.recyclerLelangAll)
+                            viewLelang.layoutManager = LinearLayoutManager(
+                                this@LelangListActivity
+                            )
+                            viewLelang.adapter = myAdapterLelang
+                            val countDown: DynamicCountDownView =
+                                context.findViewById(R.id.normalCountDownLelang)
+                            countDown.initTimer(timer)
+                            countDown.startTimer()
+                            val shimmerLayout: ShimmerFrameLayout =
+                                context.findViewById(R.id.shimmerLelangList)
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            viewLelang.visibility = View.VISIBLE
                         }
-                        val myAdapterLelang = ListLelangAdapter(arrayListLelang, this@LelangListActivity)
-                        val viewLelang = context.findViewById<RecyclerView>(R.id.recyclerLelangAll)
-                        viewLelang.layoutManager = LinearLayoutManager(
-                            this@LelangListActivity
-                        )
-                        viewLelang.adapter = myAdapterLelang
-                        val countDown: DynamicCountDownView = context.findViewById(R.id.normalCountDownLelang)
-                        countDown.initTimer(timer)
-                        countDown.startTimer()
-                        val shimmerLayout : ShimmerFrameLayout = context.findViewById(R.id.shimmerLelangList)
+                    }else{
+                        val countDown: DynamicCountDownView =
+                            context.findViewById(R.id.normalCountDownLelang)
+                        countDown.visibility = View.GONE
+                        val shimmerLayout: ShimmerFrameLayout =
+                            context.findViewById(R.id.shimmerLelangList)
                         shimmerLayout.stopShimmer()
                         shimmerLayout.visibility = View.GONE
-                        viewLelang.visibility = View.VISIBLE
+                        val layoutUtama = context.findViewById<LinearLayout>(R.id.layoutUtama)
+                        layoutUtama.visibility = View.GONE
+                        val layoutNotFound: LinearLayout = context.findViewById(R.id.layoutNotfound)
+                        layoutNotFound.visibility = View.VISIBLE
                     }
                 }
             }

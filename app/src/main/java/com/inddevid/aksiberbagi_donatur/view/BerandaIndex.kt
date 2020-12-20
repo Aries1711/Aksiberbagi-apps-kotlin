@@ -297,62 +297,63 @@ class BerandaIndex : Fragment() {
         ApiService.getLelang(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 val layout = viewT.findViewById<LinearLayout>(R.id.lelangKonten)
-                if(response?.getString("timer")!!.toInt() >= 0) {
                     if (response?.getString("message").equals("Data flashsale berhasil diambil")) {
-                        layout.visibility = View.VISIBLE
-                        val jsonArray = response?.getJSONArray("data")
-                        val timer = response?.getString("timer")!!.toInt()
-                        if (jsonArray?.length()!! > 0) {
-                            for (i in 0 until jsonArray.length()) {
-                                val item = jsonArray.getJSONObject(i)
-                                val nominalItem = item?.getJSONObject("nominal")
-                                val idLelang: String? = item?.getString("id")
-                                val judulLelang: String? = item?.getString("nama_flash_sale")
-                                val img: String? = item?.getString("gambar_url")
-                                val nominal: Double? =
-                                    nominalItem?.getString("nominal_flash_sale")!!.toDouble()
-                                val stokSekarang: String? = item?.getString("stok")
-                                val stokAwal: String? = item?.getString("stok_awal")
-                                val dataProgram = item?.getJSONObject("program")
-                                val idLelangProgram = dataProgram?.getString("tblprogram_id")
-                                val judulLelangProgram = dataProgram?.getString("tblprogram_judul")
-                                arrayLelang.add(
-                                    BerandaLelang(
-                                        idLelang,
-                                        judulLelang,
-                                        img,
-                                        stokSekarang?.toInt(),
-                                        stokAwal?.toInt(),
-                                        nominal,
-                                        "",
-                                        idLelangProgram,
-                                        judulLelangProgram
+                        if(response?.getString("timer")!!.toInt() >= 0) {
+                            layout.visibility = View.VISIBLE
+                            val jsonArray = response?.getJSONArray("data")
+                            val timer = response?.getString("timer")!!.toInt()
+                            if (jsonArray?.length()!! > 0) {
+                                for (i in 0 until jsonArray.length()) {
+                                    val item = jsonArray.getJSONObject(i)
+                                    val nominalItem = item?.getJSONObject("nominal")
+                                    val idLelang: String? = item?.getString("id")
+                                    val judulLelang: String? = item?.getString("nama_flash_sale")
+                                    val img: String? = item?.getString("gambar_url")
+                                    val nominal: Double? =
+                                        nominalItem?.getString("nominal_flash_sale")!!.toDouble()
+                                    val stokSekarang: String? = item?.getString("stok")
+                                    val stokAwal: String? = item?.getString("stok_awal")
+                                    val dataProgram = item?.getJSONObject("program")
+                                    val idLelangProgram = dataProgram?.getString("tblprogram_id")
+                                    val judulLelangProgram =
+                                        dataProgram?.getString("tblprogram_judul")
+                                    arrayLelang.add(
+                                        BerandaLelang(
+                                            idLelang,
+                                            judulLelang,
+                                            img,
+                                            stokSekarang?.toInt(),
+                                            stokAwal?.toInt(),
+                                            nominal,
+                                            "",
+                                            idLelangProgram,
+                                            judulLelangProgram
+                                        )
                                     )
-                                )
-                            }
-                            val myAdapterLelang =
-                                BerandaLelangAdapter(arrayLelang, requireActivity())
-                            view.layoutManager = LinearLayoutManager(
-                                requireActivity(),
-                                RecyclerView.HORIZONTAL,
-                                false
-                            )
-                            view.adapter = myAdapterLelang
-                            //
-                            viewT.normalCountDownView.timerTextBackgroundTintColor =
-                                ContextCompat.getColor(
+                                }
+                                val myAdapterLelang =
+                                    BerandaLelangAdapter(arrayLelang, requireActivity())
+                                view.layoutManager = LinearLayoutManager(
                                     requireActivity(),
-                                    R.color.colorInputStrokeBlue
+                                    RecyclerView.HORIZONTAL,
+                                    false
                                 )
-                            viewT.normalCountDownView.initTimer(timer)
-                            viewT.normalCountDownView.startTimer()
+                                view.adapter = myAdapterLelang
+                                //
+                                viewT.normalCountDownView.timerTextBackgroundTintColor =
+                                    ContextCompat.getColor(
+                                        requireActivity(),
+                                        R.color.colorInputStrokeBlue
+                                    )
+                                viewT.normalCountDownView.initTimer(timer)
+                                viewT.normalCountDownView.startTimer()
+                            }
+                        }else {
+                            layout.visibility = View.GONE
                         }
                     } else {
                         layout.visibility = View.GONE
                     }
-                }else{
-                    layout.visibility = View.GONE
-                }
             }
 
             override fun onError(anError: ANError?) {

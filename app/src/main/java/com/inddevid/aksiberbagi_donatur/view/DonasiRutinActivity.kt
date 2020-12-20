@@ -61,19 +61,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         val adapterBulanan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown,frekuensiBulanans)
         dropDownBulanan.adapter = adapterBulanan
 
-        var tanggalPengingat: String? = intent.getStringExtra("tanggalPengingat")
-        if(tanggalPengingat != "" || tanggalPengingat != null ){
-            layoutShimmer.visibility = View.GONE
-            shimmer.stopShimmer()
-            layoutCreate.visibility = View.VISIBLE
-            frekuensiBulanans.forEach {
-                if (tanggalPengingat == it) {
-                    dropDownBulanan.setSelection(adapterBulanan.getPosition(it))
-                }
-            }
-        }else{
-            getKoneksi(retrivedToken, this@DonasiRutinActivity)
-        }
+        getKoneksi(retrivedToken, this@DonasiRutinActivity)
 
 
         //
@@ -176,6 +164,18 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         }
 
+        var tanggalPengingat: String? = intent.getStringExtra("tanggalPengingat")
+
+
+        if(tanggalPengingat != null) {
+            frekuensiBulanans.forEach {
+                if (tanggalPengingat == it) {
+                    dropDownBulanan.setSelection(adapterBulanan.getPosition(it))
+                }
+                dropDownFrekuensi.setSelection(adapterFrekuensi.getPosition("Bulanan"))
+            }
+        }
+
         val helperProgram: TextView = findViewById(R.id.helperProgram)
         btnSubmit.setOnClickListener {
             if(idProgramPilihan == 0 ){
@@ -219,6 +219,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                     )
                     toast.show()
                     arrayDonasiRutinList.clear()
+                    intent.removeExtra("tanggalPengingat")
                     getDonasiRutinList(tokenValue, context)
                 }else{
                     val message = response?.getString("message")
@@ -329,32 +330,42 @@ class DonasiRutinActivity : AppCompatActivity() {
     private fun getDonasiRutinList(tokenValue: String?, context: DonasiRutinActivity){
         ApiService.getDonasiRutin(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if (response?.getString("message").equals("Donasi rutin berhasil diambil")){
-                    val jsonArray = response?.getJSONArray("data")
-                    for(i in 0 until jsonArray!!.length()){
-                        val dataDonasiRutin = jsonArray.getJSONObject(i)
-                        val dataProgram = dataDonasiRutin.getJSONObject("program_nama")
-                        val idDonasiRutin = dataDonasiRutin?.getString("id")
-                        val judulProgram = dataProgram?.getString("tblprogram_judul")
-                        val rentangWaktu = dataDonasiRutin.getString("rentang_waktu")
-                        val opsiWaktu = dataDonasiRutin.getString("opsi_rentang_waktu")
-                        val imageProgram = dataProgram?.getString("thumbnail_url")
-                        val status = dataDonasiRutin?.getString("status")
-                        arrayDonasiRutinList.add(ModelDonasiRutin(idDonasiRutin,judulProgram,rentangWaktu,opsiWaktu,imageProgram,status))
-                    }
-                    val myAdapterDonasi = DonasiRutinListAdapter(arrayDonasiRutinList, this@DonasiRutinActivity)
-                    val recyclerView = context.findViewById<RecyclerView>(R.id.recyclerDonasiRutin)
-                    recyclerView.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
-                    recyclerView.adapter = myAdapterDonasi
-                    //close layout lain dan show layout
+                var tanggalPengingat: String? = intent.getStringExtra("tanggalPengingat")
+                if(tanggalPengingat != null){
                     val layoutCreate : ConstraintLayout = context.findViewById(R.id.createLayout)
                     val layoutShimmer: ConstraintLayout = context.findViewById(R.id.layoutShimmer)
                     val shimmer: ShimmerFrameLayout = context.findViewById(R.id.shimmerDonasiRutin)
-                    shimmer.stopShimmer()
-                    val layoutList: ConstraintLayout = context.findViewById(R.id.layoutList)
-                    layoutList.visibility = View.VISIBLE
                     layoutShimmer.visibility = View.GONE
-                    layoutCreate.visibility = View.GONE
+                    shimmer.stopShimmer()
+                    layoutCreate.visibility = View.VISIBLE
+                }else{
+                    if (response?.getString("message").equals("Donasi rutin berhasil diambil")){
+                        val jsonArray = response?.getJSONArray("data")
+                        for(i in 0 until jsonArray!!.length()){
+                            val dataDonasiRutin = jsonArray.getJSONObject(i)
+                            val dataProgram = dataDonasiRutin.getJSONObject("program")
+                            val idDonasiRutin = dataDonasiRutin?.getString("id")
+                            val judulProgram = dataProgram?.getString("tblprogram_judul")
+                            val rentangWaktu = dataDonasiRutin.getString("rentang_waktu")
+                            val opsiWaktu = dataDonasiRutin.getString("opsi_rentang_waktu")
+                            val imageProgram = dataProgram?.getString("thumbnail_url")
+                            val status = dataDonasiRutin?.getString("status")
+                            arrayDonasiRutinList.add(ModelDonasiRutin(idDonasiRutin,judulProgram,rentangWaktu,opsiWaktu,imageProgram,status))
+                        }
+                        val myAdapterDonasi = DonasiRutinListAdapter(arrayDonasiRutinList, this@DonasiRutinActivity)
+                        val recyclerView = context.findViewById<RecyclerView>(R.id.recyclerDonasiRutin)
+                        recyclerView.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
+                        recyclerView.adapter = myAdapterDonasi
+                        //close layout lain dan show layout
+                        val layoutCreate : ConstraintLayout = context.findViewById(R.id.createLayout)
+                        val layoutShimmer: ConstraintLayout = context.findViewById(R.id.layoutShimmer)
+                        val shimmer: ShimmerFrameLayout = context.findViewById(R.id.shimmerDonasiRutin)
+                        shimmer.stopShimmer()
+                        val layoutList: ConstraintLayout = context.findViewById(R.id.layoutList)
+                        layoutList.visibility = View.VISIBLE
+                        layoutShimmer.visibility = View.GONE
+                        layoutCreate.visibility = View.GONE
+                    }
                 }
             }
 
@@ -378,11 +389,10 @@ class DonasiRutinActivity : AppCompatActivity() {
     }
 
     private fun getProgramAll(tokenValue: String?, context: DonasiRutinActivity){
-        ApiService.getAllProgram(tokenValue).getAsJSONObject(object: JSONObjectRequestListener{
+        ApiService.getJudulProgram(tokenValue).getAsJSONObject(object: JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 if(response?.getString("message").equals("Data program berhasil diambil")){
-                    val dataObject = response?.getJSONObject("data")
-                    val dataArray = dataObject?.getJSONArray("data")
+                    val dataArray = response?.getJSONArray("data")
                     for (i in 0 until dataArray!!.length()){
                         val dataProgram = dataArray.getJSONObject(i)
                         val idProgramData = dataProgram.getString("tblprogram_id").toInt()
