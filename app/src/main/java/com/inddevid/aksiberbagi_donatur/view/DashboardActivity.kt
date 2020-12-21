@@ -14,6 +14,8 @@ import com.inddevid.aksiberbagi_donatur.services.Preferences
 
 
 class DashboardActivity : AppCompatActivity() {
+    private var countBack = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -66,18 +68,19 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val count = supportFragmentManager.backStackEntryCount
-        if (count <= 1) {
+//        val count = supportFragmentManager.backStackEntryCount
+        countBack++
+        if (countBack <= 1) {
             val toast = Toast.makeText(
                 applicationContext,
                 "tekan dua kali untuk keluar",
                 Toast.LENGTH_LONG
             )
             toast.show()
-        } else if (count > 1) {
+        } else if (countBack > 1) {
             super.onBackPressed()
-            finishAffinity();
-            finish();
+            finishAffinity()
+            finish()
         }
     }
 

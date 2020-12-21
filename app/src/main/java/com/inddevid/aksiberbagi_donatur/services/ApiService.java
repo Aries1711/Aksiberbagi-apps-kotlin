@@ -223,6 +223,12 @@ public class ApiService {
         return get(endpoint);
     }
 
+    public static ANRequest getNextPageProgram(String data, String page){
+        token = data;
+        String endpoint = baseUrl("program?page=" + page);
+        return get(endpoint);
+    }
+
     public static ANRequest getPembayaran(String data){
         token = data;
         String endpoint = baseUrl("pilihan-nominal/metode-pembayaran");

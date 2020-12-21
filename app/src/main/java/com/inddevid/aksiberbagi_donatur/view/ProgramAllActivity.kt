@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.error.ANError
@@ -26,6 +27,9 @@ import org.json.JSONObject
 class ProgramAllActivity : AppCompatActivity() {
     private val arrayProgramAll = ArrayList<BerandaProgramAll>()
     private val TAG = "Program All"
+    private var totalPage = 0
+    private var loadedPage = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.program_all_activity)
@@ -40,6 +44,16 @@ class ProgramAllActivity : AppCompatActivity() {
         mainMenuAll.visibility = View.GONE
 
         getKoneksi(retrivedToken, mainMenuAll, this)
+
+
+        val layoutScroll : NestedScrollView = findViewById(R.id.layoutProgram)
+        layoutScroll.viewTreeObserver.addOnScrollChangedListener {
+            val scrollY: Int = layoutScroll.scrollY
+            Log.d(TAG, "nilai Y: $scrollY")
+            if (scrollY > 4000){
+                getNextProgram(retrivedToken, mainMenuAll)
+            }
+        }
 
         toolbar.setNavigationOnClickListener{startActivity(Intent(this@ProgramAllActivity, DashboardActivity::class.java))}
 
@@ -134,6 +148,8 @@ class ProgramAllActivity : AppCompatActivity() {
         ApiService.getAllProgram(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val jsonObject =response?.getJSONObject("data")
+                val totalPaginate = jsonObject?.getString("last_page")
+                totalPage = totalPaginate!!.toInt() + 1
                 val jsonArray =jsonObject?.getJSONArray("data")
                 if (jsonArray?.length()!! > 0){
                     for(i in 0 until jsonArray.length()){
@@ -174,6 +190,52 @@ class ProgramAllActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun getNextProgram(tokenValue: String?, view: RecyclerView){
+        if (loadedPage < totalPage){
+            loadedPage += 1
+            ApiService.getNextPageProgram(tokenValue, loadedPage.toString()).getAsJSONObject(object: JSONObjectRequestListener{
+                override fun onResponse(response: JSONObject?) {
+                    val jsonObject =response?.getJSONObject("data")
+                    val jsonArray =jsonObject?.getJSONArray("data")
+                    if (jsonArray?.length()!! > 0){
+                        for(i in 0 until jsonArray.length()){
+                            val item = jsonArray.getJSONObject(i)
+                            val idProgram = item?.getString("tblprogram_id")
+                            val img = item?.getString("thumbnail_url")
+                            val judul = item?.getString("tblprogram_judul")
+                            val link = item?.getString("tblprogram_namalink")
+                            val volunter: String? = "Aksiberbagi.com"
+                            val capaian = item?.getString("capaian_donasi")
+                            val sisaHari = item?.getString("sisa_hari")
+                            val startProgram = item?.getString("tanggal_mulai_donasi")
+                            val targetNominal: String? = item?.getString("tblprogram_isiantargetnominal")
+                            var progressProgram: Int? = item?.getInt("progress")
+                            var targetDonasi : String?
+                            if (targetNominal == "null" || targetNominal == "0" ){
+                                targetDonasi = "100"
+                            }else{
+                                targetDonasi = item?.getString("target_nominal")
+                            }
+                            val nav = "ProgramAll"
+                            arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav, link))
+                            val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@ProgramAllActivity)
+                            view.layoutManager = LinearLayoutManager(this@ProgramAllActivity)
+                            view.adapter = myAdapterAll
+                        }
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
+            })
+        }else{
+            return@getNextProgram
+        }
     }
 
     override fun onBackPressed() {
