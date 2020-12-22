@@ -6,6 +6,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -16,6 +17,7 @@ import com.inddevid.aksiberbagi_donatur.presenter.IntroSliderAdapter
 import kotlinx.android.synthetic.main.intro_activity.*
 
 class IntroActivity : AppCompatActivity() {
+    private var countBack = 0
     private val introSliderAdapter = IntroSliderAdapter(
         listOf(
             IntroSlide(
@@ -54,6 +56,22 @@ class IntroActivity : AppCompatActivity() {
         val signupBtn: Button = findViewById(R.id.signup_btn)
         loginBtn.setOnClickListener{ startActivity(Intent(this@IntroActivity, LoginActivity::class.java))}
         signupBtn.setOnClickListener{ startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))}
+    }
+
+    override fun onBackPressed() {
+        countBack++
+        if (countBack <= 1) {
+            val toast = Toast.makeText(
+                applicationContext,
+                "tekan dua kali untuk keluar",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+        } else if (countBack > 1) {
+            super.onBackPressed()
+            finishAffinity()
+            finish()
+        }
     }
 
     private fun setupIndicators(){

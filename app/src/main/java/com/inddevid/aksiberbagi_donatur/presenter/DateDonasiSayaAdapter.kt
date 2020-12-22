@@ -29,17 +29,21 @@ class DateDonasiSayaAdapter (val arrayList: ArrayList<DateDonasiSaya>, val conte
                     itemView.dateDonasiSaya.setTextColor(Color.parseColor("#F389EC"));
                     itemView.dayDonasiSaya.setTextColor(Color.parseColor("#F389EC"));
                 }
-                // pengkondisian view untuk tanggal pada hari ini
-                if( model.date == model.dateNow ){
-                    if(model.date == model.dayDonasi[i]){
+            }
+
+            // pengkondisian view untuk tanggal pada hari ini
+            if( model.date == model.dateNow ){
+                for(i in 0 until model.dayDonasi.size) {
+                    if (model.date == model.dayDonasi[i]) {
+                        itemView.frameADS.setBackgroundResource(R.drawable.rounded_linear_layout)
                         itemView.dateDonasiSaya.setBackgroundResource(R.drawable.date_donasi_today)
                         itemView.dateDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
                         itemView.dayDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
                     }
-                    itemView.frameADS.setBackgroundResource(R.drawable.rounded_linear_layout)
-                    itemView.dateDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
-                    itemView.dayDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
                 }
+                itemView.frameADS.setBackgroundResource(R.drawable.rounded_linear_layout)
+                itemView.dateDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
+                itemView.dayDonasiSaya.setTextColor(Color.parseColor("#ffffff"));
             }
 
         }
