@@ -55,6 +55,20 @@ class ListLelangAdapter(val arrayList: ArrayList<BerandaLelang>, val context: Co
         holder.bindItems(arrayList[position])
 
         val sharedPreference: Preferences = Preferences(holder.itemView.context)
+
+        holder.itemView.donasiBtn.setOnClickListener{
+            var model = arrayList[position]
+            sharedPreference.save("idLelang", model.idLelang)
+            sharedPreference.save("judulLelang", model.judulLelang)
+            sharedPreference.save("imgLelang", model.imgLelang)
+            sharedPreference.save("terdonasiLelang", model.terdonasi)
+            sharedPreference.save("nominalLelang", Converter.rupiah(model.hargaLelang))
+            sharedPreference.save("idLelangProgram", model.idLelangProgram)
+            sharedPreference.save("judulLelangProgram", model.judulLelangProgram)
+            val mIntent = Intent(context, LelangActivity::class.java)
+            context.startActivity(mIntent)
+        }
+
         holder.itemView.setOnClickListener {
             var model = arrayList[position]
             sharedPreference.save("idLelang", model.idLelang)

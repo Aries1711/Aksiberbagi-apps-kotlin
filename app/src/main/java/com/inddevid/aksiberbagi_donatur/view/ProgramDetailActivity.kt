@@ -297,7 +297,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                     if (nominalCek == ""){
                         nominalCek = "0"
                     }
-                    val nominalRaw: Int = nominalCek.replace(".", "").toInt()
+                    val nominalRaw: Int = nominalCek.replace(".", "").replace(",00", "").toInt()
                     if(nominalRaw > 999){
                         val mIntent = Intent(this, PilihPembayaranActivity::class.java)
                         val mBundle = Bundle()
@@ -329,7 +329,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                     if (nominalCek == ""){
                         nominalCek = "0"
                     }
-                    val nominalRaw: Int = nominalCek.replace(".", "").toInt()
+                    val nominalRaw: Int = nominalCek.replace(".", "").replace(",00", "").toInt()
                     if(nominalRaw > 999){
                         val mIntent = Intent(this, PilihPembayaranActivity::class.java)
                         val mBundle = Bundle()
@@ -361,7 +361,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                     if (nominalCek == ""){
                         nominalCek = "0"
                     }
-                    val nominalRaw: Int = nominalCek.replace(".", "").toInt()
+                    val nominalRaw: Int = nominalCek.replace(".", "").replace(",00", "").toInt()
                     if(nominalRaw > 999){
                         val mIntent = Intent(this, PilihPembayaranActivity::class.java)
                         val mBundle = Bundle()
@@ -431,7 +431,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                         textNominalDonasi.text!!.toString().replace(
                             ".",
                             ""
-                        )
+                        ).replace(",00", "")
                     )
                 }
             }else{

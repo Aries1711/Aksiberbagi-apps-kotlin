@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="AppMaterial" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppMaterial" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
@@ -16,7 +16,7 @@
 <!--        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>-->
     </style>
 
-    <style name="ToolbarProgramDetail" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="ToolbarProgramDetail" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#FFFFFF</item>
         <item name="android:textColor">@color/colorInputPressFalse</item>

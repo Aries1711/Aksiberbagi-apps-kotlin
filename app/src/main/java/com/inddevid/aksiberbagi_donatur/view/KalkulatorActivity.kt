@@ -112,15 +112,15 @@ class KalkulatorActivity : AppCompatActivity() {
         inputTabungan.addTextChangedListener(NumberFormaterDot(inputTabungan))
 
         btnSubmitPenghasilan.setOnClickListener {
-            var penghasilanPokok = inputPenghasilanPokok.text.toString().replace(".", "")
+            var penghasilanPokok = inputPenghasilanPokok.text.toString().replace(".", "").replace(",00", "")
             if (penghasilanPokok == ""){
                 penghasilanPokok = "0"
             }
-            var penghasilanBonus = inputBonusPenghasilan.text.toString().replace(".", "")
+            var penghasilanBonus = inputBonusPenghasilan.text.toString().replace(".", "").replace(",00", "")
             if (penghasilanBonus == ""){
                 penghasilanBonus = "0"
             }
-            var penghasilanPengeluaran = inputPengeluaranPenghasilan.text.toString().replace(".", "")
+            var penghasilanPengeluaran = inputPengeluaranPenghasilan.text.toString().replace(".", "").replace(",00", "")
             if (penghasilanPengeluaran == ""){
                 penghasilanPengeluaran = "0"
             }
@@ -137,27 +137,27 @@ class KalkulatorActivity : AppCompatActivity() {
         }
         
         btnSubmitPerdagangan.setOnClickListener{
-            var modal = inputModalPerdagangan.text.toString().replace(".","")
+            var modal = inputModalPerdagangan.text.toString().replace(".","").replace(",00", "")
             if(modal == ""){
                 modal = "0"
             }
 
-            var keuntungan = inputKeuntunganPerdagangan.text.toString().replace(".","")
+            var keuntungan = inputKeuntunganPerdagangan.text.toString().replace(".","").replace(",00", "")
             if(keuntungan == ""){
                 keuntungan = "0"
             }
 
-            var piutang = inputPiutangPerdagangan.text.toString().replace(".", "")
+            var piutang = inputPiutangPerdagangan.text.toString().replace(".", "").replace(",00", "")
             if (piutang == ""){
                 piutang = "0"
             }
 
-            var hutang = inputHutangPerdagangan.text.toString().replace(".","")
+            var hutang = inputHutangPerdagangan.text.toString().replace(".","").replace(",00", "")
             if (hutang == ""){
                 hutang ="0"
             }
 
-            var kerugian = inputKerugianPerdagangan.text.toString().replace(".","")
+            var kerugian = inputKerugianPerdagangan.text.toString().replace(".","").replace(",00", "")
             if (kerugian == ""){
                 kerugian = "0"
             }
@@ -176,7 +176,7 @@ class KalkulatorActivity : AppCompatActivity() {
         }
 
         btnSubmitEmas.setOnClickListener {
-            var beratEmas = inputEmas.text.toString().replace(".","")
+            var beratEmas = inputEmas.text.toString().replace(".","").replace(",00", "")
             if (beratEmas == ""){
                 beratEmas = "0"
             }
@@ -191,7 +191,7 @@ class KalkulatorActivity : AppCompatActivity() {
         }
 
         btnSubmitTabungan.setOnClickListener {
-            var tabungan = inputTabungan.text.toString().replace(".", "")
+            var tabungan = inputTabungan.text.toString().replace(".", "").replace(",00", "")
             if (tabungan == ""){
                 tabungan = "0"
             }

@@ -134,7 +134,7 @@ class ZakatActivity : AppCompatActivity() {
         if(statusDialogPembayaranIntent == "aktif"){
             dialogPembayaran.show()
             if (nominalIntent != "" || nominalIntent != "null" || nominalIntent != null ){
-                inputNominalZakat.text = nominalIntent?.replace(".", "")?.toEditable()
+                inputNominalZakat.text = nominalIntent?.replace(".", "")?.replace(",00", "")?.toEditable()
             }
 
             if (idZakatIntent != "" || idZakatIntent != "null" || idZakatIntent != null ){
@@ -289,7 +289,7 @@ class ZakatActivity : AppCompatActivity() {
                 sharedPreference.save("penggunaDana", noDana)
             }
 
-            val nominalZakat = inputNominalZakat.text.toString().replace(".", "")
+            val nominalZakat = inputNominalZakat.text.toString().replace(".", "").replace(",00", "")
 
 
             if(idProgramZakat == 0){
