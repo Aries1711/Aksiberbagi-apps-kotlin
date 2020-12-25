@@ -35,7 +35,7 @@ class ProgramAllActivity : AppCompatActivity() {
         setContentView(R.layout.program_all_activity)
         val sharedPreference: Preferences = Preferences(this)
         val toolbar: Toolbar = findViewById(R.id.upAppbarAllProgram)
-        toolbar.title = "Program Galang Dana"
+        toolbar.title = "Sudahkah sedekah hari ini ?"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE)
         var mainMenuAll = findViewById<RecyclerView>(R.id.recyclerProgramAllSearch)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")

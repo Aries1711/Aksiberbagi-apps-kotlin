@@ -16,6 +16,7 @@ import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,6 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.inddevid.aksiberbagi_donatur.R
@@ -65,7 +65,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             .error(R.mipmap.ic_launcher_round)
 
         //btn set program ke program FAvorit
-        val btnFavoritSet : FloatingActionButton = findViewById(R.id.btnAddFavorit)
+        val btnFavoritSet : CardView = findViewById(R.id.btnAddFavorit)
 
 
         //deklarasi value tampilan mulai dari gambar judul dll

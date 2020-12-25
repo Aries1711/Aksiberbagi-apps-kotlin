@@ -29,18 +29,17 @@
                 android:layout_weight=".7"
                 android:progress="40"
                 android:progressDrawable="@drawable/progress_bar_style" />
+
             <TextView
                 android:id="@+id/textInsideprogressBar"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:text="Terdonasi 15"
-                />
+                android:gravity="left"
+                android:text="Tersisa 15"
+                android:textSize="10sp"/>
         </RelativeLayout>
 
         <LinearLayout

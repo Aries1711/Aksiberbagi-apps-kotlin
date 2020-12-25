@@ -1,11 +1,13 @@
 package com.inddevid.aksiberbagi_donatur.view
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -43,7 +45,8 @@ class SignUpActivity : AppCompatActivity() {
             )
         )}
 
-        val syaratBtn : Button = findViewById(R.id.syaratBtn)
+        val syaratBtn : TextView = findViewById(R.id.syaratBtn)
+        syaratBtn.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         syaratBtn.setOnClickListener {
             startActivity(Intent(this,SyaratKetentuanActivity::class.java))
         }

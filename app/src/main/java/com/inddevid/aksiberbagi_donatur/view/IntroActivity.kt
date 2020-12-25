@@ -21,15 +21,15 @@ class IntroActivity : AppCompatActivity() {
     private val introSliderAdapter = IntroSliderAdapter(
         listOf(
             IntroSlide(
-                "#semangatKebaikan",
+                "#SemangatBerbagi",
                 "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
                 R.drawable.intro1
             ),IntroSlide(
-                "#semangatKebaikan",
+                "#SemangatIndonesia",
                 "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
                 R.drawable.intro2
             ),IntroSlide(
-                "#semangatKebaikan",
+                "#KolaborasiKebaikan",
                 "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
                 R.drawable.intro3
             )

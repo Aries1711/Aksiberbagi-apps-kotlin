@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.ListDonasi
@@ -22,7 +21,7 @@ class ListDonasiAdapter (val arrayList: ArrayList<ListDonasi>, val context: Cont
             .error(R.drawable.pengguna)
 
         fun bindItems(model: ListDonasi){
-            Glide.with(itemView.imageDonatur.context).load(model.imgDonatur).apply(options).into(itemView.imageDonatur)
+//            Glide.with(itemView.imageDonatur.context).load(model.imgDonatur).apply(options).into(itemView.imageDonatur)
             itemView.nameDonatur.text = model.name
             itemView.amountDonatur.text = Converter.rupiah(model.donate)
             if (model.pray == "" || model.pray == "null" || model.pray == null){

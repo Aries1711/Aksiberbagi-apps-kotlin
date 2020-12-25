@@ -237,7 +237,7 @@
                             android:textAlignment="textStart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nama Bank"
+                            android:text="Bank"
                             android:textStyle="bold"/>
                         <TextView
                             android:id="@+id/invoiceBankNama"
@@ -265,7 +265,7 @@
                             android:textAlignment="textStart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No Rekening"
+                            android:text="No. Rek"
                             android:textStyle="bold"/>
                         <TextView
                             android:id="@+id/invoiceRekening"
@@ -306,7 +306,7 @@
                             android:textAlignment="textStart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No Invoice"
+                            android:text="No. Invoice"
                             android:textStyle="bold"/>
                         <TextView
                             android:id="@+id/invoiceKode"
@@ -335,7 +335,7 @@
                             android:textAlignment="textStart"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:text="Judul program"
+                            android:text="Program:"
                             android:textStyle="bold"
                             tools:ignore="RtlCompat" />
                         <TextView
