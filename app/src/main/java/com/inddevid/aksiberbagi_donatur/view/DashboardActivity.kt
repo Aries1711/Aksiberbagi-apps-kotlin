@@ -79,8 +79,12 @@ class DashboardActivity : AppCompatActivity() {
             toast.show()
         } else if (countBack > 1) {
             super.onBackPressed()
-            finishAffinity()
-            finish()
+//            finishAffinity()
+//            finish()
+            val a = Intent(Intent.ACTION_MAIN)
+            a.addCategory(Intent.CATEGORY_HOME)
+            a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(a)
         }
     }
 

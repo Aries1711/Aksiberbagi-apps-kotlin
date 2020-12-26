@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/splashImage_id"
-        android:layout_width="244dp"
+        android:layout_width="230dp"
         android:layout_height="73dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/logo_panjang"
+        android:src="@drawable/logo_aps"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -26,8 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="212dp"
-        android:fontFamily="@font/actor"
-        android:text="Version 1.0"
+        android:fontFamily="@font/poppins_light"
+        android:text="Version 1.0.0"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

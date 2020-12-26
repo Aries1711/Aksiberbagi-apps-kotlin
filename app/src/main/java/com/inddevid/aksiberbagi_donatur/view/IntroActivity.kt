@@ -22,16 +22,16 @@ class IntroActivity : AppCompatActivity() {
         listOf(
             IntroSlide(
                 "#SemangatBerbagi",
-                "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
-                R.drawable.intro1
+                "Kita bersama memberikan manfaat kepada saudara kita yang membutuhkan",
+                R.drawable.intro_a
             ),IntroSlide(
                 "#SemangatIndonesia",
-                "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
-                R.drawable.intro2
+                "Awali pagimu dengan berbagi kebaikan kepada sesama",
+                R.drawable.intro_b
             ),IntroSlide(
                 "#KolaborasiKebaikan",
-                "Kita bersama untuk memberikan manfaat kepada saudara kita yang membutuhkan",
-                R.drawable.intro3
+                "Donasi mudah mulai dari 1.000 rupiah",
+                R.drawable.intro_c
             )
         )
     )
