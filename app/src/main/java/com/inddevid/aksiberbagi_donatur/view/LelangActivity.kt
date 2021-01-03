@@ -287,7 +287,7 @@ class LelangActivity : AppCompatActivity() {
         body.put("nominal", sharedPreference.getValueInt("donasiNominal"))
         body.put("pesan_doa", sharedPreference.getValueString("donasiDoa"))
         body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
-        body.put("is_android", true)
+        body.put("is_android", 1)
         body.put("no_wa", sharedPreference.getValueString("penggunaWA"))
         body.put("email", sharedPreference.getValueString("penggunaEmail"))
         body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
