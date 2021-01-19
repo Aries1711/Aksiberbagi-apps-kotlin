@@ -49,6 +49,7 @@ class PasswordSetActivity : AppCompatActivity() {
 
         val submitPassword: Button = findViewById(R.id.passwordSubmit)
         submitPassword.setOnClickListener {
+            submitPassword.isEnabled = false
             validatePassword(retrivedToken,this)
         }
 
@@ -98,6 +99,8 @@ class PasswordSetActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
+                val submitPassword: Button = context.findViewById(R.id.passwordSubmit)
+                submitPassword.isEnabled = true
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
                 if (apiError?.message == "Token expired"){
                     refreshToken(tokenValue, context)
