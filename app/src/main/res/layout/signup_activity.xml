@@ -225,7 +225,7 @@
                 android:gravity="center"
                 android:text="@string/daftarAgreement1"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@+id/splashImage_id" />
 
             <LinearLayout
@@ -243,7 +243,7 @@
                     android:paddingEnd="0dp"
                     android:text="@string/syaratKetentuan"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="133dp"
@@ -252,7 +252,7 @@
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/appNameCom"
                     android:textColor="#132487"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

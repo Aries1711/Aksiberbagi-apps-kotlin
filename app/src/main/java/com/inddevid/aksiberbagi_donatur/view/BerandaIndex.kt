@@ -57,13 +57,13 @@ class BerandaIndex : Fragment() {
     private var berandaSlideAdapter = BerandaSlideAdapter(
         listOf(
             BerandaSlideBanner(
-                R.drawable.banner_d
+                R.drawable.banner_real_a
             ),
             BerandaSlideBanner(
-                R.drawable.banner_g
+                R.drawable.banner_real_b
             ),
             BerandaSlideBanner(
-                R.drawable.banner_h
+                R.drawable.banner_real_d
             )
         )
     )
@@ -131,26 +131,26 @@ class BerandaIndex : Fragment() {
         // tombol submenu beranda a-d
         // tombol lelang baik
         val imageSubA : ImageView = view.findViewById(R.id.subA)
-        Glide.with(requireActivity()).load(R.drawable.submenuc).into(imageSubA)
+        Glide.with(requireActivity()).load(R.drawable.submenulelang_baik).into(imageSubA)
         imageSubA.setOnClickListener {
             startActivity(Intent(requireActivity(), LelangListActivity::class.java))
         }
 
         // tombol zakat
         val imageSubB : ImageView = view.findViewById(R.id.subB)
-        Glide.with(requireActivity()).load(R.drawable.submenub).into(imageSubB)
+        Glide.with(requireActivity()).load(R.drawable.submenuzakat).into(imageSubB)
         imageSubB.setOnClickListener {
             startActivity(Intent(requireActivity(), ZakatActivity::class.java))
         }
         // tombol publik ajukan
         val imageSubC : ImageView = view.findViewById(R.id.subC)
-        Glide.with(requireActivity()).load(R.drawable.submenud).into(imageSubC)
+        Glide.with(requireActivity()).load(R.drawable.submenupublik_ajukan).into(imageSubC)
         imageSubC.setOnClickListener {
             startActivity(Intent(requireActivity(), PublikAjukanActivity::class.java))
         }
         // tombol sapa kami
         val imageSubD : ImageView = view.findViewById(R.id.subD)
-        Glide.with(requireActivity()).load(R.drawable.submenue).into(imageSubD)
+        Glide.with(requireActivity()).load(R.drawable.submenukontak_kami).into(imageSubD)
         imageSubD.setOnClickListener {
             val phoneNumber = "+6285725268775"
             val text = "Halo Kakak Aksiberbagi.com "

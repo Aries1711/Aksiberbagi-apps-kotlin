@@ -9,5 +9,5 @@
     android:layout_height="160dp"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-    android:src="@drawable/banner_d"/>
+    android:src="@drawable/banner_real_a"/>
 </LinearLayout>
