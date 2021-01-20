@@ -257,11 +257,12 @@ class PasswordSetActivity : AppCompatActivity() {
         if (retrivedToken == "" ||retrivedToken == null ){
             startActivity(Intent(this@PasswordSetActivity, IntroActivity::class.java))
         }else{
-            val mIntent = Intent(this, DashboardActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("penggunaAktif", "true")
-            mIntent.putExtras(mBundle)
-            startActivity(mIntent)
+//            val mIntent = Intent(this, DashboardActivity::class.java)
+//            val mBundle = Bundle()
+//            mBundle.putString("penggunaAktif", "true")
+//            mIntent.putExtras(mBundle)
+//            startActivity(mIntent)
+            startActivity(Intent(this@PasswordSetActivity, IntroActivity::class.java))
         }
     }
 

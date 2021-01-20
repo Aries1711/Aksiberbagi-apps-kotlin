@@ -12,7 +12,7 @@
         android:layout_width="230dp"
         android:layout_height="73dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/logo_aps"
+        android:src="@drawable/fix_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
