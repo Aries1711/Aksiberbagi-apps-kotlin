@@ -23,6 +23,7 @@ import org.json.JSONObject
 
 class PasswordSetActivity : AppCompatActivity() {
     private val TAG = "Password Set"
+    private var boolKode = "False"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +31,16 @@ class PasswordSetActivity : AppCompatActivity() {
 
         val sharedPreference: Preferences = Preferences(this)
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
+        var kodeReset: String? = intent.getStringExtra("KODERESET")
+        if(kodeReset != null || kodeReset != "" ){
+            boolKode = "True"
+        }
 
         val toolbar: Toolbar = findViewById(R.id.upAppbarPasswordSet)
         toolbar.title = "Reset Password"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         toolbar.setNavigationOnClickListener{
+            Log.d(TAG, "retrivedToken $retrivedToken")
             if (retrivedToken == "" ||retrivedToken == null ){
                 startActivity(Intent(this@PasswordSetActivity, IntroActivity::class.java))
             }else{
@@ -49,14 +55,15 @@ class PasswordSetActivity : AppCompatActivity() {
 
         val submitPassword: Button = findViewById(R.id.passwordSubmit)
         submitPassword.setOnClickListener {
+            Log.d(TAG, "button trigerred")
             submitPassword.isEnabled = false
-            validatePassword(retrivedToken,this)
+            validatePassword(retrivedToken,this, kodeReset)
         }
 
 
     }
 
-    private fun validatePassword(tokenValue: String?, context: PasswordSetActivity){
+    private fun validatePassword(tokenValue: String?, context: PasswordSetActivity, kodeReset : String?){
         //deklarasi value password
         val layoutPasswordInputA : TextInputLayout = context.findViewById(R.id.passwordConfirmation1)
         val inputPasswordA: TextInputEditText = context.findViewById(R.id.passwordA)
@@ -71,7 +78,10 @@ class PasswordSetActivity : AppCompatActivity() {
             val countChar = passwordValueA.length
             if (countChar > 5){
                 if(passwordValueA == passwordValueB){
-                    if (tokenValue == "" || tokenValue == null ){
+                    if(kodeReset != null || kodeReset != ""){
+                        postResetPassword(context)
+                    }
+                    if (tokenValue == "" || tokenValue == null || kodeReset == null || kodeReset == "" ){
                         postResetPassword(context)
                     }else{
                         getKoneksi(tokenValue, context)
@@ -196,11 +206,18 @@ class PasswordSetActivity : AppCompatActivity() {
         //deklarasi value password from view
         val inputPasswordA: TextInputEditText = context.findViewById(R.id.passwordA)
         val inputPasswordB: TextInputEditText = context.findViewById(R.id.passwordB)
-        if (retrivedToken == "" || retrivedToken == null){
-            body.put("nomor_telepon", penggunaNoTelp)
+        if(boolKode == "False" ){
+            if (retrivedToken == "" || retrivedToken == null){
+                body.put("nomor_telepon", penggunaNoTelp)
+            }else{
+                body.put("nomor_telepon", penggunaWA)
+            }
         }else{
-            body.put("nomor_telepon", penggunaWA)
+            body.put("nomor_telepon", penggunaNoTelp)
+            sharedPreference.save("TOKEN", "")
         }
+
+
         body.put("password", inputPasswordA.text.toString())
         body.put("konfirmasi_password", inputPasswordB.text.toString())
         ApiService.postPasswordReset(body).getAsJSONObject(object : JSONObjectRequestListener{

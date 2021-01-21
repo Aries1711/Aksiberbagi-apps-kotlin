@@ -109,7 +109,11 @@ class LupaPasswordActivity : AppCompatActivity() {
         ApiService.postKodeOTPVerifikasi(body).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 if (response?.getString("message").equals("Sukses mencocokkan kode reset")){
-                    startActivity(Intent(this@LupaPasswordActivity, PasswordSetActivity::class.java))
+                    val mIntent = Intent(this@LupaPasswordActivity, PasswordSetActivity::class.java)
+                    val mBundle = Bundle()
+                    mBundle.putString("KODERESET", noKode)
+                    mIntent.putExtras(mBundle)
+                    context.startActivity(mIntent)
                 }else if(response?.getString("message").equals("Gagal mencocokkan kode reset")){
                     Toast.makeText(this@LupaPasswordActivity, "Gagal mencocokkan kode reset", Toast.LENGTH_SHORT).show()
                 }

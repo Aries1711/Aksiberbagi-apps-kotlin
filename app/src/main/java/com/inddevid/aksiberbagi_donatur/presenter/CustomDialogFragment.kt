@@ -47,6 +47,8 @@ class CustomDialogFragment : DialogFragment() {
         ApiService.postLogout(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 sharedPreference.save("TOKEN", "")
+                val token = sharedPreference.getValueString("TOKEN")
+                Log.d(TAG, "token Now = $token")
                 Looper.myLooper()?.let {
                     Handler(it).postDelayed({
                         val intent = Intent(requireContext(), IntroActivity::class.java)
