@@ -15,7 +15,7 @@ import com.inddevid.aksiberbagi_donatur.services.Preferences
 
 class DashboardActivity : AppCompatActivity() {
     private var countBack = 0
-
+    private var backPressed: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,24 +68,39 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-//        val count = supportFragmentManager.backStackEntryCount
-        countBack++
-        if (countBack <= 1) {
-            val toast = Toast.makeText(
-                applicationContext,
-                "tekan dua kali untuk keluar",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-        } else if (countBack > 1) {
+        val backToast = Toast.makeText(
+            applicationContext,
+            "tekan dua kali untuk keluar",
+            Toast.LENGTH_LONG
+        )
+        if(backPressed + 2000 > System.currentTimeMillis()){
+            backToast.cancel()
             super.onBackPressed()
-//            finishAffinity()
-//            finish()
             val a = Intent(Intent.ACTION_MAIN)
             a.addCategory(Intent.CATEGORY_HOME)
             a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(a)
+        }else{
+            backToast.show()
         }
+        backPressed = System.currentTimeMillis()
+
+
+//        countBack++
+//        if (countBack <= 1) {
+//            val toast = Toast.makeText(
+//                applicationContext,
+//                "tekan dua kali untuk keluar",
+//                Toast.LENGTH_LONG
+//            )
+//            toast.show()
+//        } else if (countBack > 1) {
+//            super.onBackPressed()
+//            val a = Intent(Intent.ACTION_MAIN)
+//            a.addCategory(Intent.CATEGORY_HOME)
+//            a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(a)
+//        }
     }
 
 }
