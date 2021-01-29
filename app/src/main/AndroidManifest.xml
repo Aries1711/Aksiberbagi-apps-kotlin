@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.inddevid.aksiberbagi_donatur">
+    package="com.aksiberbagi.donatur">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,94 +15,94 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".view.LelangListActivity"
+            android:name="com.aksiberbagi.donatur.view.LelangListActivity"
             android:theme="@style/AppMaterial"/>
         <activity
-            android:name=".view.WebviewAjuanActivity"
+            android:name="com.aksiberbagi.donatur.view.WebviewAjuanActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.KalkulatorActivity"
+            android:name="com.aksiberbagi.donatur.view.KalkulatorActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.LupaPasswordActivity"
+            android:name="com.aksiberbagi.donatur.view.LupaPasswordActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.NotifikasiActivity"
+            android:name="com.aksiberbagi.donatur.view.NotifikasiActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.ProfilActivity"
+            android:name="com.aksiberbagi.donatur.view.ProfilActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.DonasiDetailActivity"
+            android:name="com.aksiberbagi.donatur.view.DonasiDetailActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.WebviewInvoiceActivity"
+            android:name="com.aksiberbagi.donatur.view.WebviewInvoiceActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.InvoiceActivity"
+            android:name="com.aksiberbagi.donatur.view.InvoiceActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.PilihPembayaranActivity"
+            android:name="com.aksiberbagi.donatur.view.PilihPembayaranActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.LelangActivity"
+            android:name="com.aksiberbagi.donatur.view.LelangActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.SapaActivity"
+            android:name="com.aksiberbagi.donatur.view.SapaActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.ZakatActivity"
+            android:name="com.aksiberbagi.donatur.view.ZakatActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.PublikAjukanActivity"
+            android:name="com.aksiberbagi.donatur.view.PublikAjukanActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.DonasiRutinActivity"
+            android:name="com.aksiberbagi.donatur.view.DonasiRutinActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.SemuaLaporanActivity"
+            android:name="com.aksiberbagi.donatur.view.SemuaLaporanActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.SemuaDonasiSayaActivity"
+            android:name="com.aksiberbagi.donatur.view.SemuaDonasiSayaActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.SyaratKetentuanActivity"
+            android:name="com.aksiberbagi.donatur.view.SyaratKetentuanActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.TentangActivity"
+            android:name="com.aksiberbagi.donatur.view.TentangActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.BantuanActivity"
+            android:name="com.aksiberbagi.donatur.view.BantuanActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.PengaturanActivity"
+            android:name="com.aksiberbagi.donatur.view.PengaturanActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.ProgramAllActivity"
+            android:name="com.aksiberbagi.donatur.view.ProgramAllActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.ProgramDetailActivity"
+            android:name="com.aksiberbagi.donatur.view.ProgramDetailActivity"
             android:theme="@style/AppMaterial"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".view.SearchActivity"
+            android:name="com.aksiberbagi.donatur.view.SearchActivity"
             android:theme="@style/AppMaterial"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".view.DashboardActivity"
+            android:name="com.aksiberbagi.donatur.view.DashboardActivity"
             android:theme="@style/AppMaterial" /> <!-- Start Auth android app -->
         <activity
-            android:name=".view.SignUpActivity"
+            android:name="com.aksiberbagi.donatur.view.SignUpActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name="com.aksiberbagi.donatur.view.LoginActivity"
             android:theme="@style/AppMaterial" />
         <activity
-            android:name=".view.PasswordSetActivity"
+            android:name="com.aksiberbagi.donatur.view.PasswordSetActivity"
             android:theme="@style/AppMaterial" /> <!-- End Auth android app -->
         <!-- Start activity splash And Intro -->
         <activity
-            android:name=".view.SplashActivity"
+            android:name="com.aksiberbagi.donatur.view.SplashActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -111,7 +111,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.IntroActivity"
+            android:name="com.aksiberbagi.donatur.view.IntroActivity"
             android:theme="@style/AppMaterial">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

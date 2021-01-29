@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.inddevid.aksiberbagi_donatur"
+        applicationId "com.aksiberbagi.donatur"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

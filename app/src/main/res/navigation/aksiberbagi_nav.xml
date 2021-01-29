@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/berandaIndex"
-        android:name="com.inddevid.aksiberbagi_donatur.view.BerandaIndex"
+        android:name="com.aksiberbagi.donatur.view.BerandaIndex"
         android:label="fragment_beranda_index"
         tools:layout="@layout/fragment_beranda_index" />
     <fragment
         android:id="@+id/favoritIndex"
-        android:name="com.inddevid.aksiberbagi_donatur.view.FavoritIndex"
+        android:name="com.aksiberbagi.donatur.view.FavoritIndex"
         android:label="fragment_favorit_index"
         tools:layout="@layout/fragment_favorit_index" />
     <fragment
         android:id="@+id/donasiSayaIndex"
-        android:name="com.inddevid.aksiberbagi_donatur.view.DonasiSayaIndex"
+        android:name="com.aksiberbagi.donatur.view.DonasiSayaIndex"
         android:label="fragment_donasi_saya_index"
         tools:layout="@layout/fragment_donasi_saya_index" />
     <fragment
         android:id="@+id/penggunaIndex"
-        android:name="com.inddevid.aksiberbagi_donatur.view.PenggunaIndex"
+        android:name="com.aksiberbagi.donatur.view.PenggunaIndex"
         android:label="fragment_pengguna_index"
         tools:layout="@layout/fragment_pengguna_index" />
 </navigation>
