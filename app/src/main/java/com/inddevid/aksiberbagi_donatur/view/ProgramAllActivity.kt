@@ -50,7 +50,7 @@ class ProgramAllActivity : AppCompatActivity() {
         layoutScroll.viewTreeObserver.addOnScrollChangedListener {
             val scrollY: Int = layoutScroll.scrollY
             Log.d(TAG, "nilai Y: $scrollY")
-            if (scrollY > 4000){
+            if (scrollY > 2000){
                 getNextProgram(retrivedToken, mainMenuAll)
             }
         }

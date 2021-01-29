@@ -106,6 +106,8 @@ class LelangListActivity : AppCompatActivity() {
         val header : String? = tokenValue
         ApiService.getLelang(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
+                val responseMSG = response?.getString("message")
+                Log.d(TAG, "$responseMSG")
                 if(response?.getString("message").equals("Data flashsale berhasil diambil")) {
                     if (response?.getString("timer")!!.toInt() >= 0) {
                         val jsonArray = response?.getJSONArray("data")
@@ -173,7 +175,20 @@ class LelangListActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
-
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if (apiError?.message == "Data tidak ditemukan") {
+                    val countDown: DynamicCountDownView =
+                        context.findViewById(R.id.normalCountDownLelang)
+                    countDown.visibility = View.GONE
+                    val shimmerLayout: ShimmerFrameLayout =
+                        context.findViewById(R.id.shimmerLelangList)
+                    shimmerLayout.stopShimmer()
+                    shimmerLayout.visibility = View.GONE
+                    val layoutUtama = context.findViewById<LinearLayout>(R.id.layoutUtama)
+                    layoutUtama.visibility = View.GONE
+                    val layoutNotFound: LinearLayout = context.findViewById(R.id.layoutNotfound)
+                    layoutNotFound.visibility = View.VISIBLE
+                }
             }
 
         })

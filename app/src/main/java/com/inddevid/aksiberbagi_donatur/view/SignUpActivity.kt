@@ -215,10 +215,15 @@ class SignUpActivity : AppCompatActivity() {
                             ) {
                                 val data: JSONObject? = response?.getJSONObject("data")
                                 val token: String? = data?.getString("token")
+                                val dataDonatur: JSONObject? = data?.getJSONObject("donatur")
+                                val donaturNama = dataDonatur?.getString("tbldonatur_nama")
+
 
                                 //save token and donatur id on preferences
                                 if (token != null) {
                                     sharedPreference.save("TOKEN", token)
+                                    sharedPreference.save("penggunaNAMA", donaturNama )
+                                    sharedPreference.save("penggunaTotalDonasi", 0)
                                     startActivity(
                                         Intent(
                                             this@SignUpActivity,

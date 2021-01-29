@@ -152,7 +152,7 @@ class BerandaIndex : Fragment() {
         val imageSubD : ImageView = view.findViewById(R.id.subD)
         Glide.with(requireActivity()).load(R.drawable.submenukontak_kami).into(imageSubD)
         imageSubD.setOnClickListener {
-            val phoneNumber = "+6285725268775"
+            val phoneNumber = "+6281312344746"
             val text = "Halo Kakak Aksiberbagi.com "
             val textEncode = java.net.URLEncoder.encode(text, "utf-8")
             val uri = Uri.parse("whatsapp://send?text=$textEncode&phone=$phoneNumber")

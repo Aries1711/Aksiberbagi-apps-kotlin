@@ -19,7 +19,7 @@ import com.inddevid.aksiberbagi_donatur.view.IntroActivity
 import kotlinx.android.synthetic.main.dialog_logout.view.*
 import org.json.JSONObject
 
-class CustomDialogFragment : DialogFragment() {
+class CustomDialogLogout : DialogFragment() {
 
     private val TAG = "Fragment Logout"
     override fun onCreateView(
@@ -47,8 +47,12 @@ class CustomDialogFragment : DialogFragment() {
         ApiService.postLogout(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 sharedPreference.save("TOKEN", "")
+                sharedPreference.save("penggunaNAMA", "")
+                sharedPreference.save("penggunaWA", "")
+                sharedPreference.save("penggunaAlamat", "")
+                sharedPreference.save("penggunaProfesi", "")
+                sharedPreference.save("penggunaEmail", "" )
                 val token = sharedPreference.getValueString("TOKEN")
-                Log.d(TAG, "token Now = $token")
                 Looper.myLooper()?.let {
                     Handler(it).postDelayed({
                         val intent = Intent(requireContext(), IntroActivity::class.java)

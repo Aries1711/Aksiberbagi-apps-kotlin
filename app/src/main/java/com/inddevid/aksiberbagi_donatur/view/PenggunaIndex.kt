@@ -16,7 +16,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.inddevid.aksiberbagi_donatur.R
 import com.inddevid.aksiberbagi_donatur.model.PenggunaSettings
-import com.inddevid.aksiberbagi_donatur.presenter.CustomDialogFragment
+import com.inddevid.aksiberbagi_donatur.presenter.CustomDialogLogout
 import com.inddevid.aksiberbagi_donatur.presenter.PenggunaSettingsAdapter
 import com.inddevid.aksiberbagi_donatur.services.Preferences
 
@@ -100,7 +100,7 @@ class PenggunaIndex : Fragment() {
                 }
             }
             if (position == 5){
-                var dialog = CustomDialogFragment()
+                var dialog = CustomDialogLogout()
                 fragmentManager?.let { dialog.show(it, "customDialog") }
             }
         }
