@@ -19,16 +19,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.JSONObjectRequestListener
-import com.bumptech.glide.Glide
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.*
 import com.aksiberbagi.donatur.presenter.*
 import com.aksiberbagi.donatur.services.ApiError
 import com.aksiberbagi.donatur.services.ApiService
 import com.aksiberbagi.donatur.services.Preferences
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -477,7 +477,7 @@ class BerandaIndex : Fragment() {
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
                         val link = item?.getString("tblprogram_namalink")
-                        val volunter: String? = "Aksiberbagi.com"
+                        val volunter = item?.getString("tblcabang_nama")
                         val capaian = item?.getString("capaian_donasi")
                         val sisaHari = item?.getString("sisa_hari")
                         val startProgram = item?.getString("tanggal_mulai_donasi")

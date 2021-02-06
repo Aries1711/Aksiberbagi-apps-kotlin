@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.BerandaProgramPilihan
 import com.aksiberbagi.donatur.services.Preferences
 import com.aksiberbagi.donatur.view.ProgramDetailActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.beranda_card_program_pilihan.view.*
 
 class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilihan>, val context: Context) :
@@ -57,6 +57,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
             sharedPreference.save("judul", model.titleChoose)
             sharedPreference.save("capaian", model.fund)
             sharedPreference.save("sisaHari", model.dayFund)
+            sharedPreference.save("penggalang", "aksiberbagi.com")
             sharedPreference.save("tanggalMulai", model.dateStart)
             sharedPreference.save("progressProgram", model.progress)
             sharedPreference.save("targetProgram", model.targetNominal)

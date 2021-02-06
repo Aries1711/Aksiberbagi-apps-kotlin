@@ -12,15 +12,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.JSONObjectRequestListener
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.BerandaProgramAll
 import com.aksiberbagi.donatur.presenter.ProgramAllAdapter
 import com.aksiberbagi.donatur.services.ApiError
 import com.aksiberbagi.donatur.services.ApiService
 import com.aksiberbagi.donatur.services.Preferences
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.facebook.shimmer.ShimmerFrameLayout
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -158,7 +158,8 @@ class ProgramAllActivity : AppCompatActivity() {
                         val img = item?.getString("thumbnail_url")
                         val judul = item?.getString("tblprogram_judul")
                         val link = item?.getString("tblprogram_namalink")
-                        val volunter: String? = "Aksiberbagi.com"
+                        val dataCabang = item?.getJSONObject("cabang")
+                        val volunter: String? = dataCabang?.getString("tblcabang_nama")
                         val capaian = item?.getString("capaian_donasi")
                         val sisaHari = item?.getString("sisa_hari")
                         val startProgram = item?.getString("tanggal_mulai_donasi")

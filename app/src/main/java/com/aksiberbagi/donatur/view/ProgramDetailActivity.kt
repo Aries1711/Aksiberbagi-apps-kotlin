@@ -20,6 +20,10 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aksiberbagi.donatur.R
+import com.aksiberbagi.donatur.model.ListDonasi
+import com.aksiberbagi.donatur.presenter.ListDonasiAdapter
+import com.aksiberbagi.donatur.services.*
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
@@ -27,10 +31,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.aksiberbagi.donatur.R
-import com.aksiberbagi.donatur.model.ListDonasi
-import com.aksiberbagi.donatur.presenter.ListDonasiAdapter
-import com.aksiberbagi.donatur.services.*
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.toString as toString1
@@ -75,6 +75,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             val capaianProgram: String? = sharedPreference.getValueString("capaian")
             val sisaHariProgram: String? =sharedPreference.getValueString("sisaHari")
             val tanggalMulaiProgram: String? =sharedPreference.getValueString("tanggalMulai")
+            val penggalangProgram: String? = sharedPreference.getValueString("penggalang")
             val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
             val progresProgramValue: Int? = sharedPreference.getValueInt("progressProgram")
             val targetProgram: String? = sharedPreference.getValueString("targetProgram")
@@ -110,7 +111,9 @@ class ProgramDetailActivity : AppCompatActivity() {
             }else{
                 textSisaHari.text = sisaHariProgram
             }
-
+            //penggalang program (nama komunitas)
+            var textPenggalang : TextView = findViewById(R.id.kontenPenggalang)
+            textPenggalang.text = penggalangProgram
 
         val toolbar: Toolbar = findViewById(R.id.upAppbarProgramDetail)
         toolbar.setNavigationOnClickListener{startActivity(

@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.androchef.happytimer.utils.extensions.invisible
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.BerandaProgramAll
 import com.aksiberbagi.donatur.services.Preferences
 import com.aksiberbagi.donatur.view.ProgramDetailActivity
+import com.androchef.happytimer.utils.extensions.invisible
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.beranda_card_program_all.view.*
 
 class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val context:Context) :
@@ -52,7 +52,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
     override fun onBindViewHolder(holder: BerandaProgramAllAdapter.ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
 
-        if (position == 4){
+        if (position == 14){
             holder.itemView.programAllLineList.invisible()
         }
 
@@ -63,6 +63,7 @@ class BerandaProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val
             sharedPreference.save("img", model.img)
             sharedPreference.save("urlProgram", model.link)
             sharedPreference.save("judul", model.title)
+            sharedPreference.save("penggalang", model.volunteer)
             sharedPreference.save("capaian", model.fund.toString())
             sharedPreference.save("sisaHari", model.dayFund)
             sharedPreference.save("tanggalMulai", model.startFund)
