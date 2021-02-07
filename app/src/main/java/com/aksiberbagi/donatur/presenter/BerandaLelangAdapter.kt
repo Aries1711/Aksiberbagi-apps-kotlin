@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.BerandaLelang
 import com.aksiberbagi.donatur.services.Converter
 import com.aksiberbagi.donatur.services.Preferences
 import com.aksiberbagi.donatur.view.LelangActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.beranda_card_lelang.view.*
 
 class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context: Context) :
@@ -44,6 +44,7 @@ class BerandaLelangAdapter (val arrayList: ArrayList<BerandaLelang>, val context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.beranda_card_lelang, parent, false)
+        v.isNestedScrollingEnabled = true
         return BerandaLelangAdapter.ViewHolder(v)
     }
 

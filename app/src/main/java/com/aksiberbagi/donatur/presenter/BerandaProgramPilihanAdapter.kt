@@ -39,6 +39,7 @@ class BerandaProgramPilihanAdapter (val arrayList: ArrayList<BerandaProgramPilih
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.beranda_card_program_pilihan, parent, false )
+        v.isNestedScrollingEnabled = true
         return BerandaProgramPilihanAdapter.ViewHolder(v)
     }
 

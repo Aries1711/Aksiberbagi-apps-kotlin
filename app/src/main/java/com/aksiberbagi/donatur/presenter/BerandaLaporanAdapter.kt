@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.BerandaLaporan
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.beranda_card_laporan.view.*
 
 class BerandaLaporanAdapter (val arrayList: ArrayList<BerandaLaporan>, val context:Context) :
@@ -31,6 +31,7 @@ class BerandaLaporanAdapter (val arrayList: ArrayList<BerandaLaporan>, val conte
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.beranda_card_laporan, parent, false )
+        v.isNestedScrollingEnabled = true
         return BerandaLaporanAdapter.ViewHolder(v)
     }
 

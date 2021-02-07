@@ -519,17 +519,16 @@
 
                     </LinearLayout>
 
-                    <HorizontalScrollView
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/horizontalScrollLelangBaik"
-                        android:scrollbars="none">
+                        android:id="@+id/horizontalScrollLelangBaik">
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerLelangBaik"
-                            android:layout_width="280dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal" />
-                    </HorizontalScrollView>
+                    </FrameLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -557,24 +556,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakSubmenu"/>
 
-            <HorizontalScrollView
+            <FrameLayout
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:id="@+id/horizontalScrollPilihan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/headerPilihan">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerProgramPilihan"
-                    android:layout_width="280dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" />
-            </HorizontalScrollView>
+            </FrameLayout>
 
             <View
                 android:id="@+id/breakSubmenuPilihan"
@@ -622,24 +620,23 @@
                     android:textSize="14sp" />
             </FrameLayout>
 
-            <HorizontalScrollView
+            <FrameLayout
                 android:id="@+id/horizontalScrollLaporan"
                 android:layout_width="match_parent"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/headerLaporan">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerLaporan"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="220dp"
                     android:orientation="horizontal" />
-            </HorizontalScrollView>
+            </FrameLayout>
 
             <View
                 android:id="@+id/breakSubmenuLaporan"
