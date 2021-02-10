@@ -5,13 +5,11 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.aksiberbagi.donatur.R
@@ -36,6 +34,7 @@ class PenggunaIndex : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var backButtonCount = 0
+    private val TAG = "Pengguna index"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,11 +104,27 @@ class PenggunaIndex : Fragment() {
             }
         }
 
-
-//        val penggunaWa = sharedPreference.getValueString("penggunaWA")
-//        val toast = Toast.makeText(requireContext(), "NO WA $penggunaWa",Toast.LENGTH_LONG)
+        val penggunaNama = sharedPreference.getValueString("penggunaNAMA")
+        val penggunaAlamat = sharedPreference.getValueString("penggunaAlamat")
+        val penggunaProfesi = sharedPreference.getValueString("penggunaProfesi")
+        val penggunaEmail = sharedPreference.getValueString("penggunaEmail")
+//        val toast = Toast.makeText(requireContext(), "Nama '$penggunaNama' n/ Alamat '$penggunaAlamat' n/ Profesi '$penggunaProfesi' n/ Email '$penggunaEmail' n/  ",Toast.LENGTH_LONG)
 //        toast.show()
+        var totalProfil = 1
+        if(penggunaAlamat !=  "null" ){
+            totalProfil = 2
+        }
+        if(penggunaProfesi !=  "null" ){
+            totalProfil = 3
+        }
+        if(penggunaEmail != "null"){
+            totalProfil = 4
+        }
 
+
+        var profilProgress: Double = (totalProfil.toDouble() / 4) * 100
+
+        Log.d(TAG, " total profil = $profilProgress")
         val layoutProfil : LinearLayout = view.findViewById(R.id.pengaturanProfil)
         layoutProfil.setOnClickListener{
             startActivity(Intent(requireContext(), ProfilActivity::class.java))
@@ -122,7 +137,11 @@ class PenggunaIndex : Fragment() {
         penggunaText.text = penggunaNamaValue
         val totalDonasiText : TextView = view.findViewById(R.id.penggunaTotalDonasiText)
         totalDonasiText.text = "Rp $penggunaTotalDonasiValue"
-
+        val progresText : TextView = view.findViewById(R.id.progressText)
+        val progressFix = profilProgress.toInt()
+        progresText.text = "$progressFix %"
+        val progressProfil : ProgressBar = view.findViewById(R.id.progressBar)
+        progressProfil.progress = progressFix
 
         return view
     }
