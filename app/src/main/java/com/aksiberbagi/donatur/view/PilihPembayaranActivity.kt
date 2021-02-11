@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.ModelPembayaran
 import com.aksiberbagi.donatur.presenter.PilihPembayaranAdapter
 import com.aksiberbagi.donatur.services.ApiError
 import com.aksiberbagi.donatur.services.ApiService
 import com.aksiberbagi.donatur.services.Preferences
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -72,6 +72,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
             val mIntent = Intent(this, ProgramDetailActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("dialogAktif", "true")
+            mBundle.putString("pilihanPembayaran", "Pilih Pembayaran")
             mBundle.putString("nominalDonasi", nominalSet)
             mBundle.putString("spinner", spinnerPilihan)
             mIntent.putExtras(mBundle)
