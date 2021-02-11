@@ -50,7 +50,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                 nominalSet = "0"
                 spinnerSet = spinnerPilihan.toString()
             }else{
-                valueNominal = valueNominal!!.replace(".", "")
+                valueNominal = valueNominal!!.replace(".", "").replace(",00", "")
                 if(valueNominal!!.toInt() in 0..999 ){
                     layoutEwallet.setBackgroundColor(Color.parseColor("#c5c7c7"))
                     layoutEwallet.bringToFront()
