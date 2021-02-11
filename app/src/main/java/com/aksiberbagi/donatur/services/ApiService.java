@@ -219,7 +219,7 @@ public class ApiService {
 
     public static ANRequest getAllProgram(String data){
         token = data;
-        String endpoint = baseUrl("program");
+        String endpoint = baseUrl("program/all");
         return get(endpoint);
     }
 

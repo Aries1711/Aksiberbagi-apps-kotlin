@@ -143,6 +143,14 @@ class PenggunaIndex : Fragment() {
         val progressProfil : ProgressBar = view.findViewById(R.id.progressBar)
         progressProfil.progress = progressFix
 
+//        layout biodata akun lengkap
+        val layoutUnverified : LinearLayout = view.findViewById(R.id.unverifiedLayout)
+        val layoutVerified : LinearLayout = view.findViewById(R.id.verifiedLayout)
+        if(progressFix == 100){
+            layoutUnverified.visibility = View.GONE
+            layoutVerified.visibility = View.VISIBLE
+        }
+
         return view
     }
 
