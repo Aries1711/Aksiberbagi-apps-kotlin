@@ -23,6 +23,12 @@ import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "LoginActivity"
+    private val NO_TELP = "085322778935";
+    private val PASSWORD = "123456";
+    private val IS_TESTING = true;
+
+    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
@@ -30,14 +36,16 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
         val closeBtnLogin: Button = findViewById(R.id.closeLogin)
         val submitLogin: Button = findViewById(R.id.loginSubmit)
-        closeBtnLogin.setOnClickListener{ startActivity(
-            Intent(
-                this@LoginActivity,
-                IntroActivity::class.java
+        closeBtnLogin.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@LoginActivity,
+                    IntroActivity::class.java
+                )
             )
-        ) }
+        }
 
-        val btnForgotPassword : Button = findViewById(R.id.lupaAkun)
+        val btnForgotPassword: Button = findViewById(R.id.lupaAkun)
         btnForgotPassword.setOnClickListener {
             startActivity(Intent(this@LoginActivity, LupaPasswordActivity::class.java))
         }
@@ -46,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         var layoutPhone: TextInputLayout = findViewById(R.id.namePhone)
 
         var userPassword: TextInputEditText = findViewById(R.id.password)
-        var layoutPassword: TextInputLayout =findViewById(R.id.namePassword)
+        var layoutPassword: TextInputLayout = findViewById(R.id.namePassword)
 
         submitLogin.setOnClickListener {
 
@@ -93,6 +101,10 @@ class LoginActivity : AppCompatActivity() {
 
         })
 
+        if (this.IS_TESTING) {
+            phoneNumber.setText(this.NO_TELP.toEditable())
+            userPassword.setText(this.PASSWORD.toEditable())
+        }
     }
 
     private fun validateForm(
@@ -100,14 +112,14 @@ class LoginActivity : AppCompatActivity() {
         password: String,
         layoutPhone: TextInputLayout,
         layoutPass: TextInputLayout
-    ){
-        if (phoneNumber != "" && password != ""){
+    ) {
+        if (phoneNumber != "" && password != "") {
             submitLogin(phoneNumber, password, layoutPhone, layoutPass)
-        }else if (phoneNumber == ""){
+        } else if (phoneNumber == "") {
             layoutPhone.requestFocus()
             layoutPhone.boxStrokeColor = getColor(this, R.color.error_color)
             layoutPhone.helperText = "Harap Masukkan No Telepon"
-        }else if (password == ""){
+        } else if (password == "") {
             layoutPass.requestFocus()
             layoutPass.boxStrokeColor = getColor(this, R.color.error_color)
             layoutPass.helperText = "Password Tidak Boleh Kosong"
@@ -119,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
         password: String,
         layoutPhone: TextInputLayout,
         layoutPass: TextInputLayout
-    ){
+    ) {
         val body = JSONObject()
         val sharedPreference: Preferences = Preferences(this)
         try {
@@ -147,18 +159,23 @@ class LoginActivity : AppCompatActivity() {
                                 //save token and donatur id on preferences
                                 if (token != null) {
                                     sharedPreference.save("TOKEN", token)
-                                    sharedPreference.save("penggunaWA", donaturWa )
-                                    sharedPreference.save("penggunaNAMA", donaturNama )
-                                    sharedPreference.save("penggunaAlamat", donaturAlamat )
-                                    sharedPreference.save("penggunaProfesi", donaturProfesi )
-                                    sharedPreference.save("penggunaEmail", donaturEmail )
+                                    sharedPreference.save("penggunaWA", donaturWa)
+                                    sharedPreference.save("penggunaNAMA", donaturNama)
+                                    sharedPreference.save("penggunaAlamat", donaturAlamat)
+                                    sharedPreference.save("penggunaProfesi", donaturProfesi)
+                                    sharedPreference.save("penggunaEmail", donaturEmail)
                                     if (donaturKodeNegara == "null") donaturKodeNegara = "+62"
-                                    sharedPreference.save("penggunaKodeNegara", donaturKodeNegara )
-                                    sharedPreference.save("penggunaPanggilan", donaturPanggilan )
+                                    sharedPreference.save("penggunaKodeNegara", donaturKodeNegara)
+                                    sharedPreference.save("penggunaPanggilan", donaturPanggilan)
                                     sharedPreference.save("penggunaLinkAja", donaturLinkAja)
                                     sharedPreference.save("penggunaDana", donaturDana)
                                     sharedPreference.save("penggunaOvo", donaturOvo)
-                                    startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                                    startActivity(
+                                        Intent(
+                                            this@LoginActivity,
+                                            DashboardActivity::class.java
+                                        )
+                                    )
                                 }
                             }
                         } catch (e: JSONException) {
@@ -173,7 +190,7 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onError(anError: ANError?) {
                         val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                        if(anError?.errorDetail!!.equals("connectionError")){
+                        if (anError?.errorDetail!!.equals("connectionError")) {
                             val toast = Toast.makeText(
                                 this@LoginActivity,
                                 "Ada masalah dengan Koneksi Internet Anda",
@@ -182,13 +199,13 @@ class LoginActivity : AppCompatActivity() {
                             toast.show()
                             return
                         }
-                        if(anError?.errorDetail!!.equals("connectionError")){
+                        if (anError?.errorDetail!!.equals("connectionError")) {
                             val toast = Toast.makeText(
-                            this@LoginActivity,
-                            "Ada masalah dengan Koneksi Internet Anda",
-                            Toast.LENGTH_LONG
-                        )
-                        toast.show()
+                                this@LoginActivity,
+                                "Ada masalah dengan Koneksi Internet Anda",
+                                Toast.LENGTH_LONG
+                            )
+                            toast.show()
 
                         }
                         if (apiError?.message == "Nomor telepon tidak terdaftar") {
@@ -211,7 +228,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
                             val jsonObject = JSONObject(anError?.errorBody);
                             val jsonArray = jsonObject.getJSONArray("password");
-                            if(jsonArray[0] == "The password must be at least 5 characters."){
+                            if (jsonArray[0] == "The password must be at least 5 characters.") {
                                 layoutPass.requestFocus()
                                 layoutPass.boxStrokeColor = getColor(
                                     this@LoginActivity,
@@ -226,11 +243,10 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                 })
-        }catch (e: JSONException){
+        } catch (e: JSONException) {
 
         }
     }
-
 
 
 }
