@@ -192,8 +192,8 @@ class PilihPembayaranActivity : AppCompatActivity() {
         ApiService.getPembayaran(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val jsonObject = response?.getJSONObject("data")
-                val jsonArrayEwallet = jsonObject?.getJSONArray("eWallet")
-                val jsonArrayBank = jsonObject?.getJSONArray("bank")
+                val jsonArrayEwallet = jsonObject?.getJSONArray("ewallets")
+                val jsonArrayBank = jsonObject?.getJSONArray("banks")
                 if (jsonArrayEwallet?.length()!! > 0) {
                     for (i in 0 until jsonArrayEwallet.length()) {
                         val item = jsonArrayEwallet.getJSONObject(i)
