@@ -15,6 +15,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.aksiberbagi.donatur.R
+import com.aksiberbagi.donatur.services.ApiError
+import com.aksiberbagi.donatur.services.ApiService
+import com.aksiberbagi.donatur.services.NumberFormaterDot
+import com.aksiberbagi.donatur.services.Preferences
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
@@ -22,11 +27,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.aksiberbagi.donatur.R
-import com.aksiberbagi.donatur.services.ApiError
-import com.aksiberbagi.donatur.services.ApiService
-import com.aksiberbagi.donatur.services.NumberFormaterDot
-import com.aksiberbagi.donatur.services.Preferences
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -577,8 +577,8 @@ class ZakatActivity : AppCompatActivity() {
         ApiService.getPembayaran(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
                 val jsonObject = response?.getJSONObject("data")
-                val jsonArrayEwallet = jsonObject?.getJSONArray("eWallet")
-                val jsonArrayBank = jsonObject?.getJSONArray("bank")
+                val jsonArrayEwallet = jsonObject?.getJSONArray("ewallets")
+                val jsonArrayBank = jsonObject?.getJSONArray("banks")
                 if (jsonArrayEwallet?.length()!! > 0) {
                     for (i in 0 until jsonArrayEwallet.length()) {
                         val item = jsonArrayEwallet.getJSONObject(i)
