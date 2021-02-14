@@ -9,14 +9,14 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.JSONObjectRequestListener
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.services.ApiError
 import com.aksiberbagi.donatur.services.ApiService
 import com.aksiberbagi.donatur.services.Preferences
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private val TAG = "LoginActivity"
     private val NO_TELP = "085322778935";
     private val PASSWORD = "123456";
-    private val IS_TESTING = true;
+    private val IS_TESTING = false;
 
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
