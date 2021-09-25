@@ -23,6 +23,7 @@ import com.aksiberbagi.donatur.presenter.DonasiRutinListAdapter
 import com.aksiberbagi.donatur.services.ApiError
 import com.aksiberbagi.donatur.services.ApiService
 import com.aksiberbagi.donatur.services.Preferences
+import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -41,7 +42,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.upAppbarDonasiRutin)
         toolbar.title = "Donasi Rutin"
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setNavigationOnClickListener{
+        toolbar.setNavigationOnClickListener {
             val mIntent = Intent(this, DashboardActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("berandaAktif", "true")
@@ -56,9 +57,38 @@ class DonasiRutinActivity : AppCompatActivity() {
         layoutShimmer.visibility = View.VISIBLE
         shimmer.startShimmer()
 
-        val frekuensiBulanans = listOf("1","2","3","5","6","7","8","9","10", "11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28")
-        val dropDownBulanan : Spinner = findViewById(R.id.frekuensiBulanan)
-        val adapterBulanan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown,frekuensiBulanans)
+        val frekuensiBulanans = listOf(
+            "1",
+            "2",
+            "3",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28"
+        )
+        val dropDownBulanan: Spinner = findViewById(R.id.frekuensiBulanan)
+        val adapterBulanan =
+            ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiBulanans)
         dropDownBulanan.adapter = adapterBulanan
 
         getKoneksi(retrivedToken, this@DonasiRutinActivity)
@@ -69,27 +99,29 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         val frekuensiItems = listOf("Harian", "Mingguan", "Bulanan")
         val frekuensiItemsPilihan = listOf("harian", "mingguan", "bulanan")
-        val adapterFrekuensi = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiItems)
-        val dropDownFrekuensi : Spinner = findViewById(R.id.spinerFrekuensi)
+        val adapterFrekuensi =
+            ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiItems)
+        val dropDownFrekuensi: Spinner = findViewById(R.id.spinerFrekuensi)
         dropDownFrekuensi.adapter = adapterFrekuensi
 
         //set val spinner untuk frekuensi yang dipilih
         val frekuensiMingguans = listOf("senin", "selasa", "rabu", "kamis", "jumat", "minggu")
-        val dropDownMingguan : Spinner = findViewById(R.id.frekuensiMingguan)
-        val adapterMingguan = ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiMingguans)
+        val dropDownMingguan: Spinner = findViewById(R.id.frekuensiMingguan)
+        val adapterMingguan =
+            ArrayAdapter(this, R.layout.list_pilih_program_dropdown, frekuensiMingguans)
         dropDownMingguan.adapter = adapterMingguan
 
         val btnSubmit: Button = findViewById(R.id.btnSubmit)
 
         //btn tambah donasi rutin list
         val btnTambah: FloatingActionButton = findViewById(R.id.floatingTambahDonasiRutin)
-        btnTambah.setOnClickListener{
+        btnTambah.setOnClickListener {
             layoutList.visibility = View.GONE
             layoutCreate.visibility = View.VISIBLE
         }
         //set layout hidden untuk frekuensi yang dipilih
-        val layoutB : LinearLayout = findViewById(R.id.layoutBulanan)
-        val layoutM : LinearLayout = findViewById(R.id.layoutMingguan)
+        val layoutB: LinearLayout = findViewById(R.id.layoutBulanan)
+        val layoutM: LinearLayout = findViewById(R.id.layoutMingguan)
 
 
 //        var idProgramPilihan: Int = 0
@@ -110,20 +142,21 @@ class DonasiRutinActivity : AppCompatActivity() {
 //        }
 
         var rentangWaktuPilihan = ""
-        dropDownFrekuensi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        dropDownFrekuensi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                rentangWaktuPilihan  = frekuensiItemsPilihan[p2]
-                if (frekuensiItems[p2] == "Mingguan"){
+                rentangWaktuPilihan = frekuensiItemsPilihan[p2]
+                if (frekuensiItems[p2] == "Mingguan") {
                     show(layoutM)
                     gone(layoutB)
-                }else if (frekuensiItems[p2] == "Bulanan"){
+                } else if (frekuensiItems[p2] == "Bulanan") {
                     gone(layoutM)
                     show(layoutB)
-                }else{
+                } else {
                     gone(layoutM)
                     gone(layoutB)
                 }
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
@@ -131,7 +164,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         }
 
         var rentangWaktuMingguanPilihan = ""
-        dropDownMingguan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        dropDownMingguan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -148,7 +181,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         }
 
         var rentangWaktuBulanan = ""
-        dropDownBulanan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        dropDownBulanan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -167,7 +200,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         var tanggalPengingat: String? = intent.getStringExtra("tanggalPengingat")
 
 
-        if(tanggalPengingat != null) {
+        if (tanggalPengingat != null) {
             frekuensiBulanans.forEach {
                 if (tanggalPengingat == it) {
                     dropDownBulanan.setSelection(adapterBulanan.getPosition(it))
@@ -183,65 +216,69 @@ class DonasiRutinActivity : AppCompatActivity() {
 //                helperProgram.text = "Pilih program penggalangan"
 //                return@setOnClickListener
 //            }else{
-                if(rentangWaktuPilihan == "bulanan"){
+            val textFormLabel: TextInputEditText = findViewById(R.id.textDonasiRutin)
+            sharedPreference.save("labelDonasiRutin", textFormLabel.text.toString())
+            if (rentangWaktuPilihan == "bulanan") {
 //                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
-                    sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
-                    sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuBulanan)
-                    postDonasiRutin(retrivedToken, this)
-                }else if(rentangWaktuPilihan == "mingguan"){
+                sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuBulanan)
+                postDonasiRutin(retrivedToken, this)
+            } else if (rentangWaktuPilihan == "mingguan") {
 //                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
-                    sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
-                    sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuMingguanPilihan)
-                    postDonasiRutin(retrivedToken, this)
-                }else{
+                sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                sharedPreference.save("donasiRutinOpsiWaktu", rentangWaktuMingguanPilihan)
+                postDonasiRutin(retrivedToken, this)
+            } else {
 //                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
-                    sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
-                    postDonasiRutin(retrivedToken, this)
-                }
+                sharedPreference.save("donasiRutinRentangWaktu", rentangWaktuPilihan)
+                postDonasiRutin(retrivedToken, this)
+            }
 //            }
         }
 
     }
 
-    private fun postDonasiRutin(tokenValue: String?, context: DonasiRutinActivity){
+    private fun postDonasiRutin(tokenValue: String?, context: DonasiRutinActivity) {
         val sharedPreference: Preferences = Preferences(this)
         val body = JSONObject()
         body.put("rentang_waktu", sharedPreference.getValueString("donasiRutinRentangWaktu"))
+        body.put("label", sharedPreference.getValueString("labelDonasiRutin"))
         body.put("opsi_rentang_waktu", sharedPreference.getValueString("donasiRutinOpsiWaktu"))
-        body.put("program_id", sharedPreference.getValueInt("donasiRutinProgram"))
+//        body.put("program_id", sharedPreference.getValueInt("donasiRutinProgram"))
         Log.d(TAG, "Json Body Donasi rutin $body")
-        ApiService.postDonasiRutin(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener{
-            override fun onResponse(response: JSONObject?) {
-                if(response?.getString("message").equals("Donasi rutin berhasil disimpan")){
-                    val toast = Toast.makeText(
-                        this@DonasiRutinActivity,
-                        "Pendaftaran donasi rutin berhasil, menunggu verifikasi dari admin",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
-                    arrayDonasiRutinList.clear()
-                    intent.removeExtra("tanggalPengingat")
-                    getDonasiRutinList(tokenValue, context)
-                }else{
-                    val message = response?.getString("message")
-                    val toast = Toast.makeText(
-                        this@DonasiRutinActivity,
-                        "Kesalahan sistem $message",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
-                    return
+        ApiService.postDonasiRutin(tokenValue, body)
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getString("message").equals("Donasi rutin berhasil disimpan")) {
+                        val toast = Toast.makeText(
+                            this@DonasiRutinActivity,
+                            "Pendaftaran donasi rutin berhasil, menunggu verifikasi dari admin",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                        arrayDonasiRutinList.clear()
+                        intent.removeExtra("tanggalPengingat")
+                        getDonasiRutinList(tokenValue, context)
+                    } else {
+                        val message = response?.getString("message")
+                        val toast = Toast.makeText(
+                            this@DonasiRutinActivity,
+                            "Kesalahan sistem $message",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                        return
+                    }
                 }
-            }
 
-            override fun onError(anError: ANError?) {
-                TODO("Not yet implemented")
-            }
+                override fun onError(anError: ANError?) {
+                    TODO("Not yet implemented")
+                }
 
-        })
+            })
     }
 
-    private fun getKoneksi(tokenValue: String?, context: DonasiRutinActivity){
+    private fun getKoneksi(tokenValue: String?, context: DonasiRutinActivity) {
         ApiService.getKoneksi(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 getDonasiRutinList(tokenValue, context)
@@ -250,7 +287,7 @@ class DonasiRutinActivity : AppCompatActivity() {
 
             override fun onError(anError: ANError?) {
                 val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
-                if(anError?.errorDetail!!.equals("connectionError")){
+                if (anError?.errorDetail!!.equals("connectionError")) {
                     val toast = Toast.makeText(
                         this@DonasiRutinActivity,
                         "Ada masalah dengan Koneksi Internet Anda",
@@ -258,7 +295,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                     )
                     toast.show()
                     return
-                }else{
+                } else {
                     refreshToken(tokenValue, context)
                 }
             }
@@ -266,36 +303,39 @@ class DonasiRutinActivity : AppCompatActivity() {
         })
     }
 
-    private fun refreshToken(tokenValue: String?, context: DonasiRutinActivity){
-        val header : String? = tokenValue
+    private fun refreshToken(tokenValue: String?, context: DonasiRutinActivity) {
+        val header: String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
         try {
             ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     try {
-                        if (response?.getString("message").equals("Refresh berhasil")){
-                            val token : String? = response?.getString("token")
+                        if (response?.getString("message").equals("Refresh berhasil")) {
+                            val token: String? = response?.getString("token")
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(token,context)
+                                getKoneksi(token, context)
                             }
-                        }else if(response?.getString("message").equals("Token expired berhasil di refresh")){
-                            val token : String? = response?.getString("token")
+                        } else if (response?.getString("message")
+                                .equals("Token expired berhasil di refresh")
+                        ) {
+                            val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(token,context)
+                                getKoneksi(token, context)
                             }
-                        }else{
+                        } else {
                             Looper.myLooper()?.let {
                                 Handler(it).postDelayed({
-                                    val intent = Intent(this@DonasiRutinActivity, IntroActivity::class.java)
+                                    val intent =
+                                        Intent(this@DonasiRutinActivity, IntroActivity::class.java)
                                     startActivity(intent)
                                 }, 2500)
                             }
                         }
 
-                    }catch (e : JSONException){
+                    } catch (e: JSONException) {
                         val toast = Toast.makeText(
                             this@DonasiRutinActivity,
                             "Invalid Json",
@@ -304,6 +344,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                         toast.show()
                     }
                 }
+
                 override fun onError(anError: ANError?) {
                     Looper.myLooper()?.let {
                         Handler(it).postDelayed({
@@ -317,7 +358,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                 }
 
             })
-        }catch (e: JSONException){
+        } catch (e: JSONException) {
             val toast = Toast.makeText(
                 this,
                 "Kesalahan Header",
@@ -328,21 +369,21 @@ class DonasiRutinActivity : AppCompatActivity() {
     }
 
 
-    private fun getDonasiRutinList(tokenValue: String?, context: DonasiRutinActivity){
+    private fun getDonasiRutinList(tokenValue: String?, context: DonasiRutinActivity) {
         ApiService.getDonasiRutin(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 var tanggalPengingat: String? = intent.getStringExtra("tanggalPengingat")
-                if(tanggalPengingat != null){
-                    val layoutCreate : ConstraintLayout = context.findViewById(R.id.createLayout)
+                if (tanggalPengingat != null) {
+                    val layoutCreate: ConstraintLayout = context.findViewById(R.id.createLayout)
                     val layoutShimmer: ConstraintLayout = context.findViewById(R.id.layoutShimmer)
                     val shimmer: ShimmerFrameLayout = context.findViewById(R.id.shimmerDonasiRutin)
                     layoutShimmer.visibility = View.GONE
                     shimmer.stopShimmer()
                     layoutCreate.visibility = View.VISIBLE
-                }else{
-                    if (response?.getString("message").equals("Donasi rutin berhasil diambil")){
+                } else {
+                    if (response?.getString("message").equals("Donasi rutin berhasil diambil")) {
                         val jsonArray = response?.getJSONArray("data")
-                        for(i in 0 until jsonArray!!.length()){
+                        for (i in 0 until jsonArray!!.length()) {
                             val dataDonasiRutin = jsonArray.getJSONObject(i)
 //                            val dataProgram = dataDonasiRutin.getJSONObject("program")
                             val idDonasiRutin = dataDonasiRutin?.getString("id")
@@ -352,16 +393,28 @@ class DonasiRutinActivity : AppCompatActivity() {
                             val opsiWaktu = dataDonasiRutin.getString("opsi_rentang_waktu")
 //                            val imageProgram = dataProgram?.getString("thumbnail_url")
                             val status = dataDonasiRutin?.getString("status")
-                            arrayDonasiRutinList.add(ModelDonasiRutin(idDonasiRutin,labelDonasiRutin,rentangWaktu,opsiWaktu,status))
+                            arrayDonasiRutinList.add(
+                                ModelDonasiRutin(
+                                    idDonasiRutin,
+                                    labelDonasiRutin,
+                                    rentangWaktu,
+                                    opsiWaktu,
+                                    status
+                                )
+                            )
                         }
-                        val myAdapterDonasi = DonasiRutinListAdapter(arrayDonasiRutinList, this@DonasiRutinActivity)
-                        val recyclerView = context.findViewById<RecyclerView>(R.id.recyclerDonasiRutin)
+                        val myAdapterDonasi =
+                            DonasiRutinListAdapter(arrayDonasiRutinList, this@DonasiRutinActivity)
+                        val recyclerView =
+                            context.findViewById<RecyclerView>(R.id.recyclerDonasiRutin)
                         recyclerView.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
                         recyclerView.adapter = myAdapterDonasi
                         //close layout lain dan show layout
-                        val layoutCreate : ConstraintLayout = context.findViewById(R.id.createLayout)
-                        val layoutShimmer: ConstraintLayout = context.findViewById(R.id.layoutShimmer)
-                        val shimmer: ShimmerFrameLayout = context.findViewById(R.id.shimmerDonasiRutin)
+                        val layoutCreate: ConstraintLayout = context.findViewById(R.id.createLayout)
+                        val layoutShimmer: ConstraintLayout =
+                            context.findViewById(R.id.layoutShimmer)
+                        val shimmer: ShimmerFrameLayout =
+                            context.findViewById(R.id.shimmerDonasiRutin)
                         shimmer.stopShimmer()
                         val layoutList: ConstraintLayout = context.findViewById(R.id.layoutList)
                         layoutList.visibility = View.VISIBLE
@@ -390,12 +443,12 @@ class DonasiRutinActivity : AppCompatActivity() {
         })
     }
 
-    private fun getProgramAll(tokenValue: String?, context: DonasiRutinActivity){
-        ApiService.getJudulProgram(tokenValue).getAsJSONObject(object: JSONObjectRequestListener{
+    private fun getProgramAll(tokenValue: String?, context: DonasiRutinActivity) {
+        ApiService.getJudulProgram(tokenValue).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                if(response?.getString("message").equals("Data program berhasil diambil")){
+                if (response?.getString("message").equals("Data program berhasil diambil")) {
                     val dataArray = response?.getJSONArray("data")
-                    for (i in 0 until dataArray!!.length()){
+                    for (i in 0 until dataArray!!.length()) {
                         val dataProgram = dataArray.getJSONObject(i)
                         val idProgramData = dataProgram.getString("tblprogram_id").toInt()
                         val judulProgramData = dataProgram.getString("tblprogram_judul")
@@ -422,19 +475,19 @@ class DonasiRutinActivity : AppCompatActivity() {
         })
     }
 
-    fun gone(view: View){
+    fun gone(view: View) {
         view.visibility = View.GONE
     }
 
-    fun show(view: View){
+    fun show(view: View) {
         view.visibility = View.VISIBLE
     }
 
     override fun onBackPressed() {
         var prevNavigate: String? = intent.getStringExtra("prevNavigate")
-        if(prevNavigate == "Pengaturan"){
+        if (prevNavigate == "Pengaturan") {
             startActivity(Intent(this@DonasiRutinActivity, PengaturanActivity::class.java))
-        }else{
+        } else {
             startActivity(Intent(this@DonasiRutinActivity, DashboardActivity::class.java))
         }
     }
