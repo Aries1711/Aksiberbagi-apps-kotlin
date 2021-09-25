@@ -24,8 +24,9 @@
 
             <ImageView
                 android:id="@+id/imageProgram"
-                android:layout_width="140dp"
-                android:layout_height="110dp" />
+                android:layout_width="80dp"
+                android:src="@drawable/logo_donasi_rutin"
+                android:layout_height="80dp" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
@@ -41,10 +42,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/judulProgram"
+                android:id="@+id/labelDonasiRutin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sedekah Terbaik Untuk Anak Yatim .."
+                android:text="Sedekah Subuh"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="12sp"
                 android:textStyle="bold" />

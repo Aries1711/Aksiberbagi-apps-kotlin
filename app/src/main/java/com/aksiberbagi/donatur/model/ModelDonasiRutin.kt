@@ -1,4 +1,4 @@
 package com.aksiberbagi.donatur.model
 
-class ModelDonasiRutin(val idDonasi: String? ,val judulProgram: String?, val rentangWaktu: String?, val opsiWaktu: String, val imgProgram:String?, val statusDonasi:String?) {
+class ModelDonasiRutin(val idDonasi: String? ,val label: String?, val rentangWaktu: String?, val opsiWaktu: String, val statusDonasi:String?) {
 }

@@ -31,9 +31,9 @@ class DonasiRutinListAdapter(val arrayList: ArrayList<ModelDonasiRutin>, val con
 
         fun bindItems(model: ModelDonasiRutin){
             // try glide image loading from url
-            val modelUrl = model.imgProgram
-            Glide.with(itemView.imageProgram.context).load(modelUrl).apply(options).into(itemView.imageProgram)
-            itemView.judulProgram.text = model.judulProgram
+//            val modelUrl = model.imgProgram
+//            Glide.with(itemView.imageProgram.context).load(modelUrl).apply(options).into(itemView.imageProgram)
+            itemView.labelDonasiRutin.text = model.label
             itemView.donasiRutinStatus.text = model.statusDonasi
             val rentangWaktu = model.rentangWaktu
             val opsiWaktu = model.opsiWaktu

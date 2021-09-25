@@ -106,22 +106,70 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/headerDonasiRutin">
 
-                    <Spinner
-                        android:id="@+id/spinerProgram"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/dropdown_custom" />
-                    <TextView
-                        android:id="@+id/helperProgram"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="helper spinner program"
-                        android:textStyle="bold"
-                        android:textColor="@color/error_color"
-                        android:layout_marginStart="10dp"/>
+<!--                    <Spinner-->
+<!--                        android:id="@+id/spinerProgram"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="10dp"-->
+<!--                        android:background="@drawable/dropdown_custom" />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/helperProgram"-->
+<!--                        android:visibility="gone"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="helper spinner program"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/error_color"-->
+<!--                        android:layout_marginStart="10dp"/>-->
 
+                    <TextView
+                        android:id="@+id/textInputLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="25dp"
+                        android:text="Nama Donasi Rutin"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/donasiRutinBanner" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/namePhone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        android:backgroundTint="#FFFFFF"
+                        android:hint="@string/labelDonasiRutin"
+                        app:helperTextEnabled="true"
+                        app:helperTextTextColor="@color/error_color"
+                        app:helperText=""
+                        android:textColorHint="@color/colorTextPrimary"
+                        app:boxStrokeColor="@color/colorTextPrimary"
+                        app:errorTextAppearance="@color/colorIndicatorPrimary"
+                        app:hintTextColor="@color/colorTextPrimary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textDonasiRutin"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:lines="1"
+                            android:textCursorDrawable="@drawable/cursor_color"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/colorIndicatorPrimary"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
                     <Spinner
                         android:id="@+id/spinerFrekuensi"
                         android:layout_width="match_parent"
@@ -149,7 +197,7 @@
                         <Spinner
                             android:id="@+id/frekuensiMingguan"
                             android:layout_width="150dp"
-                            android:layout_height="50dp"
+                            android:layout_height="60dp"
                             android:layout_margin="10dp"
                             android:layout_weight=".6"
                             android:background="@drawable/dropdown_custom" />
