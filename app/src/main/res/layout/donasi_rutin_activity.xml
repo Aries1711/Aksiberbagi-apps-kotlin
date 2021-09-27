@@ -33,7 +33,7 @@
             <!--            layout create donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/createLayout"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -255,7 +255,7 @@
             <!--            layout List donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutList"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -272,6 +272,42 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/donasiRutinListBanner"
+                            android:layout_width="170dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_gravity="center"
+                            android:layout_height="120dp"
+                            android:src="@drawable/donasi_rutin_list_banner" />
+
+                        <TextView
+                            android:id="@+id/greetingListText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
+                            android:layout_marginTop="10dp"
+                            android:textAlignment="center"
+                            android:text="Yuk sebarkan kebiasaan baik dengan mendaftar donasi rutin"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/ListTextDonasi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
+                            android:layout_marginTop="60dp"
+                            android:text="Daftar donasi rutin Anda"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:orientation="vertical"
                             android:id="@+id/recyclerDonasiRutin"
