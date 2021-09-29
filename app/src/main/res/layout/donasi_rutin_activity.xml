@@ -170,6 +170,17 @@
                             android:textColor="@color/colorTextSecondary"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/helperLabel"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Mohon Masukkan label donasi rutin Anda"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorInputPressFalse"
+                        android:textSize="12sp"
+                        android:layout_marginStart="20dp"/>
                     <Spinner
                         android:id="@+id/spinerFrekuensi"
                         android:layout_width="match_parent"
@@ -255,7 +266,7 @@
             <!--            layout List donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutList"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"

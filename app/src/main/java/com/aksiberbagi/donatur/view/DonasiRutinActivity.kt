@@ -209,7 +209,7 @@ class DonasiRutinActivity : AppCompatActivity() {
             }
         }
 
-//        val helperProgram: TextView = findViewById(R.id.helperProgram)
+        val helperLabelDonasi: TextView = findViewById(R.id.helperLabel)
         btnSubmit.setOnClickListener {
 //            if(idProgramPilihan == 0 ){
 //                helperProgram.visibility = View.VISIBLE
@@ -217,6 +217,13 @@ class DonasiRutinActivity : AppCompatActivity() {
 //                return@setOnClickListener
 //            }else{
             val textFormLabel: TextInputEditText = findViewById(R.id.textDonasiRutin)
+            val valueLabelString = textFormLabel.text.toString()
+            if(valueLabelString == ""){
+                helperLabelDonasi.visibility = View.VISIBLE
+                helperLabelDonasi.text = "Mohon Masukkan label donasi rutin Anda"
+                helperLabelDonasi.setTextColor(Color.parseColor("#ed2a18"))
+                return@setOnClickListener
+            }
             sharedPreference.save("labelDonasiRutin", textFormLabel.text.toString())
             if (rentangWaktuPilihan == "bulanan") {
 //                    sharedPreference.save("donasiRutinProgram", idProgramPilihan )
@@ -246,6 +253,7 @@ class DonasiRutinActivity : AppCompatActivity() {
         body.put("opsi_rentang_waktu", sharedPreference.getValueString("donasiRutinOpsiWaktu"))
 //        body.put("program_id", sharedPreference.getValueInt("donasiRutinProgram"))
         Log.d(TAG, "Json Body Donasi rutin $body")
+//        return
         ApiService.postDonasiRutin(tokenValue, body)
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
@@ -257,6 +265,9 @@ class DonasiRutinActivity : AppCompatActivity() {
                         )
                         toast.show()
                         arrayDonasiRutinList.clear()
+                        sharedPreference.save("donasiRutinRentangWaktu", "")
+                        sharedPreference.save("donasiRutinOpsiWaktu", "")
+                        sharedPreference.save("labelDonasiRutin", "")
                         intent.removeExtra("tanggalPengingat")
                         getDonasiRutinList(tokenValue, context)
                     } else {
