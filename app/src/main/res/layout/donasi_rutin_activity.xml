@@ -5,17 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.DonasiRutinActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/upAppbarDonasiRutin"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="top"
-        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         android:background="@color/colorInputStrokeBlue"
         android:theme="@style/ToolbarProgramDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <androidx.core.widget.NestedScrollView
@@ -27,15 +28,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upAppbarDonasiRutin">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!--            layout create donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/createLayout"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -46,8 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:textAlignment="center"
                     android:text="Yuk mulai kebiasaan baik."
+                    android:textAlignment="center"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -60,10 +62,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:textAlignment="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:text="Dengan donasi rutin kebiasaan baikmu makin lancar"
+                    android:textAlignment="center"
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -74,10 +76,10 @@
                 <ImageView
                     android:id="@+id/donasiRutinBanner"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginTop="40dp"
                     android:layout_height="180dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
                     android:src="@drawable/banner_donasi_rutin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -105,30 +107,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/headerDonasiRutin">
-
-<!--                    <Spinner-->
-<!--                        android:id="@+id/spinerProgram"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="10dp"-->
-<!--                        android:background="@drawable/dropdown_custom" />-->
-<!--                    <TextView-->
-<!--                        android:id="@+id/helperProgram"-->
-<!--                        android:visibility="gone"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="helper spinner program"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:textColor="@color/error_color"-->
-<!--                        android:layout_marginStart="10dp"/>-->
-
                     <TextView
                         android:id="@+id/textInputLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="25dp"
+                        android:layout_marginEnd="10dp"
                         android:text="Nama Donasi Rutin"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="14sp"
@@ -136,6 +121,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/donasiRutinBanner" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/namePhone"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -144,43 +130,45 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        app:boxCornerRadiusBottomStart="10dp"
-                        app:boxCornerRadiusTopStart="10dp"
-                        app:boxCornerRadiusBottomEnd="10dp"
-                        app:boxCornerRadiusTopEnd="10dp"
                         android:backgroundTint="#FFFFFF"
                         android:hint="@string/labelDonasiRutin"
-                        app:helperTextEnabled="true"
-                        app:helperTextTextColor="@color/error_color"
-                        app:helperText=""
                         android:textColorHint="@color/colorTextPrimary"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
                         app:boxStrokeColor="@color/colorTextPrimary"
                         app:errorTextAppearance="@color/colorIndicatorPrimary"
+                        app:helperText=""
+                        app:helperTextEnabled="true"
+                        app:helperTextTextColor="@color/error_color"
                         app:hintTextColor="@color/colorTextPrimary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/textDonasiRutin"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:lines="1"
-                            android:textCursorDrawable="@drawable/cursor_color_blue"
                             android:inputType="text"
+                            android:lines="1"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:textColor="@color/colorTextSecondary"
+                            android:textCursorDrawable="@drawable/cursor_color_blue"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <TextView
                         android:id="@+id/helperLabel"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
                         android:text="Mohon Masukkan label donasi rutin Anda"
-                        android:textStyle="bold"
                         android:textColor="@color/colorInputPressFalse"
                         android:textSize="12sp"
-                        android:layout_marginStart="20dp"/>
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
                     <Spinner
                         android:id="@+id/spinerFrekuensi"
                         android:layout_width="match_parent"
@@ -266,9 +254,9 @@
             <!--            layout List donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutList"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -279,53 +267,126 @@
                     android:fillViewport="true"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/donasiRutinListBanner"
-                            android:layout_width="170dp"
-                            android:layout_marginTop="40dp"
-                            android:layout_gravity="center"
-                            android:layout_height="120dp"
-                            android:src="@drawable/donasi_rutin_list_banner" />
-
-                        <TextView
-                            android:id="@+id/greetingListText"
+                        <LinearLayout
+                            android:id="@+id/layoutNonActive"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginEnd="40dp"
-                            android:layout_marginTop="10dp"
-                            android:textAlignment="center"
-                            android:text="Yuk sebarkan kebiasaan baik dengan mendaftar donasi rutin"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            />
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/donasiRutinListBanner"
+                                android:layout_width="170dp"
+                                android:layout_height="120dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="40dp"
+                                android:src="@drawable/donasi_rutin_list_banner" />
+
+                            <TextView
+                                android:id="@+id/greetingListText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="40dp"
+                                android:text="Yuk sebarkan kebiasaan baik dengan mendaftar donasi rutin"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/layoutActive"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/greetingListTextActive"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="40dp"
+                                android:text="Yuk Saatnya Berdonasi"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:layout_weight="0.2"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/logo_donasi_rutin" />
+                                <LinearLayout
+                                    android:layout_weight="0.8"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/labelActiveNow"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="40dp"
+                                        android:layout_marginTop="20dp"
+                                        android:layout_marginEnd="40dp"
+                                        android:text="Sedekah Subuh"
+                                        android:textColor="@color/colorOrange"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="40dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginEnd="40dp"
+                                        android:text="Program Rekomendasi untuk donasi rutin Anda"
+                                        android:textColor="@color/colorTextPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerProgramRekomendasi"
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="20dp"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/ListTextDonasi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="40dp"
-                            android:layout_marginEnd="40dp"
                             android:layout_marginTop="60dp"
+                            android:layout_marginEnd="40dp"
                             android:text="Daftar donasi rutin Anda"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            />
+                            android:textStyle="bold" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:orientation="vertical"
                             android:id="@+id/recyclerDonasiRutin"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
+
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/floatingTambahDonasiRutin"
                     android:layout_width="wrap_content"
@@ -343,28 +404,34 @@
             <!--            layout shimmer donasi rutin-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutShimmer"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/shimmerDonasiRutin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:shimmer_duration="800"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shimmer_duration="800">
+
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <include layout="@layout/donasi_rutin_listcard"/>
-                        <include layout="@layout/donasi_rutin_listcard"/>
-                        <include layout="@layout/donasi_rutin_listcard"/>
-                        <include layout="@layout/donasi_rutin_listcard"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/donasi_rutin_listcard" />
+
+                        <include layout="@layout/donasi_rutin_listcard" />
+
+                        <include layout="@layout/donasi_rutin_listcard" />
+
+                        <include layout="@layout/donasi_rutin_listcard" />
                     </LinearLayout>
                 </com.facebook.shimmer.ShimmerFrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -218,7 +218,7 @@ class DonasiRutinActivity : AppCompatActivity() {
 //            }else{
             val textFormLabel: TextInputEditText = findViewById(R.id.textDonasiRutin)
             val valueLabelString = textFormLabel.text.toString()
-            if(valueLabelString == ""){
+            if (valueLabelString == "") {
                 helperLabelDonasi.visibility = View.VISIBLE
                 helperLabelDonasi.text = "Mohon Masukkan label donasi rutin Anda"
                 helperLabelDonasi.setTextColor(Color.parseColor("#ed2a18"))
@@ -414,6 +414,23 @@ class DonasiRutinActivity : AppCompatActivity() {
                                 )
                             )
                         }
+                        val layoutNonActive: LinearLayout =
+                            context.findViewById(R.id.layoutNonActive)
+                        val layoutActive: LinearLayout = context.findViewById(R.id.layoutActive)
+                        layoutActive.visibility = View.GONE
+                        layoutNonActive.visibility = View.GONE
+                        if (response?.getString("activeDonationStatus") == "active") {
+                            layoutActive.visibility = View.VISIBLE
+                            val jsonArrayLabel = response?.getJSONArray("activeDonation")
+                            var labelString = jsonArrayLabel[0].toString()
+                            var labelDonasiRutinActive : TextView = context.findViewById(R.id.labelActiveNow)
+                            labelDonasiRutinActive.text = labelString
+//                            deklarasi list program rekomendasi
+
+                        } else {
+                            layoutNonActive.visibility = View.VISIBLE
+                        }
+
                         val myAdapterDonasi =
                             DonasiRutinListAdapter(arrayDonasiRutinList, this@DonasiRutinActivity)
                         val recyclerView =
