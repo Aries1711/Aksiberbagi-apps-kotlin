@@ -21,7 +21,7 @@ class Converter {
             formatRp.monetaryDecimalSeparator = ','
             formatRp.groupingSeparator = '.'
 
-            kursIndonesia.setDecimalFormatSymbols(formatRp)
+            kursIndonesia.decimalFormatSymbols = formatRp
             val valueFormated: String = kursIndonesia.format(number)
             return valueFormated
         }

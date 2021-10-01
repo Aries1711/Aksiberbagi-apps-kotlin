@@ -129,7 +129,7 @@ class ZakatActivity : AppCompatActivity() {
         val inputNominalZakat = view.findViewById<TextInputEditText>(R.id.nominalZakat)
         val initialisasiNominal = "0"
         inputNominalZakat.text = initialisasiNominal.toEditable()
-        inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
+//        inputNominalZakat.addTextChangedListener(NumberFormaterDot(inputNominalZakat))
 
         if(statusDialogPembayaranIntent == "aktif"){
             dialogPembayaran.show()

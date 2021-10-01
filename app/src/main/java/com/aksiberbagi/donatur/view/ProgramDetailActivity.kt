@@ -174,7 +174,8 @@ class ProgramDetailActivity : AppCompatActivity() {
         val btnCloseDialog: LinearLayout = viewDonatur.findViewById(R.id.btnCloseDialogDonatur)
         val initialisasiNominal = "0"
         textNominalDonasi.text = initialisasiNominal.toEditable()
-        textNominalDonasi.addTextChangedListener(NumberFormaterDot(textNominalDonasi))
+
+        textNominalDonasi.addTextChangedListener(NonNumberFormaterDot(textNominalDonasi))
 
 
         if (switchAnonimValue == "T") {
@@ -1009,6 +1010,8 @@ class ProgramDetailActivity : AppCompatActivity() {
             startActivity(Intent(this@ProgramDetailActivity, DashboardActivity::class.java))
         } else if (navigasi == "ProgramAll") {
             startActivity(Intent(this@ProgramDetailActivity, ProgramAllActivity::class.java))
+        } else if (navigasi == "donasiRutin") {
+            startActivity(Intent(this@ProgramDetailActivity, DonasiRutinActivity::class.java))
         } else if (navigasi == "Favorit") {
             val mIntent = Intent(this, DashboardActivity::class.java)
             val mBundle = Bundle()

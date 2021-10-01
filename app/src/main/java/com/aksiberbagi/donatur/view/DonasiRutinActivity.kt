@@ -18,8 +18,10 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.aksiberbagi.donatur.R
+import com.aksiberbagi.donatur.model.BerandaProgramAll
 import com.aksiberbagi.donatur.model.ModelDonasiRutin
 import com.aksiberbagi.donatur.presenter.DonasiRutinListAdapter
+import com.aksiberbagi.donatur.presenter.ProgramAllAdapter
 import com.aksiberbagi.donatur.services.ApiError
 import com.aksiberbagi.donatur.services.ApiService
 import com.aksiberbagi.donatur.services.Preferences
@@ -28,10 +30,12 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class DonasiRutinActivity : AppCompatActivity() {
+
     private val TAG = "Donasi Rutin"
     private val arrayDonasiRutinList = ArrayList<ModelDonasiRutin>()
     private val idProgram: ArrayList<Int> = arrayListOf(0)
     private val programJudul: ArrayList<String> = arrayListOf("Pilih program favorit anda")
+    private val arrayProgramAll = ArrayList<BerandaProgramAll>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,6 +127,10 @@ class DonasiRutinActivity : AppCompatActivity() {
         val layoutB: LinearLayout = findViewById(R.id.layoutBulanan)
         val layoutM: LinearLayout = findViewById(R.id.layoutMingguan)
 
+        val programAllbtn: Button = findViewById(R.id.programAllBtn)
+        programAllbtn.setOnClickListener {
+            startActivity(Intent(applicationContext, ProgramAllActivity::class.java))
+        }
 
 //        var idProgramPilihan: Int = 0
 //        dropDownProgram.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -426,6 +434,33 @@ class DonasiRutinActivity : AppCompatActivity() {
                             var labelDonasiRutinActive : TextView = context.findViewById(R.id.labelActiveNow)
                             labelDonasiRutinActive.text = labelString
 //                            deklarasi list program rekomendasi
+                            val jsonArrayRekomendasi = response?.getJSONArray("programRekomendasi")
+                            for ( i in 0 until jsonArrayRekomendasi.length()){
+                                val programRekomendasi = jsonArrayRekomendasi.getJSONObject(i)
+                                val idProgram = programRekomendasi?.getString("tblprogram_id")
+                                val img = programRekomendasi?.getString("thumbnail_url")
+                                val judul = programRekomendasi?.getString("tblprogram_judul")
+                                val link = programRekomendasi?.getString("tblprogram_namalink")
+                                val dataCabang = programRekomendasi?.getJSONObject("cabang")
+                                val volunter: String? = dataCabang?.getString("tblcabang_nama")
+                                val capaian = programRekomendasi?.getString("capaian_donasi")
+                                val sisaHari = programRekomendasi?.getString("sisa_hari")
+                                val startProgram = programRekomendasi?.getString("tanggal_mulai_donasi")
+                                val targetNominal: String? = programRekomendasi?.getString("tblprogram_isiantargetnominal")
+                                var progressProgram: Int? = programRekomendasi?.getInt("progress")
+                                var targetDonasi : String?
+                                if (targetNominal == "null" || targetNominal == "0" ){
+                                    targetDonasi = "100"
+                                }else{
+                                    targetDonasi = programRekomendasi?.getString("target_nominal")
+                                }
+                                val nav = "donasiRutin"
+                                var view : RecyclerView = context.findViewById(R.id.recyclerProgramRekomendasi)
+                                arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav, link))
+                                val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@DonasiRutinActivity)
+                                view.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
+                                view.adapter = myAdapterAll
+                            }
 
                         } else {
                             layoutNonActive.visibility = View.VISIBLE
