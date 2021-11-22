@@ -235,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
-                    android:text="AksiBerbagi Versi 1.0.0"
+                    android:text="AksiBerbagi Versi 1.1.0"
                     android:textColor="#78818F"
                     android:textSize="14sp" />
             </LinearLayout>

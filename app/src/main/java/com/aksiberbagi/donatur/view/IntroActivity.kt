@@ -2,6 +2,7 @@ package com.aksiberbagi.donatur.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ImageView
@@ -10,13 +11,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.model.IntroSlide
 import com.aksiberbagi.donatur.presenter.IntroSliderAdapter
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.intro_activity.*
 
 class IntroActivity : AppCompatActivity() {
+    private val TAG = "IntroActivity"
     private var countBack = 0
     private val introSliderAdapter = IntroSliderAdapter(
         listOf(
@@ -52,6 +57,23 @@ class IntroActivity : AppCompatActivity() {
                 setCurrentIndicator(position)
             }
         })
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result.toString()
+
+            // Log and toast
+            Log.d(TAG, " ini Tokennya : $token")
+        })
+//        get idToken firebase ID from Device and push to the server
+//        val refreshedToken: String = FirebaseIns.getInstance().getToken()
+//        Log.d(TAG, "Refreshed token: $refreshedToken")
+
         val loginBtn: Button = findViewById(R.id.login_btn)
         val signupBtn: Button = findViewById(R.id.signup_btn)
         loginBtn.setOnClickListener{ startActivity(Intent(this@IntroActivity, LoginActivity::class.java))}

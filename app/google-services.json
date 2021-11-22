@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "711978901976",
+    "project_id": "aksiberbagi-apps",
+    "storage_bucket": "aksiberbagi-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711978901976:android:a38d39f365f4e4465412ad",
+        "android_client_info": {
+          "package_name": "com.aksiberbagi.donatur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711978901976-416mt5dppoes3ft5gn9fev11s9l96gi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aksiberbagi.donatur",
+            "certificate_hash": "1dcae415dd86c8accf1133bc375efcfd946770bb"
+          }
+        },
+        {
+          "client_id": "711978901976-tkfct5ui3ilok1qh8li4su12b7cjbd02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATEKfi88zN9HiqPCW9HvSn8fjefLOxifI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711978901976-tkfct5ui3ilok1qh8li4su12b7cjbd02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
