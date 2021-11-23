@@ -27,7 +27,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
     }
 
     fun getRemoteView(title: String, subtitle: String) : RemoteViews{
-        val remoteView = RemoteViews("com.aksiberbagi.donatur.services", R.layout.notification_panel)
+        val remoteView = RemoteViews("com.aksiberbagi.donatur", R.layout.notification_panel)
 
         remoteView.setTextViewText(R.id.titleNotification, title)
         remoteView.setTextViewText(R.id.subtitleNotification, subtitle)
