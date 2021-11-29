@@ -29,6 +29,8 @@ import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.fragment_beranda_index.view.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -170,12 +172,12 @@ class BerandaIndex : Fragment() {
         val shimmerLayout: ShimmerFrameLayout = view.findViewById(R.id.shimmerBeranda)
         shimmerLayout.startShimmer()
         getKoneksi(retrivedToken, view)
+        getFirebaseFcmToken()
 
         val btnLihatLelang : Button = view.findViewById(R.id.lihatSemuaLelang)
         btnLihatLelang.setOnClickListener {
             startActivity(Intent(requireActivity(), LelangListActivity::class.java))
         }
-
 
         //set button lihat semua
         val btnLihatAllProgram : FrameLayout = view.findViewById(R.id.frameButtonLihatSemua)
@@ -188,6 +190,21 @@ class BerandaIndex : Fragment() {
         //set banner for footer beranda
         var imgBannerUrl: String = "https://aksiberbagi.com/storage/program/Jumat%20Berkah%20Bersedekah%20Jariyah%20Atas%20Nama%20Keluarga-banner.jpeg"
         return view
+    }
+
+    private fun getFirebaseFcmToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result.toString()
+
+            // Log and toast
+            Log.d(TAG, " token FCM : $token")
+        })
     }
 
     private fun setupIndicators(view: View){

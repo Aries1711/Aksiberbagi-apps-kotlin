@@ -193,6 +193,7 @@ class ProgramDetailActivity : AppCompatActivity() {
 
         //ambil semua atribut nilai yang di tampilkan dari database server
         val pilihNominal: Spinner = view.findViewById(R.id.spinerPilihNominal)
+
         getKoneksi(
             retrivedToken,
             idProgram,
@@ -202,6 +203,7 @@ class ProgramDetailActivity : AppCompatActivity() {
             this,
             viewDonatur
         )
+
         btnFavoritSet.setOnClickListener {
             postProgramFavorit(
                 retrivedToken,

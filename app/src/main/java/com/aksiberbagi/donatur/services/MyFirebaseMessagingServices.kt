@@ -7,10 +7,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.view.DashboardActivity
+import com.aksiberbagi.donatur.view.DonasiRutinActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -22,24 +24,33 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if(remoteMessage.notification != null){
-            generateNotification(remoteMessage.notification!!.title!!, remoteMessage.notification!!.body!!)
+            generateNotification(remoteMessage.notification!!.title!!, remoteMessage.notification!!.body!!,
+                remoteMessage!!.data["key_1"].toString()
+            )
         }
     }
 
-    fun getRemoteView(title: String, subtitle: String) : RemoteViews{
+    fun getRemoteView(title: String, subtitle: String, key: String) : RemoteViews{
         val remoteView = RemoteViews("com.aksiberbagi.donatur", R.layout.notification_panel)
 
         remoteView.setTextViewText(R.id.titleNotification, title)
-        remoteView.setTextViewText(R.id.subtitleNotification, subtitle)
+        remoteView.setTextViewText(R.id.subtitleNotification, key)
         remoteView.setImageViewResource(R.id.app_notif_logo, R.drawable.aksiberbagi_blue)
 
         return remoteView
     }
 
-    fun generateNotification(title: String, subtitle: String ){
+    fun generateNotification(title: String, subtitle: String , key: String){
 
-        val intent = Intent(this,DashboardActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        var intent : Intent
+
+        if(key == "[DONASI RUTIN]"){
+            intent = Intent(this,DonasiRutinActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }else{
+            intent = Intent(this,DashboardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
 
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,PendingIntent.FLAG_ONE_SHOT)
 
@@ -51,7 +62,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
 
-        builder = builder.setContent(getRemoteView(title,subtitle))
+        builder = builder.setContent(getRemoteView(title,subtitle, key))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

@@ -404,14 +404,14 @@ class DonasiRutinActivity : AppCompatActivity() {
                         val jsonArray = response?.getJSONArray("data")
                         for (i in 0 until jsonArray!!.length()) {
                             val dataDonasiRutin = jsonArray.getJSONObject(i)
-//                            val dataProgram = dataDonasiRutin.getJSONObject("program")
                             val idDonasiRutin = dataDonasiRutin?.getString("id")
                             val labelDonasiRutin = dataDonasiRutin?.getString("label")
-//                            val judulProgram = dataProgram?.getString("tblprogram_judul")
                             val rentangWaktu = dataDonasiRutin.getString("rentang_waktu")
                             val opsiWaktu = dataDonasiRutin.getString("opsi_rentang_waktu")
-//                            val imageProgram = dataProgram?.getString("thumbnail_url")
                             val status = dataDonasiRutin?.getString("status")
+//                            val dataProgram = dataDonasiRutin.getJSONObject("program")
+//                            val judulProgram = dataProgram?.getString("tblprogram_judul")
+//                            val imageProgram = dataProgram?.getString("thumbnail_url")
                             arrayDonasiRutinList.add(
                                 ModelDonasiRutin(
                                     idDonasiRutin,
@@ -433,7 +433,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                             var labelString = jsonArrayLabel[0].toString()
                             var labelDonasiRutinActive : TextView = context.findViewById(R.id.labelActiveNow)
                             labelDonasiRutinActive.text = labelString
-//                            deklarasi list program rekomendasi
+//                          deklarasi list program rekomendasi
                             val jsonArrayRekomendasi = response?.getJSONArray("programRekomendasi")
                             for ( i in 0 until jsonArrayRekomendasi.length()){
                                 val programRekomendasi = jsonArrayRekomendasi.getJSONObject(i)
@@ -460,6 +460,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                                 val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@DonasiRutinActivity)
                                 view.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
                                 view.adapter = myAdapterAll
+                                view.visibility = View.VISIBLE
                             }
 
                         } else {
