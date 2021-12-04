@@ -54,8 +54,6 @@ class ProgramDetailActivity : AppCompatActivity() {
         val sharedPreference: Preferences = Preferences(this)
         val imageProgram: ImageView = findViewById(R.id.toolbarImage)
         var allDonasi = findViewById<RecyclerView>(R.id.totalDonasiRecycler)
-        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
-        val idProgram: String? = sharedPreference.getValueString("idProgram")
         val textJumlahDonatur: TextView = findViewById(R.id.jumlahDonasiTextProgram)
 
         //appbar background Image options
@@ -68,20 +66,45 @@ class ProgramDetailActivity : AppCompatActivity() {
         val btnFavoritSet: CardView = findViewById(R.id.btnAddFavorit)
 
 
-        //deklarasi value tampilan mulai dari gambar judul dll
-        //gambar
-        val imgProgram: String? = sharedPreference.getValueString("img")
-        val judulProgram: String? = sharedPreference.getValueString("judul")
-        val capaianProgram: String? = sharedPreference.getValueString("capaian")
-        val sisaHariProgram: String? = sharedPreference.getValueString("sisaHari")
-        val tanggalMulaiProgram: String? = sharedPreference.getValueString("tanggalMulai")
-        val penggalangProgram: String? = sharedPreference.getValueString("penggalang")
-        val switchAnonimValue: String? = sharedPreference.getValueString("ANONIM")
-        val progresProgramValue: Int? = sharedPreference.getValueInt("progressProgram")
-        val targetProgram: String? = sharedPreference.getValueString("targetProgram")
+        //deklarasi token user
+        val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
-//            val toast = Toast.makeText(this, progresProgramValue.toString(), Toast.LENGTH_LONG)
+        //deklarasi value untuk konten halaman
+        var idProgram: String? = ""
+        var imgProgram: String? = ""
+        var judulProgram: String? = ""
+        var capaianProgram: String? = ""
+        var sisaHariProgram: String? = ""
+        var tanggalMulaiProgram: String? = ""
+        var penggalangProgram: String? = ""
+        var switchAnonimValue: String? = ""
+        var progresProgramValue: Int? = 0
+        var targetProgram: String? = ""
+        var keyNotification: String? = ""
+
+        if (intent.hasExtra("keyNotification")) {
+            keyNotification = intent.getStringExtra("keyNotification")!!.toString()
+        }
+
+        idProgram = sharedPreference.getValueString("idProgram")
+        imgProgram = sharedPreference.getValueString("img")
+        judulProgram = sharedPreference.getValueString("judul")
+        capaianProgram = sharedPreference.getValueString("capaian")
+        sisaHariProgram = sharedPreference.getValueString("sisaHari")
+        tanggalMulaiProgram = sharedPreference.getValueString("tanggalMulai")
+        penggalangProgram = sharedPreference.getValueString("penggalang")
+        switchAnonimValue = sharedPreference.getValueString("ANONIM")
+        progresProgramValue = sharedPreference.getValueInt("progressProgram")
+        targetProgram = sharedPreference.getValueString("targetProgram")
+
+//        example condition firebase message
+//        if (keyNotification == "donasi rutin") {
+//            val toast = Toast.makeText(this, keyNotification, Toast.LENGTH_LONG)
 //            toast.show()
+//        } else {
+//
+//        }
+
 
         Glide.with(this).load(imgProgram).apply(options).into(imageProgram)
         //progresbar
@@ -164,7 +187,8 @@ class ProgramDetailActivity : AppCompatActivity() {
         val textNoTelepon: TextInputEditText = view.findViewById(R.id.noPembayaran)
         val textDoaDonatur: TextInputEditText = view.findViewById(R.id.doaDonatur)
         val btnDonasiClose: LinearLayout = view.findViewById(R.id.btnCollapse)
-        val metodePembayaranContainer: LinearLayout = view.findViewById(R.id.metodePembayaranContainer)
+        val metodePembayaranContainer: LinearLayout =
+            view.findViewById(R.id.metodePembayaranContainer)
         val btnPilihBayarC: TextView = view.findViewById(R.id.titleJenisPembayaran)
         val imgPembayaran: ImageView = view.findViewById(R.id.imgBank)
         val btnLanjutPembayaran: Button = view.findViewById(R.id.donasiLanjutPembayaran)
@@ -419,6 +443,18 @@ class ProgramDetailActivity : AppCompatActivity() {
                     sharedPreference.save("penggunaDana", noDana)
                 }
 
+                if (keyNotification == "donasi rutin") {
+                    val toast = Toast.makeText(
+                        this,
+                        "Post Donasi dengan track donasi rutin",
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    sharedPreference.save("influencerId", "271")
+                } else {
+                    sharedPreference.save("influencerId", "null")
+                }
+
                 sharedPreference.save("donasiProgramId", idProgram)
                 sharedPreference.save("donasiPembayaranId", idPembayaran)
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)
@@ -485,7 +521,21 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
         body.put("kode_negara_no_hp", sharedPreference.getValueString("penggunaKodeNegara"))
         body.put("panggilan", sharedPreference.getValueString("penggunaPanggilan"))
-        body.put("influencer_id", null)
+
+//        setCondition for tracking donation
+        val trackDonasi: String? = sharedPreference.getValueString("influencerId")
+        if (trackDonasi == "null") {
+            body.put("influencer_id", null)
+        } else {
+            val toast = Toast.makeText(
+                this,
+                "Berhasil set parameter donasi rutin",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+            body.put("influencer_id", trackDonasi)
+        }
+
         body.put("no_link_aja", sharedPreference.getValueString("penggunaLinkAja"))
         body.put("no_ovo", sharedPreference.getValueString("penggunaOvo"))
         body.put("no_dana", sharedPreference.getValueString("penggunaDana"))

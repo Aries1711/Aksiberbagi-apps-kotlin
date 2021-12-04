@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -46,6 +47,9 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
 
         if(key == "[DONASI RUTIN]"){
             intent = Intent(this,DonasiRutinActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("keyFirebase", "donasi rutin true" )
+            intent.putExtras(mBundle)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }else{
             intent = Intent(this,DashboardActivity::class.java)

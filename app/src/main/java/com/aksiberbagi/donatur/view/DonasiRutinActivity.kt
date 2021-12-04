@@ -54,6 +54,18 @@ class DonasiRutinActivity : AppCompatActivity() {
             startActivity(mIntent)
         }
 
+        var keyFirebase: String? = "donasi rutin true"
+
+        if (intent.hasExtra("keyFirebase")) {
+            keyFirebase = intent.getStringExtra("keyFirebase")!!.toString()
+        }
+
+        if (keyFirebase == "donasi rutin true") {
+            sharedPreference.save("fromNotification", "true")
+        } else {
+            sharedPreference.save("fromNotification", "false")
+        }
+
         val layoutShimmer: ConstraintLayout = findViewById(R.id.layoutShimmer)
         val layoutList: ConstraintLayout = findViewById(R.id.layoutList)
         val layoutCreate: ConstraintLayout = findViewById(R.id.createLayout)
@@ -431,11 +443,12 @@ class DonasiRutinActivity : AppCompatActivity() {
                             layoutActive.visibility = View.VISIBLE
                             val jsonArrayLabel = response?.getJSONArray("activeDonation")
                             var labelString = jsonArrayLabel[0].toString()
-                            var labelDonasiRutinActive : TextView = context.findViewById(R.id.labelActiveNow)
+                            var labelDonasiRutinActive: TextView =
+                                context.findViewById(R.id.labelActiveNow)
                             labelDonasiRutinActive.text = labelString
 //                          deklarasi list program rekomendasi
                             val jsonArrayRekomendasi = response?.getJSONArray("programRekomendasi")
-                            for ( i in 0 until jsonArrayRekomendasi.length()){
+                            for (i in 0 until jsonArrayRekomendasi.length()) {
                                 val programRekomendasi = jsonArrayRekomendasi.getJSONObject(i)
                                 val idProgram = programRekomendasi?.getString("tblprogram_id")
                                 val img = programRekomendasi?.getString("thumbnail_url")
@@ -445,19 +458,50 @@ class DonasiRutinActivity : AppCompatActivity() {
                                 val volunter: String? = dataCabang?.getString("tblcabang_nama")
                                 val capaian = programRekomendasi?.getString("capaian_donasi")
                                 val sisaHari = programRekomendasi?.getString("sisa_hari")
-                                val startProgram = programRekomendasi?.getString("tanggal_mulai_donasi")
-                                val targetNominal: String? = programRekomendasi?.getString("tblprogram_isiantargetnominal")
+                                val startProgram =
+                                    programRekomendasi?.getString("tanggal_mulai_donasi")
+                                val targetNominal: String? =
+                                    programRekomendasi?.getString("tblprogram_isiantargetnominal")
                                 var progressProgram: Int? = programRekomendasi?.getInt("progress")
-                                var targetDonasi : String?
-                                if (targetNominal == "null" || targetNominal == "0" ){
+                                var targetDonasi: String?
+                                if (targetNominal == "null" || targetNominal == "0") {
                                     targetDonasi = "100"
-                                }else{
+                                } else {
                                     targetDonasi = programRekomendasi?.getString("target_nominal")
                                 }
                                 val nav = "donasiRutin"
-                                var view : RecyclerView = context.findViewById(R.id.recyclerProgramRekomendasi)
-                                arrayProgramAll.add(BerandaProgramAll(idProgram,img,judul,volunter,capaian,sisaHari, startProgram,progressProgram,targetDonasi, nav, link))
-                                val myAdapterAll = ProgramAllAdapter(arrayProgramAll,this@DonasiRutinActivity)
+                                var view: RecyclerView =
+                                    context.findViewById(R.id.recyclerProgramRekomendasi)
+
+//                                get the value from notification firebase
+                                val sharedPreference: Preferences =
+                                    Preferences(this@DonasiRutinActivity)
+                                val fromFirebase: String? =
+                                    sharedPreference.getValueString("fromNotification")
+                                var trackDonasi: String?
+                                if (fromFirebase == "true") {
+                                    trackDonasi = "donasi rutin"
+                                } else {
+                                    trackDonasi = "umum"
+                                }
+                                arrayProgramAll.add(
+                                    BerandaProgramAll(
+                                        idProgram,
+                                        img,
+                                        judul,
+                                        volunter,
+                                        capaian,
+                                        sisaHari,
+                                        startProgram,
+                                        progressProgram,
+                                        targetDonasi,
+                                        nav,
+                                        link,
+                                        trackDonasi
+                                    )
+                                )
+                                val myAdapterAll =
+                                    ProgramAllAdapter(arrayProgramAll, this@DonasiRutinActivity)
                                 view.layoutManager = LinearLayoutManager(this@DonasiRutinActivity)
                                 view.adapter = myAdapterAll
                                 view.visibility = View.VISIBLE

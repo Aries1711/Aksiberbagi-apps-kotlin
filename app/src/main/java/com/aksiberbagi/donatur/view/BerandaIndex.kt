@@ -571,7 +571,8 @@ class BerandaIndex : Fragment() {
                                 progressProgram,
                                 targetDonasi,
                                 nav,
-                                link
+                                link,
+                                "umum"
                             )
                         )
                         val myAdapterAll = BerandaProgramAllAdapter(arrayProgram, requireActivity())

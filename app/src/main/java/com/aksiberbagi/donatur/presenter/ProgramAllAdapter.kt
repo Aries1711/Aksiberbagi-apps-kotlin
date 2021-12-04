@@ -2,6 +2,7 @@ package com.aksiberbagi.donatur.presenter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class ProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val contex
         holder.bindItems(arrayList[position])
 
         val sharedPreference: Preferences = Preferences(holder.itemView.context)
+
         holder.itemView.setOnClickListener {
             val model = arrayList[position]
             sharedPreference.save("idProgram", model.id)
@@ -65,7 +67,12 @@ class ProgramAllAdapter (val arrayList: ArrayList<BerandaProgramAll>, val contex
             sharedPreference.save("progressProgram", model.progresProgram)
             sharedPreference.save("targetProgram", model.targetNominal)
             sharedPreference.save("navigasi", model.poinAkses)
+            //declaration intent
             val mIntent = Intent(context, ProgramDetailActivity::class.java)
+            //add value from notification
+            val mBundle = Bundle()
+            mBundle.putString("keyNotification", model.track )
+            mIntent.putExtras(mBundle)
             context.startActivity(mIntent)
         }
     }
