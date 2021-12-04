@@ -283,6 +283,12 @@ public class ApiService {
         return put(endpoint, data);
     }
 
+    public static ANRequest postTokenFcm(String auth,  JSONObject data){
+        token = auth ;
+        String endpoint = baseUrl("firebase/store-token/fcm");
+        System.out.println("ini urlnya cuy : "+ endpoint);
+        return post(endpoint, data);
+    }
 
 
 }

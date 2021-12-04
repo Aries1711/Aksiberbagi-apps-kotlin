@@ -172,7 +172,7 @@ class BerandaIndex : Fragment() {
         val shimmerLayout: ShimmerFrameLayout = view.findViewById(R.id.shimmerBeranda)
         shimmerLayout.startShimmer()
         getKoneksi(retrivedToken, view)
-        getFirebaseFcmToken()
+        getFirebaseFcmToken(retrivedToken, view)
 
         val btnLihatLelang : Button = view.findViewById(R.id.lihatSemuaLelang)
         btnLihatLelang.setOnClickListener {
@@ -192,7 +192,9 @@ class BerandaIndex : Fragment() {
         return view
     }
 
-    private fun getFirebaseFcmToken(){
+
+//    firebase section
+    private fun getFirebaseFcmToken(tokenValue: String?, view: View){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
@@ -200,12 +202,61 @@ class BerandaIndex : Fragment() {
             }
 
             // Get new FCM registration token
-            val token = task.result.toString()
+            val tokenFCM = task.result.toString()
+            if (tokenFCM != null || tokenFCM == "" ){
+                println("in kondisinya masuk")
+                postTokenFcmDonatur(tokenValue,tokenFCM,view)
+                return@OnCompleteListener
+            }
+            println("in kondisinya masuk")
+
 
             // Log and toast
-            Log.d(TAG, " token FCM : $token")
+            Log.d(TAG, " token FCM : $tokenFCM")
         })
     }
+
+    private fun postTokenFcmDonatur(
+        tokenValue: String?,
+        tokenFCM: String?,
+        view: View
+    ){
+        val body =JSONObject()
+        body.put("token_fcm_device", tokenFCM);
+        ApiService.postTokenFcm(tokenValue,body).getAsJSONObject(object: JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                if(response?.getString("message").equals("Success data save")){
+//                    val toast = Toast.makeText(
+//                        context,
+//                        "Berhasil Menyimpan token FCM",
+//                        Toast.LENGTH_LONG
+//                    )
+//                    toast.show()
+                }else{
+//                    val toast = Toast.makeText(
+//                        requireContext(),
+//                        "gagal menyimpan token firebase",
+//                        Toast.LENGTH_LONG
+//                    )
+//                    toast.show()
+                }
+            }
+
+            override fun onError(anError: ANError?) {
+                val apiError: ApiError? = anError?.getErrorAsObject(ApiError::class.java)
+                if (apiError?.message == "Token expired") {
+                    refreshToken(tokenValue, view)
+                }else{
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
+            }
+        })
+    }
+
+
+    //end firebase section
 
     private fun setupIndicators(view: View){
         val indicators = arrayOfNulls<ImageView>(berandaSlideAdapter.itemCount)
@@ -574,6 +625,7 @@ class BerandaIndex : Fragment() {
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
                                 getKoneksi(token, view)
+                                getFirebaseFcmToken(token, view)
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -582,6 +634,7 @@ class BerandaIndex : Fragment() {
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
                                 getKoneksi(token, view)
+                                getFirebaseFcmToken(token, view)
                             }
                         } else {
                             Looper.myLooper()?.let {
