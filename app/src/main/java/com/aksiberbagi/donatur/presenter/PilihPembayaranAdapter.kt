@@ -64,6 +64,7 @@ class PilihPembayaranAdapter( val arrayList: ArrayList<ModelPembayaran>, val con
                     mBundle.putString("tipeBank", tipeSet)
                     mBundle.putString("nominalDonasi", nominalSet)
                     mBundle.putString("spinner", spinnerSet)
+                    mBundle.putString("keyNotification", model.trackDonasi)
                     mIntent.putExtras(mBundle)
                     context.startActivity(mIntent)
                 }

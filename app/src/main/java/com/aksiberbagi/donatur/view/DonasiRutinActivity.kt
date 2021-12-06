@@ -54,7 +54,7 @@ class DonasiRutinActivity : AppCompatActivity() {
             startActivity(mIntent)
         }
 
-        var keyFirebase: String? = "donasi rutin true"
+        var keyFirebase: String? = "donasi rutin false"
 
         if (intent.hasExtra("keyFirebase")) {
             keyFirebase = intent.getStringExtra("keyFirebase")!!.toString()
@@ -62,8 +62,20 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         if (keyFirebase == "donasi rutin true") {
             sharedPreference.save("fromNotification", "true")
+//            val toast = Toast.makeText(
+//                this,
+//                "dari notif",
+//                Toast.LENGTH_LONG
+//            )
+//            toast.show()
         } else {
             sharedPreference.save("fromNotification", "false")
+//            val toast = Toast.makeText(
+//                this,
+//                "dari klik",
+//                Toast.LENGTH_LONG
+//            )
+//            toast.show()
         }
 
         val layoutShimmer: ConstraintLayout = findViewById(R.id.layoutShimmer)
@@ -484,6 +496,7 @@ class DonasiRutinActivity : AppCompatActivity() {
                                 } else {
                                     trackDonasi = "umum"
                                 }
+                                Log.d(TAG, "track donasinya $trackDonasi" );
                                 arrayProgramAll.add(
                                     BerandaProgramAll(
                                         idProgram,

@@ -80,10 +80,18 @@ class ProgramDetailActivity : AppCompatActivity() {
         var switchAnonimValue: String? = ""
         var progresProgramValue: Int? = 0
         var targetProgram: String? = ""
-        var keyNotification: String? = ""
+        var keyNotification: String? = "empty"
 
         if (intent.hasExtra("keyNotification")) {
             keyNotification = intent.getStringExtra("keyNotification")!!.toString()
+        }
+
+//        Toast.makeText(this, "keyNotification isinya : $keyNotification", Toast.LENGTH_SHORT).show()
+
+        if (keyNotification == "donasi rutin") {
+            sharedPreference.save("influencerId", "271")
+        } else {
+            sharedPreference.save("influencerId", "null")
         }
 
         idProgram = sharedPreference.getValueString("idProgram")
@@ -343,6 +351,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                             val mBundle = Bundle()
                             mBundle.putString("nominal", textNominalDonasi.text.toString1())
                             mBundle.putString("spinnerValue", spinnerPilihNominal)
+                            mBundle.putString("keyNotification", keyNotification)
                             mIntent.putExtras(mBundle)
                             startActivity(mIntent)
                         } else {
@@ -353,6 +362,7 @@ class ProgramDetailActivity : AppCompatActivity() {
                         val mBundle = Bundle()
                         mBundle.putString("nominal", textNominalDonasi.text.toString1())
                         mBundle.putString("spinnerValue", spinnerPilihNominal)
+                        mBundle.putString("keyNotification", keyNotification)
                         mIntent.putExtras(mBundle)
                         startActivity(mIntent)
                     }
@@ -443,18 +453,6 @@ class ProgramDetailActivity : AppCompatActivity() {
                     sharedPreference.save("penggunaDana", noDana)
                 }
 
-                if (keyNotification == "donasi rutin") {
-                    val toast = Toast.makeText(
-                        this,
-                        "Post Donasi dengan track donasi rutin",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
-                    sharedPreference.save("influencerId", "271")
-                } else {
-                    sharedPreference.save("influencerId", "null")
-                }
-
                 sharedPreference.save("donasiProgramId", idProgram)
                 sharedPreference.save("donasiPembayaranId", idPembayaran)
                 sharedPreference.save("donasiNominal", nominalDonasiDonatur)
@@ -517,29 +515,17 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
         body.put("is_android", 1)
         body.put("no_wa", sharedPreference.getValueString("penggunaWA"))
+        body.put("influencer_id", sharedPreference.getValueString("influencerId"))
         body.put("email", sharedPreference.getValueString("penggunaEmail"))
         body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
         body.put("kode_negara_no_hp", sharedPreference.getValueString("penggunaKodeNegara"))
         body.put("panggilan", sharedPreference.getValueString("penggunaPanggilan"))
 
-//        setCondition for tracking donation
-        val trackDonasi: String? = sharedPreference.getValueString("influencerId")
-        if (trackDonasi == "null") {
-            body.put("influencer_id", null)
-        } else {
-            val toast = Toast.makeText(
-                this,
-                "Berhasil set parameter donasi rutin",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-            body.put("influencer_id", trackDonasi)
-        }
-
         body.put("no_link_aja", sharedPreference.getValueString("penggunaLinkAja"))
         body.put("no_ovo", sharedPreference.getValueString("penggunaOvo"))
         body.put("no_dana", sharedPreference.getValueString("penggunaDana"))
         body.put("nominal_flash_sale_id", null)
+        Log.d(TAG, " ini json datanya${ body.toString() }");
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 if (response?.getString("message").equals("Donasi berhasil diproses")) {

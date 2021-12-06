@@ -65,7 +65,14 @@ class PilihPembayaranActivity : AppCompatActivity() {
         nominalSet = valueNominal.toString()
         spinnerSet = spinnerPilihan.toString()
 
-        getKoneksi(retrivedToken, this, nominalSet, spinnerSet)
+        var keyNotification: String? = ""
+
+        if (intent.hasExtra("keyNotification")) {
+            keyNotification = intent.getStringExtra("keyNotification")!!.toString()
+        }
+
+        getKoneksi(retrivedToken, this, nominalSet, spinnerSet, keyNotification!!)
+
 
 
         toolbar.setNavigationOnClickListener{
@@ -74,6 +81,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
             mBundle.putString("dialogAktif", "true")
             mBundle.putString("pilihanPembayaran", "Pilih Pembayaran")
             mBundle.putString("nominalDonasi", nominalSet)
+            mBundle.putString("keyNotification", keyNotification)
             mBundle.putString("spinner", spinnerPilihan)
             mIntent.putExtras(mBundle)
             startActivity(mIntent)
@@ -86,12 +94,13 @@ class PilihPembayaranActivity : AppCompatActivity() {
         tokenValue: String?,
         context: PilihPembayaranActivity,
         nominal: String,
-        spinner: String
+        spinner: String,
+        keyNotification : String
     ){
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
-                getPilihPembayaran(tokenValue, context, nominal, spinner)
+                getPilihPembayaran(tokenValue, context, nominal, spinner, keyNotification)
             }
 
             override fun onError(anError: ANError?) {
@@ -105,7 +114,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                     toast.show()
                     return
                 }else{
-                    refreshToken(tokenValue,context,nominal, spinner)
+                    refreshToken(tokenValue,context,nominal, spinner, keyNotification)
                 }
             }
 
@@ -116,7 +125,8 @@ class PilihPembayaranActivity : AppCompatActivity() {
         tokenValue: String?,
         context: PilihPembayaranActivity,
         nominal: String,
-        spinner: String
+        spinner: String,
+        keyNotification: String
     ){
         val header : String? = tokenValue
         val sharedPreference: Preferences = Preferences(this)
@@ -129,7 +139,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                             //save token
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(token,context,nominal,spinner)
+                                getKoneksi(token,context,nominal,spinner, keyNotification)
                             }
                         } else if (response?.getString("message")
                                 .equals("Token expired berhasil di refresh")
@@ -137,7 +147,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                             val token: String? = response?.getString("token")
                             if (token != null) {
                                 sharedPreference.save("TOKEN", token)
-                                getKoneksi(token,context,nominal,spinner)
+                                getKoneksi(token,context,nominal,spinner,keyNotification)
                             }
                         } else {
                             Looper.myLooper()?.let {
@@ -187,7 +197,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPilihPembayaran(tokenValue: String?, context: PilihPembayaranActivity, nominal: String, spinner: String){
+    private fun getPilihPembayaran(tokenValue: String?, context: PilihPembayaranActivity, nominal: String, spinner: String, keyNotification: String){
 
         ApiService.getPembayaran(tokenValue).getAsJSONObject(object : JSONObjectRequestListener{
             override fun onResponse(response: JSONObject?) {
@@ -201,7 +211,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                         val namaPembayaran = item?.getString("tblbank_nama")
                         val gambarPembayaran = item?.getString("logo_url")
                         val tipePembayaran = "Ewallet"
-                        arrayEwallet.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran))
+                        arrayEwallet.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran, keyNotification))
                         val myAdapterEwallet = PilihPembayaranAdapter(arrayEwallet,this@PilihPembayaranActivity, nominal, spinner,tipePembayaran)
                         var mainMenuEwallet = context.findViewById<RecyclerView>(R.id.recyclerEwallet)
                         mainMenuEwallet.layoutManager = LinearLayoutManager(this@PilihPembayaranActivity)
@@ -216,7 +226,7 @@ class PilihPembayaranActivity : AppCompatActivity() {
                         val namaPembayaran = item?.getString("tblbank_nama")
                         val gambarPembayaran = item?.getString("logo_url")
                         val tipePembayaran = "Transfer"
-                        arrayTranfer.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran))
+                        arrayTranfer.add(ModelPembayaran(idPembayaran,namaPembayaran,gambarPembayaran, keyNotification))
                         val myAdapterTransfer = PilihPembayaranAdapter(arrayTranfer, this@PilihPembayaranActivity, nominal , spinner,tipePembayaran)
                         var mainMenuTranfer = findViewById<RecyclerView>(R.id.recyclerTransfer)
                         mainMenuTranfer.layoutManager = LinearLayoutManager(this@PilihPembayaranActivity)
