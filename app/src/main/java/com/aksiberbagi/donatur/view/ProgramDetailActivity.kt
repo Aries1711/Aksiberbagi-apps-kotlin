@@ -515,7 +515,7 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
         body.put("is_android", 1)
         body.put("no_wa", sharedPreference.getValueString("penggunaWA"))
-        body.put("influencer_id", sharedPreference.getValueString("influencerId"))
+        body.put("influencer_id", sharedPreference.getValueString("influencerId")!!.toInt())
         body.put("email", sharedPreference.getValueString("penggunaEmail"))
         body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
         body.put("kode_negara_no_hp", sharedPreference.getValueString("penggunaKodeNegara"))
@@ -525,7 +525,8 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("no_ovo", sharedPreference.getValueString("penggunaOvo"))
         body.put("no_dana", sharedPreference.getValueString("penggunaDana"))
         body.put("nominal_flash_sale_id", null)
-        Log.d(TAG, " ini json datanya${ body.toString() }");
+        Log.d(TAG, " ini json datanya: $body");
+//        return
         ApiService.postDonasi(tokenValue, body).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
                 if (response?.getString("message").equals("Donasi berhasil diproses")) {
