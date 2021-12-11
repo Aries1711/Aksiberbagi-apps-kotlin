@@ -58,6 +58,7 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         if (intent.hasExtra("keyFirebase")) {
             keyFirebase = intent.getStringExtra("keyFirebase")!!.toString()
+            Log.d("disini okey", "oh iya ini kenya $keyFirebase")
         }
 
         if (keyFirebase == "donasi rutin true") {

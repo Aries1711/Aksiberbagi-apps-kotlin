@@ -14,6 +14,7 @@ import androidx.core.app.NotificationCompat
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.view.DashboardActivity
 import com.aksiberbagi.donatur.view.DonasiRutinActivity
+import com.aksiberbagi.donatur.view.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -46,7 +47,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
         var intent : Intent
 
         if(key == "[DONASI RUTIN]"){
-            intent = Intent(this,DonasiRutinActivity::class.java)
+            intent = Intent(this,SplashActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("keyFirebase", "donasi rutin true" )
             intent.putExtras(mBundle)
