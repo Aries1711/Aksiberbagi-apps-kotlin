@@ -69,7 +69,13 @@
             android:theme="@style/AppMaterial" />
         <activity
             android:name="com.aksiberbagi.donatur.view.DonasiRutinActivity"
-            android:theme="@style/AppMaterial" />
+            android:theme="@style/AppMaterial" >
+            <intent-filter>
+                <action android:name="donasiRutin.Reminder" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.aksiberbagi.donatur.view.SemuaLaporanActivity"
             android:theme="@style/AppMaterial" />

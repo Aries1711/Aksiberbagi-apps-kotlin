@@ -63,13 +63,14 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         if (keyFirebase == "donasi rutin true") {
             sharedPreference.save("fromNotification", "true")
-//            val toast = Toast.makeText(
-//                this,
-//                "dari notif",
-//                Toast.LENGTH_LONG
-//            )
-//            toast.show()
+            val toast = Toast.makeText(
+                this,
+                "dari notif",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
         } else {
+            //ini harusnya false sementara di bypass
             sharedPreference.save("fromNotification", "false")
 //            val toast = Toast.makeText(
 //                this,
