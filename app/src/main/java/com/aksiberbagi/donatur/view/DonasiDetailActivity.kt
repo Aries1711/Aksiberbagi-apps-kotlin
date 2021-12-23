@@ -31,7 +31,7 @@ class DonasiDetailActivity : AppCompatActivity() {
         val retrivedToken: String? = sharedPreference.getValueString("TOKEN")
 
         val toolbar: Toolbar = findViewById(R.id.upAppbarDetailDonasi)
-        toolbar.title = "Donasi"
+        toolbar.title = "Donasi Detail"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE)
         toolbar.setNavigationOnClickListener{
             val mIntent = Intent(this, DashboardActivity::class.java)
@@ -39,6 +39,18 @@ class DonasiDetailActivity : AppCompatActivity() {
             mBundle.putString("donasiSayaAktif", "true")
             mIntent.putExtras(mBundle)
             startActivity(mIntent)}
+
+        var keyFirebase : String = "tidak ada"
+        if (intent.hasExtra("keyFirebase")) {
+            keyFirebase = intent.getStringExtra("keyFirebase")!!.toString()
+            Toast.makeText(
+                this@DonasiDetailActivity,
+                "Testing data intent berhasil",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+
 
         var titleHeader : TextView = findViewById(R.id.detailHeaderText)
         var titleSummary : TextView = findViewById(R.id.detailHeaderSummaryText)

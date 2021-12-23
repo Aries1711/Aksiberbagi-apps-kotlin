@@ -45,7 +45,12 @@
             android:theme="@style/AppMaterial" />
         <activity
             android:name="com.aksiberbagi.donatur.view.DonasiDetailActivity"
-            android:theme="@style/AppMaterial" />
+            android:theme="@style/AppMaterial">
+        <intent-filter>
+            <action android:name="donasiSaya.Detail" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
         <activity
             android:name="com.aksiberbagi.donatur.view.WebviewInvoiceActivity"
             android:theme="@style/AppMaterial" />

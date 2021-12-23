@@ -58,26 +58,12 @@ class DonasiRutinActivity : AppCompatActivity() {
 
         if (intent.hasExtra("keyFirebase")) {
             keyFirebase = intent.getStringExtra("keyFirebase")!!.toString()
-            Log.d("disini okey", "oh iya ini kenya $keyFirebase")
         }
 
         if (keyFirebase == "donasi rutin true") {
             sharedPreference.save("fromNotification", "true")
-            val toast = Toast.makeText(
-                this,
-                "dari notif",
-                Toast.LENGTH_LONG
-            )
-            toast.show()
         } else {
-            //ini harusnya false sementara di bypass
             sharedPreference.save("fromNotification", "false")
-//            val toast = Toast.makeText(
-//                this,
-//                "dari klik",
-//                Toast.LENGTH_LONG
-//            )
-//            toast.show()
         }
 
         val layoutShimmer: ConstraintLayout = findViewById(R.id.layoutShimmer)

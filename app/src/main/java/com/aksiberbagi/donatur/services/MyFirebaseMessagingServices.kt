@@ -27,7 +27,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if(remoteMessage.notification != null){
             generateNotification(remoteMessage.notification!!.title!!, remoteMessage.notification!!.body!!,
-                remoteMessage!!.data["key_1"].toString()
+                remoteMessage!!.data["keyFirebase"].toString()
             )
         }
     }
@@ -46,17 +46,16 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
 
         var intent : Intent
 
-//        if(key == "[DONASI RUTIN]"){
-//            intent = Intent(this,DonasiRutinActivity::class.java)
-//            val mBundle = Bundle()
-//            mBundle.putString("keyFirebase", "donasi rutin true" )
-//            intent.putExtras(mBundle)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//        }else{
-//
-//        }
+        if(key == "donasi rutin true"){
+            intent = Intent(this,DonasiRutinActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("keyFirebase", "donasi rutin true" )
+            intent.putExtras(mBundle)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }else{
             intent = Intent(this,DashboardActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
 
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,PendingIntent.FLAG_ONE_SHOT)
 
