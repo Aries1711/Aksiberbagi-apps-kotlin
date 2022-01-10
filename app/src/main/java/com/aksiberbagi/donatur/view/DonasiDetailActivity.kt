@@ -33,80 +33,104 @@ class DonasiDetailActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.upAppbarDetailDonasi)
         toolbar.title = "Donasi Detail"
         toolbar.setTitleTextColor(android.graphics.Color.WHITE)
-        toolbar.setNavigationOnClickListener{
+        toolbar.setNavigationOnClickListener {
             val mIntent = Intent(this, DashboardActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("donasiSayaAktif", "true")
             mIntent.putExtras(mBundle)
-            startActivity(mIntent)}
+            startActivity(mIntent)
+        }
 
-        var keyFirebase : String = "tidak ada"
+        var keyFirebase: String = "tidak ada"
+        var dataTagihan: String = "tidak ada"
+
+        var statusValue: String? = ""
+        var tanggalValue: String? = ""
+        var paymentValue: String? = ""
+        var nominalValue: String? = ""
+        var jenisValue: String? = ""
+
         if (intent.hasExtra("keyFirebase")) {
-            keyFirebase = intent.getStringExtra("keyFirebase")!!.toString()
+            dataTagihan = intent.getStringExtra("dataTagihan")!!.toString()
+            val dataTagihanObject = JSONObject(dataTagihan)
             Toast.makeText(
                 this@DonasiDetailActivity,
-                "Testing data intent berhasil",
+                dataTagihanObject.getString("donasi_nominal"),
                 Toast.LENGTH_LONG
             ).show()
+            statusValue = dataTagihanObject.getString("donasi_status")
+            tanggalValue = dataTagihanObject.getString("donasi_tglinsert")
+            paymentValue = dataTagihanObject.getString("bank_nama")
+            nominalValue = dataTagihanObject.getString("donasi_nominal")
+            jenisValue = dataTagihanObject.getString("jenis_donasi")
+            sharedPreference.save("idDonasiDetail", dataTagihanObject.getString("donasi_id"))
+            sharedPreference.save("detailDonasiNominal", dataTagihanObject.getString("donasi_nominal"))
+        } else {
+            statusValue = sharedPreference.getValueString("detailDonasiStatus")
+            tanggalValue = sharedPreference.getValueString("detailDonasiWaktu")
+            paymentValue = sharedPreference.getValueString("detailDonasiPembayaran")
+            nominalValue = sharedPreference.getValueString("detailDonasiNominal")
+            jenisValue = sharedPreference.getValueString("detailDonasiJenis")
         }
 
 
+        var titleHeader: TextView = findViewById(R.id.detailHeaderText)
+        var titleSummary: TextView = findViewById(R.id.detailHeaderSummaryText)
 
-        var titleHeader : TextView = findViewById(R.id.detailHeaderText)
-        var titleSummary : TextView = findViewById(R.id.detailHeaderSummaryText)
-        val statusValue: String? = sharedPreference.getValueString("detailDonasiStatus")
-        if (statusValue == "GAGAL" || statusValue == "EXPIRED" ){
+        if (statusValue == "GAGAL" || statusValue == "EXPIRED") {
             titleHeader.text = "Donasi Dibatalkan"
-            titleSummary.text = "Batas waktu pembayaran telah berakhir atau donasi gagal tercatat di sistem"
-        }else if(statusValue == "MENUNGGU"){
+            titleSummary.text =
+                "Batas waktu pembayaran telah berakhir atau donasi gagal tercatat di sistem"
+        } else if (statusValue == "MENUNGGU") {
             titleHeader.text = "Menunggu Pembayaran"
-            titleSummary.text = "Segera lakukan pembayaran melalui metode pilihan pembayaran sesuai detail berikut"
-        }else{
-            titleHeader.text = "Terima Kasih!"
+            titleSummary.text =
+                "Segera lakukan pembayaran melalui metode pilihan pembayaran sesuai detail berikut"
+        } else {
+            titleHeader.text = "Terima Kasih #orangBaik"
             titleSummary.text = "Donasimu telah kami terima dan akan kami salurkan"
         }
 
-        val jenisValue: String? = sharedPreference.getValueString("detailDonasiJenis")
-        val btnPembayaran : Button = findViewById(R.id.btnPembayaran)
-        if(jenisValue == "Transfer" && statusValue == "MENUNGGU"){
+        val btnPembayaran: Button = findViewById(R.id.btnPembayaran)
+        if (jenisValue == "Transfer" && statusValue == "MENUNGGU") {
             btnPembayaran.visibility = View.VISIBLE
-        }else{
+        } else {
             btnPembayaran.visibility = View.GONE
         }
 
-        var tanggalDonasi : TextView = findViewById(R.id.detailDonasiTanggal)
-        val tanggalValue: String? = sharedPreference.getValueString("detailDonasiWaktu")
-        tanggalDonasi.text = tanggalValue
+        var tanggalDonasi: TextView = findViewById(R.id.detailDonasiTanggal)
 
-        var paymentDonasi : TextView = findViewById(R.id.detailDonasiPayment)
-        val paymentValue: String? = sharedPreference.getValueString("detailDonasiPembayaran")
-        paymentDonasi.text = paymentValue
+        var paymentDonasi: TextView = findViewById(R.id.detailDonasiPayment)
 
-        var nominalDonasi : TextView = findViewById(R.id.detailDonasiNominal)
-        val nominalValue: String? = sharedPreference.getValueString("detailDonasiNominal")
+        var nominalDonasi: TextView = findViewById(R.id.detailDonasiNominal)
         val nominalFormated = Converter.ribuan(nominalValue!!.toDouble())
+
+
+
+        tanggalDonasi.text = tanggalValue
+        paymentDonasi.text = paymentValue
         nominalDonasi.text = "Rp $nominalFormated"
 
-        var frameDonasiStatus : FrameLayout = findViewById(R.id.detailDonasiStatusframe)
+
+        var frameDonasiStatus: FrameLayout = findViewById(R.id.detailDonasiStatusframe)
         var textDonasiStatus: TextView = findViewById(R.id.detailDonasiSayaStatus)
-        if (statusValue != "SUKSES"){
+        if (statusValue != "SUKSES") {
             frameDonasiStatus.setBackgroundResource(R.drawable.rounded_donasi_download)
             textDonasiStatus.text = statusValue
             textDonasiStatus.setTextColor(Color.parseColor("#eb6b34"))
-        }else{
+        } else {
             frameDonasiStatus.setBackgroundResource(R.drawable.rounded_status_donasi)
             textDonasiStatus.text = statusValue
             textDonasiStatus.setTextColor(Color.parseColor("#15BBDA"))
         }
 
-        getKoneksi(retrivedToken,this)
+        getKoneksi(retrivedToken, this)
 
     }
 
     private fun getKoneksi(
         tokenValue: String?,
         context: DonasiDetailActivity
-    ){
+    ) {
         val header: String? = tokenValue
         ApiService.getKoneksi(header).getAsJSONObject(object : JSONObjectRequestListener {
             override fun onResponse(response: JSONObject?) {
@@ -114,15 +138,15 @@ class DonasiDetailActivity : AppCompatActivity() {
             }
 
             override fun onError(anError: ANError?) {
-                if(anError?.errorDetail!!.equals("connectionError")){
+                if (anError?.errorDetail!!.equals("connectionError")) {
                     val toast = Toast.makeText(
                         this@DonasiDetailActivity,
                         "Ada masalah dengan Koneksi Internet Anda",
                         Toast.LENGTH_LONG
                     )
                     toast.show()
-                }else{
-                    refreshToken(tokenValue,context)
+                } else {
+                    refreshToken(tokenValue, context)
                 }
             }
 
@@ -132,8 +156,8 @@ class DonasiDetailActivity : AppCompatActivity() {
     private fun refreshToken(
         tokenValue: String?,
         context: DonasiDetailActivity
-    ){
-        val header : String? = tokenValue
+    ) {
+        val header: String? = tokenValue
         val sharedPreference: Preferences = Preferences(this@DonasiDetailActivity)
         try {
             ApiService.postRefreshToken(header).getAsJSONObject(object : JSONObjectRequestListener {
@@ -192,7 +216,7 @@ class DonasiDetailActivity : AppCompatActivity() {
                 }
 
             })
-        }catch (e: JSONException){
+        } catch (e: JSONException) {
             val toast = Toast.makeText(
                 this@DonasiDetailActivity,
                 "Kesalahan Header",
@@ -205,7 +229,7 @@ class DonasiDetailActivity : AppCompatActivity() {
     private fun getDonasiByID(
         tokenValue: String?,
         context: DonasiDetailActivity
-    ){
+    ) {
         val sharedPreference: Preferences = Preferences(this)
         val options: RequestOptions = RequestOptions()
             .centerCrop()
@@ -213,44 +237,64 @@ class DonasiDetailActivity : AppCompatActivity() {
             .placeholder(R.mipmap.ic_launcher_round)
             .error(R.mipmap.ic_launcher_round)
         val idDonasi: String? = sharedPreference.getValueString("idDonasiDetail")
-        ApiService.getDonasiDetail(tokenValue,idDonasi).getAsJSONObject(object: JSONObjectRequestListener{
-            override fun onResponse(response: JSONObject?) {
-                val data = response?.getJSONObject("dataDonasi")
-                val dataProgram = data?.getJSONObject("program")
-                val dataBank = data?.getJSONObject("bank")
-                val imgProgram = dataProgram?.getString("thumbnail_url")
-                val imageProgram = context.findViewById<ImageView>(R.id.imageDetailDonasi)
-                Glide.with(context.applicationContext).load(imgProgram).apply(options).into(imageProgram)
-                val idProgram = dataProgram?.getString("tblprogram_id")
-                val judulProgram = dataProgram?.getString("tblprogram_judul")
-                var judulProgramText = context.findViewById<TextView>(R.id.detailDonasiProgramJudul)
-                judulProgramText.text = judulProgram
+        ApiService.getDonasiDetail(tokenValue, idDonasi)
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    val data = response?.getJSONObject("dataDonasi")
+                    val dataProgram = data?.getJSONObject("program")
+                    val dataBank = data?.getJSONObject("bank")
+                    val imgProgram = dataProgram?.getString("thumbnail_url")
+                    val imageProgram = context.findViewById<ImageView>(R.id.imageDetailDonasi)
+                    Glide.with(context.applicationContext).load(imgProgram).apply(options)
+                        .into(imageProgram)
+                    val idProgram = dataProgram?.getString("tblprogram_id")
+                    val judulProgram = dataProgram?.getString("tblprogram_judul")
+                    var judulProgramText =
+                        context.findViewById<TextView>(R.id.detailDonasiProgramJudul)
+                    judulProgramText.text = judulProgram
 
-                val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
-                btnPembayaran.setOnClickListener {
-                    sharedPreference.save("invoiceNominal", sharedPreference.getValueString("detailDonasiNominal"))
-                    val kodeUnik =  data?.getString("tbldonasi_nourut")
-                    val nominalPlusKode = data?.getString("tbldonasi_nominal")
-                    var nominalRaw = nominalPlusKode!!.toInt() - kodeUnik!!.toInt()
-                    sharedPreference.save("donasiNominal", nominalRaw )
-                    sharedPreference.save("invoiceKodeUnik", data?.getString("tbldonasi_nourut") )
-                    sharedPreference.save("invoiceKode", data?.getString("tbldonasi_invoice"))
-                    sharedPreference.save("invoiceBank", dataBank?.getString("tblbank_nama"))
-                    sharedPreference.save("invoiceBankAN", dataBank?.getString("tblbank_namapemilik") )
-                    sharedPreference.save("invoiceBankUrl", dataBank?.getString("logo_url") )
-                    sharedPreference.save("invoiceBankRekening", dataBank?.getString("tblbank_rekening"))
-                    sharedPreference.save("invoiceProgramJudul", judulProgram)
-                    startActivity(Intent(this@DonasiDetailActivity, InvoiceActivity::class.java))
+                    val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
+                    btnPembayaran.setOnClickListener {
+                        sharedPreference.save(
+                            "invoiceNominal",
+                            sharedPreference.getValueString("detailDonasiNominal")
+                        )
+                        val kodeUnik = data?.getString("tbldonasi_nourut")
+                        val nominalPlusKode = data?.getString("tbldonasi_nominal")
+                        var nominalRaw = nominalPlusKode!!.toInt() - kodeUnik!!.toInt()
+                        sharedPreference.save("donasiNominal", nominalRaw)
+                        sharedPreference.save(
+                            "invoiceKodeUnik",
+                            data?.getString("tbldonasi_nourut")
+                        )
+                        sharedPreference.save("invoiceKode", data?.getString("tbldonasi_invoice"))
+                        sharedPreference.save("invoiceBank", dataBank?.getString("tblbank_nama"))
+                        sharedPreference.save(
+                            "invoiceBankAN",
+                            dataBank?.getString("tblbank_namapemilik")
+                        )
+                        sharedPreference.save("invoiceBankUrl", dataBank?.getString("logo_url"))
+                        sharedPreference.save(
+                            "invoiceBankRekening",
+                            dataBank?.getString("tblbank_rekening")
+                        )
+                        sharedPreference.save("invoiceProgramJudul", judulProgram)
+                        startActivity(
+                            Intent(
+                                this@DonasiDetailActivity,
+                                InvoiceActivity::class.java
+                            )
+                        )
+                    }
                 }
-            }
 
-            override fun onError(anError: ANError?) {
-                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
-                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
-                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
-            }
+                override fun onError(anError: ANError?) {
+                    Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                    Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                    Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+                }
 
-        })
+            })
     }
 
 }
