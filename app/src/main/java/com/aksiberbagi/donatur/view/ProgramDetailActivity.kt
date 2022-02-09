@@ -515,7 +515,11 @@ class ProgramDetailActivity : AppCompatActivity() {
         body.put("hamba_Allah", sharedPreference.getValueString("ANONIM"))
         body.put("is_android", 1)
         body.put("no_wa", sharedPreference.getValueString("penggunaWA"))
-        body.put("influencer_id", sharedPreference.getValueString("influencerId")!!.toInt())
+        if( sharedPreference.getValueString("influencerId") != "null" ){
+            body.put("influencer_id", sharedPreference.getValueString("influencerId")!!.toInt())
+        }else{
+            body.put("influencer_id",null)
+        }
         body.put("email", sharedPreference.getValueString("penggunaEmail"))
         body.put("nama_donatur", sharedPreference.getValueString("penggunaNAMA"))
         body.put("kode_negara_no_hp", sharedPreference.getValueString("penggunaKodeNegara"))
