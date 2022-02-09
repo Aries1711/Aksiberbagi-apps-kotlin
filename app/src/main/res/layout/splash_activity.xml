@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="212dp"
         android:fontFamily="@font/poppins_light"
-        android:text="Version 1.1.0"
+        android:text="Version 1.2.0"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

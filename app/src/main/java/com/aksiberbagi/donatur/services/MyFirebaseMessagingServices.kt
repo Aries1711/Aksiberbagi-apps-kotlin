@@ -36,7 +36,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
         }
     }
 
-    fun getRemoteView(title: String, subtitle: String, key: String) : RemoteViews{
+    fun getRemoteView(title: String, subtitle: String) : RemoteViews{
         val remoteView = RemoteViews("com.aksiberbagi.donatur", R.layout.notification_panel)
 
         remoteView.setTextViewText(R.id.titleNotification, title)
@@ -58,9 +58,10 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }else if(key == "tagihan"){
             intent = Intent(this, DonasiDetailActivity::class.java)
+            val sharedPreference: Preferences = Preferences(this)
             val mBundle = Bundle()
             mBundle.putString("keyFirebase", "tagihan" )
-            mBundle.putString("dataTagihan", data )
+            sharedPreference.save("dataTagihan", data)
             intent.putExtras(mBundle)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }else{
@@ -78,7 +79,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
 
-        builder = builder.setContent(getRemoteView(title,subtitle, key))
+        builder = builder.setContent(getRemoteView(title,subtitle))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

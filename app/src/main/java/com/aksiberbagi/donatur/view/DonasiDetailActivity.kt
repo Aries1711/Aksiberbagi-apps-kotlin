@@ -51,20 +51,15 @@ class DonasiDetailActivity : AppCompatActivity() {
         var jenisValue: String? = ""
 
         if (intent.hasExtra("keyFirebase")) {
-            dataTagihan = intent.getStringExtra("dataTagihan")!!.toString()
-            val dataTagihanObject = JSONObject(dataTagihan)
-            Toast.makeText(
-                this@DonasiDetailActivity,
-                dataTagihanObject.getString("donasi_nominal"),
-                Toast.LENGTH_LONG
-            ).show()
-            statusValue = dataTagihanObject.getString("donasi_status")
-            tanggalValue = dataTagihanObject.getString("donasi_tglinsert")
-            paymentValue = dataTagihanObject.getString("bank_nama")
-            nominalValue = dataTagihanObject.getString("donasi_nominal")
-            jenisValue = dataTagihanObject.getString("jenis_donasi")
-            sharedPreference.save("idDonasiDetail", dataTagihanObject.getString("donasi_id"))
-            sharedPreference.save("detailDonasiNominal", dataTagihanObject.getString("donasi_nominal"))
+                dataTagihan = sharedPreference.getValueString("dataTagihan").toString()
+                val dataTagihanObject = JSONObject(dataTagihan)
+                statusValue = dataTagihanObject.getString("donasi_status")
+                tanggalValue = dataTagihanObject.getString("donasi_tglinsert")
+                paymentValue = dataTagihanObject.getString("bank_nama")
+                nominalValue = dataTagihanObject.getString("donasi_nominal")
+                jenisValue = dataTagihanObject.getString("jenis_donasi")
+                sharedPreference.save("idDonasiDetail", dataTagihanObject.getString("donasi_id"))
+                sharedPreference.save("detailDonasiNominal", dataTagihanObject.getString("donasi_nominal"))
         } else {
             statusValue = sharedPreference.getValueString("detailDonasiStatus")
             tanggalValue = sharedPreference.getValueString("detailDonasiWaktu")
@@ -254,31 +249,20 @@ class DonasiDetailActivity : AppCompatActivity() {
                     judulProgramText.text = judulProgram
 
                     val btnPembayaran = context.findViewById<Button>(R.id.btnPembayaran)
-                    btnPembayaran.setOnClickListener {
-                        sharedPreference.save(
-                            "invoiceNominal",
-                            sharedPreference.getValueString("detailDonasiNominal")
-                        )
+                    btnPembayaran.setOnClickListener{
                         val kodeUnik = data?.getString("tbldonasi_nourut")
                         val nominalPlusKode = data?.getString("tbldonasi_nominal")
                         var nominalRaw = nominalPlusKode!!.toInt() - kodeUnik!!.toInt()
+                        sharedPreference.save("invoiceNominal",sharedPreference.getValueString("detailDonasiNominal"))
                         sharedPreference.save("donasiNominal", nominalRaw)
-                        sharedPreference.save(
-                            "invoiceKodeUnik",
-                            data?.getString("tbldonasi_nourut")
-                        )
+                        sharedPreference.save("invoiceKodeUnik", data?.getString("tbldonasi_nourut"))
                         sharedPreference.save("invoiceKode", data?.getString("tbldonasi_invoice"))
                         sharedPreference.save("invoiceBank", dataBank?.getString("tblbank_nama"))
-                        sharedPreference.save(
-                            "invoiceBankAN",
-                            dataBank?.getString("tblbank_namapemilik")
-                        )
+                        sharedPreference.save("invoiceBankAN",dataBank?.getString("tblbank_namapemilik"))
                         sharedPreference.save("invoiceBankUrl", dataBank?.getString("logo_url"))
-                        sharedPreference.save(
-                            "invoiceBankRekening",
-                            dataBank?.getString("tblbank_rekening")
-                        )
+                        sharedPreference.save("invoiceBankRekening",dataBank?.getString("tblbank_rekening"))
                         sharedPreference.save("invoiceProgramJudul", judulProgram)
+
                         startActivity(
                             Intent(
                                 this@DonasiDetailActivity,
