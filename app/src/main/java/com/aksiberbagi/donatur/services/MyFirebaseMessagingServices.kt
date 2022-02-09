@@ -13,6 +13,7 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.aksiberbagi.donatur.R
 import com.aksiberbagi.donatur.view.DashboardActivity
+import com.aksiberbagi.donatur.view.DonasiDetailActivity
 import com.aksiberbagi.donatur.view.DonasiRutinActivity
 import com.aksiberbagi.donatur.view.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -26,8 +27,11 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if(remoteMessage.notification != null){
-            generateNotification(remoteMessage.notification!!.title!!, remoteMessage.notification!!.body!!,
-                remoteMessage!!.data["keyFirebase"].toString()
+            generateNotification(
+                remoteMessage.notification!!.title!!,
+                remoteMessage.notification!!.body!!,
+                remoteMessage!!.data["keyFirebase"].toString(),
+                remoteMessage!!.data["data"].toString(),
             )
         }
     }
@@ -42,7 +46,7 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
         return remoteView
     }
 
-    fun generateNotification(title: String, subtitle: String , key: String){
+    fun generateNotification(title: String, subtitle: String , key: String, data: String){
 
         var intent : Intent
 
@@ -50,6 +54,13 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
             intent = Intent(this,DonasiRutinActivity::class.java)
             val mBundle = Bundle()
             mBundle.putString("keyFirebase", "donasi rutin true" )
+            intent.putExtras(mBundle)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }else if(key == "tagihan"){
+            intent = Intent(this, DonasiDetailActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("keyFirebase", "tagihan" )
+            mBundle.putString("dataTagihan", data )
             intent.putExtras(mBundle)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }else{

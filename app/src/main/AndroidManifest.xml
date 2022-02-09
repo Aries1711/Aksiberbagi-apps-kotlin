@@ -43,14 +43,17 @@
         <activity
             android:name="com.aksiberbagi.donatur.view.ProfilActivity"
             android:theme="@style/AppMaterial" />
+
         <activity
             android:name="com.aksiberbagi.donatur.view.DonasiDetailActivity"
             android:theme="@style/AppMaterial">
         <intent-filter>
             <action android:name="donasiSaya.Detail" />
+
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
         </activity>
+
         <activity
             android:name="com.aksiberbagi.donatur.view.WebviewInvoiceActivity"
             android:theme="@style/AppMaterial" />
@@ -72,6 +75,7 @@
         <activity
             android:name="com.aksiberbagi.donatur.view.PublikAjukanActivity"
             android:theme="@style/AppMaterial" />
+
         <activity
             android:name="com.aksiberbagi.donatur.view.DonasiRutinActivity"
             android:theme="@style/AppMaterial" >
@@ -81,6 +85,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.aksiberbagi.donatur.view.SemuaLaporanActivity"
             android:theme="@style/AppMaterial" />
