@@ -91,6 +91,7 @@ class DonasiDetailActivity : AppCompatActivity() {
         } else {
             btnPembayaran.visibility = View.GONE
         }
+        val detailDonasiLagiBtn : Button = findViewById(R.id.detailDonasiLagiBtn)
 
         var tanggalDonasi: TextView = findViewById(R.id.detailDonasiTanggal)
 
@@ -119,6 +120,9 @@ class DonasiDetailActivity : AppCompatActivity() {
         }
 
         getKoneksi(retrivedToken, this)
+
+        getDetailProgramById( this, retrivedToken,detailDonasiLagiBtn )
+
 
     }
 
@@ -279,6 +283,59 @@ class DonasiDetailActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    private fun getDetailProgramById(context: DonasiDetailActivity, tokenValue: String?, buttonDonasiLagi: Button){
+        val sharedPreference: Preferences = Preferences(this)
+        val idDonasi: String? = sharedPreference.getValueString("idDonasiDetail")
+
+        ApiService.getProgramDetailID(tokenValue, idDonasi).getAsJSONObject(object : JSONObjectRequestListener{
+            override fun onResponse(response: JSONObject?) {
+                val data = response?.getJSONObject("data")
+                val cabang = data?.getJSONObject("cabang")
+
+                val idProgram = data?.getString("tblprogram_id")
+                val gambarProgram = data?.getString("thumbnail_url")
+                val slugProgram = data?.getString("tblprogram_namalink")
+                val judulProgram = data?.getString("tblprogram_judul")
+                val penggalangProgram = cabang?.getString("tblcabang_nama")
+                val capaianProgram = data?.getString("capaian_donasi")
+                val sisaHariProgram = data?.getString("sisa_hari")
+                val tanggalMulai = data?.getString("tanggal_mulai_donasi")
+                val progressProgram = data?.getInt("progress")
+                val targetNominal: String? = data?.getString("tblprogram_isiantargetnominal")
+                var targetDonasi : String?
+                if (targetNominal == "null" || targetNominal == "0" ){
+                    targetDonasi = "100"
+                }else{
+                    targetDonasi = data?.getString("target_nominal")
+                }
+
+                buttonDonasiLagi.setOnClickListener {
+                    sharedPreference.save("idProgram", idProgram)
+                    sharedPreference.save("img", gambarProgram)
+                    sharedPreference.save("urlProgram", slugProgram)
+                    sharedPreference.save("judul", judulProgram)
+                    sharedPreference.save("penggalang", penggalangProgram)
+                    sharedPreference.save("capaian", capaianProgram)
+                    sharedPreference.save("sisaHari", sisaHariProgram)
+                    sharedPreference.save("tanggalMulai", tanggalMulai)
+                    sharedPreference.save("progressProgram", progressProgram)
+                    sharedPreference.save("targetProgram", targetDonasi)
+                    val mIntent = Intent(context, ProgramDetailActivity::class.java)
+                    context.startActivity(mIntent)
+                }
+
+            }
+
+            override fun onError(anError: ANError?) {
+                Log.d(TAG, "OnErrorBody " + anError?.errorBody)
+                Log.d(TAG, "OnErrorCode " + anError?.errorCode)
+                Log.d(TAG, "OnErrorDetail " + anError?.errorDetail)
+            }
+
+        })
+
     }
 
 }
